@@ -107,32 +107,23 @@ label{
 }
 
 .content {
-  transition: all 0.3s ease;
+  transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 body.onboarding-active .content {
   filter: blur(7px);
   transform: scale(0.99);
-  transition: all 0.3s ease;
-  will-change: transform, filter;
 }
 
-body.onboarding-active .actionBar{
-  opacity:1 !important;
-  filter:none !important;
-}
-
+/* LOCKED FOOTER */
 .actionBar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-
-  width: 100%;
+  z-index: 999999;
   max-width: 900px;
   margin: 0 auto;
-
-  z-index: 999999;
 }
 
 .actionBar button{
@@ -203,7 +194,9 @@ body.onboarding-active .actionBar{
 </div>
 <div id="status"></div>
 
-<div class="actionBar">
+</div>
+
+  <div class="actionBar">
 
   <button id="startBtn" class="pulse">
     ▶ Start arbeidet
@@ -212,9 +205,7 @@ body.onboarding-active .actionBar{
   <button id="finishBtn">
     ✓ Ferdigmeld
   </button>
-
-</div>
-
+  
 <script>
 let currentJob = null;
 let startTime = null;
