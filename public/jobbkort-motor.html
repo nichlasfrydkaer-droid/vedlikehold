@@ -114,26 +114,30 @@ body.onboarding-active .content {
   filter: blur(7px);
   transform: scale(0.99);
 }
-
 /* LOCKED FOOTER */
 .actionBar {
+  padding: 12px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 999999;
+
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
+
+  z-index: 999999;
 }
 
-.actionBar button{
-  width:100%;
-  margin:0;
-  border-radius:14px;
-  font-size:18px;
-  padding:18px;
+.actionBar button {
+  width: 100%;
+  margin: 0;
+  border-radius: 14px;
+  font-size: 18px;
+  padding: 18px;
 }
-</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
