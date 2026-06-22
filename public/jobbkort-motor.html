@@ -106,6 +106,46 @@ label{
   text-align:center;
 }
 
+  body.onboarding-active .container > *:not(.actionBar){
+  opacity:0.35;
+  filter:blur(1px);
+}
+
+body.onboarding-active .actionBar{
+  opacity:1 !important;
+  filter:none !important;
+}
+
+#startHint{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:95px;
+  text-align:center;
+  color:#2563eb;
+  font-weight:bold;
+  font-size:16px;
+  animation:bounce 1.2s infinite;
+  z-index:10001;
+}
+
+  #startHint{
+  pointer-events:none;
+}
+
+#startHint .arrow{
+  font-size:48px;
+  display:block;
+  color:#2563eb;
+  animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce{
+  0%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(-8px);}
+  100%{transform:translateX(-50%) translateY(0);}
+}
+
 .actionBar{
   position:fixed;
   left:50%;
@@ -187,6 +227,8 @@ label{
 
 </div>
 <div id="status"></div>
+<div id="startHint">
+  <span class="arrow">⬇</span>
 </div>
 
 <div class="actionBar">
@@ -239,6 +281,10 @@ async function loadJob(){
   });
 }
 function startWork(){
+document.body.classList.remove("onboarding-active");
+
+const hint = document.getElementById("startHint");
+if (hint) hint.style.display = "none";
   startTime = Date.now();
   document
     .querySelectorAll(".task")
@@ -534,6 +580,12 @@ finishBtn.innerHTML = "⏳ Sender rapport...";
 
 }
 loadJob();
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.body.classList.add("onboarding-active");
+  }, 200);
+});
 </script>
 </body>
 </html>
