@@ -103,6 +103,9 @@ label{
   font-weight:bold;
 }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -287,11 +290,132 @@ document
       return;
     }
 
-    alert(
-      `Jobbkort ${currentJob.nummer} ferdig.\n\nPDF og e-post kommer i neste steg.`
-    );
+    generatePDF();
 
   });
+  async function generatePDF(){
+
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+
+  let y = 15;
+
+  doc.setFontSize(18);
+  doc.text(
+    `JOBBKORT ${currentJob.nummer}`,
+    10,
+    y
+  );
+
+  y += 10;
+
+  doc.setFontSize(14);
+  doc.text(
+    currentJob.titel.toUpperCase(),
+    10,
+    y
+  );
+
+  y += 15;
+
+  const navn =
+    document.getElementById("nameInput").value;
+
+  const tid =
+    document.getElementById("timeInput").value;
+
+  const dato =
+    new Date().toLocaleDateString("no-NO");
+
+  doc.setFontSize(11);
+
+  doc.text(`Navn: ${navn}`,10,y);
+  y += 8;
+
+  doc.text(`Dato: ${dato}`,10,y);
+  y += 8;
+
+  doc.text(`Tid brukt: ${tid}`,10,y);
+  y += 15;
+
+  doc.setFont(undefined,"bold");
+  doc.text("KONTROLLISTE",10,y);
+
+  y += 10;
+
+  document
+    .querySelectorAll(".task")
+    .forEach(task => {
+
+      const tekst =
+        task.parentElement.textContent.trim();
+
+      const linjer =
+        doc.splitTextToSize(tekst,120);
+
+      if(task.checked){
+
+        doc.setTextColor(0,160,0);
+        doc.text("UTFØRT",10,y);
+
+      }else{
+
+        doc.setTextColor(200,0,0);
+        doc.text("IKKE UTFØRT",10,y);
+
+      }
+
+      doc.setTextColor(0,0,0);
+
+      doc.text(
+        linjer,
+        55,
+        y
+      );
+
+      y += (linjer.length * 6) + 6;
+
+      if(y > 260){
+
+        doc.addPage();
+
+        y = 20;
+
+      }
+
+    });
+
+  y += 10;
+
+  doc.setFont(undefined,"bold");
+  doc.text("NOTATER",10,y);
+
+  y += 8;
+
+  doc.setFont(undefined,"normal");
+
+  const notater =
+    document.getElementById("notes").value || "-";
+
+  const noteLines =
+    doc.splitTextToSize(notater,180);
+
+  doc.text(noteLines,10,y);
+
+  y += (noteLines.length * 6) + 10;
+
+  doc.text(
+    `Vedlagte bilder: ${selectedPhotos.length}`,
+    10,
+    y
+  );
+
+  doc.save(
+    `Jobbkort-${currentJob.nummer}.pdf`
+  );
+
+}
 loadJob();
 </script>
 </body>
