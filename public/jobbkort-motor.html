@@ -270,9 +270,27 @@ document
 document
   .getElementById("finishBtn")
   .addEventListener("click", () => {
+
+    const navn =
+      document.getElementById("nameInput")
+      .value
+      .trim();
+
+    if(!navn){
+
+      alert("Vennligst fyll ut navn.");
+
+      document
+        .getElementById("nameInput")
+        .focus();
+
+      return;
+    }
+
     alert(
       `Jobbkort ${currentJob.nummer} ferdig.\n\nPDF og e-post kommer i neste steg.`
     );
+
   });
 loadJob();
 </script>
