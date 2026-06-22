@@ -325,8 +325,12 @@ document
   const tid =
     document.getElementById("timeInput").value;
 
-  const dato =
-    new Date().toLocaleDateString("no-NO");
+const datoObj = new Date();
+
+const dato =
+  String(datoObj.getDate()).padStart(2,"0") + "." +
+  String(datoObj.getMonth()+1).padStart(2,"0") + "." +
+  datoObj.getFullYear();
 
   doc.setFontSize(11);
 
@@ -339,10 +343,15 @@ document
   doc.text(`Tid brukt: ${tid}`,10,y);
   y += 15;
 
-  doc.setFont(undefined,"bold");
-  doc.text("KONTROLLISTE",10,y);
+doc.setFontSize(13);
 
-  y += 10;
+doc.setFont(undefined,"bold");
+
+doc.text("KONTROLLISTE",10,y);
+
+y += 12;
+
+doc.setFontSize(11);
 
   document
     .querySelectorAll(".task")
@@ -356,25 +365,32 @@ document
 
       if(task.checked){
 
-        doc.setTextColor(0,160,0);
-        doc.text("UTFØRT",10,y);
+doc.setFont(undefined,"bold");
+
+doc.setTextColor(0,160,0);
+
+doc.text("UTFØRT",10,y);
 
       }else{
 
-        doc.setTextColor(200,0,0);
-        doc.text("IKKE UTFØRT",10,y);
+doc.setFont(undefined,"bold");
+
+doc.setTextColor(200,0,0);
+
+doc.text("IKKE UTFØRT",10,y);
 
       }
 
       doc.setTextColor(0,0,0);
 
+      doc.setFont(undefined,"normal");
       doc.text(
         linjer,
         55,
         y
       );
 
-      y += (linjer.length * 6) + 6;
+      y += (linjer.length * 6) + 10;
 
       if(y > 260){
 
@@ -388,8 +404,13 @@ document
 
   y += 10;
 
-  doc.setFont(undefined,"bold");
-  doc.text("NOTATER",10,y);
+doc.setFontSize(13);
+
+doc.setFont(undefined,"bold");
+
+doc.text("NOTATER",10,y);
+
+doc.setFontSize(11);
 
   y += 8;
 
