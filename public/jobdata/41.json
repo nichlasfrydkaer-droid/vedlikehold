@@ -1,5 +1,6 @@
 {
   "nummer": 41,
+
   "titel": "Brann og innbruddsalarm",
 
   "frekvens": "Hver 3. måned",
@@ -20,10 +21,15 @@
 
   "oppgaver": [
     "Test røykmeldere med egnet testgass og kontroller at brannalarmen aktiveres. Test minst 1 forskjellig detektor hver gang. Loggfør hvilken detektor som ble testet i egen kontrolliste.",
+
     "Sørg for at kontrollen blir dokumentert av vedlikeholdskoordinatoren i MNT-skjema. Hvis noe ikke fungerer så er det viktig at dette blir registrert og at man gjør tiltak for å rette feilen så snart som mulig.",
+
     "Sjekk om brannalarmen er satt i drift igjen ved å taste alarmkoden.",
+
     "Aktiver innbruddsalarmen, test funksjonen ved å utløse bevegelsessensor.",
+
     "Sjekk om innbruddsalarmen er satt i drift igjen ved å taste alarmkoden.",
+
     "Sjekk datoen for siste batteriskift. Batteriet må maks være 3 år gammelt. (Noter dato på batteriet når det er nytt)"
   ]
 }
