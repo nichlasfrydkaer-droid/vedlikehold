@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+sådan? <!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
@@ -133,8 +133,7 @@ label{
 
 </head>
 <body>
-<div id="app">
-  <div class="container">
+<div class="container">
 <h1 id="jobTitle">Laster...</h1>
 <div class="section">
   <strong>Frekvens:</strong>
@@ -240,35 +239,33 @@ async function loadJob(){
   });
 }
 function startWork(){
-
-  // 1. fjern blur
-  document.body.classList.remove("onboarding-active");
-
-  // 2. FORCE repaint (DET vigtige fix)
-  const app = document.getElementById("app");
-  app.style.transition = "none";
-  app.style.filter = "none";
-  app.offsetHeight;
-
-  // genskab transition (så UI stadig er smooth bagefter)
-  setTimeout(() => {
-    app.style.transition = "";
-    app.style.filter = "";
-  }, 50);
-
-  // 3. normal flow
   startTime = Date.now();
-
-  document.querySelectorAll(".task").forEach(x => x.disabled = false);
+  document
+    .querySelectorAll(".task")
+    .forEach(x => x.disabled = false);
   document.getElementById("nameInput").disabled = false;
   document.getElementById("notes").disabled = false;
   document.getElementById("photos").disabled = false;
+document.getElementById("startBtn").style.display = "none";
 
-  document.getElementById("startBtn").style.display = "none";
+const finishBtn =
+  document.getElementById("finishBtn");
 
-  const finishBtn = document.getElementById("finishBtn");
-  finishBtn.style.display = "block";
-  finishBtn.classList.add("pulse");
+finishBtn.style.display = "block";
+finishBtn.classList.add("pulse");
+  timerInterval = setInterval(() => {
+    const diff = Date.now() - startTime;
+    const h =
+      Math.floor(diff / 3600000);
+    const m =
+      Math.floor((diff % 3600000) / 60000);
+    const s =
+      Math.floor((diff % 60000) / 1000);
+    document.getElementById("timeInput").value =
+      String(h).padStart(2,"0") + ":" +
+      String(m).padStart(2,"0") + ":" +
+      String(s).padStart(2,"0");
+  },1000);
 }
 document
   .getElementById("photos")
