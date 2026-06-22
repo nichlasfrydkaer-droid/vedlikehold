@@ -117,7 +117,8 @@ label{
   background:rgba(255,255,255,.95);
   backdrop-filter:blur(10px);
   box-shadow:0 -4px 20px rgba(0,0,0,.12);
-  z-index:999;
+  z-index:999999;
+  pointer-events:auto;
 }
 
 .actionBar button{
@@ -127,6 +128,15 @@ label{
   font-size:18px;
   padding:18px;
 }
+
+/* ===== BLUR SYSTEM ===== */
+
+body.onboarding-active .container {
+  filter: blur(7px);
+  transform: scale(0.98);
+  pointer-events: none;
+}
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
