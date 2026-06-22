@@ -106,45 +106,15 @@ label{
   text-align:center;
 }
 
- body.onboarding-active .container > *:not(.actionBar){
-  opacity:0.20;
-  filter:blur(2px);
+body.onboarding-active .container > *:not(.actionBar){
+  filter: blur(6px);
+  transform: scale(0.99);
+  transition: all 0.3s ease;
 }
 
 body.onboarding-active .actionBar{
   opacity:1 !important;
   filter:none !important;
-}
-
-#startHint{
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:95px;
-  text-align:center;
-  color:#2563eb;
-  font-weight:bold;
-  font-size:16px;
-  animation:bounce 1.2s infinite;
-  z-index:10001;
-}
-
-  #startHint{
-  pointer-events:none;
-}
-
-#startHint .arrow{
-  font-size:56px;
-  display:block;
-  color:#2563eb;
-  animation: bounce 1.1s infinite;
-  text-shadow: 0 0 12px rgba(37,99,235,0.5);
-}
-
-@keyframes bounce{
-  0%{transform:translateX(-50%) translateY(0);}
-  50%{transform:translateX(-50%) translateY(-8px);}
-  100%{transform:translateX(-50%) translateY(0);}
 }
 
 .actionBar{
@@ -228,9 +198,6 @@ body.onboarding-active .actionBar{
 
 </div>
 <div id="status"></div>
-<div id="startHint">
-  <span class="arrow">⬇</span>
-</div>
 
 <div class="actionBar">
 
@@ -282,10 +249,13 @@ async function loadJob(){
   });
 }
 function startWork(){
+  
+  if (navigator.vibrate) {
+  navigator.vibrate(120);
+}
+  
 document.body.classList.remove("onboarding-active");
 
-const hint = document.getElementById("startHint");
-if (hint) hint.style.display = "none";
   startTime = Date.now();
   document
     .querySelectorAll(".task")
@@ -581,12 +551,9 @@ finishBtn.innerHTML = "⏳ Sender rapport...";
 
 }
 loadJob();
+  document.body.classList.add("onboarding-active");
 
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.body.classList.add("onboarding-active");
-  }, 200);
-});
+
 </script>
 </body>
 </html>
