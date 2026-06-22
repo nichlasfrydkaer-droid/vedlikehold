@@ -237,6 +237,7 @@ async function loadJob(){
       `<input type="checkbox" class="task" disabled> ${task}`;
     container.appendChild(label);
   });
+  document.body.classList.add("onboarding-active");
 }
 function startWork(){
   startTime = Date.now();
