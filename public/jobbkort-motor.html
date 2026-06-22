@@ -110,7 +110,7 @@ label{
   transition: all 0.3s ease;
 }
 
-body.onboarding-active .content > *:not(.actionBar) {
+body.onboarding-active .content {
   filter: blur(7px);
   transform: scale(0.99);
   transition: all 0.3s ease;
@@ -133,11 +133,6 @@ body.onboarding-active .actionBar{
   margin: 0 auto;
 
   z-index: 999999;
-
-  padding: 12px;
-  background: rgba(255,255,255,.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -4px 20px rgba(0,0,0,.12);
 }
 
 .actionBar button{
