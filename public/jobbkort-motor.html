@@ -110,9 +110,10 @@ label{
   transition: all 0.3s ease;
 }
 
-body.onboarding-active .content {
+body.onboarding-active .content > *:not(.actionBar) {
   filter: blur(7px);
   transform: scale(0.99);
+  transition: all 0.3s ease;
   will-change: transform, filter;
 }
 
@@ -121,18 +122,22 @@ body.onboarding-active .actionBar{
   filter:none !important;
 }
 
-.actionBar{
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:0;
-  width:100%;
-  max-width:900px;
-  padding:12px;
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(10px);
-  box-shadow:0 -4px 20px rgba(0,0,0,.12);
-  z-index:999;
+.actionBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+
+  z-index: 999999;
+
+  padding: 12px;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -4px 20px rgba(0,0,0,.12);
 }
 
 .actionBar button{
