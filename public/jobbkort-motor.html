@@ -106,10 +106,14 @@ label{
   text-align:center;
 }
 
-body.onboarding-active .container > *:not(.actionBar){
-  filter: blur(6px);
-  transform: scale(0.99);
+.content {
   transition: all 0.3s ease;
+}
+
+body.onboarding-active .content {
+  filter: blur(7px);
+  transform: scale(0.99);
+  will-change: transform, filter;
 }
 
 body.onboarding-active .actionBar{
@@ -144,7 +148,7 @@ body.onboarding-active .actionBar{
 
 </head>
 <body>
-<div class="container">
+<div class="content">
 <h1 id="jobTitle">Laster...</h1>
 <div class="section">
   <strong>Frekvens:</strong>
