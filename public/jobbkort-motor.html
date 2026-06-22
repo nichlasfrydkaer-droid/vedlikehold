@@ -4,36 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jobbkort</title>
-
 <style>
+*{
+  box-sizing:border-box;
+}
 body{
   font-family:Arial,sans-serif;
   margin:0;
   background:#f4f6f8;
 }
-
 .container{
   max-width:900px;
   margin:auto;
   background:white;
   padding:20px;
 }
-
 .section{
   margin-top:20px;
   padding-bottom:15px;
   border-bottom:1px solid #ddd;
 }
-
 input[type="text"],
 textarea{
   width:100%;
+  max-width:100%;
   padding:12px;
   font-size:16px;
   border:2px solid #ccc;
   border-radius:6px;
 }
-
 button{
   width:100%;
   padding:16px;
@@ -42,18 +41,15 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
-
 #startBtn{
   background:#28a745;
   color:white;
 }
-
 #finishBtn{
   background:red;
   color:white;
   display:none;
 }
-
 .notesInfo{
   font-size:14px;
   line-height:1.4;
@@ -62,205 +58,215 @@ button{
   background:#f8f9fa;
   border-left:4px solid #28a745;
 }
-
 label{
   display:block;
   margin:10px 0;
+  line-height:1.4;
 }
-
 .pulse{
   animation:pulse 1.5s infinite;
 }
-
 @keyframes pulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.03)}
   100%{transform:scale(1)}
 }
+#preview{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+.previewItem{
+  position:relative;
+}
+.previewItem img{
+  width:100%;
+  height:90px;
+  object-fit:cover;
+  border-radius:6px;
+}
+.removeBtn{
+  position:absolute;
+  top:5px;
+  right:5px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:red;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+#status{
+  margin-top:15px;
+  font-weight:bold;
+}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <h1 id="jobTitle">Laster...</h1>
-
 <div class="section">
   <strong>Frekvens:</strong>
   <span id="frequency"></span>
 </div>
-
 <div class="section">
   <strong>Sted:</strong>
   <span id="location"></span>
 </div>
-
 <div class="section">
   <strong>Tid brukt</strong>
   <input type="text" id="timeInput" disabled>
 </div>
-
 <div class="section">
   <strong>Navn</strong>
   <input type="text" id="nameInput" disabled>
 </div>
-
 <div class="section">
-  <button id="startBtn">Start arbeidet</button>
+  <button id="startBtn" class="pulse">
+    Start arbeidet
+  </button>
 </div>
-
 <div class="section">
-  <button id="finishBtn">Ferdigmeld</button>
+  <button id="finishBtn">
+    Ferdigmeld
+  </button>
 </div>
-
 <div class="section">
-
   <div class="notesInfo" id="merkText"></div>
 
-  <strong>Kontrolliste</strong>
+Kontrolliste
 
   <div id="taskContainer"></div>
-
 </div>
-
 <div class="section">
 
-  <strong>Notater</strong>
+Notater
 
   <div class="notesInfo" id="notatInfo"></div>
-
   <textarea id="notes" disabled></textarea>
-
 </div>
-
 <div class="section">
 
-  <strong>Bilder</strong>
+Bilder
 
-  <input
-    type="file"
-    id="photos"
-    multiple
-    accept="image/*"
-    disabled
-  >
+<input
+type=“file”
+id=“photos”
+multiple
+accept=“image/*”
+disabled
 
+  <div id="preview"></div>
 </div>
-
 <div id="status"></div>
-
 </div>
-
 <script>
-
 let currentJob = null;
 let startTime = null;
 let timerInterval = null;
-
+let selectedPhotos = [];
 async function loadJob(){
-
   const params =
     new URLSearchParams(window.location.search);
-
   const id =
     params.get("id") || "41";
-
   const response =
     await fetch(`/jobdata/${id}.json`);
-
   currentJob =
     await response.json();
-
   document.title =
     `Jobbkort ${currentJob.nummer}`;
-
   document.getElementById("jobTitle").innerText =
     `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
-
   document.getElementById("frequency").innerText =
     currentJob.frekvens;
-
   document.getElementById("location").innerText =
     currentJob.sted;
-
   document.getElementById("merkText").innerText =
     "MERK: " + currentJob.merk;
-
   document.getElementById("notatInfo").innerText =
     currentJob.notatInfo;
-
   const container =
     document.getElementById("taskContainer");
-
+  container.innerHTML = "";
   currentJob.oppgaver.forEach(task => {
-
     const label =
       document.createElement("label");
-
     label.innerHTML =
       `<input type="checkbox" class="task" disabled> ${task}`;
-
     container.appendChild(label);
-
   });
-
 }
-
 function startWork(){
-
   startTime = Date.now();
-
   document
     .querySelectorAll(".task")
     .forEach(x => x.disabled = false);
-
   document.getElementById("nameInput").disabled = false;
   document.getElementById("notes").disabled = false;
   document.getElementById("photos").disabled = false;
-
   document.getElementById("startBtn").style.display = "none";
   document.getElementById("finishBtn").style.display = "block";
-
   timerInterval = setInterval(() => {
-
     const diff = Date.now() - startTime;
-
     const h =
       Math.floor(diff / 3600000);
-
     const m =
       Math.floor((diff % 3600000) / 60000);
-
     const s =
       Math.floor((diff % 60000) / 1000);
-
     document.getElementById("timeInput").value =
       String(h).padStart(2,"0") + ":" +
       String(m).padStart(2,"0") + ":" +
       String(s).padStart(2,"0");
-
   },1000);
-
 }
-
+document
+  .getElementById("photos")
+  .addEventListener("change", e => {
+    selectedPhotos =
+      selectedPhotos.concat(
+        Array.from(e.target.files)
+      );
+    e.target.value = "";
+    renderPreview();
+});
+function renderPreview(){
+  const preview =
+    document.getElementById("preview");
+  preview.innerHTML = "";
+  selectedPhotos.forEach((file,index)=>{
+    const url =
+      URL.createObjectURL(file);
+    preview.innerHTML += `
+      <div class="previewItem">
+        <img src="${url}">
+        <button
+          class="removeBtn"
+          onclick="removePhoto(${index})">
+          ×
+        </button>
+      </div>
+    `;
+  });
+}
+function removePhoto(index){
+  selectedPhotos.splice(index,1);
+  renderPreview();
+}
 document
   .getElementById("startBtn")
   .addEventListener("click", startWork);
-
 document
   .getElementById("finishBtn")
   .addEventListener("click", () => {
-
     alert(
       `Jobbkort ${currentJob.nummer} ferdig.\n\nPDF og e-post kommer i neste steg.`
     );
-
   });
-
 loadJob();
-
 </script>
-
 </body>
 </html>
