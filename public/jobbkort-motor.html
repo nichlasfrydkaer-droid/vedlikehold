@@ -250,15 +250,22 @@ async function loadJob(){
   document.body.classList.add("onboarding-active");
 }
 function startWork(){
-  startTime = Date.now();
-  document
-    .querySelectorAll(".task")
-    .forEach(x => x.disabled = false);
-  document.getElementById("nameInput").disabled = false;
-  document.getElementById("notes").disabled = false;
-  document.getElementById("photos").disabled = false;
-document.getElementById("startBtn").style.display = "none";
 
+  document.body.classList.remove("onboarding-active"); // 👈 DEN HER
+
+  startTime = Date.now();
+
+  document.querySelectorAll(".task").forEach(x => x.disabled = false);
+
+  document.getElementById("nameInput").disabled = false;
+
+  document.getElementById("notes").disabled = false;
+
+  document.getElementById("photos").disabled = false;
+
+  document.getElementById("startBtn").style.display = "none";
+
+}
 const finishBtn =
   document.getElementById("finishBtn");
 
