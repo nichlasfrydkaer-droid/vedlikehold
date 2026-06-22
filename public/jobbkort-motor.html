@@ -241,43 +241,34 @@ async function loadJob(){
 }
 function startWork(){
 
+  // 1. fjern blur (DETTE er nok)
+
   document.body.classList.remove("onboarding-active");
 
-  // FORCE UI REFRESH (Safari fix)
-
-  document.body.style.transform = "translateZ(0)";
+  // 2. force repaint (kun iOS fix)
 
   document.body.offsetHeight;
 
-  document.body.style.transform = "";
+  // 3. normal flow
 
   startTime = Date.now();
-  document
-    .querySelectorAll(".task")
-    .forEach(x => x.disabled = false);
+
+  document.querySelectorAll(".task").forEach(x => x.disabled = false);
+
   document.getElementById("nameInput").disabled = false;
+
   document.getElementById("notes").disabled = false;
+
   document.getElementById("photos").disabled = false;
-document.getElementById("startBtn").style.display = "none";
 
-const finishBtn =
-  document.getElementById("finishBtn");
+  document.getElementById("startBtn").style.display = "none";
 
-finishBtn.style.display = "block";
-finishBtn.classList.add("pulse");
-  timerInterval = setInterval(() => {
-    const diff = Date.now() - startTime;
-    const h =
-      Math.floor(diff / 3600000);
-    const m =
-      Math.floor((diff % 3600000) / 60000);
-    const s =
-      Math.floor((diff % 60000) / 1000);
-    document.getElementById("timeInput").value =
-      String(h).padStart(2,"0") + ":" +
-      String(m).padStart(2,"0") + ":" +
-      String(s).padStart(2,"0");
-  },1000);
+  const finishBtn = document.getElementById("finishBtn");
+
+  finishBtn.style.display = "block";
+
+  finishBtn.classList.add("pulse");
+
 }
 document
   .getElementById("photos")
