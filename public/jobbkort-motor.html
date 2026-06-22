@@ -241,34 +241,34 @@ async function loadJob(){
 }
 function startWork(){
 
-  // 1. fjern blur (DETTE er nok)
-
+  // 1. fjern blur
   document.body.classList.remove("onboarding-active");
 
-  // 2. force repaint (kun iOS fix)
+  // 2. FORCE repaint (DET vigtige fix)
+  const app = document.getElementById("app");
+  app.style.transition = "none";
+  app.style.filter = "none";
+  app.offsetHeight;
 
-  document.body.offsetHeight;
+  // genskab transition (så UI stadig er smooth bagefter)
+  setTimeout(() => {
+    app.style.transition = "";
+    app.style.filter = "";
+  }, 50);
 
   // 3. normal flow
-
   startTime = Date.now();
 
   document.querySelectorAll(".task").forEach(x => x.disabled = false);
-
   document.getElementById("nameInput").disabled = false;
-
   document.getElementById("notes").disabled = false;
-
   document.getElementById("photos").disabled = false;
 
   document.getElementById("startBtn").style.display = "none";
 
   const finishBtn = document.getElementById("finishBtn");
-
   finishBtn.style.display = "block";
-
   finishBtn.classList.add("pulse");
-
 }
 document
   .getElementById("photos")
