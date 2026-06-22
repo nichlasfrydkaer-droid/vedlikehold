@@ -1,7 +1,7 @@
 async function loadJob() {
 
-  const path = window.location.pathname;
-  const jobId = path.split("/").pop();
+const params = new URLSearchParams(window.location.search);
+const jobId = params.get("id");
 
   try {
 
