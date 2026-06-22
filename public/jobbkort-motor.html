@@ -1,4 +1,4 @@
-sådan? <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
@@ -133,7 +133,8 @@ label{
 
 </head>
 <body>
-<div class="container">
+<div id="app">
+  <div class="container">
 <h1 id="jobTitle">Laster...</h1>
 <div class="section">
   <strong>Frekvens:</strong>
@@ -239,6 +240,17 @@ async function loadJob(){
   });
 }
 function startWork(){
+
+  document.body.classList.remove("onboarding-active");
+
+  // FORCE UI REFRESH (Safari fix)
+
+  document.body.style.transform = "translateZ(0)";
+
+  document.body.offsetHeight;
+
+  document.body.style.transform = "";
+
   startTime = Date.now();
   document
     .querySelectorAll(".task")
