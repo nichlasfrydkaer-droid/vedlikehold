@@ -6,6 +6,7 @@
 <title>Jobbkort</title>
 
 <style>
+
 body{
   font-family:Arial,sans-serif;
   background:#f4f6f8;
@@ -13,30 +14,31 @@ body{
 }
 
 .container{
-  max-width:700px;
+  max-width:800px;
   margin:auto;
   padding:20px;
 }
 
 .card{
   background:white;
-  padding:20px;
+  padding:25px;
   border-radius:10px;
   box-shadow:0 2px 8px rgba(0,0,0,.1);
 }
 
 h1{
   text-align:center;
+  margin-bottom:25px;
 }
 
 button{
   width:100%;
   padding:16px;
   margin:10px 0;
-  font-size:16px;
-  font-weight:bold;
   border:none;
   border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
   cursor:pointer;
 }
 
@@ -45,10 +47,15 @@ button{
   color:white;
 }
 
-.pdfBtn{
+.docBtn{
   background:#007bff;
   color:white;
 }
+
+button:hover{
+  opacity:.95;
+}
+
 </style>
 </head>
 
@@ -64,19 +71,19 @@ button{
       Åpne jobbkort
     </button>
 
-    <button class="pdfBtn" id="printBtn">
+    <button class="docBtn" id="printBtn">
       Skriv ut
     </button>
 
-    <button class="pdfBtn" id="sjaBtn">
+    <button class="docBtn" id="sjaBtn">
       Sikker jobb analyse
     </button>
 
-    <button class="pdfBtn" id="sjaGuideBtn">
+    <button class="docBtn" id="sjaGuideBtn">
       Veiledning: Sikker jobb-analysen
     </button>
 
-    <button class="pdfBtn" id="safeWorkBtn">
+    <button class="docBtn" id="safeWorkBtn">
       Veiledning: Arbeid trygt sammen
     </button>
 
@@ -88,33 +95,62 @@ button{
 
 async function loadMenu(){
 
-  const params = new URLSearchParams(window.location.search);
-  const jobId = params.get("id");
+  const params =
+    new URLSearchParams(window.location.search);
 
-  const response = await fetch(`/jobdata/${jobId}.json`);
-  const job = await response.json();
+  const jobId =
+    params.get("id") || "41";
+
+  const response =
+    await fetch(`/jobdata/${jobId}.json`);
+
+  const job =
+    await response.json();
 
   document.getElementById("title").innerText =
-    `JOBBKORT ${job.nummer} - ${job.titel}`;
+    `JOBBKORT ${job.nummer} - ${job.titel.toUpperCase()}`;
 
   document.getElementById("openBtn").onclick = () => {
-    location.href = `/jobbkort.html?id=${job.nummer}`;
+
+    location.href =
+      `/jobbkort-motor.html?id=${job.nummer}`;
+
   };
 
   document.getElementById("printBtn").onclick = () => {
-    window.open(job.jobbkortPdf, "_blank");
+
+    window.open(
+      job.jobbkortPdf,
+      "_blank"
+    );
+
   };
 
   document.getElementById("sjaBtn").onclick = () => {
-    window.open(job.sjaPdf, "_blank");
+
+    window.open(
+      job.sjaPdf,
+      "_blank"
+    );
+
   };
 
   document.getElementById("sjaGuideBtn").onclick = () => {
-    window.open(job.sjaVeiledningPdf, "_blank");
+
+    window.open(
+      job.sjaVeiledningPdf,
+      "_blank"
+    );
+
   };
 
   document.getElementById("safeWorkBtn").onclick = () => {
-    window.open(job.arbeidTrygtPdf, "_blank");
+
+    window.open(
+      job.arbeidTrygtPdf,
+      "_blank"
+    );
+
   };
 
 }
