@@ -12,6 +12,7 @@ body{
   font-family:Arial,sans-serif;
   margin:0;
   background:#f4f6f8;
+  padding-bottom:120px;
 }
 .container{
   max-width:900px;
@@ -101,6 +102,29 @@ label{
 #status{
   margin-top:15px;
   font-weight:bold;
+  text-align:center;
+}
+
+.actionBar{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:0;
+  width:100%;
+  max-width:900px;
+  padding:12px;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(10px);
+  box-shadow:0 -4px 20px rgba(0,0,0,.12);
+  z-index:999;
+}
+
+.actionBar button{
+  width:100%;
+  margin:0;
+  border-radius:14px;
+  font-size:18px;
+  padding:18px;
 }
 </style>
 
@@ -125,16 +149,6 @@ label{
 <div class="section">
   <strong>Navn</strong>
   <input type="text" id="nameInput" disabled>
-</div>
-<div class="section">
-  <button id="startBtn" class="pulse">
-    Start arbeidet
-  </button>
-</div>
-<div class="section">
-  <button id="finishBtn">
-    Ferdigmeld
-  </button>
 </div>
 <div class="section">
   <div class="notesInfo" id="merkText"></div>
@@ -173,6 +187,19 @@ label{
 </div>
 <div id="status"></div>
 </div>
+
+<div class="actionBar">
+
+  <button id="startBtn" class="pulse">
+    ▶ Start arbeidet
+  </button>
+
+  <button id="finishBtn">
+    ✓ Ferdigmeld
+  </button>
+
+</div>
+
 <script>
 let currentJob = null;
 let startTime = null;
@@ -218,8 +245,13 @@ function startWork(){
   document.getElementById("nameInput").disabled = false;
   document.getElementById("notes").disabled = false;
   document.getElementById("photos").disabled = false;
-  document.getElementById("startBtn").style.display = "none";
-  document.getElementById("finishBtn").style.display = "block";
+document.getElementById("startBtn").style.display = "none";
+
+const finishBtn =
+  document.getElementById("finishBtn");
+
+finishBtn.style.display = "block";
+finishBtn.classList.add("pulse");
   timerInterval = setInterval(() => {
     const diff = Date.now() - startTime;
     const h =
@@ -456,7 +488,13 @@ const status =
 status.innerHTML = "Sender rapport...";
 
 try{
+const finishBtn =
 
+  document.getElementById("finishBtn");
+
+finishBtn.disabled = true;
+
+finishBtn.innerHTML = "⏳ Sender rapport...";
   const response =
     await fetch(
       "https://jobbkort-mail.nichlasfrydkaer.workers.dev/",
@@ -481,6 +519,12 @@ try{
 }catch(err){
 
   console.error(err);
+
+  const finishBtn =
+    document.getElementById("finishBtn");
+
+  finishBtn.disabled = false;
+  finishBtn.innerHTML = "✓ Ferdigmeld";
 
   status.innerHTML =
     "Feil ved sending.";
