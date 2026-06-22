@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobbkort</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  margin:0;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  margin:10px 0;
+  font-size:16px;
+  font-weight:bold;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.openBtn{
+  background:#28a745;
+  color:white;
+}
+
+.pdfBtn{
+  background:#007bff;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1 id="title">Laster...</h1>
+
+    <button class="openBtn" id="openBtn">
+      Åpne jobbkort
+    </button>
+
+    <button class="pdfBtn" id="printBtn">
+      Skriv ut
+    </button>
+
+    <button class="pdfBtn" id="sjaBtn">
+      Sikker jobb analyse
+    </button>
+
+    <button class="pdfBtn" id="sjaGuideBtn">
+      Veiledning: Sikker jobb-analysen
+    </button>
+
+    <button class="pdfBtn" id="safeWorkBtn">
+      Veiledning: Arbeid trygt sammen
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+async function loadMenu(){
+
+  const params = new URLSearchParams(window.location.search);
+  const jobId = params.get("id");
+
+  const response = await fetch(`/jobdata/${jobId}.json`);
+  const job = await response.json();
+
+  document.getElementById("title").innerText =
+    `JOBBKORT ${job.nummer} - ${job.titel}`;
+
+  document.getElementById("openBtn").onclick = () => {
+    location.href = `/jobbkort.html?id=${job.nummer}`;
+  };
+
+  document.getElementById("printBtn").onclick = () => {
+    window.open(job.jobbkortPdf, "_blank");
+  };
+
+  document.getElementById("sjaBtn").onclick = () => {
+    window.open(job.sjaPdf, "_blank");
+  };
+
+  document.getElementById("sjaGuideBtn").onclick = () => {
+    window.open(job.sjaVeiledningPdf, "_blank");
+  };
+
+  document.getElementById("safeWorkBtn").onclick = () => {
+    window.open(job.arbeidTrygtPdf, "_blank");
+  };
+
+}
+
+loadMenu();
+
+</script>
+
+</body>
+</html>
