@@ -256,7 +256,7 @@ if (
     heading.className = "taskHeading";
     heading.innerText = task.overskrift;
 
-    container.appendChild(heading);
+  container.appendChild(heading);
 
 if(task.innhold){
 
@@ -290,8 +290,22 @@ if(task.innhold){
 
   });
 
-}  
-  
+}
+
+if(task.tekst){
+
+  const tekst =
+    document.createElement("div");
+
+  tekst.style.marginBottom = "10px";
+  tekst.style.lineHeight = "1.5";
+
+  tekst.innerHTML = task.tekst;
+
+  container.appendChild(tekst);
+
+}
+
 if(task.punkter){
 
   task.punkter.forEach(punkt => {
@@ -308,7 +322,7 @@ if(task.punkter){
 
 }
 
-  }
+}
 
   // Ren tekst uden checkbox
   else if (
