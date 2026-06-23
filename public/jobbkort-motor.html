@@ -236,13 +236,47 @@ async function loadJob(){
   const container =
     document.getElementById("taskContainer");
   container.innerHTML = "";
-  currentJob.oppgaver.forEach(task => {
+currentJob.oppgaver.forEach(task => {
+
+  // Ny struktur med overskrift + punkter
+  if (typeof task === "object" && task.punkter) {
+
+    const heading =
+      document.createElement("h3");
+
+    heading.innerText =
+      task.overskrift;
+
+    container.appendChild(heading);
+
+    task.punkter.forEach(punkt => {
+
+      const label =
+        document.createElement("label");
+
+      label.innerHTML =
+        `<input type="checkbox" class="task" disabled> ${punkt}`;
+
+      container.appendChild(label);
+
+    });
+
+  }
+
+  // Gammel struktur med almindelige opgaver
+  else {
+
     const label =
       document.createElement("label");
+
     label.innerHTML =
       `<input type="checkbox" class="task" disabled> ${task}`;
+
     container.appendChild(label);
-  });
+
+  }
+
+});
 }
 function startWork(){
   startTime = Date.now();
