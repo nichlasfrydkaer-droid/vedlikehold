@@ -240,8 +240,15 @@ if(currentJob.merk){
   container.innerHTML = "";
 currentJob.oppgaver.forEach(task => {
 
-  // Gruppe med overskrift
-  if (typeof task === "object" && task.punkter) {
+// Gruppe med overskrift
+
+if (
+
+  typeof task === "object" &&
+
+  (task.punkter || task.innhold)
+
+) {
 
     const heading =
       document.createElement("h3");
@@ -251,31 +258,55 @@ currentJob.oppgaver.forEach(task => {
 
     container.appendChild(heading);
 
-    if(task.tekst){
+if(task.innhold){
+
+  task.innhold.forEach(item => {
+
+    if(item.type === "tekst"){
 
       const tekst =
         document.createElement("div");
 
-      tekst.style.marginBottom = "10px";
+      tekst.style.margin = "10px 0";
       tekst.style.lineHeight = "1.5";
 
-      tekst.innerHTML = task.tekst;
+      tekst.innerHTML = item.tekst;
 
       container.appendChild(tekst);
 
     }
 
-    task.punkter.forEach(punkt => {
+    if(item.type === "punkt"){
 
       const label =
         document.createElement("label");
 
       label.innerHTML =
-        `<input type="checkbox" class="task" disabled> ${punkt}`;
+        `<input type="checkbox" class="task" disabled> ${item.tekst}`;
 
       container.appendChild(label);
 
-    });
+    }
+
+  });
+
+}  
+  
+if(task.punkter){
+
+  task.punkter.forEach(punkt => {
+
+    const label =
+      document.createElement("label");
+
+    label.innerHTML =
+      `<input type="checkbox" class="task" disabled> ${punkt}`;
+
+    container.appendChild(label);
+
+  });
+
+}
 
   }
 
