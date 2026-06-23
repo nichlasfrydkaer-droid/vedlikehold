@@ -239,13 +239,15 @@ currentJob.oppgaver.forEach(task => {
   // Ny struktur med overskrift + punkter
   if (typeof task === "object" && task.punkter) {
 
-    const heading =
-      document.createElement("h3");
+const heading =
+  document.createElement("h3");
 
-    heading.innerText =
-      task.overskrift;
+heading.className = "taskHeading";
 
-    container.appendChild(heading);
+heading.innerText =
+  task.overskrift;
+
+container.appendChild(heading);
 
     task.punkter.forEach(punkt => {
 
