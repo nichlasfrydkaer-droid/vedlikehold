@@ -1,47 +1,47 @@
 {
 "nummer": "7"
-"titel”: "Innvendige vegger, tak og gulv”,
-"frekvens”: "Årlig kontroll”,
+"titel": "Innvendige vegger, tak og gulv",
+"frekvens": "Årlig kontroll",
 
-"oppgaver”: [
+"oppgaver": [
 {
-"overskrift”: "Vegger”,
-"punkter”: [
-"Sjekk malte vegger for skader som merker, riper, sprekker og ødelagte overganger. Se etter mugg bak innredninger. Spesielt bak møbler langs yttervegger eller andre våtromsvegger.”,
-"Sjekk veggfliser for sprekker i flis eller manglende fuger.”,
-"Sjekk vegger for tegn på vannskader.”,
-"Sjekk at eventuelle branntettinger i brannskillevegger er intakt. (Se branntegning i perm 1)”
+"overskrift": "Vegger",
+"punkter": [
+"Sjekk malte vegger for skader som merker, riper, sprekker og ødelagte overganger. Se etter mugg bak innredninger. Spesielt bak møbler langs yttervegger eller andre våtromsvegger.",
+"Sjekk veggfliser for sprekker i flis eller manglende fuger.",
+"Sjekk vegger for tegn på vannskader.",
+"Sjekk at eventuelle branntettinger i brannskillevegger er intakt. (Se branntegning i perm 1)"
 ]
 },
 {
-"overskrift”: "Tak”,
-"punkter”: [
-"Sjekk fast himling for skader og flekker som kan indikere vannlekkasje.”,
-"Vurder tilstanden til malte overflater.”,
-"Sjekk løs himling for ødelagte, skadete, våte eller tilgrisede plater. Bruk egnede hansker hvis du tar på platene.”,
-"Sjekk bæreskinner i løs himling for riper og at de er tilstrekkelig festet.”,
-"Sjekk løs himling for ujevnheter og undersøk årsaken.”,
-"Hvis isolasjon er flyttet på under kontrollen, legg tilbake på riktig plass.”
+"overskrift": "Tak",
+"punkter": [
+"Sjekk fast himling for skader og flekker som kan indikere vannlekkasje.",
+"Vurder tilstanden til malte overflater.",
+"Sjekk løs himling for ødelagte, skadete, våte eller tilgrisede plater. Bruk egnede hansker hvis du tar på platene.",
+"Sjekk bæreskinner i løs himling for riper og at de er tilstrekkelig festet.",
+"Sjekk løs himling for ujevnheter og undersøk årsaken.",
+"Hvis isolasjon er flyttet på under kontrollen, legg tilbake på riktig plass."
 ]
 },
 {
-"overskrift”: "Gulvteppe”,
-"punkter”: [
-"Kontroller tilstanden til teppet. Se etter flekker, revner, våte flekker, og at det sitter fast til underlaget.”,
-"Sjekk om det er slitte områder på teppet.”,
-"Sjekk om gulvlister og avslutninger er i god stand.”,
-"Sjekk om teppe på scenekant er i orden.”
+"overskrift": "Gulvteppe",
+"punkter": [
+"Kontroller tilstanden til teppet. Se etter flekker, revner, våte flekker, og at det sitter fast til underlaget.",
+"Sjekk om det er slitte områder på teppet.",
+"Sjekk om gulvlister og avslutninger er i god stand.",
+"Sjekk om teppe på scenekant er i orden."
 ]
 },
 {
-"overskrift”: "Gulvfliser”,
-"punkter”: [
-"Sjekk om det er ødelagte, sprukne eller løse gulvfliser.”,
-"Sjekk fuger, om de mangler, om de er ødelagte, om de er konstant våte eller om det er mugg på dem. Sjekk om det er sprekker i fugene.”,
-"Sjekk tilstanden til silikonfuger og flislist. Sjekk tilstanden til impregnering av fliser.”
+"overskrift": "Gulvfliser",
+"punkter": [
+"Sjekk om det er ødelagte, sprukne eller løse gulvfliser.",
+"Sjekk fuger, om de mangler, om de er ødelagte, om de er konstant våte eller om det er mugg på dem. Sjekk om det er sprekker i fugene.",
+"Sjekk tilstanden til silikonfuger og flislist. Sjekk tilstanden til impregnering av fliser."
 ]
 }
 ],
 
-"notatInfo”: "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.”
+"notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
 }
