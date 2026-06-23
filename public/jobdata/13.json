@@ -30,21 +30,35 @@
     },
     {
       "overskrift": "Toaletter",
-      "punkter": [
-        "Sjekk innsiden av toalettskål for skader eller lekkasjer fra cisterne. Sjekk utvendig lekkasje mellom cisterne og skål, og mellom skål og avløpsrør.",
-        "Sjekk at toalettskålen er ordentlig festet til gulvet og at toalettsetet er trygt."
-      ]
-    },
-    {
-      "tekst": "<strong>Dersom det er lekkasje fra sisternen</strong> (det sildrer vann ned i skålen)"
-    },
-    {
-      "overskrift": "Toaletter",
-      "punkter": [
-        "Sjekk cisterne, innsiden og utsiden.",
-        "Sjekk og rengjør cisternens flottør.",
-        "Sjekk spaken til vanntømmeventilen. Demonter denne for å sjekke at pakninger og ventil er i orden.",
-        "Sjekk vannivået i cisternen og overløp. Juster hvis nødvendig."
+      "innhold": [
+        {
+          "type": "punkt",
+          "tekst": "Sjekk innsiden av toalettskål for skader eller lekkasjer fra cisterne. Sjekk utvendig lekkasje mellom cisterne og skål, og mellom skål og avløpsrør."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk at toalettskålen er ordentlig festet til gulvet og at toalettsetet er trygt."
+        },
+        {
+          "type": "tekst",
+          "tekst": "<strong>Dersom det er lekkasje fra sisternen</strong> (det sildrer vann ned i skålen)"
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk cisterne, innsiden og utsiden."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk og rengjør cisternens flottør."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk spaken til vanntømmeventilen. Demonter denne for å sjekke at pakninger og ventil er i orden."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk vannivået i cisternen og overløp. Juster hvis nødvendig."
+        }
       ]
     },
     {
