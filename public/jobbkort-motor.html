@@ -229,8 +229,12 @@ async function loadJob(){
     currentJob.frekvens;
   document.getElementById("location").innerText =
     currentJob.sted;
+if(currentJob.merk){
   document.getElementById("merkText").innerText =
     "MERK: " + currentJob.merk;
+}else{
+  document.getElementById("merkText").style.display = "none";
+}
   document.getElementById("notatInfo").innerText =
     currentJob.notatInfo;
   const container =
