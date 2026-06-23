@@ -11,7 +11,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger! Hvis man oppdager feil på det elektriske anlegget skal man avslutte kontrollen og kontakte vedlikeholdskoordinator. Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i kontakt med lyskilden, rengjør med teknisk sprit.",
+  "merk": "<strong>ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger! Hvis man oppdager feil på det elektriske anlegget skal man avslutte kontrollen og kontakte vedlikeholdskoordinator.</strong><br><br>Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i kontakt med lyskilden, rengjør med teknisk sprit.",
 
   "oppgaver": [
     {
