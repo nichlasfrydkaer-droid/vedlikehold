@@ -34,6 +34,12 @@ textarea{
   border:2px solid #ccc;
   border-radius:6px;
 }
+
+textarea{
+  min-height:100px;
+  resize:none;
+  overflow:hidden;
+}
 button{
   width:100%;
   padding:16px;
@@ -266,7 +272,6 @@ finishBtn.classList.add("pulse");
       String(m).padStart(2,"0") + ":" +
       String(s).padStart(2,"0");
   },1000);
-}
 document
   .getElementById("photos")
   .addEventListener("change", e => {
@@ -276,6 +281,11 @@ document
       );
     e.target.value = "";
     renderPreview();
+});
+
+document.getElementById("notes").addEventListener("input", function() {
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
 });
 function renderPreview(){
   const preview =
