@@ -14,6 +14,9 @@
   "merk": "ADVARSEL: Dra ut støpsel før det utføres vedlikehold eller reparasjoner!",
 
   "oppgaver": [
+    "Utfør en generell elektrisk kontroll. Sjekk tilstanden på elektriske kabler og støpsler.",
+    "Sjekk tilstanden og funksjonen på alle brytere og bryterhjul.",
+
     {
       "overskrift": "Platetopp",
       "punkter": [
