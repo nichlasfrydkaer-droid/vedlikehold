@@ -2,8 +2,6 @@ name: Generate Job Index
 
 on:
   push:
-    paths:
-      - 'public/jobdata/*.json'
 
 jobs:
   build-index:
@@ -52,7 +50,7 @@ jobs:
 
           git add public/jobdata/index.json
 
-          git diff --cached --quiet || (
+          if ! git diff --cached --quiet; then
             git commit -m "Auto-update job index"
             git push
-          )
+          fi
