@@ -1,0 +1,30 @@
+{
+  "nummer": "2",
+  "titel": "Murpussede vegger og grunnmur",
+  "frekvens": "Årlig kontroll",
+
+  "jobbkortPdf": "/pdf/Jobbkort 2 (E).pdf",
+
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "merk": "Ved inspeksjon skal hver enkelt vegg undersøkes.",
+
+  "oppgaver": [
+    "Se etter synlige skader på overflaten.",
+    "Se etter sprekker, flass, og hull på overflaten av murpussen. Vurder hvilken type skade det er, og reparer.",
+    "Vurder tilstanden på de malte overflatene. Se etter avskalling eller flass i malingen. Sjekk malingen for skader ved å stryke håndflaten over den malte overflaten. Kalkbelegg (hvitt pulver) på håndflaten indikerer at malingen er i ferd med å gå i oppløsning. Mindre kalkutslag, samtidig med at fargen på veggen er tilfredsstillende/ikke misfarget er akseptabelt. Mye kalkutslag indikerer at malingen ikke beskytter veggoverflaten tilstrekkelig.",
+    "Se etter tegn på mose, lav eller misfarging som kan indikere fukt.",
+    "Forsikre deg om at området nærmest bygningen er lett tilgjengelig til enhver tid. Hold vegetasjon borte fra vegger og området nær bygning. Hold grus og singel fri for ugress.",
+    "Forsikre deg om at trær og busker ikke leder vann inn mot bygning og at jord og singel ikke går over grunnmursbeskyttelsen.",
+    "Sjekk at alle ekspansjonsfuger er intakt og ikke har løsnet, tørket inn, eller sprukket.",
+    "Sørg for at ventilasjonsåpninger ikke er blokkert.",
+    "Sjekk tilstanden til mørtelen brukt mellom betong blokker, der den er synlig.",
+    "Se etter rustutslag fra armeringen i muren. Males med egnet maling og pusses inn med betong."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
