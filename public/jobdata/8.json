@@ -1,0 +1,38 @@
+{
+  "nummer": "8",
+  "titel": "Møbler og stoler",
+  "frekvens": "Årlig vedlikehold",
+
+  "jobbkortPdf": "/pdf/Jobbkort 8 (E).pdf",
+
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "oppgaver": [
+    {
+      "overskrift": "Møbler",
+      "punkter": [
+        "Sjekk at alle dører, skuffer, fester og håndtak er i god stand.",
+        "Sjekk for skader eller slitasje på møbeltrekk.",
+        "Sjekk at alle bord er rette og stabile.",
+        "Sjekk om malte eller lakkerte overflater er slitt.",
+        "Sjekk at stellebord på HCWC er forsvarlig festet og i god stand.",
+        "Sjekk at alle oppslagstavler er forsvarlig festet."
+      ]
+    },
+    {
+      "overskrift": "Stoler",
+      "punkter": [
+        "Smør alle bevegelige deler hvis nødvendig.",
+        "Sjekk for skader eller slitasje på møbeltrekk.",
+        "Sjekk om det er løse mutter, bolter og skruer. Strammes ved behov.",
+        "Se etter solbleking av stoff på stoler – sirkuler stolene ved behov."
+      ]
+    }
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
