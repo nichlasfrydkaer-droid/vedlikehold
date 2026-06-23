@@ -1,0 +1,28 @@
+{
+  "nummer": "7",
+  "titel": "Innvendig bygningskontroll",
+  "frekvens": "Årlig kontroll",
+  "sted": "",
+  "oppgaver": [
+    {
+      "overskrift": "Vegger",
+      "punkter": [
+        "Sjekk malte vegger for skader som merker, riper, sprekker og ødelagte overganger.",
+        "Sjekk veggfliser for sprekker i flis eller manglende fuger.",
+        "Sjekk vegger for tegn på vannskader.",
+        "Sjekk at eventuelle branntettinger i brannskillevegger er intakt."
+      ]
+    },
+    {
+      "overskrift": "Tak",
+      "punkter": [
+        "Sjekk fast himling for skader og flekker som kan indikere vannlekkasje.",
+        "Vurder tilstanden til malte overflater.",
+        "Sjekk løs himling for ødelagte, skadete, våte eller tilgrisede plater.",
+        "Sjekk bæreskinner i løs himling.",
+        "Sjekk løs himling for ujevnheter og undersøk årsaken.",
+        "Hvis isolasjon er flyttet på under kontrollen, legg tilbake på riktig plass."
+      ]
+    }
+  ]
+}
