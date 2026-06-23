@@ -240,18 +240,31 @@ if(currentJob.merk){
   container.innerHTML = "";
 currentJob.oppgaver.forEach(task => {
 
-  // Ny struktur med overskrift + punkter
+  // Gruppe med overskrift
   if (typeof task === "object" && task.punkter) {
 
-const heading =
-  document.createElement("h3");
+    const heading =
+      document.createElement("h3");
 
-heading.className = "taskHeading";
+    heading.className = "taskHeading";
+    heading.innerText = task.overskrift;
 
-heading.innerText =
-  task.overskrift;
+    container.appendChild(heading);
 
-container.appendChild(heading);
+    // Valgfri tekst under overskrift
+    if(task.tekst){
+
+      const tekst =
+        document.createElement("div");
+
+      tekst.style.marginBottom = "10px";
+      tekst.style.lineHeight = "1.5";
+
+      tekst.innerHTML = task.tekst;
+
+      container.appendChild(tekst);
+
+    }
 
     task.punkter.forEach(punkt => {
 
@@ -266,6 +279,39 @@ container.appendChild(heading);
     });
 
   }
+
+  // Ren tekst uden checkbox
+  else if (
+    typeof task === "object" &&
+    task.tekst
+  ) {
+
+    const tekst =
+      document.createElement("div");
+
+    tekst.style.margin = "10px 0";
+    tekst.style.lineHeight = "1.5";
+
+    tekst.innerHTML = task.tekst;
+
+    container.appendChild(tekst);
+
+  }
+
+  // Almindelig checkbox
+  else {
+
+    const label =
+      document.createElement("label");
+
+    label.innerHTML =
+      `<input type="checkbox" class="task" disabled> ${task}`;
+
+    container.appendChild(label);
+
+  }
+
+});
 
   // Gammel struktur med almindelige opgaver
   else {
