@@ -435,6 +435,31 @@ doc.setFontSize(11);
 const headings =
   document.querySelectorAll(".taskHeading");
 
+if(headings.length > 0){
+
+  doc.setFontSize(12);
+  doc.setFont(undefined,"bold");
+
+  headings.forEach(h => {
+
+    doc.text(
+      h.innerText.toUpperCase(),
+      10,
+      y
+    );
+
+    y += 8;
+
+  });
+
+  doc.setFontSize(11);
+
+}
+
+document
+  .querySelectorAll(".task")
+  .forEach(task => {
+
 document
   .querySelectorAll(".task")
   .forEach(task => {
