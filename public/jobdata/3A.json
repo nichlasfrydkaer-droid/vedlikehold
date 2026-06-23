@@ -1,0 +1,32 @@
+{
+  "nummer": "3A",
+  "titel": "Bordkledning",
+  "frekvens": "Årlig inspeksjon",
+
+  "jobbkortPdf": "/pdf/Jobbkort 3A (E).pdf",
+
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "merk": "Ved inspeksjon skal hver enkelt vegg undersøkes.",
+
+  "oppgaver": [
+    "Kontroller om det finnes synlige skader på veggen.",
+    "Ta vannprøve på bordkledningen. Hiv på vann og se at det ikke trenger inn i treverket, men preller fint av.",
+    "Har bordkledningen sprekker, er den tørr, har malingen bobler eller er den falmet?",
+    "Har bordkledningen vekst av mose, svarte prikker eller er råtten?",
+    "Er bordkledningen så nært bakken at den er fuktig i underkant?",
+    "Kontroller at overflatevann ikke renner inn mot huset. Sjekk at knottplast på grunnmur er godt festet og at vegetasjonen ikke er høyere enn denne.",
+    "Kontroller at ventiler ikke er blokkert eller tette.",
+    "Kontroller musebånd under nederste bord på kledningen.",
+    "Sjekk at vannbord og lister rundt vinduer ikke er sprukne eller råtten og er riktig montert.",
+    "Sjekk vindskibord og annen bordkledning på kassen rundt bygget for råte og sprekker.",
+    "Kontroller at Rikets sal-skiltet og JW.org-skiltet ikke er skadet og sitter godt fast. Kontroller at oppslag for møtetider er lett leselig og korrekt utfylt.",
+    "Rengjør veggene med fasadevask. Ikke bruk høytrykk."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
