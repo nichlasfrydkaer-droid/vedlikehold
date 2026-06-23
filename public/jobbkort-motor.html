@@ -233,8 +233,19 @@ if(currentJob.merk){
   document.getElementById("merkText").style.display = "none";
 
 }
-  document.getElementById("notatInfo").innerText =
+const notatInfoElement =
+  document.getElementById("notatInfo");
+
+if(currentJob.notatInfo){
+
+  notatInfoElement.innerText =
     currentJob.notatInfo;
+
+}else{
+
+  notatInfoElement.style.display = "none";
+
+}
   const container =
     document.getElementById("taskContainer");
   container.innerHTML = "";
