@@ -1,0 +1,41 @@
+{
+  "nummer": "11",
+  "titel": "Brannslukkere",
+  "frekvens": "Årlig kontroll",
+
+  "jobbkortPdf": "/pdf/Jobbkort 11 (E).pdf",
+
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "merk": "Denne kontrollen skal det kvitteres for, med navn og dato, på merkelapper som limes på produktet. Avvik skal dokumenteres og utbedres så snart som mulig.",
+
+  "oppgaver": [
+    {
+      "overskrift": "Brannslukkere – alle typer",
+      "punkter": [
+        "Sjekk at orienteringsplan ved utgangsdør er oppdatert og ikke er tildekket.",
+        "Sjekk at brannslukker er lokalisert der den skal være ifølge orienteringsplan og merket med selvlysende skilt.",
+        "Sjekk brannslukker for synlige skader.",
+        "Sjekk at instruksjonsmanual er ren, leselig og er plassert på riktig sted.",
+        "Sjekk at brannslukker ikke har vært brukt. Sjekk at forseglingen ikke er brutt eller borte.",
+        "Hvis brannslukker har en trykkindikator, sjekk at måler viser at trykk er riktig i henhold til bruks og sikkerhetsgrenser.",
+        "For pulverapparat: Vend slukker opp ned flere ganger for å sikre at pulver er løst. Skal byttes hvert 10 år.",
+        "For skumapparat: Kontroller måler for trykk. (Skal ikke snues opp/ned) Skal byttes hvert 5 år."
+      ]
+    },
+    {
+      "overskrift": "Brannteppe/slange",
+      "punkter": [
+        "Kontroller at brannteppet er på sin tildelte plass og ikke har blitt tuklet med.",
+        "Trekk ut brannslangen og funksjonstest denne. Se etter skade eller sprekker på slange. (Bøy den kraftig og se etter sprekker i gummien) Er den merket med selvlysende skilt?",
+        "Brannslangen skal trykkprøves av sertifisert personell hvert 5 år. Sjekk at brannslangen er merket med siste kontroll og at det ikke har gått mer enn 5 år siden forrige kontroll."
+      ]
+    }
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
