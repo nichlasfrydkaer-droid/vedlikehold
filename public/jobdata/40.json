@@ -1,0 +1,22 @@
+{
+  "nummer": "40",
+  "titel": "Skjermer",
+  "frekvens": "Årlig vedlikehold",
+
+  "jobbkortPdf": "/pdf/Jobbkort 40 (E).pdf",
+
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "oppgaver": [
+    "Utfør en generell elektrisk sjekk. Ta en visuell kontroll av tilstanden til kabler og kontakter, kontroller at de er festet, unngå å dra ut noen kontakter.",
+    "Kontroller at veggfestet er festet forsvarlig til veggen. Unngå å dra ut skjermen da det øker belastningen på veggfestet.",
+    "Støvsug luftåpninger.",
+    "Bytt batteri på fjernkontroll."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
