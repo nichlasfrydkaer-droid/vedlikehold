@@ -54,20 +54,43 @@ a:hover{
   <div class="card">
 <h1>Vedlikeholdssystem</h1>
 <p>Velg jobbkort:</p>
-<ul>
-  <li>
-    <a href="/jobbkort-menu.html?id=7">
-      Jobbkort 7 - Innvendige vegger, tak og gulv
-    </a>
-  </li>
-
-  <li>
-    <a href="/jobbkort-menu.html?id=41">
-      Jobbkort 41 - Brann og innbruddsalarm
-    </a>
-  </li>
-</ul>
+<ul id="jobList"></ul>
   </div>
 </div>
+  <script>
+async function loadJobs() {
+
+  const response =
+    await fetch("/jobdata/index.json");
+
+  const jobs =
+    await response.json();
+
+  const list =
+    document.getElementById("jobList");
+
+  jobs
+    .sort((a,b) =>
+      Number(a.nummer) - Number(b.nummer)
+    )
+    .forEach(job => {
+
+      const li =
+        document.createElement("li");
+
+      li.innerHTML = `
+        <a href="/jobbkort-menu.html?id=${job.nummer}">
+          Jobbkort ${job.nummer} - ${job.titel}
+        </a>
+      `;
+
+      list.appendChild(li);
+
+    });
+
+}
+
+loadJobs();
+</script>
 </body>
 </html>
