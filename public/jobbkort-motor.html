@@ -469,89 +469,51 @@ doc.setFontSize(11);
 let taskIndex = 0;
 
 if (
-  currentJob.oppgaver.length > 0 &&
-  typeof currentJob.oppgaver[0] === "object" &&
-  currentJob.oppgaver[0].punkter
-) {
+currentJob.oppgaver.forEach(item => {
 
-  currentJob.oppgaver.forEach(gruppe => {
+  // Gruppe med overskrift
+  if (typeof item === "object" && item.punkter) {
 
     doc.setFontSize(12);
     doc.setFont(undefined,"bold");
 
     doc.text(
-      gruppe.overskrift.toUpperCase(),
+      item.overskrift.toUpperCase(),
       10,
       y
     );
 
-    y += 16;
+    y += 10;
 
-    doc.setFontSize(11);
+    // Valgfri tekst under overskrift
+    if(item.tekst){
 
-gruppe.punkter.forEach((tekst, index) => {
-
-  const linjer =
-    doc.splitTextToSize(tekst,120);
-
-  const task =
-    document.querySelectorAll(".task")[taskIndex];
-taskIndex++;
-
-if(task && task.checked){
-
-  doc.setFont(undefined,"bold");
-  doc.setTextColor(0,160,0);
-
-  doc.text("UTFØRT",10,y);
-
-}else{
-
-  doc.setFont(undefined,"bold");
-  doc.setTextColor(200,0,0);
-
-  doc.text("IKKE UTFØRT",10,y);
-
-}
-
-      doc.setTextColor(0,0,0);
+      doc.setFontSize(11);
       doc.setFont(undefined,"normal");
 
-      doc.text(
-        linjer,
-        55,
-        y
-      );
+      const tekstLinjer =
+        doc.splitTextToSize(
+          item.tekst.replace(/<[^>]*>/g, ""),
+          180
+        );
 
-      y += (linjer.length * 6) + 10;
+      doc.text(tekstLinjer,10,y);
 
-      if(y > 260){
+      y += (tekstLinjer.length * 6) + 4;
 
-        doc.addPage();
+    }
 
-        y = 20;
-
-      }
-
-    });
-
-    y += 4;
-
-  });
-
-} else {
-
-  document
-    .querySelectorAll(".task")
-    .forEach(task => {
-
-      const tekst =
-        task.parentElement.textContent.trim();
+    item.punkter.forEach(tekst => {
 
       const linjer =
         doc.splitTextToSize(tekst,120);
 
-      if(task.checked){
+      const task =
+        document.querySelectorAll(".task")[taskIndex];
+
+      taskIndex++;
+
+      if(task && task.checked){
 
         doc.setFont(undefined,"bold");
         doc.setTextColor(0,160,0);
@@ -579,20 +541,84 @@ if(task && task.checked){
       if(y > 260){
 
         doc.addPage();
-
         y = 20;
 
       }
 
     });
 
-}    
-    
-doc.setFontSize(13);
+    y += 4;
 
-doc.setFont(undefined,"bold");
+  }
 
-doc.text("NOTATER",10,y);
+  // Fritstående tekst uden checkbox
+  else if (
+    typeof item === "object" &&
+    item.tekst
+  ) {
+
+    doc.setFont(undefined,"normal");
+
+    const tekstLinjer =
+      doc.splitTextToSize(
+        item.tekst.replace(/<[^>]*>/g, ""),
+        180
+      );
+
+    doc.text(tekstLinjer,10,y);
+
+    y += (tekstLinjer.length * 6) + 8;
+
+  }
+
+  // Almindelig checkbox-opgave
+  else {
+
+    const tekst =
+      String(item);
+
+    const linjer =
+      doc.splitTextToSize(tekst,120);
+
+    const task =
+      document.querySelectorAll(".task")[taskIndex];
+
+    taskIndex++;
+
+    if(task && task.checked){
+
+      doc.setFont(undefined,"bold");
+      doc.setTextColor(0,160,0);
+      doc.text("UTFØRT",10,y);
+
+    }else{
+
+      doc.setFont(undefined,"bold");
+      doc.setTextColor(200,0,0);
+      doc.text("IKKE UTFØRT",10,y);
+
+    }
+
+    doc.setTextColor(0,0,0);
+    doc.setFont(undefined,"normal");
+
+    doc.text(
+      linjer,
+      55,
+      y
+    );
+
+    y += (linjer.length * 6) + 10;
+
+  }
+
+});
+      
+  doc.setFontSize(13);
+  
+  doc.setFont(undefined,"bold");
+  
+  doc.text("NOTATER",10,y);
 
 doc.setFontSize(11);
 
