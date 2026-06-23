@@ -21,6 +21,7 @@ jobs:
           python3 << 'EOF'
           import json
           import glob
+          import re
 
           jobs = []
 
@@ -40,7 +41,17 @@ jobs:
               except Exception as e:
                   print(f"Fejl i {file}: {e}")
 
-          jobs.sort(key=lambda x: int(x["nummer"]))
+          def sort_key(job):
+              match = re.match(r"(\d+)(.*)", str(job["nummer"]))
+
+              if match:
+                  number = int(match.group(1))
+                  suffix = match.group(2)
+                  return (number, suffix)
+
+              return (9999, "")
+
+          jobs.sort(key=sort_key)
 
           with open("public/jobdata/index.json", "w", encoding="utf-8") as f:
               json.dump(jobs, f, ensure_ascii=False, indent=2)
