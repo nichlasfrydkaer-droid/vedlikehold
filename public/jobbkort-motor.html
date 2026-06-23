@@ -251,7 +251,6 @@ currentJob.oppgaver.forEach(task => {
 
     container.appendChild(heading);
 
-    // Valgfri tekst under overskrift
     if(task.tekst){
 
       const tekst =
@@ -299,21 +298,6 @@ currentJob.oppgaver.forEach(task => {
   }
 
   // Almindelig checkbox
-  else {
-
-    const label =
-      document.createElement("label");
-
-    label.innerHTML =
-      `<input type="checkbox" class="task" disabled> ${task}`;
-
-    container.appendChild(label);
-
-  }
-
-});
-
-  // Gammel struktur med almindelige opgaver
   else {
 
     const label =
