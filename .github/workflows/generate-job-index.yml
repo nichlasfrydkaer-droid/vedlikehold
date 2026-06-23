@@ -1,1 +1,58 @@
+name: Generate Job Index
 
+on:
+  push:
+    paths:
+      - 'public/jobdata/*.json'
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate index.json
+        run: |
+          python3 << 'EOF'
+          import json
+          import glob
+
+          jobs = []
+
+          for file in glob.glob("public/jobdata/*.json"):
+              if file.endswith("index.json"):
+                  continue
+
+              try:
+                  with open(file, "r", encoding="utf-8") as f:
+                      data = json.load(f)
+
+                  jobs.append({
+                      "nummer": str(data.get("nummer", "")),
+                      "titel": data.get("titel", "")
+                  })
+
+              except Exception as e:
+                  print(f"Fejl i {file}: {e}")
+
+          jobs.sort(key=lambda x: int(x["nummer"]))
+
+          with open("public/jobdata/index.json", "w", encoding="utf-8") as f:
+              json.dump(jobs, f, ensure_ascii=False, indent=2)
+
+          print(f"Genererede index.json med {len(jobs)} jobbkort")
+          EOF
+
+      - name: Commit updated index.json
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add public/jobdata/index.json
+
+          git diff --cached --quiet || (
+            git commit -m "Auto-update job index"
+            git push
+          )
