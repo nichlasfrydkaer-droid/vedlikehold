@@ -146,10 +146,6 @@ label{
   <span id="frequency"></span>
 </div>
 <div class="section">
-  <strong>Sted:</strong>
-  <span id="location"></span>
-</div>
-<div class="section">
   <strong>Tid brukt</strong>
   <input type="text" id="timeInput" disabled>
 </div>
@@ -227,8 +223,6 @@ async function loadJob(){
     `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
   document.getElementById("frequency").innerText =
     currentJob.frekvens;
-  document.getElementById("location").innerText =
-    currentJob.sted;
 if(currentJob.merk){
   document.getElementById("merkText").innerText =
     "MERK: " + currentJob.merk;
