@@ -502,7 +502,10 @@ let taskIndex = 0;
 currentJob.oppgaver.forEach(item => {
 
   // Gruppe med overskrift
-  if (typeof item === "object" && item.punkter) {
+  if (
+  typeof item === "object" &&
+  (item.punkter || item.innhold)
+) {
 
     doc.setFontSize(12);
     doc.setFont(undefined,"bold");
@@ -514,7 +517,70 @@ currentJob.oppgaver.forEach(item => {
     );
 
     y += 10;
+    
+if(item.innhold){
 
+  item.innhold.forEach(del => {
+
+    if(del.type === "tekst"){
+
+      doc.setFont(undefined,"normal");
+
+      const tekstLinjer =
+        doc.splitTextToSize(
+          del.tekst.replace(/<[^>]*>/g, ""),
+          180
+        );
+
+      doc.text(tekstLinjer,10,y);
+
+      y += (tekstLinjer.length * 6) + 8;
+
+    }
+
+    if(del.type === "punkt"){
+
+      const linjer =
+        doc.splitTextToSize(del.tekst,120);
+
+      const task =
+        document.querySelectorAll(".task")[taskIndex];
+
+      taskIndex++;
+
+      if(task && task.checked){
+
+        doc.setFont(undefined,"bold");
+        doc.setTextColor(0,160,0);
+
+        doc.text("UTFØRT",10,y);
+
+      }else{
+
+        doc.setFont(undefined,"bold");
+        doc.setTextColor(200,0,0);
+
+        doc.text("IKKE UTFØRT",10,y);
+
+      }
+
+      doc.setTextColor(0,0,0);
+      doc.setFont(undefined,"normal");
+
+      doc.text(
+        linjer,
+        55,
+        y
+      );
+
+      y += (linjer.length * 6) + 10;
+
+    }
+
+  });
+
+}
+    
     // Valgfri tekst under overskrift
     if(item.tekst){
 
@@ -533,7 +599,9 @@ currentJob.oppgaver.forEach(item => {
 
     }
 
-    item.punkter.forEach(tekst => {
+if(item.punkter){
+
+  item.punkter.forEach(tekst => {
 
       const linjer =
         doc.splitTextToSize(tekst,120);
@@ -577,7 +645,9 @@ currentJob.oppgaver.forEach(item => {
 
     });
 
-    y += 4;
+y += 4;
+
+}
 
   }
 
