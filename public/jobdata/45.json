@@ -1,0 +1,50 @@
+{
+  "nummer": "45",
+  "titel": "Hvitevarer",
+  "frekvens": "Toårlig",
+
+  "jobbkortPdf": "/pdf/Jobbkort 45 (E).pdf",
+
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "merk": "ADVARSEL: Dra ut støpsel før det utføres vedlikehold eller reparasjoner!",
+
+  "oppgaver": [
+    {
+      "overskrift": "Platetopp",
+      "punkter": [
+        "Rengjør om nødvendig.",
+        "Gjør en visuell sjekk og funksjonssjekk."
+      ]
+    },
+    {
+      "overskrift": "Ventilator",
+      "punkter": [
+        "Demonter og rengjør filter i avtrekksvifte. Rengjør viftehus innvendig og utvendig.",
+        "Sjekk vifte og viftehus for skader. Sjekk at alt er forsvarlig festet og skrudd fast. Rengjør om nødvendig."
+      ]
+    },
+    {
+      "overskrift": "Oppvaskmaskin",
+      "punkter": [
+        "Kontroller at kurvene i maskinen går lett inn og ut og at alle trinser er ok.",
+        "Sjekk at såpekopp er ok.",
+        "Start maskinen på et kort program og hør etter ulyder."
+      ]
+    },
+    {
+      "overskrift": "Kjøleskap",
+      "punkter": [
+        "Kontroller at døren slutter godt om pakningen når den er lukket.",
+        "Kontroller at det ikke er fullt av is på kjøledelen både i kjøleskapet og i fryseboksen. (Hvis det er mye is må dette fjernes ved bruk av varme – IKKE bruk kniv eller andre spisse redskaper)",
+        "Dra kjøleskapet fram og rengjør kjøleribbene på baksiden."
+      ]
+    }
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
