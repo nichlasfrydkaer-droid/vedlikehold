@@ -1,6 +1,7 @@
 {
   "nummer": "37",
   "titel": "Datamaskin",
+  "undertittel": "Teknisk utstyr",
   "frekvens": "Årlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 37 (E).pdf",
@@ -11,7 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "Aldri bruk alkohol eller tynner for å rengjøre deler på datamaskinen. Dette kan skade datamaskinens deler og deksel. Ta ut datamaskinens støpsel.",
+  "merk": "<strong>ADVARSEL:</strong> Aldri bruk alkohol eller tynner for å rengjøre deler på datamaskinen. Dette kan skade datamaskinens deler og deksel. Ta ut datamaskinens støpsel.",
 
   "oppgaver": [
     "Ta ut datamaskinens støpsel.",
