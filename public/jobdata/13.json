@@ -1,6 +1,7 @@
 {
   "nummer": "13",
   "titel": "VVS komponenter",
+  "undertittel": "VVS anlegg",
   "frekvens": "Årlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 13 (E).pdf",
@@ -11,7 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "Informer alle som oppholder seg i bygget i god tid før kontrollen finner sted. OBS! Hvis man merker at en Ballofix-ventil er treg å dreie på, skal man ikke tvinge den!",
+  "merk": "Informer alle som oppholder seg i bygget i god tid før kontrollen finner sted.<br><br><strong>OBS!</strong> Hvis man merker at en Ballofix-ventil er treg å dreie på, skal man ikke tvinge den!",
 
   "oppgaver": [
     {
@@ -30,15 +31,11 @@
     },
     {
       "overskrift": "Toaletter",
+      "punkter": [
+        "Sjekk innsiden av toalettskål for skader eller lekkasjer fra cisterne. Sjekk utvendig lekkasje mellom cisterne og skål, og mellom skål og avløpsrør.",
+        "Sjekk at toalettskålen er ordentlig festet til gulvet og at toalettsetet er trygt."
+      ],
       "innhold": [
-        {
-          "type": "punkt",
-          "tekst": "Sjekk innsiden av toalettskål for skader eller lekkasjer fra cisterne. Sjekk utvendig lekkasje mellom cisterne og skål, og mellom skål og avløpsrør."
-        },
-        {
-          "type": "punkt",
-          "tekst": "Sjekk at toalettskålen er ordentlig festet til gulvet og at toalettsetet er trygt."
-        },
         {
           "type": "tekst",
           "tekst": "<strong>Dersom det er lekkasje fra sisternen</strong> (det sildrer vann ned i skålen)"
