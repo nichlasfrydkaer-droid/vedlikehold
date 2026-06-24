@@ -1,6 +1,7 @@
 {
   "nummer": "45",
   "titel": "Hvitevarer",
+  "undertittel": "Husholdningsutstyr",
   "frekvens": "Toårlig",
 
   "jobbkortPdf": "/pdf/Jobbkort 45 (E).pdf",
@@ -11,7 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "ADVARSEL: Dra ut støpsel før det utføres vedlikehold eller reparasjoner!",
+  "merk": "<strong>ADVARSEL:</strong> Dra ut støpsel før det utføres vedlikehold eller reparasjoner!",
 
   "oppgaver": [
     "Utfør en generell elektrisk kontroll. Sjekk tilstanden på elektriske kabler og støpsler.",
@@ -24,21 +25,24 @@
         "Gjør en visuell sjekk og funksjonssjekk."
       ]
     },
+
     {
       "overskrift": "Ventilator",
       "punkter": [
         "Demonter og rengjør filter i avtrekksvifte. Rengjør viftehus innvendig og utvendig.",
-        "Sjekk vifte og viftehus for skader. Sjekk at alt er forsvarlig festet og skrudd fast. Rengjør om nødvendig."
+        "Sjekk vifte og viftehus, for skader. Sjekk at alt er forsvarlig festet og skrudd fast. Rengjør om nødvendig."
       ]
     },
+
     {
       "overskrift": "Oppvaskmaskin",
       "punkter": [
         "Kontroller at kurvene i maskinen går lett inn og ut og at alle trinser er ok.",
         "Sjekk at såpekopp er ok.",
-        "Start maskinen på et kort program og hør etter ulyder."
+        "Start maskina på ett kort program og hør etter ulyder."
       ]
     },
+
     {
       "overskrift": "Kjøleskap",
       "punkter": [
