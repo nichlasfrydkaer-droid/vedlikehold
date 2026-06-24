@@ -574,6 +574,11 @@ if(item.innhold){
           180
         );
 
+const blockHeight =
+  (tekstLinjer.length * 6) + 8;
+
+checkPageSpace(blockHeight);
+      
       doc.text(tekstLinjer,10,y);
 
       y += (tekstLinjer.length * 6) + 8;
@@ -582,11 +587,16 @@ if(item.innhold){
 
     if(del.type === "punkt"){
 
-      const linjer =
-        doc.splitTextToSize(del.tekst,120);
+const linjer =
+  doc.splitTextToSize(del.tekst,120);
 
-      const task =
-        document.querySelectorAll(".task")[taskIndex];
+const blockHeight =
+  (linjer.length * 6) + 10;
+
+checkPageSpace(blockHeight);
+
+const task =
+  document.querySelectorAll(".task")[taskIndex];
 
       taskIndex++;
 
@@ -635,6 +645,11 @@ if(item.innhold){
           180
         );
 
+const blockHeight =
+  (tekstLinjer.length * 6) + 4;
+
+checkPageSpace(blockHeight);      
+      
       doc.text(tekstLinjer,10,y);
 
       y += (tekstLinjer.length * 6) + 4;
@@ -705,6 +720,11 @@ y += 4;
         180
       );
 
+const blockHeight =
+  (tekstLinjer.length * 6) + 8;
+
+checkPageSpace(blockHeight);    
+    
     doc.text(tekstLinjer,10,y);
 
     y += (tekstLinjer.length * 6) + 8;
@@ -763,7 +783,7 @@ const task =
   
   doc.setFont(undefined,"bold");
   
-  doc.text("NOTATER",10,y);
+  checkPageSpace(30);
 
 doc.setFontSize(11);
 
