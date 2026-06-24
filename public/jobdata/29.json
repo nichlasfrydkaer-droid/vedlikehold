@@ -1,6 +1,7 @@
 {
   "nummer": "29",
   "titel": "Utvendig belysning",
+  "undertittel": "Lys",
   "frekvens": "Årlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 29 (E).pdf",
@@ -11,8 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger! Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i hudkontakt med lyskilden, rengjør med teknisk sprit.",
-
+"merk": "<strong>ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger!</strong> Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i hudkontakt med lyskilden, rengjør med teknisk sprit."
   "oppgaver": [
     "Sjekk at bryter til lysføler fungerer. Dekk over fotocelle og se om utelys tenner etter noen minutter. Eller sett bryter for automatikk i manuell slik at lyset står på. (Bryter i eltavle)",
     "Sjekk at alle lamper virker og lyser. Registrer de som ikke virker.",
@@ -20,17 +20,17 @@
     "Sjekk den generelle tilstanden til alle lamper. Bytt pærer på de lampene som ikke lyste under testen.",
     "Reparer ødelagte deksler, diffusere, reflektorer.",
     "Ved sjekk av lysmaster må man bruke lift eller legge lysmasten ned på en bukk. Pass på at den elektriske kabelen er lang nok. Dette krever egne sikkerhetstiltak og skal kun gjøres i samråd med vedlikeholdskoordinator og ved mistanke om feil.",
-    "Sjekk for fukt inne i lamper og koblingsbokser. NB! Ikke rør elektriske koblinger. Sjekk at alle pakninger er i god tilstand.",
-    "Sjekk om det er vann på innsiden av lampestolper.",
+    "Sjekk for fukt inne i lamper og koblingsbokser. NB! Ikke rør elektriske koblinger. Sjekk at alle pakninger er god tilstand.",
+    "Sjekk om det vann på innsiden av lampestolper.",
     "Undersøk om det er skader på elektriske ledninger.",
     "Undersøk tilstanden på pærens sokkel. Se etter tegn på varmgang.",
     "Hvis det er nødvendig å rengjøre lampene, demonter rister, reflektorer eller diffusere. Vær forsiktig når det skal demonteres noe av plast, da dette kan ha blitt sprøtt og brekker lett. Ikke bruk etsende eller sterke vaskemidler.",
     "Remonter deksler, diffusere og reflektorer.",
     "Når alle lamper er remontert, fjern lock out på sikringer og slå på sikringen(e).",
     "Sjekk at alle lamper virker og lyser.",
-    "Fjern eventuell tildekking av fotocelle eller sett bryter for automatikk tilbake til auto.",
+    "Fjern evt tildekking av fotocelle eller sett bryter for automatikk tilbake til auto.",
     "NB! Hvis det er behov for å skifte sokkel, transformatorer, startere eller gjøre inngrep som går på det elektriske skal dette utføres av elektriker i samarbeid med autorisert installatør."
   ],
 
-  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
 }
