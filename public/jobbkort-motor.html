@@ -507,14 +507,31 @@ document
 
   y += 10;
 
-  doc.setFontSize(14);
+doc.setFontSize(14);
+doc.text(
+  currentJob.titel.toUpperCase(),
+  10,
+  y
+);
+
+y += 10;
+
+if(currentJob.undertittel){
+
+  doc.setFontSize(11);
+  doc.setFont(undefined,"bold");
+
   doc.text(
-    currentJob.titel.toUpperCase(),
+    currentJob.undertittel,
     10,
     y
   );
 
-  y += 15;
+  y += 10;
+
+}
+
+y += 5;
 
   const navn =
     document.getElementById("nameInput").value;
