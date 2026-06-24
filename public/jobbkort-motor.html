@@ -530,6 +530,17 @@ doc.setFontSize(11);
     
 let taskIndex = 0;
 
+function checkPageSpace(requiredHeight){
+
+  if(y + requiredHeight > 270){
+
+    doc.addPage();
+    y = 20;
+
+  }
+
+}    
+
 currentJob.oppgaver.forEach(item => {
 
   // Gruppe med overskrift
@@ -637,6 +648,11 @@ if(item.punkter){
       const linjer =
         doc.splitTextToSize(tekst,120);
 
+const blockHeight =
+  (linjer.length * 6) + 10;
+
+checkPageSpace(blockHeight);    
+    
       const task =
         document.querySelectorAll(".task")[taskIndex];
 
@@ -666,13 +682,6 @@ if(item.punkter){
       );
 
       y += (linjer.length * 6) + 10;
-
-      if(y > 260){
-
-        doc.addPage();
-        y = 20;
-
-      }
 
     });
 
@@ -708,11 +717,16 @@ y += 4;
     const tekst =
       String(item);
 
-    const linjer =
-      doc.splitTextToSize(tekst,120);
+const linjer =
+  doc.splitTextToSize(tekst,120);
 
-    const task =
-      document.querySelectorAll(".task")[taskIndex];
+const blockHeight =
+  (linjer.length * 6) + 10;
+
+checkPageSpace(blockHeight);
+
+const task =
+  document.querySelectorAll(".task")[taskIndex];
 
     taskIndex++;
 
