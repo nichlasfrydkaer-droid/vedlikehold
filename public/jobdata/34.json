@@ -1,6 +1,7 @@
 {
   "nummer": "34",
   "titel": "Gressklipper",
+  "undertittel": "Utstyr",
   "frekvens": "Halvårlig",
 
   "jobbkortPdf": "/pdf/Jobbkort 34 (E).pdf",
@@ -11,7 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "Vedlikehold av maskiner skal skje i henhold til produsentens anvisninger.",
+  "merk": "<strong>HUSK: Vedlikehold av maskiner skal skje i henhold til produsentens anvisninger</strong>",
 
   "oppgaver": [
     {
@@ -54,5 +55,5 @@
     }
   ],
 
-  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
 }
