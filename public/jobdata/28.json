@@ -1,6 +1,7 @@
 {
   "nummer": "28",
   "titel": "Alle lysarmaturer og elektriske komponenter",
+  "undertittel": "Lys",
   "frekvens": "Vedlikehold hvert 2. år",
 
   "jobbkortPdf": "/pdf/Jobbkort 28 (E).pdf",
@@ -14,11 +15,12 @@
   "merk": "<strong>ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger! Hvis man oppdager feil på det elektriske anlegget skal man avslutte kontrollen og kontakte vedlikeholdskoordinator.</strong><br><br>Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i kontakt med lyskilden, rengjør med teknisk sprit.",
 
   "oppgaver": [
+    "Kontroller at det IKKE brukes noen skjøteledninger permanent. (Kun tillatt for midlertidig arbeid)",
+
     {
       "overskrift": "Lamper",
       "punkter": [
-        "Kontroller at det IKKE brukes noen skjøteledninger permanent. (Kun tillatt for midlertidig arbeid)",
-        "Før rengjøring, sjekk funksjonen til alle lysstoffrør og startere. Dette kan gjøres ved å se etter blinkende lysstoffrør og høre etter ulyder fra lamper.",
+        "Før rengjøring, sjekk funksjonen til alle lysstoffrør og startere. Dette kan gjøre ved å se etter blinkende lysstoffrør og høre etter ulyder fra lamper.",
         "Slå av strømmen hvis nødvendig. Finn riktig kurs i el-tavlen og sørg for at vernet er låst med lock-out.",
         "Bruk rene bomullshansker når raster (gitter) skal demonteres. Dette fordi fingermerker setter permanente merker.",
         "Sjekk tilstanden til lampen.",
@@ -32,6 +34,7 @@
         "Slå på sikringen igjen når kontrollen er fullført."
       ]
     },
+
     {
       "overskrift": "Veggpunkter",
       "punkter": [
@@ -42,5 +45,5 @@
     }
   ],
 
-  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
 }
