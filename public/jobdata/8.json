@@ -1,6 +1,7 @@
 {
   "nummer": "8",
   "titel": "Møbler og stoler",
+  "undertittel": "Innvendig bygningskontroll",
   "frekvens": "Årlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 8 (E).pdf",
@@ -10,6 +11,8 @@
   "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "merk": "Dette inkluderer alle møbler i bygget, på plattform og så videre.",
 
   "oppgaver": [
     {
