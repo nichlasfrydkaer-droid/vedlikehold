@@ -25,6 +25,12 @@ body{
   overflow-wrap:anywhere;
 }
 
+#jobSubtitle{
+  font-weight:bold;
+  font-size:18px;
+  margin-bottom:15px;
+}
+  
 .section{
   margin-top:20px;
   padding-bottom:15px;
@@ -147,6 +153,9 @@ label{
 
 <div class="container">
 <h1 id="jobTitle">Laster...</h1>
+  
+<div id="jobSubtitle"></div>
+  
 <div class="section">
   <strong>Frekvens:</strong>
   <span id="frequency"></span>
@@ -227,6 +236,19 @@ async function loadJob(){
     `Jobbkort ${currentJob.nummer}`;
   document.getElementById("jobTitle").innerText =
     `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
+  
+if(currentJob.undertittel){
+
+  document.getElementById("jobSubtitle").innerText =
+    currentJob.undertittel;
+
+}else{
+
+  document.getElementById("jobSubtitle").style.display =
+    "none";
+
+}
+  
   document.getElementById("frequency").innerText =
     currentJob.frekvens;
 if(currentJob.merk){
