@@ -22,7 +22,7 @@
         },
         {
           "type": "tekst",
-          "tekst": "<strong>NB!</strong> Ikke rør noen elektriske koblinger."
+          "tekst": "<strong>NB! Ikke rør noen elektriske koblinger.</strong>"
         },
         {
           "type": "punkt",
@@ -38,7 +38,7 @@
         },
         {
           "type": "tekst",
-          "tekst": "<strong>NB!</strong> Hvis noe ikke er i orden med det elektriske må dette utbedres av en elektriker i samarbeid med autorisert installatør. Gi beskjed til vedlikeholdskoordinatoren."
+          "tekst": "<strong>NB! Hvis noe ikke er i orden med det elektriske må dette utbedres av en elektriker i samarbeid med autorisert installatør. Gi beskjed til vedlikeholdskoordinatoren.</strong>"
         },
         {
           "type": "punkt",
