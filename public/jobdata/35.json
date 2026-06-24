@@ -1,6 +1,7 @@
 {
   "nummer": "35",
-  "titel": "Verktøy",
+  "titel": "Stiger",
+  "undertittel": "Verktøy",
   "frekvens": "Årlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 35 (E).pdf",
@@ -12,18 +13,13 @@
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
   "oppgaver": [
-    {
-      "overskrift": "Stiger",
-      "punkter": [
-        "Rengjør stigen.",
-        "Sjekk for løse eller skadde trinn – kastes hvis den ikke er 100%, gjøres i samråd med vedlikeholdskoordinator.",
-        "Sjekk hengsler.",
-        "Sjekk at føtter er i en god tilstand.",
-        "Sjekk at alle deler/skråstag er i en god tilstand.",
-        "Sjekk at ingen av stigens komponenter mangler.",
-        "Kontroller brannstige i 2 etg. Gjør en funksjonskontroll på den. Sjekk at veggfestene er gode, men ikke gå ut på stigen."
-      ]
-    }
+    "Rengjør stigen.",
+    "Sjekk for løse eller skadde trinn – kastes hvis den ikke er 100 %, gjøres i samråd med vedlikeholdskoordinator.",
+    "Sjekk hengsler.",
+    "Sjekk at føtter er i en god tilstand.",
+    "Sjekk at alle deler/skråstag er i en god tilstand.",
+    "Sjekk at ingen av stigens komponenter mangler.",
+    "Kontroller brannstige i 2 etg. Gjør en funksjonskontroll på den. Sjekk at veggfestene er gode, men ikke gå ut på stigen."
   ],
 
   "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
