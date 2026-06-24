@@ -1,6 +1,7 @@
 {
   "nummer": "26",
   "titel": "Sikringsskap",
+  "undertittel": "Strømfordeling",
   "frekvens": "Årlig kontroll",
 
   "jobbkortPdf": "/pdf/Jobbkort 26 (E).pdf",
@@ -11,7 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "Vær alltid 2 personer på denne oppgaven. Husk lommelykt, det kan bli mørkt når du tar sikringen. Ikke skru av noen deksler i skapet, eller berør strømførende deler. Kun sertifiserte elektrikere i samarbeid med autorisert installatør får utføre arbeid i sikringskapet/tavlen. Følg gjeldende sikkerhetsrutiner.",
+  "merk": "Vær alltid <strong>2 personer</strong> på denne oppgaven. Husk lommelykt, det kan bli mørkt når du tar sikringen. Ikke skru av noen deksler i skapet, eller berør strømførende deler. Kun <strong>sertifiserte elektrikere</strong> i samarbeid med <strong>autorisert installatør</strong> får utføre arbeid i sikringskapet/tavlen. Følg gjeldende sikkerhetsrutiner.",
 
   "oppgaver": [
     "Vurder sikkerheten! Er det ting i tavla som ser farlig ut, løse ledninger, åpne felt som gjør det mulig å ta på strømførende komponenter? Noter ned info, avslutt kontrollen og ta kontakt med driftsutvalget.",
