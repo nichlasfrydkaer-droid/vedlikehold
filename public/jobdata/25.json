@@ -1,6 +1,7 @@
 {
   "nummer": "25",
   "titel": "Varmtvannsbereder",
+  "undertittel": "Varmtvannsbereder",
   "frekvens": "Toårlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 25 (E).pdf",
@@ -12,14 +13,47 @@
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
   "oppgaver": [
-    "Gjør varmtvannsbeholder strømløs. Enten ved å dra pluggen ut av stikkontakten eller ved å slå av sikringen. Hvis man slår av sikringen må denne låses for å forhindre at noen uforvarende slår den på. NB! Ikke rør noen elektriske koblinger.",
-    "Skru av deksel over element, og sjekk elementene for lekkasje.",
-    "Sjekk tilstand på ledning og støpsel til berederen. Se etter skader eller varmgang.",
-    "Se etter varmgang på ledninger.",
-    "NB! Hvis noe ikke er i orden med det elektriske må dette utbedres av en elektriker i samarbeid med autorisert installatør. Gi beskjed til vedlikeholdskoordinatoren.",
-    "Kontroller sikkerhetsventilen ved å skru på den. Sjekk for lekkasje etterpå.",
-    "Slå på strømmen igjen.",
-    "Sjekk temperaturen på varmtvannet og juster hvis nødvendig. Minimum 60 grader. Sett termostat på 75 grader og juster på blandeventilen på toppen av tanken, til ønsket temperatur på varmtvann i kranen er oppnådd."
+    {
+      "overskrift": "Varmtvannsbereder",
+      "innhold": [
+        {
+          "type": "punkt",
+          "tekst": "Gjør varmtvannsbeholder strømløs. Enten ved å dra pluggen ut av stikkontakten eller ved å slå av sikringen. Hvis man slår av sikringen må denne låses for å forhindre at noen uforvarende slår den på."
+        },
+        {
+          "type": "tekst",
+          "tekst": "<strong>NB!</strong> Ikke rør noen elektriske koblinger."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Skru av deksel over element, og sjekk elementene for lekkasje."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk tilstand på ledning og støpsel til berederen. Se etter skader eller varmgang."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Se etter varmgang på ledninger."
+        },
+        {
+          "type": "tekst",
+          "tekst": "<strong>NB!</strong> Hvis noe ikke er i orden med det elektriske må dette utbedres av en elektriker i samarbeid med autorisert installatør. Gi beskjed til vedlikeholdskoordinatoren."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Kontroller sikkerhetsventilen ved å skru på den. Sjekk for lekkasje etterpå."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Slå på strømmen igjen."
+        },
+        {
+          "type": "punkt",
+          "tekst": "Sjekk temperaturen på varmtvannet og juster hvis nødvendig. Minimum 60 grader. Sett termostat på 75 grader og juster på blandeventilen på toppen av tanken, til ønsket temperatur på varmtvann i kranen er oppnådd."
+        }
+      ]
+    }
   ],
 
   "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
