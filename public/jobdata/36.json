@@ -1,6 +1,7 @@
 {
   "nummer": "36",
   "titel": "Feiemaskin",
+  "undertittel": "Verktøy",
   "frekvens": "Årlig vedlikehold",
 
   "jobbkortPdf": "/pdf/Jobbkort 36 (E).pdf",
@@ -11,7 +12,7 @@
 
   "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
 
-  "merk": "Utfør kontroll og service i henhold til produsentens instruksjoner.",
+  "merk": "<strong>MERK:</strong> Utfør kontroll og service i henhold til produsentens instruksjoner.",
 
   "oppgaver": [
     "Demonter alle løse deler og deksler. Rengjør maskinen grundig.",
