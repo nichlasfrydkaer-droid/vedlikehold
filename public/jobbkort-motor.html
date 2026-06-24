@@ -874,6 +874,36 @@ selectedPhotos.forEach(photo => {
 const status =
   document.getElementById("status");
 
+const MAX_FILES = 20;
+const MAX_TOTAL_MB = 25;
+
+if(selectedPhotos.length > MAX_FILES){
+
+  alert(
+    `Du kan maksimalt vedhæfte ${MAX_FILES} billeder.`
+  );
+
+  return;
+}
+
+const totalBytes =
+  selectedPhotos.reduce(
+    (sum,file) => sum + file.size,
+    0
+  );
+
+const totalMB =
+  totalBytes / 1024 / 1024;
+
+if(totalMB > MAX_TOTAL_MB){
+
+  alert(
+    `De valgte billeder fylder ${totalMB.toFixed(1)} MB.\n\nMaks tilladt størrelse er ${MAX_TOTAL_MB} MB.`
+  );
+
+  return;
+}
+    
 status.innerHTML = "Sender rapport...";
 
 try{
