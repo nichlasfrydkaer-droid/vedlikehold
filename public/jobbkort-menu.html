@@ -26,9 +26,13 @@ body{
   box-shadow:0 2px 8px rgba(0,0,0,.1);
 }
 
-h1{
+#title{
   text-align:center;
   margin-bottom:25px;
+  overflow-wrap:break-word;
+  word-break:normal;
+  text-wrap:balance;
+  line-height:1.15;
 }
 
 button{
@@ -93,6 +97,45 @@ button:hover{
 
 <script>
 
+function fitJobTitle(){
+
+  const title =
+    document.getElementById("title");
+
+  title.style.fontSize = "";
+
+  let size =
+    parseFloat(
+      getComputedStyle(title).fontSize
+    );
+
+  const lineHeight =
+    parseFloat(
+      getComputedStyle(title).lineHeight
+    );
+
+  const maxHeight =
+    (lineHeight * 2) + 2;
+
+  while(
+    title.scrollHeight > maxHeight &&
+    size > 18
+  ){
+
+    size--;
+
+    title.style.fontSize =
+      size + "px";
+
+  }
+
+}
+
+window.addEventListener(
+  "resize",
+  fitJobTitle
+);
+
 async function loadMenu(){
 
   const params =
@@ -109,6 +152,8 @@ async function loadMenu(){
 
   document.getElementById("title").innerText =
     `JOBBKORT ${job.nummer} - ${job.titel.toUpperCase()}`;
+
+  requestAnimationFrame(fitJobTitle);
 
   document.getElementById("openBtn").onclick = () => {
 
