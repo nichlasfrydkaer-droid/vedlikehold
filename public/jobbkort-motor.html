@@ -22,7 +22,10 @@ body{
 }
 
 #jobTitle{
-  overflow-wrap:anywhere;
+  overflow-wrap:break-word;
+  word-break:normal;
+  line-height:1.15;
+  text-wrap:balance;
 }
 
 #jobSubtitle{
@@ -234,9 +237,10 @@ async function loadJob(){
     await response.json();
   document.title =
     `Jobbkort ${currentJob.nummer}`;
-  document.getElementById("jobTitle").innerText =
-    `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
-  
+
+document.getElementById("jobTitle").innerText =
+  `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
+
 if(currentJob.undertittel){
 
   document.getElementById("jobSubtitle").innerText =
@@ -395,6 +399,9 @@ if(task.punkter){
   }
 
 });
+
+requestAnimationFrame(fitJobTitle);
+
 }
 function startWork(){
   startTime = Date.now();
@@ -951,6 +958,47 @@ finishBtn.innerHTML = "⏳ Sender rapport...";
 }
 
 }
+
+function fitJobTitle(){
+
+  const title =
+    document.getElementById("jobTitle");
+
+  // Nulstil til standard H1
+  title.style.fontSize = "";
+
+  let size =
+    parseFloat(
+      getComputedStyle(title).fontSize
+    );
+
+  const lineHeight =
+    parseFloat(
+      getComputedStyle(title).lineHeight
+    );
+
+  const maxHeight =
+  (lineHeight * 2) + 2;
+
+  while(
+    title.scrollHeight > maxHeight &&
+    size > 18
+  ){
+
+    size--;
+
+    title.style.fontSize =
+      size + "px";
+
+  }
+
+}
+
+
+window.addEventListener(
+  "resize",
+  fitJobTitle
+); 
 loadJob();
 </script>
 </body>
