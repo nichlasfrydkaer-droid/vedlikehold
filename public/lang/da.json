@@ -17,4 +17,11 @@
   "pdfAttachedPhotos": "Vedlagte billeder",
   "pdfDone": "UDFØRT",
   "pdfNotDone": "IKKE UDFØRT"
+  "statusSending": "Sender rapport...",
+  "statusSent": "Rapport sendt!",
+  "statusError": "Fejl ved afsendelse.",
+  "buttonSending": "⏳ Sender rapport...",
+  "alertNameRequired": "Udfyld venligst navn.",
+  "alertMaxFiles": "Du kan maksimalt vedhæfte {count} billeder.",
+  "alertMaxSize": "De valgte billeder fylder {size} MB.\n\nMaks tilladt størrelse er {max} MB."
 }
