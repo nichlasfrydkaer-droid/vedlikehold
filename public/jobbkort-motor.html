@@ -257,6 +257,9 @@ currentCongregation =
 const language =
   currentCongregation?.language || "no";
 
+console.log("Language:", language);
+console.log("URL:", `/lang/${language}.json`);
+    
 let languageResponse =
   await fetch(`/lang/${language}.json`);
 
