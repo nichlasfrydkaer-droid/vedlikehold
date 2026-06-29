@@ -257,14 +257,26 @@ currentCongregation =
 const language =
   currentCongregation?.language || "no";
 
-const languageResponse =
+let languageResponse =
   await fetch(`/lang/${language}.json`);
 
-translations =
-  await languageResponse.json();
+if(!languageResponse.ok){
 
-document.getElementById("startBtn").innerHTML =
-  translations.startWork;
+  languageResponse =
+
+    await fetch("/lang/no.json");
+
+}
+
+if(!languageResponse.ok){
+
+  throw new Error("Kunne ikke indlæse sprogfil.");
+
+}
+
+translations =
+
+  await languageResponse.json();
 
 document.getElementById("finishBtn").innerHTML =
   translations.finish;
@@ -1105,7 +1117,8 @@ status.innerHTML =
     document.getElementById("finishBtn");
 
   finishBtn.disabled = false;
-  finishBtn.innerHTML = "✓ Ferdigmeld";
+  finishBtn.innerHTML =
+  translations.finish;
 
 status.innerHTML =
   translations.statusError;
