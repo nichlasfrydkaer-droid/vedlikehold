@@ -155,12 +155,18 @@ async function loadMenu(){
 
   requestAnimationFrame(fitJobTitle);
 
-  document.getElementById("openBtn").onclick = () => {
+const params =
+  new URLSearchParams(window.location.search);
 
-    location.href =
-      `/jobbkort-motor.html?id=${job.nummer}`;
+const congregation =
+  params.get("congregation");
 
-  };
+document.getElementById("openBtn").onclick = () => {
+
+  location.href =
+    `/jobbkort-motor.html?id=${job.nummer}&congregation=${congregation}`;
+
+};
 
   document.getElementById("printBtn").onclick = () => {
 
