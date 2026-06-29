@@ -221,7 +221,8 @@ label{
 
 <script>
 let currentJob = null;
-let currentCongregation = null;  
+let currentCongregation = null;
+let translations = null;
 let startTime = null;
 let timerInterval = null;
 let selectedPhotos = [];
@@ -252,6 +253,15 @@ currentCongregation =
   congregations.find(
     c => c.id === congregationId
   ) || null;
+
+const language =
+  currentCongregation?.language || "no";
+
+const languageResponse =
+  await fetch(`/lang/${language}.json`);
+
+translations =
+  await languageResponse.json();    
 
 }
   document.title =
