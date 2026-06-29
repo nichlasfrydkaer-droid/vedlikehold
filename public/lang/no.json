@@ -9,4 +9,12 @@
   "photos": "Bilder",
   "congregation": "Menighet",
   "notice": "MERK"
+  "pdfName": "Navn",
+  "pdfDate": "Dato",
+  "pdfTime": "Tid brukt",
+  "pdfChecklist": "KONTROLLISTE",
+  "pdfNotes": "NOTATER",
+  "pdfAttachedPhotos": "Vedlagte bilder",
+  "pdfDone": "UTFØRT",
+  "pdfNotDone": "IKKE UTFØRT"
 }
