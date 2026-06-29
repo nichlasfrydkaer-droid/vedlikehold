@@ -144,6 +144,9 @@ async function loadMenu(){
   const jobId =
     params.get("id") || "41";
 
+  const congregation =
+  params.get("congregation");
+
   const response =
     await fetch(`/jobdata/${jobId}.json`);
 
@@ -160,7 +163,7 @@ const params =
 
 const congregation =
   params.get("congregation");
-
+  
 document.getElementById("openBtn").onclick = () => {
 
   location.href =
