@@ -282,7 +282,7 @@ translations =
   await languageResponse.json();
 
 document.getElementById("finishBtn").innerHTML =
-  translations.finish;
+  translations?.finish || "✓ Ferdigmeld";
 
     document.getElementById("frequencyLabel").innerText =
   translations.frequency + ":";
