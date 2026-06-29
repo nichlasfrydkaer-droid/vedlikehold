@@ -454,17 +454,6 @@ if(
 
 if(
   currentCongregation &&
-  !currentCongregation.settings.allowPhotos
-){
-
-  document.getElementById(
-    "photosSection"
-  ).style.display = "none";
-
-}
-
-if(
-  currentCongregation &&
   !currentCongregation.settings.allowComments
 ){
 
@@ -504,9 +493,26 @@ function startWork(){
   document
     .querySelectorAll(".task")
     .forEach(x => x.disabled = false);
+if(
+  !currentCongregation ||
+  currentCongregation.settings.showName
+){
   document.getElementById("nameInput").disabled = false;
+}
+
+if(
+  !currentCongregation ||
+  currentCongregation.settings.allowComments
+){
   document.getElementById("notes").disabled = false;
+}
+
+if(
+  !currentCongregation ||
+  currentCongregation.settings.allowPhotos
+){
   document.getElementById("photos").disabled = false;
+}
 document.getElementById("startBtn").style.display = "none";
 
 const finishBtn =
