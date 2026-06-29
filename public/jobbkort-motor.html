@@ -160,34 +160,34 @@ label{
 <div id="jobSubtitle"></div>
   
 <div class="section">
-  <strong>Frekvens:</strong>
+<strong id="frequencyLabel">Frekvens:</strong>
   <span id="frequency"></span>
 </div>
 <div class="section" id="timeSection">
-  <strong>Tid brukt</strong>
+  <strong id="timeLabel">Tid brukt</strong>
   <input type="text" id="timeInput" disabled>
 </div>
 <div class="section" id="nameSection">
-  <strong>Navn</strong>
+  <strong id="nameLabel">Navn</strong>
   <input type="text" id="nameInput" disabled>
 </div>
 <div class="section">
   <div class="notesInfo" id="merkText"></div>
 
-<strong>Kontrolliste</strong>
+<strong id="checklistLabel">Kontrolliste</strong>
 
   <div id="taskContainer"></div>
 </div>
 <div class="section" id="commentsSection">
 
-<strong>Notater</strong>
+<strong id="notesLabel">Notater</strong>
 
   <div class="notesInfo" id="notatInfo"></div>
   <textarea id="notes" disabled></textarea>
 </div>
 <div class="section" id="photosSection">
 
-  <strong>Bilder</strong>
+  <strong id="photosLabel">Bilder</strong>
 
   <input
     type="file"
@@ -269,6 +269,24 @@ document.getElementById("startBtn").innerHTML =
 document.getElementById("finishBtn").innerHTML =
   translations.finish;
 
+    document.getElementById("frequencyLabel").innerText =
+  translations.frequency + ":";
+
+document.getElementById("timeLabel").innerText =
+  translations.timeUsed;
+
+document.getElementById("nameLabel").innerText =
+  translations.name;
+
+document.getElementById("checklistLabel").innerText =
+  translations.checklist;
+
+document.getElementById("notesLabel").innerText =
+  translations.notes;
+
+document.getElementById("photosLabel").innerText =
+  translations.photos;
+
 }
 document.title =
   `Jobbkort ${currentJob.nummer}`;
@@ -292,8 +310,8 @@ if(currentJob.undertittel){
   info.style.borderLeft = "4px solid #2563eb";
   info.style.borderRadius = "6px";
 
-  info.innerHTML =
-    `<strong>Menighet:</strong> ${currentCongregation.name}`;
+info.innerHTML =
+  `<strong>${translations.congregation}:</strong> ${currentCongregation.name}`;
 
   document
     .getElementById("jobSubtitle")
