@@ -1,13 +1,12 @@
 {
+  "startWork": "▶ Start arbejdet",
+  "finish": "✓ Færdigmeld",
   "frequency": "Frekvens",
   "timeUsed": "Tid brugt",
   "name": "Navn",
   "checklist": "Kontrolliste",
-  "notes": "Notater",
+  "notes": "Noter",
   "photos": "Billeder",
-  "startWork": "▶ Start arbejdet",
-  "finish": "✓ Færdigmeld",
   "congregation": "Menighed",
-  "loading": "Indlæser..."
   "notice": "BEMÆRK"
 }
