@@ -261,11 +261,17 @@ const languageResponse =
   await fetch(`/lang/${language}.json`);
 
 translations =
-  await languageResponse.json();    
+  await languageResponse.json();
+
+document.getElementById("startBtn").innerHTML =
+  translations.startWork;
+
+document.getElementById("finishBtn").innerHTML =
+  translations.finish;
 
 }
-  document.title =
-    `Jobbkort ${currentJob.nummer}`;
+document.title =
+  `Jobbkort ${currentJob.nummer}`;
 
 document.getElementById("jobTitle").innerText =
   `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
