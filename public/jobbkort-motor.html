@@ -163,11 +163,11 @@ label{
   <strong>Frekvens:</strong>
   <span id="frequency"></span>
 </div>
-<div class="section">
+<div class="section" id="timeSection">
   <strong>Tid brukt</strong>
   <input type="text" id="timeInput" disabled>
 </div>
-<div class="section">
+<div class="section" id="nameSection">
   <strong>Navn</strong>
   <input type="text" id="nameInput" disabled>
 </div>
@@ -454,6 +454,17 @@ if(
 
 if(
   currentCongregation &&
+  !currentCongregation.settings.allowPhotos
+){
+
+  document.getElementById(
+    "photosSection"
+  ).style.display = "none";
+
+}
+
+if(
+  currentCongregation &&
   !currentCongregation.settings.allowComments
 ){
 
@@ -461,7 +472,29 @@ if(
     "commentsSection"
   ).style.display = "none";
 
-}  
+}
+
+if(
+  currentCongregation &&
+  !currentCongregation.settings.showTime
+){
+
+  document.getElementById(
+    "timeSection"
+  ).style.display = "none";
+
+}
+
+if(
+  currentCongregation &&
+  !currentCongregation.settings.showName
+){
+
+  document.getElementById(
+    "nameSection"
+  ).style.display = "none";
+
+}
 
 requestAnimationFrame(fitJobTitle);
 
