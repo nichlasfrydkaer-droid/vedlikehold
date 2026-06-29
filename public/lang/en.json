@@ -18,4 +18,11 @@
   "pdfAttachedPhotos": "Attached photos",
   "pdfDone": "COMPLETED",
   "pdfNotDone": "NOT COMPLETED"
+  "statusSending": "Sending report...",
+  "statusSent": "Report sent!",
+  "statusError": "Error while sending.",
+  "buttonSending": "⏳ Sending report...",
+  "alertNameRequired": "Please enter your name.",
+  "alertMaxFiles": "You can attach a maximum of {count} photos.",
+  "alertMaxSize": "The selected photos total {size} MB.\n\nMaximum allowed size is {max} MB."
 }
