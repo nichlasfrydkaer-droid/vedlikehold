@@ -442,20 +442,26 @@ if(task.punkter){
 });
 
 if(
-
   currentCongregation &&
-
   !currentCongregation.settings.allowPhotos
-
 ){
 
   document.getElementById(
-
     "photosSection"
-
   ).style.display = "none";
 
 }
+
+if(
+  currentCongregation &&
+  !currentCongregation.settings.allowComments
+){
+
+  document.getElementById(
+    "commentsSection"
+  ).style.display = "none";
+
+}  
 
 requestAnimationFrame(fitJobTitle);
 
