@@ -328,15 +328,17 @@ info.innerHTML =
   
   document.getElementById("frequency").innerText =
     currentJob.frekvens;
-const noticeText =
-  translations?.notice || "MERK";
+if(currentJob.merk){
 
-document.getElementById("merkText").innerHTML =
-  `<strong>${noticeText}:</strong> ${currentJob.merk}`;
+  const noticeText =
+    translations?.notice || "MERK";
+
+  document.getElementById("merkText").innerHTML =
+    `<strong>${noticeText}:</strong> ${currentJob.merk}`;
 
 }else{
 
-  document.getElementById("merkText").style.display = "none";
+  document.getElementById("merkText").style.display="none";
 
 }
 const notatInfoElement =
