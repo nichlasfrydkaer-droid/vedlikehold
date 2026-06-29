@@ -16,7 +16,7 @@
   "pdfNotes": "NOTATER",
   "pdfAttachedPhotos": "Vedlagte bilder",
   "pdfDone": "UTFØRT",
-  "pdfNotDone": "IKKE UTFØRT"
+  "pdfNotDone": "IKKE UTFØRT",
   "statusSending": "Sender rapport...",
   "statusSent": "Rapport sendt!",
   "statusError": "Feil ved sending.",
