@@ -280,28 +280,29 @@ if(!languageResponse.ok){
 translations =
 
   await languageResponse.json();
+document.getElementById("startBtn").innerHTML =
+  translations?.startWork || "▶ Start arbeidet";
 
 document.getElementById("finishBtn").innerHTML =
   translations?.finish || "✓ Ferdigmeld";
 
-    document.getElementById("frequencyLabel").innerText =
-  translations.frequency + ":";
+document.getElementById("frequencyLabel").innerText =
+  (translations?.frequency || "Frekvens") + ":";
 
 document.getElementById("timeLabel").innerText =
-  translations.timeUsed;
+  translations?.timeUsed || "Tid brukt";
 
 document.getElementById("nameLabel").innerText =
-  translations.name;
+  translations?.name || "Navn";
 
 document.getElementById("checklistLabel").innerText =
-  translations.checklist;
+  translations?.checklist || "Kontrolliste";
 
 document.getElementById("notesLabel").innerText =
-  translations.notes;
+  translations?.notes || "Notater";
 
 document.getElementById("photosLabel").innerText =
-  translations.photos;
-
+  translations?.photos || "Bilder";
 }
 document.title =
   `Jobbkort ${currentJob.nummer}`;
