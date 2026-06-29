@@ -17,7 +17,7 @@
   "pdfNotes": "NOTES",
   "pdfAttachedPhotos": "Attached photos",
   "pdfDone": "COMPLETED",
-  "pdfNotDone": "NOT COMPLETED"
+  "pdfNotDone": "NOT COMPLETED",
   "statusSending": "Sending report...",
   "statusSent": "Report sent!",
   "statusError": "Error while sending.",
