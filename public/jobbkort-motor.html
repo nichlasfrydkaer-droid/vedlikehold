@@ -185,14 +185,12 @@ label{
   <div class="notesInfo" id="notatInfo"></div>
   <textarea id="notes" disabled></textarea>
 </div>
-<div class="section">
+<div class="section" id="photosSection">
 
   <strong>Bilder</strong>
 
   <input
-
     type="file"
-
     id="photos"
 
     multiple
@@ -439,7 +437,25 @@ if(task.punkter){
 
   }
 
+
+
 });
+
+if(
+
+  currentCongregation &&
+
+  !currentCongregation.settings.allowPhotos
+
+){
+
+  document.getElementById(
+
+    "photosSection"
+
+  ).style.display = "none";
+
+}
 
 requestAnimationFrame(fitJobTitle);
 
