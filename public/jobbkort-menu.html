@@ -157,12 +157,6 @@ async function loadMenu(){
     `JOBBKORT ${job.nummer} - ${job.titel.toUpperCase()}`;
 
   requestAnimationFrame(fitJobTitle);
-
-const params =
-  new URLSearchParams(window.location.search);
-
-const congregation =
-  params.get("congregation");
   
 document.getElementById("openBtn").onclick = () => {
 
