@@ -328,10 +328,11 @@ info.innerHTML =
   
   document.getElementById("frequency").innerText =
     currentJob.frekvens;
-if(currentJob.merk){
+const noticeText =
+  translations?.notice || "MERK";
 
 document.getElementById("merkText").innerHTML =
-  `<strong>${translations.notice}:</strong> ${currentJob.merk}`;
+  `<strong>${noticeText}:</strong> ${currentJob.merk}`;
 
 }else{
 
