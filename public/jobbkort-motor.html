@@ -326,7 +326,7 @@ if(currentJob.undertittel){
   info.style.borderRadius = "6px";
 
 info.innerHTML =
-  `<strong>${translations.congregation}:</strong> ${currentCongregation.name}`;
+  `<strong>${translations?.congregation || "Menighed"}:</strong> ${currentCongregation.name}`;
 
   document
     .getElementById("jobSubtitle")
