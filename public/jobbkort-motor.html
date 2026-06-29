@@ -624,7 +624,7 @@ document
 
     if(!navn){
 
-  alert("Vennligst fyll ut navn.");
+  alert(translations.alertNameRequired);
 
   document
     .getElementById("nameInput")
@@ -1037,9 +1037,10 @@ const MAX_TOTAL_MB = 75;
 
 if(selectedPhotos.length > MAX_FILES){
 
-  alert(
-    `Du kan maksimalt vedhæfte ${MAX_FILES} billeder.`
-  );
+ alert(
+  translations.alertMaxFiles
+    .replace("{count}", MAX_FILES)
+);
 
   return;
 }
@@ -1055,14 +1056,17 @@ const totalMB =
 
 if(totalMB > MAX_TOTAL_MB){
 
-  alert(
-    `De valgte billeder fylder ${totalMB.toFixed(1)} MB.\n\nMaks tilladt størrelse er ${MAX_TOTAL_MB} MB.`
-  );
+alert(
+  translations.alertMaxSize
+    .replace("{size}", totalMB.toFixed(1))
+    .replace("{max}", MAX_TOTAL_MB)
+);
 
   return;
 }
     
-status.innerHTML = "Sender rapport...";
+status.innerHTML =
+  translations.statusSending;
 
 try{
 const finishBtn =
@@ -1071,7 +1075,7 @@ const finishBtn =
 
 finishBtn.disabled = true;
 
-finishBtn.innerHTML = "⏳ Sender rapport...";
+finishBtn.innerHTML =   translations.buttonSending;
   const response =
     await fetch(
       "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/",
@@ -1085,8 +1089,8 @@ finishBtn.innerHTML = "⏳ Sender rapport...";
     throw new Error("Upload feilet");
   }
 
-  status.innerHTML =
-    "Rapport sendt!";
+status.innerHTML =
+  translations.statusSent;
 
   setTimeout(() => {
     window.location.href =
@@ -1103,8 +1107,8 @@ finishBtn.innerHTML = "⏳ Sender rapport...";
   finishBtn.disabled = false;
   finishBtn.innerHTML = "✓ Ferdigmeld";
 
-  status.innerHTML =
-    "Feil ved sending.";
+status.innerHTML =
+  translations.statusError;
 
 }
 
