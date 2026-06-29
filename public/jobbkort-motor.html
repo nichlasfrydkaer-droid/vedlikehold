@@ -859,6 +859,12 @@ doc.setFontSize(11);
 
 const formData = new FormData();
 
+const params =
+  new URLSearchParams(window.location.search);
+
+const congregation =
+  params.get("congregation");
+
 formData.append(
   "file",
   pdfBlob,
@@ -866,10 +872,15 @@ formData.append(
 );
 
 formData.append(
+  "congregation",
+  congregation
+);
+
+formData.append(
   "token",
   "f9K2Lm8Pq4Xz7RjN5Bw1"
 );
-    
+
 selectedPhotos.forEach(photo => {
   formData.append(
     "photos",
