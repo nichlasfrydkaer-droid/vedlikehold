@@ -10,4 +10,12 @@
   "congregation": "Congregation",
   "loading": "Loading..."
   "notice": "NOTE"
+  "pdfName": "Name",
+  "pdfDate": "Date",
+  "pdfTime": "Time spent",
+  "pdfChecklist": "CHECKLIST",
+  "pdfNotes": "NOTES",
+  "pdfAttachedPhotos": "Attached photos",
+  "pdfDone": "COMPLETED",
+  "pdfNotDone": "NOT COMPLETED"
 }
