@@ -330,8 +330,8 @@ info.innerHTML =
     currentJob.frekvens;
 if(currentJob.merk){
 
-  document.getElementById("merkText").innerHTML =
-    "<strong>MERK:</strong> " + currentJob.merk;
+document.getElementById("merkText").innerHTML =
+  `<strong>${translations.notice}:</strong> ${currentJob.merk}`;
 
 }else{
 
