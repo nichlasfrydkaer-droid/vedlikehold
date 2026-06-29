@@ -587,19 +587,19 @@ document
 
     if(!navn){
 
-      alert("Vennligst fyll ut navn.");
+  alert("Vennligst fyll ut navn.");
 
-      document
-        .getElementById("nameInput")
-        .focus();
+  document
+    .getElementById("nameInput")
+    .focus();
 
-      return;
-    }
+  return;
+
 }
-    
-    generatePDF();
 
-  });
+generatePDF();
+
+});
   async function generatePDF(){
 
   const { jsPDF } = window.jspdf;
