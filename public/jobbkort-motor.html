@@ -223,18 +223,39 @@ label{
 
 <script>
 let currentJob = null;
+let currentCongregation = null;  
 let startTime = null;
 let timerInterval = null;
 let selectedPhotos = [];
 async function loadJob(){
-  const params =
-    new URLSearchParams(window.location.search);
-  const id =
-    params.get("id") || "41";
+const params =
+  new URLSearchParams(window.location.search);
+
+const id =
+  params.get("id") || "41";
+
+const congregationId =
+  params.get("congregation");
   const response =
     await fetch(`/jobdata/${id}.json`);
   currentJob =
     await response.json();
+  if(congregationId){
+
+  const congregationResponse =
+    await fetch(
+      "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/congregations"
+    );
+
+  const congregations =
+    await congregationResponse.json();
+
+currentCongregation =
+  congregations.find(
+    c => c.id === congregationId
+  ) || null;
+
+}
   document.title =
     `Jobbkort ${currentJob.nummer}`;
 
@@ -245,6 +266,26 @@ if(currentJob.undertittel){
 
   document.getElementById("jobSubtitle").innerText =
     currentJob.undertittel;
+
+  if(currentCongregation){
+
+  const info =
+    document.createElement("div");
+
+  info.style.marginBottom = "15px";
+  info.style.padding = "10px";
+  info.style.background = "#eef6ff";
+  info.style.borderLeft = "4px solid #2563eb";
+  info.style.borderRadius = "6px";
+
+  info.innerHTML =
+    `<strong>Menighet:</strong> ${currentCongregation.name}`;
+
+  document
+    .getElementById("jobSubtitle")
+    .after(info);
+
+}
 
 }else{
 
