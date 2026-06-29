@@ -1,5 +1,6 @@
 {
-  "loading": "Laster...",
+  "startWork": "▶ Start arbeidet",
+  "finish": "✓ Ferdigmeld",
   "frequency": "Frekvens",
   "timeUsed": "Tid brukt",
   "name": "Navn",
@@ -7,7 +8,5 @@
   "notes": "Notater",
   "photos": "Bilder",
   "congregation": "Menighet",
-  "startWork": "▶ Start arbeidet",
-  "finish": "✓ Ferdigmeld"
   "notice": "MERK"
 }
