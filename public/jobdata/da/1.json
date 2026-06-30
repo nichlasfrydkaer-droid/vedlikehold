@@ -1,6 +1,29 @@
-[
-  {
-    "nummer": "1",
-    "titel": "Tag og tagrender"
-  }
-]
+{
+  "nummer": "1",
+  "titel": "Tag og tagrender",
+  "undertittel": "Udvendig bygningskontrol",
+  "frekvens": "Årlig kontrol",
+
+  "jobbkortPdf": "/pdf/Jobbkort 1 (D).pdf",
+  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+
+  "merk": "ADVARSEL: Udfør arbejdet på en sikker måde, og følg gældende sikkerhedskrav. (Læs DC-82 og udfyld DC-85). Inspektionen indebærer ikke, at nogen skal gå op på taget.",
+
+  "oppgaver": [
+    "Kontrollér tagstenene for skader. Ved skader kontaktes vedligeholdskoordinatoren.",
+    "Vurder behovet for rengøring af taget. Se efter mos og anden vækst. Eventuelle udbedringer udføres i samarbejde med vedligeholdskoordinatoren.",
+    "Kontrollér taginddækninger og ventilationshætter for rust og slid.",
+    "Kontrollér kipstenenes tilstand og fastgørelse.",
+    "Kontrollér ventilation og udluftning ved tagudhæng.",
+    "Kontrollér at insektnet er intakt og korrekt monteret.",
+    "Rens tagrender.",
+    "Rens riste og nedløbsrør.",
+    "Kontrollér tagrender og nedløbsrør for rust og skader.",
+    "Kontrollér skotrendernes tilstand.",
+    "Kontrollér under regnvejr, at vandet ledes korrekt i tagrenderne."
+  ],
+
+  "notatInfo": "Notér nedenfor forhold, som du har opdaget, men som du ikke selv kan eller må udbedre."
+}
