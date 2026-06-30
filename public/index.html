@@ -7,7 +7,10 @@
 
 <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Vedlikeholdssystem">
+<meta
+  id="appleAppTitle"
+  name="apple-mobile-web-app-title"
+  content="Vedlikeholdssystem">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <style>
@@ -83,17 +86,17 @@ a:hover{
 
 <div class="card">
 
-<h1>Vedlikeholdssystem</h1>
+<h1 id="systemTitle">Vedlikeholdssystem</h1>
 
 <div class="selectBox">
 
-<label>Velg menighet</label>
+<label id="selectCongregationLabel">Velg menighet</label>
 
 <select id="congregationSelect"></select>
 
 </div>
 
-<p>Velg jobbkort:</p>
+<p id="selectJobLabel">Velg jobbkort:</p>
 
 <ul id="jobList"></ul>
 
@@ -105,6 +108,49 @@ a:hover{
 
 let selectedCongregation = "";
 let currentCongregation = null;
+let translations = null;
+
+async function loadTranslations(language){
+
+  let response =
+    await fetch(`/lang/${language}.json`);
+
+  if(!response.ok){
+
+    response =
+      await fetch("/lang/no.json");
+
+  }
+
+  translations =
+    await response.json();
+
+document.title =
+
+  translations.systemTitle;
+
+document
+
+  .getElementById("appleAppTitle")
+
+  .setAttribute(
+
+    "content",
+
+    translations.systemTitle
+
+  );
+
+  document.getElementById("systemTitle").innerText =
+    translations.systemTitle;
+
+  document.getElementById("selectCongregationLabel").innerText =
+    translations.selectCongregation;
+
+  document.getElementById("selectJobLabel").innerText =
+    translations.selectJob + ":";
+
+}
 
 async function loadCongregations(){
 
@@ -153,7 +199,11 @@ async function loadCongregations(){
       c => c.id === selectedCongregation
     ) || null;
 
-  select.onchange = ()=>{
+    await loadTranslations(
+  currentCongregation?.language || "no"
+);
+
+  select.onchange = async ()=>{
 
     selectedCongregation =
       select.value;
@@ -163,12 +213,16 @@ async function loadCongregations(){
         c => c.id === selectedCongregation
       ) || null;
 
+      await loadTranslations(
+  currentCongregation?.language || "no"
+);
+
     localStorage.setItem(
       "congregation",
       selectedCongregation
     );
 
-    loadJobs();
+    await loadJobs();
 
   };
 
@@ -182,12 +236,11 @@ async function loadJobs(){
   let response =
     await fetch(`/jobdata/${language}/index.json`);
 
-  if(!response.ok){
+if(!response.ok){
 
-    response =
-      await fetch("/jobdata/no/index.json");
+  throw new Error("Jobblisten finnes ikke for dette språket.");
 
-  }
+}
 
   const jobs =
     await response.json();
@@ -221,7 +274,7 @@ async function loadJobs(){
 
       li.innerHTML = `
 <a href="/jobbkort-menu.html?id=${job.nummer}&congregation=${selectedCongregation}">
-Jobbkort ${job.nummer} - ${job.titel}
+${translations.jobCard} ${job.nummer} - ${job.titel}
 </a>
 `;
 
