@@ -105,8 +105,8 @@ button:hover{
 
 <script>
 
-let translations = null;  
-  
+let translations = null;
+
 function fitJobTitle(){
 
   const title =
@@ -187,7 +187,7 @@ async function loadTranslations(language){
     translations.safeWork;
 
 }
-  
+
 async function loadMenu(){
 
   const params =
@@ -197,89 +197,89 @@ async function loadMenu(){
     params.get("id") || "41";
 
   const congregation =
-  params.get("congregation");
+    params.get("congregation");
 
-let language = "no";
+  let language = "no";
 
-if(congregation){
+  if(congregation){
 
-  const congregationResponse =
-    await fetch(
-      "https://api.vedlikeholdsystem.no/congregations"
-    );
+    const congregationResponse =
+      await fetch(
+        "https://api.vedlikeholdsystem.no/congregations"
+      );
 
-  const congregations =
-    await congregationResponse.json();
+    const congregations =
+      await congregationResponse.json();
 
-  const currentCongregation =
-    congregations.find(
-      c => c.id === congregation
-    );
+    const currentCongregation =
+      congregations.find(
+        c => c.id === congregation
+      );
 
-  language =
-    currentCongregation?.language || "no";
+    language =
+      currentCongregation?.language || "no";
 
-}
+  }
 
-  await loadTranslations(language);  
-  
-let response =
-  await fetch(`/jobdata/${language}/${jobId}.json`);
+  await loadTranslations(language);
 
-if(!response.ok){
+  let response =
+    await fetch(`/jobdata/${language}/${jobId}.json`);
 
-  throw new Error("Jobbkort ikke funnet.");
+  if(!response.ok){
 
-}
+    throw new Error("Jobbkort ikke funnet.");
 
-const job =
-  await response.json();
+  }
 
-document.getElementById("title").innerText =
-  `${translations.jobCard} ${job.nummer} - ${job.titel.toUpperCase()}`;
+  const job =
+    await response.json();
+
+  document.getElementById("title").innerText =
+    `${translations.jobCard} ${job.nummer} - ${job.titel.toUpperCase()}`;
 
   requestAnimationFrame(fitJobTitle);
-  
-document.getElementById("openBtn").onclick = () => {
 
-  location.href =
-    `/jobbkort-motor.html?id=${job.nummer}&congregation=${congregation}`;
+  document.getElementById("openBtn").onclick = () => {
 
-};
+    location.href =
+      `/jobbkort-motor.html?id=${job.nummer}&congregation=${congregation}`;
+
+  };
 
   document.getElementById("printBtn").onclick = () => {
 
-window.open(
-  `/pdf/${language}/${job.jobbkortPdf}`,
-  "_blank"
-);
+    window.open(
+      `/pdf/${language}/${job.jobbkortPdf}`,
+      "_blank"
+    );
 
   };
 
   document.getElementById("sjaBtn").onclick = () => {
 
-window.open(
-  `/dokumenter/${language}/${job.sjaPdf}`,
-  "_blank"
-);
+    window.open(
+      `/dokumenter/${language}/${job.sjaPdf}`,
+      "_blank"
+    );
 
   };
 
   document.getElementById("sjaGuideBtn").onclick = () => {
 
-window.open(
-  `/dokumenter/${language}/${job.sjaVeiledningPdf}`,
-  "_blank"
-);
+    window.open(
+      `/dokumenter/${language}/${job.sjaVeiledningPdf}`,
+      "_blank"
+    );
 
   };
 
   document.getElementById("safeWorkBtn").onclick = () => {
 
-window.open(
-  `/dokumenter/${language}/${job.arbeidTrygtPdf}`,
-  "_blank"
-);
+    window.open(
+      `/dokumenter/${language}/${job.arbeidTrygtPdf}`,
+      "_blank"
+    );
 
   };
 
@@ -288,6 +288,6 @@ window.open(
 loadMenu();
 
 </script>
-
+  
 </body>
 </html>
