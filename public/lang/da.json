@@ -27,5 +27,10 @@
   "systemTitle": "Vedligeholdelsessystem",
   "selectCongregation": "Vælg menighed",
   "selectJob": "Vælg arbejdskort",
-  "jobCard": "ARBEJDSKORT"
+  "jobCard": "ARBEJDSKORT",
+  "openJob": "Åbn arbejdskort",
+  "print": "Udskriv",
+  "sja": "Sikker jobanalyse",
+  "sjaGuide": "Vejledning: Sikker jobanalyse (DC-85)",
+  "safeWork": "Vejledning: Arbejd sikkert sammen (DC-82)"
 }
