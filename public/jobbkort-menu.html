@@ -68,6 +68,10 @@ button:hover{
   opacity:.95;
 }
 
+.docRef{
+  white-space:nowrap;
+}  
+
 </style>
 </head>
 
@@ -180,11 +184,11 @@ async function loadTranslations(language){
   document.getElementById("sjaBtn").innerText =
     translations.sja;
 
-  document.getElementById("sjaGuideBtn").innerText =
-    translations.sjaGuide;
+document.getElementById("sjaGuideBtn").innerHTML =
+  translations.sjaGuide;
 
-  document.getElementById("safeWorkBtn").innerText =
-    translations.safeWork;
+document.getElementById("safeWorkBtn").innerHTML =
+  translations.safeWork;
 
 }
 
