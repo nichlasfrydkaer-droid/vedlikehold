@@ -25,7 +25,7 @@ jobs:
 
           jobs = []
 
-          for file in glob.glob("public/jobdata/*.json"):
+          for file in glob.glob("public/jobdata/no/*.json"):
               if file.endswith("index.json"):
                   continue
 
@@ -53,7 +53,7 @@ jobs:
 
           jobs.sort(key=sort_key)
 
-          with open("public/jobdata/index.json", "w", encoding="utf-8") as f:
+          with open("public/jobdata/no/index.json", "w", encoding="utf-8") as f:
               json.dump(jobs, f, ensure_ascii=False, indent=2)
 
           print(f"Genererede index.json med {len(jobs)} jobbkort")
@@ -64,7 +64,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add public/jobdata/index.json
+          git add public/jobdata/no/index.json
 
           if ! git diff --cached --quiet; then
             git commit -m "Auto-update job index"
