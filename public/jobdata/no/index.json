@@ -1,1 +1,122 @@
-[]
+[
+  {
+    "nummer": "1",
+    "titel": "Tak og takrenner"
+  },
+  {
+    "nummer": "2",
+    "titel": "Murpussede vegger og grunnmur"
+  },
+  {
+    "nummer": "3A",
+    "titel": "Bordkledning"
+  },
+  {
+    "nummer": "4",
+    "titel": "Belegningsstein og fortau"
+  },
+  {
+    "nummer": "5",
+    "titel": "Hageområder"
+  },
+  {
+    "nummer": "7",
+    "titel": "Innvendige vegger, tak og gulv"
+  },
+  {
+    "nummer": "8",
+    "titel": "Møbler og stoler"
+  },
+  {
+    "nummer": "9",
+    "titel": "Bygningens struktur"
+  },
+  {
+    "nummer": "10",
+    "titel": "Dører og vinduer"
+  },
+  {
+    "nummer": "11",
+    "titel": "Brannslukkere – alle typer"
+  },
+  {
+    "nummer": "12",
+    "titel": "Brannslukkere – alle typer"
+  },
+  {
+    "nummer": "13",
+    "titel": "VVS komponenter"
+  },
+  {
+    "nummer": "14",
+    "titel": "Tøm utvendige kraner"
+  },
+  {
+    "nummer": "21",
+    "titel": "Avtrekksvifte"
+  },
+  {
+    "nummer": "25",
+    "titel": "Varmtvannsbereder"
+  },
+  {
+    "nummer": "26",
+    "titel": "Sikringsskap"
+  },
+  {
+    "nummer": "27",
+    "titel": "Nødlys - utgangslys"
+  },
+  {
+    "nummer": "28",
+    "titel": "Alle lysarmaturer og elektriske komponenter"
+  },
+  {
+    "nummer": "29",
+    "titel": "Utvendig belysning"
+  },
+  {
+    "nummer": "31",
+    "titel": "Overspenningsvern"
+  },
+  {
+    "nummer": "33",
+    "titel": "Støvsugere"
+  },
+  {
+    "nummer": "34",
+    "titel": "Gressklipper"
+  },
+  {
+    "nummer": "35",
+    "titel": "Stiger"
+  },
+  {
+    "nummer": "36",
+    "titel": "Feiemaskin"
+  },
+  {
+    "nummer": "37",
+    "titel": "Datamaskin"
+  },
+  {
+    "nummer": "38",
+    "titel": "Lydanlegg"
+  },
+  {
+    "nummer": "40",
+    "titel": "Skjermer"
+  },
+  {
+    "nummer": "41",
+    "titel": "Brann og innbruddsalarm"
+  },
+  {
+    "nummer": "43",
+    "titel": "Medisinskap og førstehjelp"
+  },
+  {
+    "nummer": "45",
+    "titel": "Hvitevarer"
+  }
+]
