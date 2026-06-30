@@ -241,7 +241,7 @@ if(congregationId){
 
   const congregationResponse =
     await fetch(
-      "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/congregations"
+      "https://api.vedlikeholdsystem.no/congregations"
     );
 
   const congregations =
@@ -280,7 +280,7 @@ currentJob =
 
   const congregationResponse =
     await fetch(
-      "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/congregations"
+      "https://api.vedlikeholdsystem.no/congregations"
     );
 
   const congregations =
@@ -1131,7 +1131,7 @@ finishBtn.disabled = true;
 finishBtn.innerHTML =   translations.buttonSending;
   const response =
     await fetch(
-      "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/",
+      "https://api.vedlikeholdsystem.no/",
       {
         method:"POST",
         body:formData
