@@ -110,6 +110,40 @@ let selectedCongregation = "";
 let currentCongregation = null;
 let translations = null;
 
+function fitSystemTitle(){
+
+  const title =
+    document.getElementById("systemTitle");
+
+  title.style.fontSize = "";
+
+  let size =
+    parseFloat(
+      getComputedStyle(title).fontSize
+    );
+
+  const lineHeight =
+    parseFloat(
+      getComputedStyle(title).lineHeight
+    );
+
+  const maxHeight =
+    (lineHeight * 2) + 2;
+
+  while(
+    title.scrollHeight > maxHeight &&
+    size > 18
+  ){
+
+    size--;
+
+    title.style.fontSize =
+      size + "px";
+
+  }
+
+}  
+
 async function loadTranslations(language){
 
   let response =
@@ -143,6 +177,8 @@ document
 
   document.getElementById("systemTitle").innerText =
     translations.systemTitle;
+
+  requestAnimationFrame(fitSystemTitle);
 
   document.getElementById("selectCongregationLabel").innerText =
     translations.selectCongregation;
@@ -284,6 +320,11 @@ ${translations.jobCard} ${job.nummer} - ${job.titel}
 
 }
 
+window.addEventListener(
+  "resize",
+  fitSystemTitle
+);
+  
 (async()=>{
 
   await loadCongregations();
