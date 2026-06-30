@@ -4,13 +4,13 @@
   "undertittel": "Utvendig bygningskontroll",
   "frekvens": "Årlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 5 (E).pdf",
+  "jobbkortPdf": "Jobbkort 5.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "Dette jobbkortet erstatter ikke regelmessig vedlikehold av hageanlegg.",
 

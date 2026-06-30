@@ -4,13 +4,13 @@
   "undertittel": "Ventilasjonsanlegg",
   "frekvens": "Årlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 21 (E).pdf",
+  "jobbkortPdf": "Jobbkort 21.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     "Sjekk at bryter på ventilator fungerer og hør etter om ventilator har unormale lyder.",

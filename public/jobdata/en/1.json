@@ -4,10 +4,10 @@
   "undertittel": "Exterior Building Inspection",
   "frekvens": "Annual inspection",
 
-  "jobbkortPdf": "/pdf/Jobbkort 1 (E).pdf",
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "jobbkortPdf": "Jobbkort 1.pdf",
+  "sjaPdf": "DC-85_N.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "WARNING: Carry out the work safely and follow all applicable safety requirements. (Read DC-82 and complete DC-85.) This inspection does not require anyone to climb onto the roof.",
 

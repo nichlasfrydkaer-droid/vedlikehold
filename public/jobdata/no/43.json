@@ -3,13 +3,13 @@
   "titel": "Medisinskap og førstehjelp",
   "frekvens": "Årlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 43 (E).pdf",
+  "jobbkortPdf": "Jobbkort 43.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     "Kontroller at medisinskapet er godt merket og henger der det skal.",

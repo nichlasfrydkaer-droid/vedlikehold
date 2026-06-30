@@ -4,13 +4,13 @@
   "undertittel": "Lys",
   "frekvens": "Årlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 27 (E).pdf",
+  "jobbkortPdf": "Jobbkort 27.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     "Sjekk at alle markeringslys fungerer i vanlig driftstilstand (Skal lyse hele tiden.) Sjekk at LED diodene på armaturen indikerer at alt fungerer. (Se armaturens manual.) Markeringslysene har en selvtest som den kjører med regelmessige intervaller.",

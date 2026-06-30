@@ -4,13 +4,13 @@
   "undertittel": "Lys",
   "frekvens": "Vedlikehold hvert 2. år",
 
-  "jobbkortPdf": "/pdf/Jobbkort 28 (E).pdf",
+  "jobbkortPdf": "Jobbkort 28.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "<strong>ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger! Hvis man oppdager feil på det elektriske anlegget skal man avslutte kontrollen og kontakte vedlikeholdskoordinator.</strong><br><br>Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i kontakt med lyskilden, rengjør med teknisk sprit.",
 

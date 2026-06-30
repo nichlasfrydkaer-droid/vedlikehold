@@ -4,13 +4,13 @@
   "undertittel": "Dører og vinduer",
   "frekvens": "Halvårlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 10 (E).pdf",
+  "jobbkortPdf": "Jobbkort 10.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "Aldri bruk smøremidler med grafitt i nøkkelsylindere, da dette vil føre til slitasje over tid. Bruk bare PTFE (Teflon) og silikonspray.",
 

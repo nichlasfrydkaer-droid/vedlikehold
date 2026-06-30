@@ -4,13 +4,13 @@
   "undertittel": "Teknisk utstyr",
   "frekvens": "Årlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 40 (E).pdf",
+  "jobbkortPdf": "Jobbkort 40.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     "Utfør en generell elektrisk sjekk. Ta en visuell kontroll av tilstanden til kabler og kontakter, kontroller at de er festet, unngå å dra ut noen kontakter.",

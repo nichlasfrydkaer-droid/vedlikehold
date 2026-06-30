@@ -4,13 +4,13 @@
   "undertittel": "Utvendig bygningskontroll",
   "frekvens": "Årlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 4 (E).pdf",
+  "jobbkortPdf": "Jobbkort 4.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     "Fjern ugress som vokser i fuger i belegningsstein. Bruk plantevernmidler hvis absolutt nødvendig, men forsikre deg om at det blir gjort av kvalifiserte personer med riktige sertifikater. Eddik er et fint alternativ som alle kan bruke. Høytrykk kan vurderes hvis det har roterende dyse og man bruker kvalifiserte personer.",

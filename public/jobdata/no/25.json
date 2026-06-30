@@ -4,13 +4,13 @@
   "undertittel": "Varmtvannsbereder",
   "frekvens": "Toårlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 25 (E).pdf",
+  "jobbkortPdf": "Jobbkort 25.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     {

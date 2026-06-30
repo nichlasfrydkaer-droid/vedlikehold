@@ -4,13 +4,13 @@
   "undertittel": "Brannslukkere",
   "frekvens": "Årlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 11 (E).pdf",
+  "jobbkortPdf": "Jobbkort 11.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "Denne kontrollen skal det kvitteres for, med navn og dato, på merkelapper som limes på produktet. Avvik skal dokumenteres og utbedres så snart som mulig.",
 

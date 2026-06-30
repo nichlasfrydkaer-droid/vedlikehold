@@ -4,13 +4,13 @@
   "undertittel": "VVS anlegg",
   "frekvens": "Årlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 13 (E).pdf",
+  "jobbkortPdf": "Jobbkort 13.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "Informer alle som oppholder seg i bygget i god tid før kontrollen finner sted.<br><br><strong>OBS!</strong> Hvis man merker at en Ballofix-ventil er treg å dreie på, skal man ikke tvinge den!",
 

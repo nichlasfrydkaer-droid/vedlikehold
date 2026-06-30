@@ -4,13 +4,13 @@
   "undertittel": "Brannslukkere",
   "frekvens": "Månedlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 12 (E).pdf",
+  "jobbkortPdf": "Jobbkort 12.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "Personen som utfører dette må ha fått opplæring av personell som kjenner til bransjens anbefalte vedlikeholdsrutiner av brannslukkere.",
 

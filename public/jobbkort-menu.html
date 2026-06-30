@@ -147,11 +147,46 @@ async function loadMenu(){
   const congregation =
   params.get("congregation");
 
-  const response =
-    await fetch(`/jobdata/${jobId}.json`);
+let language = "no";
 
-  const job =
-    await response.json();
+if(congregation){
+
+  const congregationResponse =
+    await fetch(
+      "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/congregations"
+    );
+
+  const congregations =
+    await congregationResponse.json();
+
+  const currentCongregation =
+    congregations.find(
+      c => c.id === congregation
+    );
+
+  language =
+    currentCongregation?.language || "no";
+
+}
+
+let response =
+  await fetch(`/jobdata/${language}/${jobId}.json`);
+
+if(!response.ok){
+
+  response =
+    await fetch(`/jobdata/no/${jobId}.json`);
+
+}
+
+if(!response.ok){
+
+  throw new Error("Jobbkort ikke funnet.");
+
+}
+
+const job =
+  await response.json();
 
   document.getElementById("title").innerText =
     `JOBBKORT ${job.nummer} - ${job.titel.toUpperCase()}`;
@@ -167,37 +202,37 @@ document.getElementById("openBtn").onclick = () => {
 
   document.getElementById("printBtn").onclick = () => {
 
-    window.open(
-      job.jobbkortPdf,
-      "_blank"
-    );
+window.open(
+  `/pdf/${language}/${job.jobbkortPdf}`,
+  "_blank"
+);
 
   };
 
   document.getElementById("sjaBtn").onclick = () => {
 
-    window.open(
-      job.sjaPdf,
-      "_blank"
-    );
+window.open(
+  `/dokumenter/${language}/${job.sjaPdf}`,
+  "_blank"
+);
 
   };
 
   document.getElementById("sjaGuideBtn").onclick = () => {
 
-    window.open(
-      job.sjaVeiledningPdf,
-      "_blank"
-    );
+window.open(
+  `/dokumenter/${language}/${job.sjaVeiledningPdf}`,
+  "_blank"
+);
 
   };
 
   document.getElementById("safeWorkBtn").onclick = () => {
 
-    window.open(
-      job.arbeidTrygtPdf,
-      "_blank"
-    );
+window.open(
+  `/dokumenter/${language}/${job.arbeidTrygtPdf}`,
+  "_blank"
+);
 
   };
 

@@ -4,13 +4,13 @@
   "undertittel": "Alle elektriske tavler og sikringsskap med overspenningsvern",
   "frekvens": "Årlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 31 (E).pdf",
+  "jobbkortPdf": "Jobbkort 31.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "<strong>Dette er kun en visuell kontroll. Ingen deksler må demonteres.</strong> Eventuell feilsøking og utbedring må utføres av sertifisert elektriker i samarbeid med autorisert installatør.",
 

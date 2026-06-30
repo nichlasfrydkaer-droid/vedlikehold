@@ -4,13 +4,13 @@
   "undertittel": "Teknisk utstyr",
   "frekvens": "Årlig vedlikehold",
 
-  "jobbkortPdf": "/pdf/Jobbkort 38 (E).pdf",
+  "jobbkortPdf": "Jobbkort 38.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "oppgaver": [
     {

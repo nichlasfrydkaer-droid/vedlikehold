@@ -4,13 +4,13 @@
   "undertittel": "Strømfordeling",
   "frekvens": "Årlig kontroll",
 
-  "jobbkortPdf": "/pdf/Jobbkort 26 (E).pdf",
+  "jobbkortPdf": "Jobbkort 26.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "Vær alltid <strong>2 personer</strong> på denne oppgaven. Husk lommelykt, det kan bli mørkt når du tar sikringen. Ikke skru av noen deksler i skapet, eller berør strømførende deler. Kun <strong>sertifiserte elektrikere</strong> i samarbeid med <strong>autorisert installatør</strong> får utføre arbeid i sikringskapet/tavlen. Følg gjeldende sikkerhetsrutiner.",
 

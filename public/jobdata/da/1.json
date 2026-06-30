@@ -4,10 +4,10 @@
   "undertittel": "Udvendig bygningskontrol",
   "frekvens": "Årlig kontrol",
 
-  "jobbkortPdf": "/pdf/Jobbkort 1 (D).pdf",
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "jobbkortPdf": "Jobbkort 1 (D).pdf",
+  "sjaPdf": "DC-85_N.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "ADVARSEL: Udfør arbejdet på en sikker måde, og følg gældende sikkerhedskrav. (Læs DC-82 og udfyld DC-85). Inspektionen indebærer ikke, at nogen skal gå op på taget.",
 

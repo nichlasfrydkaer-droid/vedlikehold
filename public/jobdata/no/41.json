@@ -4,13 +4,13 @@
   "undertittel": "Teknisk vedlikehold",
   "frekvens": "Hver 3. måned",
 
-  "jobbkortPdf": "/pdf/Jobbkort 41 (E).pdf",
+  "jobbkortPdf": "Jobbkort 41.pdf",
 
-  "sjaPdf": "/dokumenter/DC-85_N.pdf",
+  "sjaPdf": "DC-85_N.pdf",
 
-  "sjaVeiledningPdf": "/dokumenter/Veiledning Sikker jobb-analyse.pdf",
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
 
-  "arbeidTrygtPdf": "/dokumenter/Arbeid trygt sammen.pdf",
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
 
   "merk": "<strong>MERK:</strong> Siden brannalarmen er koblet sammen med innbruddsalarmen, sørg for å ha koden til alarmen nedskrevet før videre arbeid.<br><br>Kontrolliste for brannalarm brukes for å loggføre test av røykmeldere.",
 
