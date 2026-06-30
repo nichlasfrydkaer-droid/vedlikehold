@@ -23,5 +23,14 @@
   "buttonSending": "⏳ Sender rapport...",
   "alertNameRequired": "Vennligst fyll ut navn.",
   "alertMaxFiles": "Du kan maksimalt vedhæfte {count} bilder.",
-  "alertMaxSize": "De valgte bildene fyller {size} MB.\n\nMaks tillatt størrelse er {max} MB."
+  "alertMaxSize": "De valgte bildene fyller {size} MB.\n\nMaks tillatt størrelse er {max} MB.",
+  "systemTitle": "Vedlikeholdssystem",
+  "selectCongregation": "Velg menighet",
+  "selectJob": "Velg jobbkort",
+  "jobCard": "JOBBKORT",
+  "openJob": "Åpne jobbkort",
+  "print": "Skriv ut",
+  "sja": "Sikker jobb analyse",
+  "sjaGuide": "Veiledning: Sikker jobb-analyse (DC-85)",
+  "safeWork": "Veiledning: Arbeid trygt sammen (DC-82)"
 }

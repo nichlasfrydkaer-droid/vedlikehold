@@ -24,5 +24,14 @@
   "buttonSending": "⏳ Sending report...",
   "alertNameRequired": "Please enter your name.",
   "alertMaxFiles": "You can attach a maximum of {count} photos.",
-  "alertMaxSize": "The selected photos total {size} MB.\n\nMaximum allowed size is {max} MB."
+  "alertMaxSize": "The selected photos total {size} MB.\n\nMaximum allowed size is {max} MB.",
+  "systemTitle": "Maintenance System",
+  "selectCongregation": "Select congregation",
+  "selectJob": "Select job card",
+  "jobCard": "JOB CARD",
+  "openJob": "Open job card",
+  "print": "Print",
+  "sja": "Job Safety Analysis",
+  "sjaGuide": "Guide: Job Safety Analysis (DC-85)",
+  "safeWork": "Guide: Work Safely Together (DC-82)"
 }
