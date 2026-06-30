@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jobbkort</title>
 
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta
+  id="appleAppTitle"
+  name="apple-mobile-web-app-title"
+  content="Jobbkort">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
 <style>
 
 body{
@@ -97,6 +105,8 @@ button:hover{
 
 <script>
 
+let translations = null;  
+  
 function fitJobTitle(){
 
   const title =
@@ -136,6 +146,48 @@ window.addEventListener(
   fitJobTitle
 );
 
+async function loadTranslations(language){
+
+  let response =
+    await fetch(`/lang/${language}.json`);
+
+  if(!response.ok){
+
+    response =
+      await fetch("/lang/no.json");
+
+  }
+
+  translations =
+    await response.json();
+
+  document.title =
+    translations.jobCard;
+
+  document
+    .getElementById("appleAppTitle")
+    .setAttribute(
+      "content",
+      translations.jobCard
+    );
+
+  document.getElementById("openBtn").innerText =
+    translations.openJob;
+
+  document.getElementById("printBtn").innerText =
+    translations.print;
+
+  document.getElementById("sjaBtn").innerText =
+    translations.sja;
+
+  document.getElementById("sjaGuideBtn").innerText =
+    translations.sjaGuide;
+
+  document.getElementById("safeWorkBtn").innerText =
+    translations.safeWork;
+
+}
+  
 async function loadMenu(){
 
   const params =
@@ -167,17 +219,12 @@ if(congregation){
   language =
     currentCongregation?.language || "no";
 
+  await loadTranslations(language);
+
 }
 
 let response =
   await fetch(`/jobdata/${language}/${jobId}.json`);
-
-if(!response.ok){
-
-  response =
-    await fetch(`/jobdata/no/${jobId}.json`);
-
-}
 
 if(!response.ok){
 
@@ -188,8 +235,8 @@ if(!response.ok){
 const job =
   await response.json();
 
-  document.getElementById("title").innerText =
-    `JOBBKORT ${job.nummer} - ${job.titel.toUpperCase()}`;
+document.getElementById("title").innerText =
+  `${translations.jobCard} ${job.nummer} - ${job.titel.toUpperCase()}`;
 
   requestAnimationFrame(fitJobTitle);
   
