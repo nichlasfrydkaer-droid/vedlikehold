@@ -32,5 +32,8 @@
   "print": "Udskriv",
   "sja": "Sikker jobanalyse",
   "sjaGuide": "Vejledning: Sikker jobanalyse (DC-85)",
-  "safeWork": "Vejledning: Arbejd sikkert sammen (DC-82)"
+  "safeWork": "Vejledning: Arbejd sikkert sammen (DC-82)",
+  "reportSent": "Rapport sendt!",
+  "reportSentText": "Rapporten er sendt til Vedligeholdelsessystemet.",
+  "closePage": "Du kan nu lukke siden."
 }
