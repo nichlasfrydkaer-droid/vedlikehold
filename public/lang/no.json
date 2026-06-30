@@ -23,5 +23,9 @@
   "buttonSending": "⏳ Sender rapport...",
   "alertNameRequired": "Vennligst fyll ut navn.",
   "alertMaxFiles": "Du kan maksimalt vedhæfte {count} bilder.",
-  "alertMaxSize": "De valgte bildene fyller {size} MB.\n\nMaks tillatt størrelse er {max} MB."
+  "alertMaxSize": "De valgte bildene fyller {size} MB.\n\nMaks tillatt størrelse er {max} MB.",
+  "systemTitle": "Vedlikeholdssystem",
+  "selectCongregation": "Velg menighet",
+  "selectJob": "Velg jobbkort",
+  "jobCard": "JOBBKORT"
 }
