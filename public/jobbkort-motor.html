@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jobbkort</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta
+  id="appleAppTitle"
+  name="apple-mobile-web-app-title"
+  content="Jobbkort">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 *{
   box-sizing:border-box;
@@ -262,13 +269,6 @@ let response =
 
 if(!response.ok){
 
-  response =
-    await fetch(`/jobdata/no/${id}.json`);
-
-}
-
-if(!response.ok){
-
   throw new Error("Kunne ikke indlæse jobbkort.");
 
 }
@@ -342,10 +342,16 @@ document.getElementById("photosLabel").innerText =
   translations?.photos || "Bilder";
 }
 document.title =
-  `Jobbkort ${currentJob.nummer}`;
+  `${translations.jobCard} ${currentJob.nummer}`;
+document
+  .getElementById("appleAppTitle")
+  .setAttribute(
+    "content",
+    translations.jobCard
+  );
 
 document.getElementById("jobTitle").innerText =
-  `JOBBKORT ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
+  `${translations.jobCard} ${currentJob.nummer} - ${currentJob.titel.toUpperCase()}`;
 
 if(currentJob.undertittel){
 
