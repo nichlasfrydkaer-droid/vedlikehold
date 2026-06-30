@@ -696,7 +696,10 @@ document
 generatePDF();
 
 });
-  async function generatePDF(){
+
+async function generatePDF(){
+
+  clearInterval(timerInterval);
 
   const { jsPDF } = window.jspdf;
 
