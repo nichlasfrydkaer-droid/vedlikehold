@@ -1,0 +1,32 @@
+{
+  "nummer": "9",
+  "titel": "Bygningens struktur",
+  "undertittel": "Strukturelle elementer",
+  "frekvens": "Årlig vedlikehold",
+
+  "jobbkortPdf": "Jobbkort 9.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "Kontroller alle bærende konstruksjonselementer (takstoler, dragere, søyler, bjelker, vegger, overliggere og gulv). Under kontrollen bør hvert enkelt element bli undersøkt.",
+
+  "oppgaver": [
+    "Sjekk for nye eller ekspanderende sprekker i gulv, teglsteinsmurer, Leca eller betongmurer.",
+    "Sjekk for synlige ujevnheter og sprekker i gulv.",
+    "Se etter tegn på fukt.",
+    "Sjekk at trapper og rekkverk ikke er løse og se etter tegn på at strukturelle sammenføyninger løsner. Sjekk at trapp/mur ikke siger bort fra vegg.",
+    "Sjekk om trekonstruksjoner er infisert av skadedyr eller insekter.",
+    "Sjekk om bærende søyler (som f.eks. holder oppe tak over inngangsdør) er OK og ikke angrepet av råte. Spesielt nederst i søyleskoen.",
+    "Sjekk for skader på, eller ufullstendig branntetting på brannvegger.",
+    "Over himling, sjekk tilstanden på takkonstruksjonene. Sjekk for sprekker, kutt eller andre tegn på forringing. Se etter misfarging og sprekker på bjelkelaget.",
+    "Over himling, se etter tegn på vannlekkasjer fra taket. Sjekk også at dampsperre er på plass og at det ikke er skader eller hull på denne.",
+    "Se etter muggdannelser (hvitt hårete belegg) eller jordslag (sorte prikker i konsentrerte områder).",
+    "Sjekk at luftingen er i orden og tilstrekkelig."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

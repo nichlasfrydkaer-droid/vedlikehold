@@ -1,0 +1,42 @@
+{
+  "nummer": "10",
+  "titel": "Dører og vinduer",
+  "undertittel": "Dører og vinduer",
+  "frekvens": "Halvårlig vedlikehold",
+
+  "jobbkortPdf": "Jobbkort 10.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "Aldri bruk smøremidler med grafitt i nøkkelsylindere, da dette vil føre til slitasje over tid. Bruk bare PTFE (Teflon) og silikonspray.",
+
+  "oppgaver": [
+    "Åpne og lukk dører for å sjekke at hengsler, dørlås og dørlukker fungerer og at dør er riktig justert.",
+    "Se etter slitasje eller metalltretthet på alle bevegelige deler, håndtak, hengsler osv. Smør og juster hvis nødvendig. Tørk av overflødig smøremiddel.",
+    "Sjekk at alle skruer og bolter er godt skrudd til.",
+    "Undersøk at dør som har dørlukker, lukker seg fint. Juster lukkehastighet og kraft, hvis nødvendig. Hurtig lukking inn til de siste 10 cm, så sakte fart til døren er helt lukket.",
+    "Sjekk tilstanden på branndører og at brannfuge er intakt og ikke malt over.",
+    "Sjekk tilstanden på tetningsfuge rundt dørkarm og at dørens overflater er akseptable.",
+    "Sjekk tilstanden på fuge mot gulv.",
+    "Sjekk tilstanden til dørstopper og kontroller at det er montert der det er behov.",
+    "Sjekk tilstanden til den malte eller lakkerte overflaten på både dørblad og dørkarm. Sjekk at eventuelle pakninger er på plass og at de er hele.",
+    "Sjekk at vinduer som kan åpnes, kan åpnes uten at de henger i karmen, eller sitter fast. Rengjør vinduskarm hele veien rundt.",
+    "Smør hengsel og kontroller at barnesikring virker (vindu skal bare kunne åpnes litt – før barnesikring aktiveres).",
+    "Sjekk utvendig treverk på vinduene for uttørking og råte. Pusses og males (skift råtne deler) ved behov.",
+    "Sjekk tilstanden til gardiner. At de er rene og fungerer som de skal. Kontroller at de ikke dekker til panelovner.",
+
+    {
+      "overskrift": "Inngangsparti & Rømningsdører",
+      "punkter": [
+        "Sjekk at nødutstyr, slikt som panikkbeslag på dører, er riktig montert og fungerer som det skal. Sjekk at dørmatter ligger forsvarlig og uten snublekanter.",
+        "Sjekk tilstanden på inngangsparti med tak og vegger. Sjekk at det er i forsvarlig stand og at overflater og beslag er i god stand. Sjekk at dørmatter og dørrister er i en forsvarlig tilstand. Sjekk at fuger er i orden."
+      ]
+    }
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

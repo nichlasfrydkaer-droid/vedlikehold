@@ -1,0 +1,27 @@
+{
+  "nummer": "41",
+  "titel": "Brann og innbruddsalarm",
+  "undertittel": "Teknisk vedlikehold",
+  "frekvens": "Hver 3. måned",
+
+  "jobbkortPdf": "Jobbkort 41.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "<strong>MERK:</strong> Siden brannalarmen er koblet sammen med innbruddsalarmen, sørg for å ha koden til alarmen nedskrevet før videre arbeid.<br><br>Kontrolliste for brannalarm brukes for å loggføre test av røykmeldere.",
+
+  "oppgaver": [
+    "Test røykmeldere med egnet testgass og kontroller at brannalarmen aktiveres. Test minst 1 forskjellig detektor hver gang. Loggfør hvilken detektor som ble testet i egen kontrolliste.",
+    "Sørg for at kontrollen blir dokumentert av vedlikeholdskoordinatoren i MNT-skjema. Hvis noe ikke fungerer så er det viktig at dette blir registrert og at man gjør tiltak for å rette feilen så snart som mulig.",
+    "Sjekk om brannalarmen er satt i drift igjen ved å taste alarmkoden.",
+    "Aktiver innbruddsalarmen, test funksjonen ved å utløse bevegelsessensor.",
+    "Sjekk om innbruddsalarmen er satt i drift igjen ved å taste alarmkoden.",
+    "Sjekk datoen for siste batteriskift. Batteriet må maks være 3 år gammelt. (Noter dato på batteriet når det er nytt)"
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

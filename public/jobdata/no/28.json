@@ -1,0 +1,49 @@
+{
+  "nummer": "28",
+  "titel": "Alle lysarmaturer og elektriske komponenter",
+  "undertittel": "Lys",
+  "frekvens": "Vedlikehold hvert 2. år",
+
+  "jobbkortPdf": "Jobbkort 28.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "<strong>ADVARSEL: Vær nøye med å ivareta sikkerheten. Ikke rør noen elektriske koblinger! Hvis man oppdager feil på det elektriske anlegget skal man avslutte kontrollen og kontakte vedlikeholdskoordinator.</strong><br><br>Når man rengjør lamper der lyskilden er halogenpærer, ikke berør pærene med huden da dette kan forkorte lyskildens levetid. Hvis man likevel kommer i kontakt med lyskilden, rengjør med teknisk sprit.",
+
+  "oppgaver": [
+    "Kontroller at det IKKE brukes noen skjøteledninger permanent. (Kun tillatt for midlertidig arbeid)",
+
+    {
+      "overskrift": "Lamper",
+      "punkter": [
+        "Før rengjøring, sjekk funksjonen til alle lysstoffrør og startere. Dette kan gjøre ved å se etter blinkende lysstoffrør og høre etter ulyder fra lamper.",
+        "Slå av strømmen hvis nødvendig. Finn riktig kurs i el-tavlen og sørg for at vernet er låst med lock-out.",
+        "Bruk rene bomullshansker når raster (gitter) skal demonteres. Dette fordi fingermerker setter permanente merker.",
+        "Sjekk tilstanden til lampen.",
+        "Erstatt ødelagte deksler, rister eller reflektorer.",
+        "Undersøk pærens/rørets innfestning. Smøres med egnet smøremiddel – spør en elektriker.",
+        "Hvis endene på lysstoffrørene blitt svarte (ikke grå) mer enn 25 mm, bytt rør.",
+        "Starter byttes samtidig som lysrør.",
+        "Bytt alle lysrør samtidig. (Vanlig levetid 5–7 år.) Hvis dette er aktuelt, bør vedlikeholdskoordinator kontakte LDC via drift og vedlikeholdsinspektøren.",
+        "Hvis det er nødvendig å rengjøre lampene, demonter rister, reflektorer eller diffusere. Vær forsiktig når det skal demonteres noe av plast, da dette kan ha blitt sprøtt og brekker lett. Ikke bruk etsende eller sterke vaskemidler.",
+        "Monter lampen sammen igjen.",
+        "Slå på sikringen igjen når kontrollen er fullført."
+      ]
+    },
+
+    {
+      "overskrift": "Veggpunkter",
+      "punkter": [
+        "Sjekk at alle brytere og stikkontakter er faste og montert beint.",
+        "Sjekk at elektriske panelovner er montert ordentlig, sitter godt nok fast i vegg og at de er rengjorte. (Støvsuges og tørkes av med mildt rengjøringsprodukt.)",
+        "Sjekk alle ledninger og brytere på alle lamper. Se etter om ytre isolasjon er dradd ut av støpsel eller brytere."
+      ]
+    }
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

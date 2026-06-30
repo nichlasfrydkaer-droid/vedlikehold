@@ -1,0 +1,24 @@
+{
+  "nummer": "5",
+  "titel": "Hageområder",
+  "undertittel": "Utvendig bygningskontroll",
+  "frekvens": "Årlig kontroll",
+
+  "jobbkortPdf": "Jobbkort 5.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "Dette jobbkortet erstatter ikke regelmessig vedlikehold av hageanlegg.",
+
+  "oppgaver": [
+    "Se etter vegetasjon nær bygninger som må beskjæres/trimmes, for å forhindre at det utvikles fukt. Kontroller at ingen planter eller trær vokser opp inntil veggene. Ha rikelig med luft rundt huset. Fjern beplantning som kan skade huset. Fjern også ugress og andre vekster fra singelgang rundt huset.",
+    "Kontroller at ikke røtter fører til skade på gangveier, veier eller grunnmur.",
+    "Sjekk hele tomten for tegn på jorderosjon. For eksempel unormale hull eller søkk i bakken."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

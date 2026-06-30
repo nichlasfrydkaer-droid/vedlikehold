@@ -1,0 +1,34 @@
+{
+  "nummer": "33",
+  "titel": "Støvsugere",
+  "undertittel": "Husholdningsutstyr",
+  "frekvens": "Årlig vedlikehold",
+
+  "jobbkortPdf": "Jobbkort 33.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "<strong>ADVARSEL: Dra ut støpsel før det utføres vedlikehold eller reparasjoner!</strong>",
+
+  "oppgaver": [
+    "Utfør en generell elektrisk kontroll. Sjekk tilstanden på elektriske kabler og støpsler.",
+    "Sjekk tilstanden og funksjonen på alle brytere og bryterhjul.",
+    "Sjekk at beskyttelse er intakt, at hjul og kabelinntrekk fungerer.",
+    "Sjekk om motor vibrerer unormalt mye, når man slår på og av maskin.",
+    "Hør om det er ulyd i lagrene i motoren.",
+    "Rengjør innsiden av enheten, luftinntaket og motoren.",
+    "Demonter utluftsfilter og rengjør dette hvis nødvendig. Filteret bør skiftes en gang i året.",
+    "Sjekk tilstanden på slangen og dens tilkoblinger.",
+    "Demonter innluftsfilter (beskytter motor) og rengjør hvis nødvendig. Skift til nytt, hvis det gamle viser tegn til slitasje.",
+    "Fjern alle tråder og hår som har satt seg fast i hjulene på børstehodet.",
+    "Sjekk enheten for løse muttere, bolter og skruer.",
+    "Sjekk om tilbehøret er i en god tilstand og fungerer.",
+    "Utfør en funksjonstest."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

@@ -1,0 +1,21 @@
+{
+  "nummer": "43",
+  "titel": "Medisinskap og førstehjelp",
+  "frekvens": "Årlig vedlikehold",
+
+  "jobbkortPdf": "Jobbkort 43.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "oppgaver": [
+    "Kontroller at medisinskapet er godt merket og henger der det skal.",
+    "Sjekk tilstanden til innholdet. Er det gått ut på dato? Stemmer innholdet med beskrivelsen?",
+    "Hvis det er en båre på huset, er den da godt merket og tilgjengelig?"
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jobbkort</title>
 
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta
+  id="appleAppTitle"
+  name="apple-mobile-web-app-title"
+  content="Jobbkort">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
 <style>
 
 body{
@@ -60,6 +68,10 @@ button:hover{
   opacity:.95;
 }
 
+.docRef{
+  white-space:nowrap;
+}  
+
 </style>
 </head>
 
@@ -96,6 +108,8 @@ button:hover{
 </div>
 
 <script>
+
+let translations = null;
 
 function fitJobTitle(){
 
@@ -136,6 +150,48 @@ window.addEventListener(
   fitJobTitle
 );
 
+async function loadTranslations(language){
+
+  let response =
+    await fetch(`/lang/${language}.json`);
+
+  if(!response.ok){
+
+    response =
+      await fetch("/lang/no.json");
+
+  }
+
+  translations =
+    await response.json();
+
+  document.title =
+    translations.jobCard;
+
+  document
+    .getElementById("appleAppTitle")
+    .setAttribute(
+      "content",
+      translations.jobCard
+    );
+
+  document.getElementById("openBtn").innerText =
+    translations.openJob;
+
+  document.getElementById("printBtn").innerText =
+    translations.print;
+
+  document.getElementById("sjaBtn").innerText =
+    translations.sja;
+
+document.getElementById("sjaGuideBtn").innerHTML =
+  translations.sjaGuide;
+
+document.getElementById("safeWorkBtn").innerHTML =
+  translations.safeWork;
+
+}
+
 async function loadMenu(){
 
   const params =
@@ -144,28 +200,61 @@ async function loadMenu(){
   const jobId =
     params.get("id") || "41";
 
-  const response =
-    await fetch(`/jobdata/${jobId}.json`);
+  const congregation =
+    params.get("congregation");
+
+  let language = "no";
+
+  if(congregation){
+
+    const congregationResponse =
+      await fetch(
+        "https://api.vedlikeholdsystem.no/congregations"
+      );
+
+    const congregations =
+      await congregationResponse.json();
+
+    const currentCongregation =
+      congregations.find(
+        c => c.id === congregation
+      );
+
+    language =
+      currentCongregation?.language || "no";
+
+  }
+
+  await loadTranslations(language);
+
+  let response =
+    await fetch(`/jobdata/${language}/${jobId}.json`);
+
+  if(!response.ok){
+
+    throw new Error("Jobbkort ikke funnet.");
+
+  }
 
   const job =
     await response.json();
 
   document.getElementById("title").innerText =
-    `JOBBKORT ${job.nummer} - ${job.titel.toUpperCase()}`;
+    `${translations.jobCard} ${job.nummer} - ${job.titel.toUpperCase()}`;
 
   requestAnimationFrame(fitJobTitle);
 
   document.getElementById("openBtn").onclick = () => {
 
     location.href =
-      `/jobbkort-motor.html?id=${job.nummer}`;
+      `/jobbkort-motor.html?id=${job.nummer}&congregation=${congregation}`;
 
   };
 
   document.getElementById("printBtn").onclick = () => {
 
     window.open(
-      job.jobbkortPdf,
+      `/pdf/${language}/${job.jobbkortPdf}`,
       "_blank"
     );
 
@@ -174,7 +263,7 @@ async function loadMenu(){
   document.getElementById("sjaBtn").onclick = () => {
 
     window.open(
-      job.sjaPdf,
+      `/dokumenter/${language}/${job.sjaPdf}`,
       "_blank"
     );
 
@@ -183,7 +272,7 @@ async function loadMenu(){
   document.getElementById("sjaGuideBtn").onclick = () => {
 
     window.open(
-      job.sjaVeiledningPdf,
+      `/dokumenter/${language}/${job.sjaVeiledningPdf}`,
       "_blank"
     );
 
@@ -192,7 +281,7 @@ async function loadMenu(){
   document.getElementById("safeWorkBtn").onclick = () => {
 
     window.open(
-      job.arbeidTrygtPdf,
+      `/dokumenter/${language}/${job.arbeidTrygtPdf}`,
       "_blank"
     );
 
@@ -203,6 +292,6 @@ async function loadMenu(){
 loadMenu();
 
 </script>
-
+  
 </body>
 </html>

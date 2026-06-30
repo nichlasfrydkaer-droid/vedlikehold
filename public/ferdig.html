@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Rapport sendt</title>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta
+  id="appleAppTitle"
+  name="apple-mobile-web-app-title"
+  content="Rapport sendt">
+<meta
+  name="apple-mobile-web-app-status-bar-style"
+  content="default">
 
 <style>
 
@@ -27,7 +38,7 @@ body{
   background:white;
   padding:40px;
   border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
 
   max-width:500px;
   width:90%;
@@ -64,15 +75,86 @@ p{
 
   <div class="check">✓</div>
 
-  <h1>Rapport sendt!</h1>
+  <h1 id="title">
+    Rapport sendt!
+  </h1>
 
-  <p>
+  <p id="text">
     Rapporten er sendt til vedlikeholdssystemet.
     <br><br>
     Du kan nå lukke siden.
   </p>
 
 </div>
+
+<script>
+
+let translations = null;
+
+async function loadPage(){
+
+  const params =
+    new URLSearchParams(window.location.search);
+
+  const congregation =
+    params.get("congregation");
+
+  let language = "no";
+
+  if(congregation){
+
+    const congregationResponse =
+      await fetch(
+        "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/congregations"
+      );
+
+    const congregations =
+      await congregationResponse.json();
+
+    const currentCongregation =
+      congregations.find(
+        c => c.id === congregation
+      );
+
+    language =
+      currentCongregation?.language || "no";
+
+  }
+
+  let response =
+    await fetch(`/lang/${language}.json`);
+
+  if(!response.ok){
+
+    response =
+      await fetch("/lang/no.json");
+
+  }
+
+  translations =
+    await response.json();
+
+  document.title =
+    translations.reportSent;
+
+  document
+    .getElementById("appleAppTitle")
+    .setAttribute(
+      "content",
+      translations.reportSent
+    );
+
+  document.getElementById("title").innerText =
+    translations.reportSent;
+
+  document.getElementById("text").innerHTML =
+    `${translations.reportSentText}<br><br>${translations.closePage}`;
+
+}
+
+loadPage();
+
+</script>
 
 </body>
 </html>

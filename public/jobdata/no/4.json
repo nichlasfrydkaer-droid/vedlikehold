@@ -1,0 +1,28 @@
+{
+  "nummer": "4",
+  "titel": "Belegningsstein og fortau",
+  "undertittel": "Utvendig bygningskontroll",
+  "frekvens": "Årlig kontroll",
+
+  "jobbkortPdf": "Jobbkort 4.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "oppgaver": [
+    "Fjern ugress som vokser i fuger i belegningsstein. Bruk plantevernmidler hvis absolutt nødvendig, men forsikre deg om at det blir gjort av kvalifiserte personer med riktige sertifikater. Eddik er et fint alternativ som alle kan bruke. Høytrykk kan vurderes hvis det har roterende dyse og man bruker kvalifiserte personer.",
+    "Sjekk at det ikke er løse stein og hull. Må utbedres.",
+    "Sjekk at alle kantsteiner er på plass og at de ikke er skadet eller løse. Se etter tegn på at belegningsstein og kantstein har sunket, da det kan bety setningsskader og bevegelser i grunnen.",
+    "Undersøk veikanten. Sjekk at ikke erosjon har funnet sted. Veikanten beskytter underliggende veidekke og forhindre setningsskader på veien.",
+    "Sjekk at alle avløp er i orden. Forsikre deg om at alle avløps- og overvannsrør ikke er blokkert.",
+    "Sjekk for oljesøl og flekker. Fjern disse med et passende avfettingsmiddel.",
+    "Sjekk inngangspartiet for synlige sprekker.",
+    "Kontroller at grusdekke er fritt for vannansamlinger og hull.",
+    "Sjekk om overvannskummer og sandfangkummer er fylt opp av sand og jord. Rengjør kummer og sluker hvis nødvendig."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}

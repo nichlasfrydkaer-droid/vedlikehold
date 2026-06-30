@@ -1,0 +1,32 @@
+{
+  "nummer": "26",
+  "titel": "Sikringsskap",
+  "undertittel": "Strømfordeling",
+  "frekvens": "Årlig kontroll",
+
+  "jobbkortPdf": "Jobbkort 26.pdf",
+
+  "sjaPdf": "DC-85_N.pdf",
+
+  "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
+
+  "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
+
+  "merk": "Vær alltid <strong>2 personer</strong> på denne oppgaven. Husk lommelykt, det kan bli mørkt når du tar sikringen. Ikke skru av noen deksler i skapet, eller berør strømførende deler. Kun <strong>sertifiserte elektrikere</strong> i samarbeid med <strong>autorisert installatør</strong> får utføre arbeid i sikringskapet/tavlen. Følg gjeldende sikkerhetsrutiner.",
+
+  "oppgaver": [
+    "Vurder sikkerheten! Er det ting i tavla som ser farlig ut, løse ledninger, åpne felt som gjør det mulig å ta på strømførende komponenter? Noter ned info, avslutt kontrollen og ta kontakt med driftsutvalget.",
+    "Se etter varmgang i komponenter. Kjenn med fingrene utenpå sikringene om de er varm. Ved varme over 37 grader, meld fra til vedlikeholdskoordinator.",
+    "Se om det finnes noen synlige skader.",
+    "Se etter tegn på fukt.",
+    "Fjern alt som ikke hører til i skapet. Ikke kast ukritisk – er du i tvil gi det til vedlikeholdskoordinatoren. Kanskje det er dokumenter som skal være i permer med bygningsdokumentasjon. Rengjør skapet med støvsuger påmontert børste.",
+    "Sjekk at bruksanvisning for bruk av jordfeilbrytere er hengt opp på tavledøren og er leselig.",
+    "Sjekk at jordfeilbryter-funksjonen på alle sikringene fungerer. (Husk lommelykt) Trykk inn testknapp slik at sikringen løser ut. Hvis den løser ut, er den ok – slå på igjen. Hvis den ikke løser ut på testknapp, slå av sikringen manuelt, vent noen sekunder og slå den på igjen. Prøv nå testknappen en gang til. Hvis den løser ut nå er den ok. Hvis ikke, noter ned info som følges opp av vedlikeholdskoordinator.",
+    "Sjekk at jordfeilvarsleren fungerer. Alarm skal høres i panelet i inngangspartiet når man trykker inn test-knappen. Hvis ikke, noter ned info til vedlikeholdskoordinator.",
+    "Sjekk kursfortegnelsene. Er de lett tilgjengelig og lesbare?",
+    "Sjekk at sikkerhetssystemet for å låse sikringer og servicebrytere er tilgjengelig, og er i orden. (Lockout/tagout-system - LOTO).",
+    "Sjekk at det er utført el-kontroll av bygget av autorisert elektroinstallatør innenfor de 4 siste årene. Informasjon om dette skal oppbevares i perm 1 (Kap. 3 punkt 1) og at eventuelle avvik er lukket."
+  ],
+
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+}
