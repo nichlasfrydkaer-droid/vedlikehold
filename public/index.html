@@ -1,3 +1,106 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vedlikeholdssystem</title>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vedlikeholdssystem">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  margin:0;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+}
+
+.selectBox{
+  margin:25px 0;
+}
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+select{
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  border-radius:8px;
+}
+
+ul{
+  list-style:none;
+  padding:0;
+}
+
+li{
+  margin:12px 0;
+}
+
+a{
+  display:block;
+  padding:15px;
+  background:#28a745;
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+a:hover{
+  opacity:.9;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Vedlikeholdssystem</h1>
+
+<div class="selectBox">
+
+<label>Velg menighet</label>
+
+<select id="congregationSelect"></select>
+
+</div>
+
+<p>Velg jobbkort:</p>
+
+<ul id="jobList"></ul>
+
+</div>
+
+</div>
+
 <script>
 
 let selectedCongregation = "";
@@ -15,6 +118,8 @@ async function loadCongregations(){
 
   const select =
     document.getElementById("congregationSelect");
+
+  select.innerHTML = "";
 
   congregations
     .filter(c => c.active !== false)
@@ -34,7 +139,7 @@ async function loadCongregations(){
   const saved =
     localStorage.getItem("congregation");
 
-  if(saved){
+  if(saved && congregations.some(c=>c.id===saved)){
 
     select.value = saved;
 
@@ -93,9 +198,22 @@ async function loadJobs(){
   list.innerHTML = "";
 
   jobs
-    .sort((a,b)=>
-      Number(a.nummer)-Number(b.nummer)
-    )
+    .sort((a,b)=>{
+
+      const na =
+        parseInt(a.nummer);
+
+      const nb =
+        parseInt(b.nummer);
+
+      if(na !== nb){
+        return na-nb;
+      }
+
+      return a.nummer.localeCompare(b.nummer);
+
+    })
+
     .forEach(job=>{
 
       const li =
@@ -113,7 +231,7 @@ Jobbkort ${job.nummer} - ${job.titel}
 
 }
 
-(async ()=>{
+(async()=>{
 
   await loadCongregations();
 
@@ -122,3 +240,6 @@ Jobbkort ${job.nummer} - ${job.titel}
 })();
 
 </script>
+
+</body>
+</html>
