@@ -16,30 +16,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate index.json
+      - name: Generate index.json files
         run: |
           python3 << 'EOF'
           import json
           import glob
+          import os
           import re
-
-          jobs = []
-
-          for file in glob.glob("public/jobdata/no/*.json"):
-              if file.endswith("index.json"):
-                  continue
-
-              try:
-                  with open(file, "r", encoding="utf-8") as f:
-                      data = json.load(f)
-
-                  jobs.append({
-                      "nummer": str(data.get("nummer", "")),
-                      "titel": data.get("titel", "")
-                  })
-
-              except Exception as e:
-                  print(f"Fejl i {file}: {e}")
 
           def sort_key(job):
               match = re.match(r"(\d+)(.*)", str(job["nummer"]))
@@ -51,23 +34,52 @@ jobs:
 
               return (9999, "")
 
-          jobs.sort(key=sort_key)
+          language_folders = glob.glob("public/jobdata/*")
 
-          with open("public/jobdata/no/index.json", "w", encoding="utf-8") as f:
-              json.dump(jobs, f, ensure_ascii=False, indent=2)
+          for folder in language_folders:
 
-          print(f"Genererede index.json med {len(jobs)} jobbkort")
+              if not os.path.isdir(folder):
+                  continue
+
+              jobs = []
+
+              for file in glob.glob(f"{folder}/*.json"):
+
+                  if file.endswith("index.json"):
+                      continue
+
+                  try:
+                      with open(file, "r", encoding="utf-8") as f:
+                          data = json.load(f)
+
+                      jobs.append({
+                          "nummer": str(data.get("nummer", "")),
+                          "titel": data.get("titel", "")
+                      })
+
+                  except Exception as e:
+                      print(f"Fejl i {file}: {e}")
+
+              jobs.sort(key=sort_key)
+
+              index_file = os.path.join(folder, "index.json")
+
+              with open(index_file, "w", encoding="utf-8") as f:
+                  json.dump(jobs, f, ensure_ascii=False, indent=2)
+
+              print(f"Genererede {index_file} med {len(jobs)} jobbkort")
+
           EOF
 
-      - name: Commit updated index.json
+      - name: Commit updated index.json files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add public/jobdata/no/index.json
+          git add public/jobdata/*/index.json
 
           if ! git diff --cached --quiet; then
-            git commit -m "Auto-update job index"
+            git commit -m "Auto-update job indexes"
             git pull --rebase
             git push
           fi
