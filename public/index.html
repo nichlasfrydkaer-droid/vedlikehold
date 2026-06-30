@@ -115,7 +115,9 @@ function fitSystemTitle(){
   const title =
     document.getElementById("systemTitle");
 
-  title.style.fontSize = "";
+  title.style.fontSize = "32px";
+
+let size = 32;
 
   let size =
     parseFloat(
@@ -132,7 +134,7 @@ function fitSystemTitle(){
 
   while(
     title.scrollHeight > maxHeight &&
-    size > 18
+    size > 14
   ){
 
     size--;
