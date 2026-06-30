@@ -235,8 +235,46 @@ const id =
 
 const congregationId =
   params.get("congregation");
-  const response =
-    await fetch(`/jobdata/${id}.json`);
+let language = "no";
+
+if(congregationId){
+
+  const congregationResponse =
+    await fetch(
+      "https://jobbkort-mail-v2.nichlasfrydkaer.workers.dev/congregations"
+    );
+
+  const congregations =
+    await congregationResponse.json();
+
+  currentCongregation =
+    congregations.find(
+      c => c.id === congregationId
+    ) || null;
+
+  language =
+    currentCongregation?.language || "no";
+
+}
+
+let response =
+  await fetch(`/jobdata/${language}/${id}.json`);
+
+if(!response.ok){
+
+  response =
+    await fetch(`/jobdata/no/${id}.json`);
+
+}
+
+if(!response.ok){
+
+  throw new Error("Kunne ikke indlæse jobbkort.");
+
+}
+
+currentJob =
+  await response.json();
   currentJob =
     await response.json();
   if(congregationId){
