@@ -117,24 +117,11 @@ function fitSystemTitle(){
 
   title.style.fontSize = "32px";
 
-let size = 32;
-
-  let size =
-    parseFloat(
-      getComputedStyle(title).fontSize
-    );
-
-  const lineHeight =
-    parseFloat(
-      getComputedStyle(title).lineHeight
-    );
-
-  const maxHeight =
-    (lineHeight * 2) + 2;
+  let size = 32;
 
   while(
-    title.scrollHeight > maxHeight &&
-    size > 14
+    title.scrollWidth > title.clientWidth &&
+    size > 16
   ){
 
     size--;
@@ -144,7 +131,7 @@ let size = 32;
 
   }
 
-}  
+}
 
 async function loadTranslations(language){
 
