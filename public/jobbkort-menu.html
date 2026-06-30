@@ -219,10 +219,10 @@ if(congregation){
   language =
     currentCongregation?.language || "no";
 
-  await loadTranslations(language);
-
 }
 
+  await loadTranslations(language);  
+  
 let response =
   await fetch(`/jobdata/${language}/${jobId}.json`);
 
