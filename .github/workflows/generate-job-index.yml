@@ -67,6 +67,7 @@ jobs:
           git add public/jobdata/no/index.json
 
           if ! git diff --cached --quiet; then
-            git commit -m "Auto-update job index"
-            git push
+          git commit -m "Auto-update job index"
+          git pull --rebase
+          git push
           fi
