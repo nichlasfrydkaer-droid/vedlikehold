@@ -109,6 +109,42 @@ a:hover{
 let selectedCongregation = "";
 let currentCongregation = null;
 let translations = null;
+  
+function fitSystemTitle(){
+
+  const title =
+    document.getElementById("systemTitle");
+
+  title.style.fontSize = "";
+
+  let size =
+    parseFloat(
+      getComputedStyle(title).fontSize
+    );
+
+const style =
+  getComputedStyle(title);
+
+const lineHeight =
+  parseFloat(style.lineHeight) ||
+  parseFloat(style.fontSize) * 1.2;
+
+  const maxHeight =
+    (lineHeight * 2) + 2;
+
+  while(
+    title.scrollHeight > maxHeight &&
+    size > 14
+  ){
+
+    size--;
+
+    title.style.fontSize =
+      size + "px";
+
+  }
+
+} 
 
 async function loadTranslations(language){
 
@@ -142,7 +178,9 @@ document
   );
 
   document.getElementById("systemTitle").innerText =
-    translations.systemTitle;
+  translations.systemTitle;
+
+requestAnimationFrame(fitSystemTitle);
 
   document.getElementById("selectCongregationLabel").innerText =
     translations.selectCongregation;
@@ -295,6 +333,11 @@ ${translations.jobCard} ${job.nummer} - ${job.titel}
     });
 
 }
+
+window.addEventListener(
+  "resize",
+  fitSystemTitle
+);
 
 (async()=>{
 
