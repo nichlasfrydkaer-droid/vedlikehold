@@ -110,29 +110,6 @@ let selectedCongregation = "";
 let currentCongregation = null;
 let translations = null;
 
-function fitSystemTitle(){
-
-  const title =
-    document.getElementById("systemTitle");
-
-  title.style.fontSize = "32px";
-
-  let size = 32;
-
-  while(
-    title.scrollWidth > title.clientWidth &&
-    size > 16
-  ){
-
-    size--;
-
-    title.style.fontSize =
-      size + "px";
-
-  }
-
-}
-
 async function loadTranslations(language){
 
   let response =
@@ -166,8 +143,6 @@ document
 
   document.getElementById("systemTitle").innerText =
     translations.systemTitle;
-
-  requestAnimationFrame(fitSystemTitle);
 
   document.getElementById("selectCongregationLabel").innerText =
     translations.selectCongregation;
@@ -224,6 +199,11 @@ async function loadCongregations(){
       c => c.id === selectedCongregation
     ) || null;
 
+    localStorage.setItem(
+  "congregationData",
+  JSON.stringify(currentCongregation)
+);
+
     await loadTranslations(
   currentCongregation?.language || "no"
 );
@@ -237,6 +217,11 @@ async function loadCongregations(){
       congregations.find(
         c => c.id === selectedCongregation
       ) || null;
+
+      localStorage.setItem(
+  "congregationData",
+  JSON.stringify(currentCongregation)
+);
 
       await loadTranslations(
   currentCongregation?.language || "no"
@@ -309,11 +294,6 @@ ${translations.jobCard} ${job.nummer} - ${job.titel}
 
 }
 
-window.addEventListener(
-  "resize",
-  fitSystemTitle
-);
-  
 (async()=>{
 
   await loadCongregations();

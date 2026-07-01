@@ -242,27 +242,15 @@ const id =
 
 const congregationId =
   params.get("congregation");
-let language = "no";
-
-if(congregationId){
-
-  const congregationResponse =
-    await fetch(
-      "https://api.vedlikeholdsystem.no/congregations"
-    );
-
-  const congregations =
-    await congregationResponse.json();
-
   currentCongregation =
-    congregations.find(
-      c => c.id === congregationId
-    ) || null;
+  JSON.parse(
+    localStorage.getItem(
+      "congregationData"
+    )
+  );
 
-  language =
-    currentCongregation?.language || "no";
-
-}
+let language =
+  currentCongregation?.language || "no";
 
 let response =
   await fetch(`/jobdata/${language}/${id}.json`);
@@ -275,24 +263,6 @@ if(!response.ok){
 
 currentJob =
   await response.json();
-
-  if(congregationId){
-
-  const congregationResponse =
-    await fetch(
-      "https://api.vedlikeholdsystem.no/congregations"
-    );
-
-  const congregations =
-    await congregationResponse.json();
-
-currentCongregation =
-  congregations.find(
-    c => c.id === congregationId
-  ) || null;
-
-const language =
-  currentCongregation?.language || "no";
 
 console.log("Language:", language);
 console.log("URL:", `/lang/${language}.json`);
@@ -340,7 +310,7 @@ document.getElementById("notesLabel").innerText =
 
 document.getElementById("photosLabel").innerText =
   translations?.photos || "Bilder";
-}
+
 document.title =
   `${translations.jobCard} ${currentJob.nummer}`;
 document
