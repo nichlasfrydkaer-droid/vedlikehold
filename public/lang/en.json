@@ -32,6 +32,9 @@
   "openJob": "Open job card",
   "print": "Print",
   "sja": "Job Safety Analysis",
-  "sjaGuide": "Guide: Job Safety Analysis (DC-85)",
-  "safeWork": "Guide: Work Safely Together (DC-82)"
+  "sjaGuide": "Guide: Safe Job Analysis <span class=\"docRef\">(DC-85)</span>",
+  "safeWork": "Guide: Work Safely Together <span class=\"docRef\">(DC-82)</span>",
+  "reportSent": "Report sent!",
+  "reportSentText": "The report has been sent to the Maintenance System.",
+  "closePage": "You can now close this page."
 }

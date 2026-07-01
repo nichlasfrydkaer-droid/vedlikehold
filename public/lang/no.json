@@ -31,6 +31,9 @@
   "openJob": "Åpne jobbkort",
   "print": "Skriv ut",
   "sja": "Sikker jobb analyse",
-  "sjaGuide": "Veiledning: Sikker jobb-analyse (DC-85)",
-  "safeWork": "Veiledning: Arbeid trygt sammen (DC-82)"
+  "sjaGuide": "Veiledning: Sikker jobb-analyse <span class=\"docRef\">(DC-85)</span>",
+  "safeWork": "Veiledning: Arbeid trygt sammen <span class=\"docRef\">(DC-82)</span>",
+  "reportSent": "Rapport sendt!",
+  "reportSentText": "Rapporten er sendt til Vedlikeholdsystem.",
+  "closePage": "Du kan nå lukke siden."
 }
