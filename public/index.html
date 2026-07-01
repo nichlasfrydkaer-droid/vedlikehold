@@ -35,6 +35,9 @@ body{
 
 h1{
   text-align:center;
+  font-size:48px;
+  line-height:1.1;
+  margin:0 0 30px;
 }
 
 .selectBox{
@@ -122,29 +125,19 @@ function fitSystemTitle(){
       getComputedStyle(title).fontSize
     );
 
-const style =
-  getComputedStyle(title);
-
-const lineHeight =
-  parseFloat(style.lineHeight) ||
-  parseFloat(style.fontSize) * 1.2;
-
-  const maxHeight =
-    (lineHeight * 2) + 2;
-
   while(
-    title.scrollHeight > maxHeight &&
+    title.scrollWidth > title.clientWidth &&
     size > 14
   ){
 
-    size--;
+    size -= 0.5;
 
     title.style.fontSize =
       size + "px";
 
   }
 
-} 
+}
 
 async function loadTranslations(language){
 
