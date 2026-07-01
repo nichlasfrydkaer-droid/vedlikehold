@@ -154,10 +154,12 @@ document
 
 async function loadCongregations(){
 
-  const response =
-    await fetch(
-      "https://api.vedlikeholdsystem.no/congregations"
-    );
+const response = await fetch(
+  "https://api.vedlikeholdsystem.no/congregations?t=" + Date.now(),
+  {
+    cache: "no-store"
+  }
+);
 
   const congregations =
     await response.json();
