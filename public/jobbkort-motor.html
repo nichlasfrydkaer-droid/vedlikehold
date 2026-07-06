@@ -227,71 +227,17 @@ label{
 </div>
 
 <script type="module">
-import { renderTasks } from "/motor/render.js";
+import { loadJob } from "/motor/loadJob.js";
 import { generatePDF } from "/motor/pdf.js";
-import {
-  startTimer
-} from "/motor/timer.js";  
+import { startTimer } from "/motor/timer.js";
 import {
   initPhotos,
   autoResizeNotes
-} from "/motor/photos.js";  
-import {
-  fitJobTitle,
-  initTitle
-} from "/motor/title.js";  
+} from "/motor/photos.js";
+import { initTitle } from "/motor/title.js";
 import { state } from "/motor/state.js";
-import { dom } from "/motor/dom.js";  
+import { dom } from "/motor/dom.js";
 
-renderTasks();
-
-if(
-  state.currentCongregation &&
-  !state.currentCongregation.settings.allowPhotos
-){
-
-  document.getElementById(
-    "photosSection"
-  ).style.display = "none";
-
-}
-
-if(
-  state.currentCongregation &&
-  !state.currentCongregation.settings.allowComments
-){
-
-  document.getElementById(
-    "commentsSection"
-  ).style.display = "none";
-
-}
-
-if(
-  state.currentCongregation &&
-  !state.currentCongregation.settings.showTime
-){
-
-  document.getElementById(
-    "timeSection"
-  ).style.display = "none";
-
-}
-
-if(
-  state.currentCongregation &&
-  !state.currentCongregation.settings.showName
-){
-
-  document.getElementById(
-    "nameSection"
-  ).style.display = "none";
-
-}
-
-requestAnimationFrame(fitJobTitle);
-
-}
 function startWork(){
 
   startTimer();
@@ -357,10 +303,8 @@ generatePDF();
 });
 
 initTitle();  
-
 initPhotos();
 autoResizeNotes();
-  
 loadJob();
 </script>
 </body>
