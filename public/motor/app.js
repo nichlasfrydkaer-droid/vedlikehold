@@ -6,7 +6,7 @@ import { startWork } from "./work.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 
-export function initApp() {
+export async function initApp() {
 
     initTitle();
 
@@ -23,9 +23,7 @@ export function initApp() {
         if (!navn) {
 
             alert(state.translations.alertNameRequired);
-
             dom.nameInput.focus();
-
             return;
 
         }
@@ -34,6 +32,6 @@ export function initApp() {
 
     });
 
-    loadJob();
+    await loadJob();
 
 }
