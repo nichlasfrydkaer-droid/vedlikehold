@@ -89,9 +89,19 @@ doc.setFontSize(13);
   
   doc.setFont(undefined,"bold");
   
-  y = checkPageSpace(doc, y, 50);
+const notater =
+  dom.notes.value || "-";
 
-doc.text(state.translations.pdfNotes,10,y);
+const noteLines =
+  doc.splitTextToSize(notater, 180);
+
+y = checkPageSpace(
+  doc,
+  y,
+  (noteLines.length * 6) + 20
+);
+
+doc.text(state.translations.pdfNotes, 10, y);
     
 doc.setFontSize(11);
 
