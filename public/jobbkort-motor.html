@@ -227,85 +227,9 @@ label{
 </div>
 
 <script type="module">
-import { loadJob } from "/motor/loadJob.js";
-import { generatePDF } from "/motor/pdf.js";
-import { startTimer } from "/motor/timer.js";
-import {
-  initPhotos,
-  autoResizeNotes
-} from "/motor/photos.js";
-import { initTitle } from "/motor/title.js";
-import { state } from "/motor/state.js";
-import { dom } from "/motor/dom.js";
+import { initApp } from "/motor/app.js";
 
-function startWork(){
-
-  startTimer();
-  
-  document
-    .querySelectorAll(".task")
-    .forEach(x => x.disabled = false);
-if(
-  !state.currentCongregation ||
-  state.currentCongregation.settings.showName
-){
-  dom.nameInput.disabled = false;
-}
-
-if(
-  !state.currentCongregation ||
-  state.currentCongregation.settings.allowComments
-){
-  dom.notes.disabled = false;
-}
-
-if(
-  !state.currentCongregation ||
-  state.currentCongregation.settings.allowPhotos
-){
-  dom.photos.disabled = false;
-}
-dom.startBtn.style.display = "none";
-
-const finishBtn =
-  dom.finishBtn;
-
-finishBtn.style.display = "block";
-finishBtn.classList.add("pulse");
-}
-  
-document
-  .getElementById("startBtn")
-  .addEventListener("click", startWork);
-document
-  .getElementById("finishBtn")
-  .addEventListener("click", () => {
-
-    const navn =
-      dom.nameInput
-      .value
-      .trim();
-
-    if(!navn){
-
-  alert(state.translations.alertNameRequired);
-
-  document
-    .getElementById("nameInput")
-    .focus();
-
-  return;
-
-}
-
-generatePDF();
-
-});
-
-initTitle();  
-initPhotos();
-autoResizeNotes();
-loadJob();
+initApp();
 </script>
 </body>
 </html>
