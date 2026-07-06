@@ -226,7 +226,11 @@ label{
 
 </div>
 
-<script>
+<script type="module">
+import {
+  fitJobTitle,
+  initTitle
+} from "/motor/title.js";  
 import { state } from "/motor/state.js";
 import { config } from "/motor/config.js";
 import { qs, qsa, params } from "/motor/utils.js";
@@ -1061,14 +1065,11 @@ state.selectedPhotos.forEach(photo => {
 const status =
   document.getElementById("status");
 
-const confic.maxFiles = 20;
-const config.maxTotalMB = 75;
-
-if(state.selectedPhotos.length > confic.maxFiles){
+if(state.selectedPhotos.length > config.maxFiles){
 
  alert(
   state.translations.alertMaxFiles
-    .replace("{count}", confic.maxFiles)
+    .replace("{count}", config.maxFiles)
 );
 
   return;
@@ -1144,46 +1145,8 @@ status.innerHTML =
 
 }
 
-function fitJobTitle(){
-
-  const title =
-    document.getElementById("jobTitle");
-
-  // Nulstil til standard H1
-  title.style.fontSize = "";
-
-  let size =
-    parseFloat(
-      getComputedStyle(title).fontSize
-    );
-
-  const lineHeight =
-    parseFloat(
-      getComputedStyle(title).lineHeight
-    );
-
-  const maxHeight =
-  (lineHeight * 2) + 2;
-
-  while(
-    title.scrollHeight > maxHeight &&
-    size > 18
-  ){
-
-    size--;
-
-    title.style.fontSize =
-      size + "px";
-
-  }
-
-}
-
-
-window.addEventListener(
-  "resize",
-  fitJobTitle
-); 
+initTitle();  
+  
 loadJob();
 </script>
 </body>
