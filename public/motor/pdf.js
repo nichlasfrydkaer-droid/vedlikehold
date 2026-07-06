@@ -3,7 +3,7 @@ import { dom } from "./dom.js";
 import { uploadReport } from "./upload.js";
 import { stopTimer } from "./work.js";
 import { checkPageSpace } from "./pdf-utils.js";
-async function generatePDF(){
+export async function generatePDF(){
 
   stopTimer();
 
