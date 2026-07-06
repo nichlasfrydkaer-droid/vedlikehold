@@ -234,6 +234,7 @@ import {
 import { state } from "/motor/state.js";
 import { config } from "/motor/config.js";
 import { qs, qsa, params } from "/motor/utils.js";
+import { dom } from "/motor/dom.js";  
 async function loadJob(){
 const params =
   new URLSearchParams(window.location.search);
@@ -288,10 +289,10 @@ if(!languageResponse.ok){
 state.translations =
 
   await languageResponse.json();
-document.getElementById("startBtn").innerHTML =
+dom.startBtn.innerHTML =
   state.translations?.startWork || "▶ Start arbeidet";
 
-document.getElementById("finishBtn").innerHTML =
+dom.finishBtn.innerHTML =
   state.translations?.finish || "✓ Ferdigmeld";
 
 document.getElementById("frequencyLabel").innerText =
@@ -564,7 +565,7 @@ if(
   !state.currentCongregation ||
   state.currentCongregation.settings.showName
 ){
-  document.getElementById("nameInput").disabled = false;
+  dom.nameInput.disabled = false;
 }
 
 if(
@@ -583,7 +584,7 @@ if(
 dom.startBtn.style.display = "none";
 
 const finishBtn =
-  document.getElementById("finishBtn");
+  dom.finishBtn;
 
 finishBtn.style.display = "block";
 finishBtn.classList.add("pulse");
@@ -595,7 +596,7 @@ finishBtn.classList.add("pulse");
       Math.floor((diff % 3600000) / 60000);
     const s =
       Math.floor((diff % 60000) / 1000);
-    document.getElementById("timeInput").value =
+    dom.timeInput.value =
       String(h).padStart(2,"0") + ":" +
       String(m).padStart(2,"0") + ":" +
       String(s).padStart(2,"0");
@@ -613,7 +614,7 @@ document
     renderPreview();
 });
 
-document.getElementById("notes").addEventListener("input", function() {
+dom.notes.addEventListener("input", function() {
   this.style.height = "auto";
   this.style.height = this.scrollHeight + "px";
 });
@@ -648,7 +649,7 @@ document
   .addEventListener("click", () => {
 
     const navn =
-      document.getElementById("nameInput")
+      dom.nameInput
       .value
       .trim();
 
@@ -714,10 +715,10 @@ if(state.currentJob.undertittel){
 y += 5;
 
   const navn =
-    document.getElementById("nameInput").value;
+    dom.nameInput.value;
 
   const tid =
-    document.getElementById("timeInput").value;
+    dom.timeInput.value;
 
 const datoObj = new Date();
 
@@ -1101,7 +1102,7 @@ status.innerHTML =
 try{
 const finishBtn =
 
-  document.getElementById("finishBtn");
+  dom.finishBtn;
 
 finishBtn.disabled = true;
 
@@ -1132,7 +1133,7 @@ window.location.href =
   console.error(err);
 
   const finishBtn =
-    document.getElementById("finishBtn");
+    dom.finishBtn;
 
   finishBtn.disabled = false;
   finishBtn.innerHTML =
