@@ -1,1 +1,44 @@
+import { state } from "./state.js";
 
+export function applySettings(){
+
+  if(!state.currentCongregation){
+    return;
+  }
+
+  const settings =
+    state.currentCongregation.settings;
+
+  if(!settings.allowPhotos){
+
+    document.getElementById(
+      "photosSection"
+    ).style.display = "none";
+
+  }
+
+  if(!settings.allowComments){
+
+    document.getElementById(
+      "commentsSection"
+    ).style.display = "none";
+
+  }
+
+  if(!settings.showTime){
+
+    document.getElementById(
+      "timeSection"
+    ).style.display = "none";
+
+  }
+
+  if(!settings.showName){
+
+    document.getElementById(
+      "nameSection"
+    ).style.display = "none";
+
+  }
+
+}
