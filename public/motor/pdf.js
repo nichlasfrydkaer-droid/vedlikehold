@@ -1,3 +1,4 @@
+import { drawTasks } from "./pdfTasks.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { uploadReport } from "./upload.js";
