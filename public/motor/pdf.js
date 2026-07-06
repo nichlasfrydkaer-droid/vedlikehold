@@ -120,4 +120,6 @@ doc.text(
 );
 const pdfBlob = doc.output("blob");
 
-await uploadReport(pdfBlob);  
+await uploadReport(pdfBlob);
+
+}
