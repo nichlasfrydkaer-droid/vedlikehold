@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Menighet</title>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dashboard">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f8;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:25px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+h1{
+    margin-top:0;
+}
+
+.section{
+    margin-top:30px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.checkboxList{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(240px,1fr));
+
+    gap:8px;
+
+}
+
+.checkboxList label{
+
+    font-weight:normal;
+
+}
+
+button{
+
+    margin-top:30px;
+
+    padding:15px 25px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#28a745;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    opacity:.9;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Menighet</h1>
+
+<div class="section">
+
+<label>Navn</label>
+
+<input
+id="name"
+type="text">
+
+</div>
+
+<div class="section">
+
+<label>Språk</label>
+
+<select id="language">
+
+<option value="no">Norsk</option>
+
+<option value="da">Dansk</option>
+
+<option value="en">English</option>
+
+</select>
+
+</div>
+
+<div class="section">
+
+<label>E-postmottakere</label>
+
+<div id="emails"></div>
+
+<button
+type="button"
+id="addEmailBtn">
+
++ Legg til e-post
+
+</button>
+
+</div>
+
+<div class="section">
+
+<label>Tilgjengelige jobbkort</label>
+
+<div
+id="jobcards"
+class="checkboxList">
+
+</div>
+
+</div>
+
+<div class="section">
+
+<label>Innstillinger</label>
+
+<div class="checkboxList">
+
+<label>
+<input type="checkbox" id="allowPhotos">
+ Tillat bilder
+</label>
+
+<label>
+<input type="checkbox" id="allowComments">
+ Tillat kommentarer
+</label>
+
+<label>
+<input type="checkbox" id="requirePhotos">
+ Krev bilder
+</label>
+
+<label>
+<input type="checkbox" id="requireComments">
+ Krev kommentarer
+</label>
+
+<label>
+<input type="checkbox" id="showTime">
+ Vis tidsbruk
+</label>
+
+<label>
+<input type="checkbox" id="showName">
+ Vis navn
+</label>
+
+</div>
+
+</div>
+
+<button id="saveBtn">
+
+Lagre
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+console.log("Dashboard klar");
+
+</script>
+
+</body>
+</html>
