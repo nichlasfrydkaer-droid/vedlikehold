@@ -3,7 +3,7 @@ import { drawTasks } from "./pdfTasks.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { uploadReport } from "./upload.js";
-import { stopTimer } from "./work.js";
+import { stopTimer } from "./timer.js";
 export async function generatePDF(){
 
   stopTimer();
