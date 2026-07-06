@@ -3,7 +3,6 @@ import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { uploadReport } from "./upload.js";
 import { stopTimer } from "./work.js";
-import { checkPageSpace } from "./pdf-utils.js";
 export async function generatePDF(){
 
   stopTimer();
