@@ -109,12 +109,6 @@ doc.setFontSize(11);
 
   doc.setFont(undefined,"normal");
 
-const notater =
-  dom.notes.value || "-";
-
-  const noteLines =
-    doc.splitTextToSize(notater,180);
-
   doc.text(noteLines,10,y);
 
   y += (noteLines.length * 6) + 10;
