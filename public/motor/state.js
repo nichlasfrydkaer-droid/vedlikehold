@@ -1,30 +1,14 @@
 export const state = {
 
-  // Menighed
-  congregation: null,
-
-  // Sprog
-  language: "no",
-
-  // Oversættelser
+  currentJob: null,
+  currentCongregation: null,
   translations: null,
 
-  // Jobdata
-  job: null,
-
-  // Timer
-  started: false,
   startTime: null,
-  elapsedSeconds: 0,
+  timerInterval: null,
 
-  // PDF
-  pdfBlob: null,
+  selectedPhotos: [],
 
-  // Fotos
-  photos: [],
-
-  // UI
-  sending: false,
-  finished: false
+  sending: false
 
 };
