@@ -228,6 +228,10 @@ label{
 
 <script type="module">
 import {
+  initPhotos,
+  autoResizeNotes
+} from "/motor/photos.js";  
+import {
   fitJobTitle,
   initTitle
 } from "/motor/title.js";  
@@ -579,7 +583,7 @@ if(
   !state.currentCongregation ||
   state.currentCongregation.settings.allowPhotos
 ){
-  document.getElementById("photos").disabled = false;
+  dom.photos.disabled = false;
 }
 dom.startBtn.style.display = "none";
 
@@ -602,45 +606,7 @@ finishBtn.classList.add("pulse");
       String(s).padStart(2,"0");
   },1000);
 }
-
-document
-  .getElementById("photos")
-  .addEventListener("change", e => {
-    state.selectedPhotos =
-      state.selectedPhotos.concat(
-        Array.from(e.target.files)
-      );
-    e.target.value = "";
-    renderPreview();
-});
-
-dom.notes.addEventListener("input", function() {
-  this.style.height = "auto";
-  this.style.height = this.scrollHeight + "px";
-});
-function renderPreview(){
-  const preview =
-    dom.preview;
-  preview.innerHTML = "";
-  state.selectedPhotos.forEach((file,index)=>{
-    const url =
-      URL.createObjectURL(file);
-    preview.innerHTML += `
-      <div class="previewItem">
-        <img src="${url}">
-        <button
-          class="removeBtn"
-          onclick="removePhoto(${index})">
-          ×
-        </button>
-      </div>
-    `;
-  });
-}
-function removePhoto(index){
-  state.selectedPhotos.splice(index,1);
-  renderPreview();
-}
+  
 document
   .getElementById("startBtn")
   .addEventListener("click", startWork);
@@ -1147,6 +1113,9 @@ status.innerHTML =
 }
 
 initTitle();  
+
+initPhotos();
+autoResizeNotes();
   
 loadJob();
 </script>
