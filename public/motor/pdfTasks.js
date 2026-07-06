@@ -1,3 +1,6 @@
+import { state } from "./state.js";
+import { checkPageSpace } from "./pdf-utils.js";
+export function drawTasks(doc, y){
 let taskIndex = 0; 
 
 state.currentJob.oppgaver.forEach(item => {
@@ -237,3 +240,6 @@ const task =
   }
 
 });
+return y;
+
+}
