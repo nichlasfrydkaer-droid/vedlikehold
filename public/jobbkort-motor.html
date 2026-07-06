@@ -392,75 +392,17 @@ if(state.currentJob.notatInfo){
   notatInfoElement.style.display = "none";
 
 }
+
+renderTasks();
+
+if(
+  state.currentCongregation &&
+  !state.currentCongregation.settings.allowPhotos
+){
   
 }
 
-if(task.tekst){
-
-  const tekst =
-    document.createElement("div");
-
-  tekst.style.marginBottom = "10px";
-  tekst.style.lineHeight = "1.5";
-
-  tekst.innerHTML = task.tekst;
-
-  container.appendChild(tekst);
-
-}
-
-if(task.punkter){
-
-  task.punkter.forEach(punkt => {
-
-    const label =
-      document.createElement("label");
-
-    label.innerHTML =
-      `<input type="checkbox" class="task" disabled> ${punkt}`;
-
-    container.appendChild(label);
-
-  });
-
-}
-
-}
-
-  // Ren tekst uden checkbox
-  else if (
-    typeof task === "object" &&
-    task.tekst
-  ) {
-
-    const tekst =
-      document.createElement("div");
-
-    tekst.style.margin = "10px 0";
-    tekst.style.lineHeight = "1.5";
-
-    tekst.innerHTML = task.tekst;
-
-    container.appendChild(tekst);
-
-  }
-
-  // Almindelig checkbox
-  else {
-
-    const label =
-      document.createElement("label");
-
-    label.innerHTML =
-      `<input type="checkbox" class="task" disabled> ${task}`;
-
-    container.appendChild(label);
-
-  }
-
-
-
-});
+renderTasks();  
 
 if(
   state.currentCongregation &&
