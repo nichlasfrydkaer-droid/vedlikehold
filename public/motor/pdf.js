@@ -82,12 +82,14 @@ doc.text(state.translations.pdfChecklist,10,y);
 y += 12;
 
 doc.setFontSize(10);
-      
-  doc.setFontSize(13);
+
+y = drawTasks(doc, y);
+
+doc.setFontSize(13);
   
   doc.setFont(undefined,"bold");
   
-  checkPageSpace(50);
+  y = checkPageSpace(doc, y, 50);
 
 doc.text(state.translations.pdfNotes,10,y);
     
@@ -97,8 +99,8 @@ doc.setFontSize(11);
 
   doc.setFont(undefined,"normal");
 
-  const notater =
-    document.getElementById("notes").value || "-";
+const notater =
+  dom.notes.value || "-";
 
   const noteLines =
     doc.splitTextToSize(notater,180);
