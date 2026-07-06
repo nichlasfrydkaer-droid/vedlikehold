@@ -260,8 +260,20 @@ if(!response.ok){
 
   list.innerHTML = "";
 
-  jobs
-    .sort((a,b)=>{
+jobs
+  .filter(job => {
+
+    if(!currentCongregation?.jobCards){
+
+      return true;
+
+    }
+
+    return currentCongregation.jobCards.includes(job.nummer);
+
+  })
+
+  .sort((a,b)=>{
 
       const na =
         parseInt(a.nummer);
