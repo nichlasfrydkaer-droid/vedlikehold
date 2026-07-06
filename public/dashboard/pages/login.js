@@ -21,6 +21,13 @@ if(result.success){
     dom.status.innerText =
         "Innlogging vellykket.";
 
+    setTimeout(() => {
+
+        window.location.href =
+            "/dashboard/dashboard.html";
+
+    }, 500);
+
 }else{
 
     dom.status.innerText =
