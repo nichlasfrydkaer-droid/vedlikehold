@@ -35,6 +35,9 @@ body{
 
 h1{
   text-align:center;
+  font-size:48px;
+  line-height:1.1;
+  margin:0 0 30px;
 }
 
 .selectBox{
@@ -109,6 +112,32 @@ a:hover{
 let selectedCongregation = "";
 let currentCongregation = null;
 let translations = null;
+  
+function fitSystemTitle(){
+
+  const title =
+    document.getElementById("systemTitle");
+
+  title.style.fontSize = "";
+
+  let size =
+    parseFloat(
+      getComputedStyle(title).fontSize
+    );
+
+  while(
+    title.scrollWidth > title.clientWidth &&
+    size > 14
+  ){
+
+    size -= 0.5;
+
+    title.style.fontSize =
+      size + "px";
+
+  }
+
+}
 
 async function loadTranslations(language){
 
@@ -142,7 +171,9 @@ document
   );
 
   document.getElementById("systemTitle").innerText =
-    translations.systemTitle;
+  translations.systemTitle;
+
+requestAnimationFrame(fitSystemTitle);
 
   document.getElementById("selectCongregationLabel").innerText =
     translations.selectCongregation;
@@ -154,10 +185,12 @@ document
 
 async function loadCongregations(){
 
-  const response =
-    await fetch(
-      "https://api.vedlikeholdsystem.no/congregations"
-    );
+const response = await fetch(
+  "https://api.vedlikeholdsystem.no/congregations?t=" + Date.now(),
+  {
+    cache: "no-store"
+  }
+);
 
   const congregations =
     await response.json();
@@ -305,6 +338,11 @@ ${translations.jobCard} ${job.nummer} - ${job.titel}
     });
 
 }
+
+window.addEventListener(
+  "resize",
+  fitSystemTitle
+);
 
 (async()=>{
 

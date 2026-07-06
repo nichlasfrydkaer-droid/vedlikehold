@@ -203,12 +203,12 @@ let language = "no";
 
 if(congregation){
 
-const currentCongregation =
-  JSON.parse(
-    localStorage.getItem(
-      "congregationData"
-    )
-  );
+  const currentCongregation =
+    JSON.parse(
+      localStorage.getItem(
+        "congregationData"
+      )
+    );
 
   language =
     currentCongregation?.language || "no";
