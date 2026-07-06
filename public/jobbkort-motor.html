@@ -228,6 +228,10 @@ label{
 
 <script type="module">
 import {
+  startTimer,
+  stopTimer
+} from "/motor/timer.js";  
+import {
   initPhotos,
   autoResizeNotes
 } from "/motor/photos.js";  
@@ -561,7 +565,9 @@ requestAnimationFrame(fitJobTitle);
 
 }
 function startWork(){
-  state.startTime = Date.now();
+
+  startTimer();
+  
   document
     .querySelectorAll(".task")
     .forEach(x => x.disabled = false);
@@ -592,19 +598,6 @@ const finishBtn =
 
 finishBtn.style.display = "block";
 finishBtn.classList.add("pulse");
-  state.timerInterval = setInterval(() => {
-    const diff = Date.now() - state.startTime;
-    const h =
-      Math.floor(diff / 3600000);
-    const m =
-      Math.floor((diff % 3600000) / 60000);
-    const s =
-      Math.floor((diff % 60000) / 1000);
-    dom.timeInput.value =
-      String(h).padStart(2,"0") + ":" +
-      String(m).padStart(2,"0") + ":" +
-      String(s).padStart(2,"0");
-  },1000);
 }
   
 document
@@ -637,7 +630,7 @@ generatePDF();
 
 async function generatePDF(){
 
-  clearInterval(state.timerInterval);
+  stopTimer();
 
   const { jsPDF } = window.jspdf;
 
