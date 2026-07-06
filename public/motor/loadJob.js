@@ -1,3 +1,4 @@
+import { applySettings } from "./settings.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { renderTasks } from "./render.js";
@@ -61,52 +62,10 @@ export async function loadJob(){
 
   renderNotes();
 
-  renderTasks();
+ renderTasks();
 
-  if(
-    state.currentCongregation &&
-    !state.currentCongregation.settings.allowPhotos
-  ){
+applySettings();
 
-    document.getElementById(
-      "photosSection"
-    ).style.display = "none";
-
-  }
-
-  if(
-    state.currentCongregation &&
-    !state.currentCongregation.settings.allowComments
-  ){
-
-    document.getElementById(
-      "commentsSection"
-    ).style.display = "none";
-
-  }
-
-  if(
-    state.currentCongregation &&
-    !state.currentCongregation.settings.showTime
-  ){
-
-    document.getElementById(
-      "timeSection"
-    ).style.display = "none";
-
-  }
-
-  if(
-    state.currentCongregation &&
-    !state.currentCongregation.settings.showName
-  ){
-
-    document.getElementById(
-      "nameSection"
-    ).style.display = "none";
-
-  }
-
-  requestAnimationFrame(fitJobTitle);
-
+requestAnimationFrame(fitJobTitle);
+  
 }
