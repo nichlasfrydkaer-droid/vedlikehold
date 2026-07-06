@@ -5,61 +5,98 @@ export function renderTasks() {
   container.innerHTML = "";
 
   state.currentJob.oppgaver.forEach(task => {
+    renderTask(container, task);
+  });
+}
 
-  const container =
-    document.getElementById("taskContainer");
-  container.innerHTML = "";
-state.currentJob.oppgaver.forEach(task => {
+function renderTask(container, task) {
 
-// Gruppe med overskrift
+  // Gruppe med overskrift
+  if (
+    typeof task === "object" &&
+    (task.punkter || task.innhold)
+  ) {
 
-if (
+    renderGroup(container, task);
+    return;
+  }
 
-  typeof task === "object" &&
+  // Ren tekst
+  if (
+    typeof task === "object" &&
+    task.tekst
+  ) {
 
-  (task.punkter || task.innhold)
+    renderText(container, task.tekst);
+    return;
+  }
 
-) {
+  // Almindelig checkbox
+  renderCheckbox(container, task);
 
-    const heading =
-      document.createElement("h3");
+}
 
-    heading.className = "taskHeading";
-    heading.innerText = task.overskrift;
+function renderGroup(container, task) {
 
+  const heading = document.createElement("h3");
+  heading.className = "taskHeading";
+  heading.innerText = task.overskrift;
   container.appendChild(heading);
 
-if(task.innhold){
+  if (task.innhold) {
 
-  task.innhold.forEach(item => {
+    task.innhold.forEach(item => {
 
-    if(item.type === "tekst"){
+      if (item.type === "tekst") {
+        renderText(container, item.tekst);
+      }
 
-      const tekst =
-        document.createElement("div");
+      if (item.type === "punkt") {
+        renderCheckbox(container, item.tekst);
+      }
 
-      tekst.style.margin = "10px 0";
-      tekst.style.lineHeight = "1.5";
+    });
 
-      tekst.innerHTML = item.tekst;
+  }
 
-      container.appendChild(tekst);
+  if (task.tekst) {
+    renderText(container, task.tekst, true);
+  }
 
-    }
+  if (task.punkter) {
 
-    if(item.type === "punkt"){
+    task.punkter.forEach(punkt => {
+      renderCheckbox(container, punkt);
+    });
 
-      const label =
-        document.createElement("label");
+  }
 
-      label.innerHTML =
-        `<input type="checkbox" class="task" disabled> ${item.tekst}`;
+}
 
-      container.appendChild(label);
+function renderText(container, text, bottomOnly = false) {
 
-    }
+  const div = document.createElement("div");
 
-  });
+  if (bottomOnly) {
+    div.style.marginBottom = "10px";
+  } else {
+    div.style.margin = "10px 0";
+  }
 
-  });
+  div.style.lineHeight = "1.5";
+  div.innerHTML = text;
+
+  container.appendChild(div);
+
+}
+
+function renderCheckbox(container, text) {
+
+  const label = document.createElement("label");
+
+  label.innerHTML =
+    `<input type="checkbox" class="task" disabled> ${text}`;
+
+  container.appendChild(label);
+
 }
