@@ -227,16 +227,7 @@ label{
 </div>
 
 <script type="module">
-import {
-  checkPageSpace
-} from "/motor/pdfHelpers.js";  
-import {
-  uploadReport
-} from "/motor/upload.js";  
-import {
-  startTimer,
-  stopTimer
-} from "/motor/timer.js";  
+import { generatePDF } from "/motor/pdf.js";  
 import {
   initPhotos,
   autoResizeNotes
@@ -633,13 +624,6 @@ document
 generatePDF();
 
 });
-
-const pdfBlob =
-  doc.output("blob");
-
-await uploadReport(pdfBlob);
-
-}
 
 initTitle();  
 
