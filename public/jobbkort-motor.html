@@ -571,7 +571,7 @@ if(
   !state.currentCongregation ||
   state.currentCongregation.settings.allowComments
 ){
-  document.getElementById("notes").disabled = false;
+  dom.notes.disabled = false;
 }
 
 if(
@@ -580,7 +580,7 @@ if(
 ){
   document.getElementById("photos").disabled = false;
 }
-document.getElementById("startBtn").style.display = "none";
+dom.startBtn.style.display = "none";
 
 const finishBtn =
   document.getElementById("finishBtn");
@@ -619,7 +619,7 @@ document.getElementById("notes").addEventListener("input", function() {
 });
 function renderPreview(){
   const preview =
-    document.getElementById("preview");
+    dom.preview;
   preview.innerHTML = "";
   state.selectedPhotos.forEach((file,index)=>{
     const url =
@@ -1063,7 +1063,7 @@ state.selectedPhotos.forEach(photo => {
 });
 
 const status =
-  document.getElementById("status");
+  dom.status
 
 if(state.selectedPhotos.length > config.maxFiles){
 
