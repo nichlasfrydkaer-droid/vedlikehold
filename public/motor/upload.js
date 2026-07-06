@@ -29,41 +29,28 @@ export async function uploadReport(pdfBlob){
   );
 
   state.selectedPhotos.forEach(photo=>{
-
     formData.append(
       "photos",
       photo,
       photo.name
     );
-
   });
 
-  if(
-    state.selectedPhotos.length >
-    config.maxFiles
-  ){
+  if(state.selectedPhotos.length > config.maxFiles){
 
     alert(
-
       state.translations.alertMaxFiles
-        .replace(
-          "{count}",
-          config.maxFiles
-        )
-
+        .replace("{count}", config.maxFiles)
     );
 
-    return;
+    return false;
 
   }
 
   const totalBytes =
     state.selectedPhotos.reduce(
-
       (sum,file)=>sum+file.size,
-
       0
-
     );
 
   const totalMB =
@@ -72,34 +59,24 @@ export async function uploadReport(pdfBlob){
   if(totalMB > config.maxTotalMB){
 
     alert(
-
       state.translations.alertMaxSize
-
-        .replace(
-          "{size}",
-          totalMB.toFixed(1)
-        )
-
-        .replace(
-          "{max}",
-          config.maxTotalMB
-        )
-
+        .replace("{size}", totalMB.toFixed(1))
+        .replace("{max}", config.maxTotalMB)
     );
 
-    return;
+    return false;
 
   }
 
   dom.status.innerHTML =
     state.translations.statusSending;
 
-  dom.finishBtn.disabled = true;
-
-  dom.finishBtn.innerHTML =
-    state.translations.buttonSending;
-
   try{
+
+    dom.finishBtn.disabled = true;
+
+    dom.finishBtn.innerHTML =
+      state.translations.buttonSending;
 
     const response =
       await fetch(
@@ -112,9 +89,7 @@ export async function uploadReport(pdfBlob){
 
     if(!response.ok){
 
-      throw new Error(
-        "Upload feilet"
-      );
+      throw new Error("Upload feilet");
 
     }
 
@@ -128,6 +103,8 @@ export async function uploadReport(pdfBlob){
 
     },1000);
 
+    return true;
+
   }catch(err){
 
     console.error(err);
@@ -139,6 +116,8 @@ export async function uploadReport(pdfBlob){
 
     dom.status.innerHTML =
       state.translations.statusError;
+
+    return false;
 
   }
 
