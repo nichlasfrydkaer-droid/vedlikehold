@@ -228,6 +228,9 @@ label{
 
 <script type="module">
 import {
+  checkPageSpace
+} from "/motor/pdfHelpers.js";  
+import {
   uploadReport
 } from "/motor/upload.js";  
 import {
@@ -710,18 +713,7 @@ y += 12;
 
 doc.setFontSize(10);
     
-let taskIndex = 0;
-
-function checkPageSpace(requiredHeight){
-
-  if(y + requiredHeight > 270){
-
-    doc.addPage();
-    y = 20;
-
-  }
-
-}    
+let taskIndex = 0; 
 
 state.currentJob.oppgaver.forEach(item => {
 
@@ -759,7 +751,7 @@ if(item.innhold){
 const blockHeight =
   (tekstLinjer.length * 6) + 8;
 
-checkPageSpace(blockHeight);
+y =   checkPageSpace(     doc,     y,     blockHeight   );
       
       doc.text(tekstLinjer,10,y);
 
@@ -775,7 +767,7 @@ const linjer =
 const blockHeight =
   (linjer.length * 6) + 10;
 
-checkPageSpace(blockHeight);
+y =   checkPageSpace(     doc,     y,     blockHeight   );
 
 const task =
   document.querySelectorAll(".task")[taskIndex];
@@ -830,7 +822,7 @@ const task =
 const blockHeight =
   (tekstLinjer.length * 6) + 4;
 
-checkPageSpace(blockHeight);      
+y =   checkPageSpace(     doc,     y,     blockHeight   );      
       
       doc.text(tekstLinjer,10,y);
 
@@ -848,7 +840,7 @@ if(item.punkter){
 const blockHeight =
   (linjer.length * 6) + 10;
 
-checkPageSpace(blockHeight);    
+y =   checkPageSpace(     doc,     y,     blockHeight   );    
     
       const task =
         document.querySelectorAll(".task")[taskIndex];
@@ -905,7 +897,7 @@ y += 4;
 const blockHeight =
   (tekstLinjer.length * 6) + 8;
 
-checkPageSpace(blockHeight);    
+y =   checkPageSpace(     doc,     y,     blockHeight   );    
     
     doc.text(tekstLinjer,10,y);
 
@@ -925,7 +917,7 @@ const linjer =
 const blockHeight =
   (linjer.length * 6) + 10;
 
-checkPageSpace(blockHeight);
+y =   checkPageSpace(     doc,     y,     blockHeight   );
 
 const task =
   document.querySelectorAll(".task")[taskIndex];
