@@ -11,8 +11,22 @@ export function initLogin(){
         dom.password.value
       );
 
+if(result.success){
+
+    localStorage.setItem(
+        "dashboard_token",
+        result.token
+    );
+
     dom.status.innerText =
-      result.message;
+        "Innlogging vellykket.";
+
+}else{
+
+    dom.status.innerText =
+        result.message;
+
+}
 
     console.log(result);
 
