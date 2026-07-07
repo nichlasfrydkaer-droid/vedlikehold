@@ -1,0 +1,39 @@
+.dashboard-inbox{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.dashboard-inbox-title{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#1565c0;
+
+    margin-bottom:10px;
+
+}
+
+.dashboard-inbox-empty{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:60px;
+
+    text-align:center;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+
+    color:#777;
+
+    font-size:18px;
+
+}
