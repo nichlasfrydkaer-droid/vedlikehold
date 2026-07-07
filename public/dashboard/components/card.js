@@ -1,8 +1,12 @@
-export function createCard(title, content) {
+export function createCard(
+    title,
+    content,
+    fullWidth = false
+){
 
     return `
 
-        <section class="dashboard-card">
+        <section class="dashboard-card ${fullWidth ? "dashboard-full" : ""}">
 
             <h2>
 
