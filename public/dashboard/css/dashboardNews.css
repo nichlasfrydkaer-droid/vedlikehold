@@ -1,0 +1,39 @@
+.dashboard-news-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.dashboard-news-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:#f7f9fc;
+
+    border-left:5px solid #1565c0;
+
+    border-radius:10px;
+
+    padding:16px 18px;
+
+    font-size:16px;
+
+    color:#444;
+
+    transition:.2s;
+
+}
+
+.dashboard-news-item:hover{
+
+    background:#eef4fb;
+
+}
