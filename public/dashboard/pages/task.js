@@ -1,10 +1,12 @@
 import {
+    getReport,
     createTask
-} from "../js/api.js";
+}
+from "../js/api.js";
 
 export async function initTask(){
 
-    const task =
+    const container =
         document.getElementById(
             "task"
         );
@@ -14,109 +16,237 @@ export async function initTask(){
             location.search
         ).get("report");
 
-    task.innerHTML = `
+    if(!reportId){
 
-        <div class="dashboard-card">
+        container.innerHTML=`
 
-            <h1>
+            <div class="dashboard-card">
 
-                Opprett oppdrag
+                <h2>
 
-            </h1>
+                    Rapport mangler.
 
-            <p>
-
-                Rapport:
-                <strong>${reportId}</strong>
-
-            </p>
-
-            <hr>
-
-            <label>
-
-                Tittel
-
-            </label>
-
-            <input
-                id="taskTitle"
-                type="text"
-                placeholder="Skriv tittel..."
-            >
-
-            <br><br>
-
-            <label>
-
-                Frist
-
-            </label>
-
-            <input
-                id="deadline"
-                type="date"
-            >
-
-            <br><br>
-
-            <h2>
-
-                Sjekkpunkter
-
-            </h2>
-
-            <div
-                id="checklist"
-            >
-
-                <input
-                    class="checkItem"
-                    type="text"
-                    placeholder="Første punkt..."
-                >
+                </h2>
 
             </div>
 
-            <br>
+        `;
 
-            <button
-                id="addItem"
+        return;
+
+    }
+
+    const result =
+        await getReport(
+            reportId
+        );
+
+    if(!result.success){
+
+        container.innerHTML=`
+
+            <div class="dashboard-card">
+
+                <h2>
+
+                    Rapport kunne ikke hentes.
+
+                </h2>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    const report =
+        result.report;
+
+    container.innerHTML=`
+
+    <div class="dashboard-card">
+
+        <h1>
+
+            Opprett oppdrag
+
+        </h1>
+
+        <br>
+
+        <p>
+
+            <strong>
+
+                Rapport:
+
+            </strong>
+
+            ${report.report_number ?? report.id}
+
+        </p>
+
+        <p>
+
+            <strong>
+
+                Jobbkort:
+
+            </strong>
+
+            ${report.jobcard_id ?? "-"}
+
+        </p>
+
+        <hr>
+
+        <h2>
+
+            Original kommentar
+
+        </h2>
+
+        <label>
+
+            <input
+                id="includeComment"
+                type="checkbox"
+                checked
             >
 
-                + Legg til punkt
+            Inkluder kommentar
 
-            </button>
+        </label>
 
-            <br><br>
+        <br><br>
 
-            <button
-                id="createTaskButton"
+        <textarea
+
+            id="originalComment"
+
+            rows="5"
+
+            readonly
+
+        >${report.comment ?? ""}</textarea>
+
+        <br><br>
+
+        <label>
+
+            Tittel
+
+        </label>
+
+        <input
+
+            id="taskTitle"
+
+            type="text"
+
+            value="${report.title ?? ""}"
+
+        >
+
+        <br><br>
+
+        <label>
+
+            Frist
+
+        </label>
+
+        <input
+
+            id="deadline"
+
+            type="date"
+
+        >
+
+        <br><br>
+
+        <h2>
+
+            Sjekkpunkter
+
+        </h2>
+
+        <div
+            id="checklist"
+        >
+
+            <input
+
+                class="checkItem"
+
+                placeholder="Første punkt..."
+
             >
-
-                Opprett oppdrag
-
-            </button>
-
-            <div
-                id="result"
-                style="margin-top:30px;"
-            ></div>
 
         </div>
+
+        <br>
+
+        <button
+            id="addItem"
+        >
+
+            + Legg til punkt
+
+        </button>
+
+        <hr>
+
+        <h2>
+
+            Bilder
+
+        </h2>
+
+        <div
+            id="photos"
+        >
+
+            Ingen bilder ennå.
+
+        </div>
+
+        <br>
+
+        <button
+            id="createTask"
+
+        >
+
+            Opprett oppdrag
+
+        </button>
+
+        <div
+            id="result"
+        ></div>
+
+    </div>
 
     `;
 
     document
+
         .getElementById(
             "addItem"
         )
-        .onclick = ()=>{
+
+        .onclick=()=>{
 
             document
+
                 .getElementById(
                     "checklist"
                 )
+
                 .insertAdjacentHTML(
 
                     "beforeend",
@@ -124,9 +254,11 @@ export async function initTask(){
                     `
 
                     <input
+
                         class="checkItem"
-                        type="text"
+
                         placeholder="Nytt punkt..."
+
                     >
 
                     `
@@ -136,35 +268,42 @@ export async function initTask(){
         };
 
     document
-        .getElementById(
-            "createTaskButton"
-        )
-        .onclick = async ()=>{
 
-            const checklist =
-                [];
+        .getElementById(
+            "createTask"
+        )
+
+        .onclick=async()=>{
+
+            const checklist=[];
 
             document
+
                 .querySelectorAll(
                     ".checkItem"
                 )
+
                 .forEach(
 
                     input=>{
 
                         if(
+
                             input.value.trim()
+
                         ){
 
-checklist.push({
+                            checklist.push({
 
-    id:
-        crypto.randomUUID(),
+                                id:
 
-    text:
-        input.value.trim()
+                                    crypto.randomUUID(),
 
-});
+                                text:
+
+                                    input.value.trim()
+
+                            });
 
                         }
 
@@ -172,20 +311,40 @@ checklist.push({
 
                 );
 
-            const result =
+            const response=
+
                 await createTask({
 
                     report_id:
-                        reportId,
+
+                        report.id,
 
                     title:
+
                         document
                             .getElementById(
                                 "taskTitle"
                             )
                             .value,
 
+                    description:
+
+                        document
+                            .getElementById(
+                                "includeComment"
+                            )
+                            .checked
+
+                        ?
+
+                        report.comment
+
+                        :
+
+                        "",
+
                     deadline:
+
                         document
                             .getElementById(
                                 "deadline"
@@ -198,13 +357,17 @@ checklist.push({
 
                 });
 
-            if(result.success){
+            if(response.success){
 
                 document
+
                     .getElementById(
                         "result"
                     )
-                    .innerHTML = `
+
+                    .innerHTML=`
+
+                        <hr>
 
                         <h2>
 
@@ -214,27 +377,29 @@ checklist.push({
 
                         <p>
 
-                            ID:
+                            <strong>
 
-                            ${result.task.id}
+                                Oppdrag:
+
+                            </strong>
+
+                            ${response.task.id}
 
                         </p>
 
                         <p>
 
-                            Link:
+                            <strong>
 
-                            https://vedlikeholdsystem.no/o/${result.task.link_code}
+                                Linkkode:
+
+                            </strong>
+
+                            ${response.task.link_code}
 
                         </p>
 
                     `;
-
-            }else{
-
-                alert(
-                    "Kunne ikke opprette oppdrag."
-                );
 
             }
 
