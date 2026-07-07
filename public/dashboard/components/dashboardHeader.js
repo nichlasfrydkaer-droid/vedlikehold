@@ -1,4 +1,8 @@
 import { renderDashboardMenu } from "./dashboardMenu.js";
+import {
+    renderDashboardMenu,
+    initDashboardMenu
+} from "./dashboardMenu.js";
 
 export function renderDashboardHeader() {
 
