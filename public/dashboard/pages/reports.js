@@ -1,15 +1,59 @@
-import { getReport } from "../js/api.js";
+import { getReports } from "../js/api.js";
+import { getCongregation } from "../js/session.js";
+import { renderReportCard } from "../components/reportCard.js";
 
-export async function initReport(){
+export async function initReports(){
 
-    const id =
-        new URLSearchParams(
-            location.search
-        ).get("id");
+    const container =
+        document.getElementById(
+            "reports"
+        );
+
+    const congregation =
+        getCongregation();
 
     const result =
-        await getReport(id);
+        await getReports(
+            congregation.id
+        );
 
-    console.log(result);
+    if(!result.success){
+
+        container.innerHTML = `
+
+            <div class="dashboard-card">
+
+                Kunne ikke hente rapporter.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        result.reports
+            .map(renderReportCard)
+            .join("");
+
+    container
+        .querySelectorAll(
+            ".report-card"
+        )
+        .forEach(card=>{
+
+            card.onclick = ()=>{
+
+                location.href =
+
+                    "/dashboard/report.html?id=" +
+
+                    card.dataset.id;
+
+            };
+
+        });
 
 }
