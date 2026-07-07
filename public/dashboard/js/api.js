@@ -117,6 +117,21 @@ export async function createTask(
 
         }
 
+        export async function getPublicTask(
+    linkCode
+){
+
+    const response =
+        await fetch(
+
+            config.api + "/o/" + linkCode
+
+        );
+
+    return await response.json();
+
+}
+
     );
 
 }
