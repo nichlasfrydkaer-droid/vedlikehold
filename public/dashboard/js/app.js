@@ -38,4 +38,11 @@ switch(page){
 
         break;
 
+    case "o":
+
+        import("../pages/o.js")
+            .then(m=>m.initO());
+
+        break;
+
 }
