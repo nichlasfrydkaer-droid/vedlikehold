@@ -1,9 +1,7 @@
 import { createCard } from "./card.js";
+import { addDashboardWidget } from "./dashboardWidget.js";
 
 export function renderDashboardNews(){
-
-    const grid =
-        document.getElementById("dashboardGrid");
 
     const content = `
 
@@ -19,13 +17,14 @@ export function renderDashboardNews(){
 
     `;
 
-    grid.insertAdjacentHTML(
-
-        "beforeend",
+    addDashboardWidget(
 
         createCard(
+
             "🔔 Nyt siden sist",
+
             content
+
         )
 
     );
