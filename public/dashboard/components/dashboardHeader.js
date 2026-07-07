@@ -71,6 +71,6 @@ export function renderDashboardHeader() {
 
     );
 
-initDashboardMenu();    
+    initDashboardMenu();
 
 }
