@@ -1,11 +1,10 @@
 import {
     renderCongregationSelector,
     initCongregationSelector
-}
-from "./dashboardCongregationSelector.js";
+} from "./dashboardCongregationSelector.js";
+
 import {
-    getUser,
-    getCongregation
+    getUser
 } from "../js/session.js";
 
 export function renderDashboardHeader() {
@@ -15,9 +14,6 @@ export function renderDashboardHeader() {
 
     const user =
         getUser();
-
-    const congregation =
-        getCongregation();
 
     dashboard.insertAdjacentHTML(
 
@@ -46,7 +42,7 @@ export function renderDashboardHeader() {
 
                     </div>
 
-${renderCongregationSelector()}
+                    ${renderCongregationSelector()}
 
                 </div>
 
@@ -69,5 +65,7 @@ ${renderCongregationSelector()}
         `
 
     );
+
+    initCongregationSelector();
 
 }
