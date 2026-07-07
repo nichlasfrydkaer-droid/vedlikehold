@@ -104,8 +104,9 @@ export function buildReport(){
         congregation:
             state.currentCongregation?.id,
 
-        jobNumber:
-            state.currentJob.nummer,
+jobNumber:
+    String(state.currentJob.nummer)
+        .padStart(3, "0"),
 
         title:
             state.currentJob.titel,
