@@ -36,14 +36,17 @@ export function renderDashboardHeader() {
 
                 </div>
 
-                <button
-                    class="dashboard-user-button"
-                    title="Brukermeny"
-                >
+<div class="dashboard-menu">
 
-                    ☰
+    <button
+        id="menuButton"
+        class="dashboard-user-button">
 
-                </button>
+        ⠿
+
+    </button>
+
+</div>
 
             </div>
 
