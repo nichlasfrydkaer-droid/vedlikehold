@@ -2,8 +2,8 @@ import { createCard } from "./card.js";
 
 export function renderDashboardUpcoming(){
 
-    const dashboard =
-        document.getElementById("dashboard");
+    const grid =
+        document.getElementById("dashboardGrid");
 
     const content = `
 
@@ -29,16 +29,13 @@ export function renderDashboardUpcoming(){
 
     `;
 
-    dashboard.insertAdjacentHTML(
+    grid.insertAdjacentHTML(
 
         "beforeend",
 
         createCard(
-
             "📅 Kommende Jobbkort",
-
             content
-
         )
 
     );
