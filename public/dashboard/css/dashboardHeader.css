@@ -1,1 +1,121 @@
+.dashboard-header{
 
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:25px 30px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,.08);
+
+    margin-bottom:30px;
+
+}
+
+.dashboard-logo h1{
+
+    color:#1565c0;
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.dashboard-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.dashboard-user-info{
+
+    text-align:right;
+
+}
+
+.dashboard-user-name{
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+.dashboard-user-congregation{
+
+    font-size:14px;
+
+    color:#666;
+
+    margin-top:3px;
+
+}
+
+.dashboard-user-button{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1565c0;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.dashboard-user-button:hover{
+
+    background:#0d47a1;
+
+}
+
+@media(max-width:700px){
+
+    .dashboard-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:20px;
+
+    }
+
+    .dashboard-user{
+
+        width:100%;
+
+        justify-content:space-between;
+
+    }
+
+    .dashboard-user-info{
+
+        text-align:left;
+
+    }
+
+}
