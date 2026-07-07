@@ -7,17 +7,23 @@ export function renderReportCard(report){
             data-id="${report.id}"
         >
 
-            <h2>
+<h2>
 
-                JOBBKORT ${report.job_number}
+    JOBBKORT ${report.job_number}
 
-            </h2>
+</h2>
 
-            <p>
+<h3 class="report-title">
 
-                ${report.subtitle ?? ""}
+    ${report.title ?? ""}
 
-            </p>
+</h3>
+
+<p class="report-subtitle">
+
+    ${report.subtitle ?? ""}
+
+</p>
 
             <br>
 
