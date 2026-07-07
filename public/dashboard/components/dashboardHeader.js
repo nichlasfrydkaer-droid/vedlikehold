@@ -1,3 +1,5 @@
+import { state } from "../js/state.js";
+
 export function renderDashboardHeader() {
 
     const dashboard =
@@ -26,13 +28,19 @@ export function renderDashboardHeader() {
 
                     <div class="dashboard-user-name">
 
-                        Nichlas Frydkær
+                        ${
+                            state.user?.name ??
+                            ""
+                        }
 
                     </div>
 
                     <div class="dashboard-user-congregation">
 
-                        Elverum
+                        ${
+                            state.congregation?.name ??
+                            ""
+                        }
 
                     </div>
 
