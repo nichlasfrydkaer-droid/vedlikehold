@@ -1,7 +1,9 @@
 *{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
+
 }
 
 body{
@@ -19,19 +21,44 @@ body{
 
 #dashboard{
 
-    width:min(1200px,95vw);
+    width:100%;
 
-    margin:40px auto;
+    min-height:100vh;
+
+    padding:24px;
 
 }
 
-@media(max-width:700px){
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:24px;
+
+    align-items:start;
+
+}
+
+.dashboard-full{
+
+    grid-column:1 / -1;
+
+}
+
+@media(max-width:1000px){
 
     #dashboard{
 
-        width:94vw;
+        padding:18px;
 
-        margin:20px auto;
+    }
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
 
     }
 
