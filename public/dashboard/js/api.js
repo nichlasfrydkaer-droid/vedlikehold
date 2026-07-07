@@ -80,3 +80,25 @@ export async function getMe(){
     );
 
 }
+
+export async function getInbox(){
+
+    return await request(
+
+        "/inbox"
+
+    );
+
+}
+
+export async function getReport(
+    id
+){
+
+    return await request(
+
+        "/report?id=" + id
+
+    );
+
+}
