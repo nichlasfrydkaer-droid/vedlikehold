@@ -1,6 +1,7 @@
 import {
     getCongregation,
-    getCongregations
+    getCongregations,
+    setCongregation
 } from "../js/session.js";
 
 export function renderCongregationSelector(){
@@ -11,15 +12,21 @@ export function renderCongregationSelector(){
     const congregations =
         getCongregations();
 
+    if(!current){
+
+        return "";
+
+    }
+
     if(congregations.length <= 1){
 
         return `
 
             <div
-                class="dashboard-user-congregation"
+                class="dashboard-congregation-single"
             >
 
-                ${current?.name ?? ""}
+                ${current.name}
 
             </div>
 
@@ -29,29 +36,128 @@ export function renderCongregationSelector(){
 
     return `
 
-        <select
-            id="congregationSelector"
-            class="dashboard-congregation-selector"
+        <div
+            class="dashboard-congregation-picker"
         >
 
-            ${congregations.map(c=>`
+            <button
 
-                <option
+                id="congregationButton"
 
-                    value="${c.id}"
+                class="dashboard-congregation-button"
 
-                    ${c.id===current.id ? "selected" : ""}
+            >
 
-                >
+                ▼ ${current.name}
 
-                    ${c.name}
+            </button>
 
-                </option>
+            <div
 
-            `).join("")}
+                id="congregationDropdown"
 
-        </select>
+                class="dashboard-congregation-dropdown hidden"
+
+            >
+
+                ${congregations.map(c=>`
+
+                    <button
+
+                        class="dashboard-congregation-item"
+
+                        data-id="${c.id}"
+
+                    >
+
+                        ${c.id===current.id ? "✓ " : ""}
+
+                        ${c.name}
+
+                    </button>
+
+                `).join("")}
+
+            </div>
+
+        </div>
 
     `;
+
+}
+
+export function initCongregationSelector(){
+
+    const button =
+        document.getElementById(
+            "congregationButton"
+        );
+
+    const dropdown =
+        document.getElementById(
+            "congregationDropdown"
+        );
+
+    if(!button || !dropdown){
+
+        return;
+
+    }
+
+    button.addEventListener(
+
+        "click",
+
+        e=>{
+
+            e.stopPropagation();
+
+            dropdown.classList.toggle(
+                "hidden"
+            );
+
+        }
+
+    );
+
+    document.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            dropdown.classList.add(
+                "hidden"
+            );
+
+        }
+
+    );
+
+    dropdown
+        .querySelectorAll(
+            ".dashboard-congregation-item"
+        )
+        .forEach(button=>{
+
+            button.addEventListener(
+
+                "click",
+
+                ()=>{
+
+                    setCongregation(
+
+                        button.dataset.id
+
+                    );
+
+                    location.reload();
+
+                }
+
+            );
+
+        });
 
 }
