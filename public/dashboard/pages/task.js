@@ -7,9 +7,7 @@ from "../js/api.js";
 export async function initTask(){
 
     const container =
-        document.getElementById(
-            "task"
-        );
+        document.getElementById("task");
 
     const reportId =
         new URLSearchParams(
@@ -18,7 +16,7 @@ export async function initTask(){
 
     if(!reportId){
 
-        container.innerHTML=`
+        container.innerHTML = `
 
             <div class="dashboard-card">
 
@@ -37,13 +35,11 @@ export async function initTask(){
     }
 
     const result =
-        await getReport(
-            reportId
-        );
+        await getReport(reportId);
 
     if(!result.success){
 
-        container.innerHTML=`
+        container.innerHTML = `
 
             <div class="dashboard-card">
 
@@ -64,189 +60,146 @@ export async function initTask(){
     const report =
         result.report;
 
-    container.innerHTML=`
+    container.innerHTML = `
 
-    <div class="dashboard-card">
+        <div class="dashboard-card">
 
-        <h1>
+            <h1>
 
-            Opprett oppdrag
+                Opprett oppdrag
 
-        </h1>
+            </h1>
 
-        <br>
+            <br>
 
-        <p>
+            <p>
 
-            <strong>
+                <strong>Rapport:</strong>
 
-                Rapport:
+                ${report.report_number ?? report.id}
 
-            </strong>
+            </p>
 
-            ${report.report_number ?? report.id}
+            <p>
 
-        </p>
+                <strong>Jobbkort:</strong>
 
-        <p>
+                ${report.jobcard_id ?? "-"}
 
-            <strong>
+            </p>
 
-                Jobbkort:
+            <hr>
 
-            </strong>
+            <h2>
 
-            ${report.jobcard_id ?? "-"}
+                Original kommentar
 
-        </p>
+            </h2>
 
-        <hr>
+            <label>
 
-        <h2>
+                <input
+                    id="includeComment"
+                    type="checkbox"
+                    checked
+                >
 
-            Original kommentar
+                Inkluder kommentar
 
-        </h2>
+            </label>
 
-        <label>
+            <br><br>
 
-            <input
-                id="includeComment"
-                type="checkbox"
-                checked
-            >
+            <textarea
+                id="originalComment"
+                rows="5"
+                readonly
+            >${report.comment ?? report.notes ?? ""}</textarea>
 
-            Inkluder kommentar
+            <br><br>
 
-        </label>
+            <label>
 
-        <br><br>
+                Tittel
 
-        <textarea
-
-            id="originalComment"
-
-            rows="5"
-
-            readonly
-
-        >${report.comment ?? ""}</textarea>
-
-        <br><br>
-
-        <label>
-
-            Tittel
-
-        </label>
-
-        <input
-
-            id="taskTitle"
-
-            type="text"
-
-            value="${report.title ?? ""}"
-
-        >
-
-        <br><br>
-
-        <label>
-
-            Frist
-
-        </label>
-
-        <input
-
-            id="deadline"
-
-            type="date"
-
-        >
-
-        <br><br>
-
-        <h2>
-
-            Sjekkpunkter
-
-        </h2>
-
-        <div
-            id="checklist"
-        >
+            </label>
 
             <input
-
-                class="checkItem"
-
-                placeholder="Første punkt..."
-
+                id="taskTitle"
+                type="text"
+                value="${report.title ?? ""}"
             >
 
+            <br><br>
+
+            <label>
+
+                Frist
+
+            </label>
+
+            <input
+                id="deadline"
+                type="date"
+            >
+
+            <br><br>
+
+            <h2>
+
+                Sjekkpunkter
+
+            </h2>
+
+            <div id="checklist">
+
+                <input
+                    class="checkItem"
+                    placeholder="Første punkt..."
+                >
+
+            </div>
+
+            <br>
+
+            <button id="addItem">
+
+                + Legg til punkt
+
+            </button>
+
+            <hr>
+
+            <h2>
+
+                Bilder
+
+            </h2>
+
+            <div id="photos">
+
+                Ingen bilder ennå.
+
+            </div>
+
+            <br>
+
+            <button id="createTask">
+
+                Opprett oppdrag
+
+            </button>
+
         </div>
-
-        <br>
-
-        <button
-            id="addItem"
-        >
-
-            + Legg til punkt
-
-        </button>
-
-        <hr>
-
-        <h2>
-
-            Bilder
-
-        </h2>
-
-        <div
-            id="photos"
-        >
-
-            Ingen bilder ennå.
-
-        </div>
-
-        <br>
-
-        <button
-            id="createTask"
-
-        >
-
-            Opprett oppdrag
-
-        </button>
-
-        <div
-            id="result"
-        ></div>
-
-    </div>
 
     `;
 
     document
-
-        .getElementById(
-            "addItem"
-        )
-
-        .onclick=()=>{
+        .getElementById("addItem")
+        .onclick = () => {
 
             document
-
-                .getElementById(
-                    "checklist"
-                )
-
+                .getElementById("checklist")
                 .insertAdjacentHTML(
 
                     "beforeend",
@@ -254,11 +207,8 @@ export async function initTask(){
                     `
 
                     <input
-
                         class="checkItem"
-
                         placeholder="Nytt punkt..."
-
                     >
 
                     `
@@ -268,87 +218,59 @@ export async function initTask(){
         };
 
     document
+        .getElementById("createTask")
+        .onclick = async () => {
 
-        .getElementById(
-            "createTask"
-        )
-
-        .onclick=async()=>{
-
-            const checklist=[];
+            const checklist = [];
 
             document
+                .querySelectorAll(".checkItem")
+                .forEach(input => {
 
-                .querySelectorAll(
-                    ".checkItem"
-                )
+                    if(input.value.trim()){
 
-                .forEach(
+                        checklist.push({
 
-                    input=>{
+                            id:
+                                crypto.randomUUID(),
 
-                        if(
+                            text:
+                                input.value.trim()
 
-                            input.value.trim()
-
-                        ){
-
-                            checklist.push({
-
-                                id:
-
-                                    crypto.randomUUID(),
-
-                                text:
-
-                                    input.value.trim()
-
-                            });
-
-                        }
+                        });
 
                     }
 
-                );
+                });
 
-            const response=
-
+            const response =
                 await createTask({
 
                     report_id:
-
                         report.id,
 
                     title:
-
                         document
-                            .getElementById(
-                                "taskTitle"
-                            )
+                            .getElementById("taskTitle")
                             .value,
 
-                    description:
+                    instructions:
 
                         document
-                            .getElementById(
-                                "includeComment"
-                            )
+                            .getElementById("includeComment")
                             .checked
 
                         ?
 
-                        report.comment
+                        (report.comment ?? report.notes ?? "")
 
                         :
 
                         "",
 
                     deadline:
-
                         document
-                            .getElementById(
-                                "deadline"
-                            )
+                            .getElementById("deadline")
                             .value,
 
                     checklist,
@@ -357,57 +279,24 @@ export async function initTask(){
 
                 });
 
+            console.log(response);
+
             if(response.success){
 
-    location.href =
+                location.href =
+                    `/dashboard/taskCreated.html?id=${response.task.id}&code=${response.task.link_code}`;
 
-        `/dashboard/taskCreated.html?id=${response.task.id}&code=${response.task.link_code}`;
-
-}
-
-                document
-
-                    .getElementById(
-                        "result"
-                    )
-
-                    .innerHTML=`
-
-                        <hr>
-
-                        <h2>
-
-                            ✅ Oppdrag opprettet
-
-                        </h2>
-
-                        <p>
-
-                            <strong>
-
-                                Oppdrag:
-
-                            </strong>
-
-                            ${response.task.id}
-
-                        </p>
-
-                        <p>
-
-                            <strong>
-
-                                Linkkode:
-
-                            </strong>
-
-                            ${response.task.link_code}
-
-                        </p>
-
-                    `;
+                return;
 
             }
+
+            alert(
+
+                response.message ??
+
+                "Kunne ikke opprette oppdrag."
+
+            );
 
         };
 
