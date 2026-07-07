@@ -1,8 +1,3 @@
-import {
-    renderDashboardMenu,
-    initDashboardMenu
-} from "./dashboardMenu.js";
-
 export function renderDashboardHeader() {
 
     const dashboard =
@@ -62,15 +57,5 @@ export function renderDashboardHeader() {
         `
 
     );
-
-    dashboard.insertAdjacentHTML(
-
-        "beforeend",
-
-        renderDashboardMenu()
-
-    );
-
-    initDashboardMenu();
 
 }
