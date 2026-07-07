@@ -119,8 +119,18 @@ doc.text(
  10,
  y
 );
-const pdfBlob = doc.output("blob");
+const report =
+    buildReport();
 
-await uploadReport(pdfBlob);
+const pdfBlob =
+    doc.output("blob");
+
+await uploadReport(
+
+    pdfBlob,
+
+    report
+
+);
 
 }
