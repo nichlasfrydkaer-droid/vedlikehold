@@ -2,123 +2,190 @@ import { state } from "./state.js";
 import { config } from "./config.js";
 import { dom } from "./dom.js";
 
-export async function uploadReport(pdfBlob){
-
-  const formData = new FormData();
-
-  const params =
-    new URLSearchParams(window.location.search);
-
-  const congregation =
-    params.get("congregation");
-
-  formData.append(
-    "file",
+export async function uploadReport(
     pdfBlob,
-    `Jobbkort-${state.currentJob.nummer}.pdf`
-  );
+    report
+){
 
-  formData.append(
-    "congregation",
-    congregation
-  );
+    const formData =
+        new FormData();
 
-  formData.append(
-    "token",
-    config.apiToken
-  );
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-  state.selectedPhotos.forEach(photo=>{
+    const congregation =
+        params.get("congregation");
+
     formData.append(
-      "photos",
-      photo,
-      photo.name
-    );
-  });
 
-  if(state.selectedPhotos.length > config.maxFiles){
+        "file",
 
-    alert(
-      state.translations.alertMaxFiles
-        .replace("{count}", config.maxFiles)
+        pdfBlob,
+
+        `Jobbkort-${state.currentJob.nummer}.pdf`
+
     );
 
-    return false;
+    formData.append(
 
-  }
+        "congregation",
 
-  const totalBytes =
-    state.selectedPhotos.reduce(
-      (sum,file)=>sum+file.size,
-      0
+        congregation
+
     );
 
-  const totalMB =
-    totalBytes / 1024 / 1024;
+    formData.append(
 
-  if(totalMB > config.maxTotalMB){
+        "token",
 
-    alert(
-      state.translations.alertMaxSize
-        .replace("{size}", totalMB.toFixed(1))
-        .replace("{max}", config.maxTotalMB)
+        config.apiToken
+
     );
 
-    return false;
+    //
+    // Hele rapporten sendes til Dashboard
+    //
 
-  }
+    formData.append(
 
-  dom.status.innerHTML =
-    state.translations.statusSending;
+        "report",
 
-  try{
+        JSON.stringify(report)
 
-    dom.finishBtn.disabled = true;
+    );
 
-    dom.finishBtn.innerHTML =
-      state.translations.buttonSending;
+    state.selectedPhotos.forEach(photo=>{
 
-    const response =
-      await fetch(
-        config.apiUrl,
-        {
-          method:"POST",
-          body:formData
-        }
-      );
+        formData.append(
 
-    if(!response.ok){
+            "photos",
 
-      throw new Error("Upload feilet");
+            photo,
+
+            photo.name
+
+        );
+
+    });
+
+    if(state.selectedPhotos.length > config.maxFiles){
+
+        alert(
+
+            state.translations.alertMaxFiles
+                .replace(
+                    "{count}",
+                    config.maxFiles
+                )
+
+        );
+
+        return false;
+
+    }
+
+    const totalBytes =
+        state.selectedPhotos.reduce(
+
+            (sum,file)=>
+
+                sum + file.size,
+
+            0
+
+        );
+
+    const totalMB =
+        totalBytes / 1024 / 1024;
+
+    if(totalMB > config.maxTotalMB){
+
+        alert(
+
+            state.translations.alertMaxSize
+
+                .replace(
+                    "{size}",
+                    totalMB.toFixed(1)
+                )
+
+                .replace(
+                    "{max}",
+                    config.maxTotalMB
+                )
+
+        );
+
+        return false;
 
     }
 
     dom.status.innerHTML =
-      state.translations.statusSent;
+        state.translations.statusSending;
 
-    setTimeout(()=>{
+    try{
 
-      window.location.href =
-        `ferdig.html?congregation=${congregation}`;
+        dom.finishBtn.disabled =
+            true;
 
-    },1000);
+        dom.finishBtn.innerHTML =
+            state.translations.buttonSending;
 
-    return true;
+        const response =
+            await fetch(
 
-  }catch(err){
+                config.apiUrl,
 
-    console.error(err);
+                {
 
-    dom.finishBtn.disabled = false;
+                    method:"POST",
 
-    dom.finishBtn.innerHTML =
-      state.translations.finish;
+                    body:formData
 
-    dom.status.innerHTML =
-      state.translations.statusError;
+                }
 
-    return false;
+            );
 
-  }
+        if(!response.ok){
+
+            throw new Error(
+                "Upload feilet"
+            );
+
+        }
+
+        dom.status.innerHTML =
+            state.translations.statusSent;
+
+        setTimeout(()=>{
+
+            window.location.href =
+
+                `ferdig.html?congregation=${congregation}`;
+
+        },1000);
+
+        return true;
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        dom.finishBtn.disabled =
+            false;
+
+        dom.finishBtn.innerHTML =
+            state.translations.finish;
+
+        dom.status.innerHTML =
+            state.translations.statusError;
+
+        return false;
+
+    }
 
 }
