@@ -43,11 +43,7 @@ export function renderDashboardHeader() {
 
                     </div>
 
-                    <div class="dashboard-user-congregation">
-
-                        ${congregation?.name ?? ""}
-
-                    </div>
+${renderCongregationSelector()}
 
                 </div>
 
