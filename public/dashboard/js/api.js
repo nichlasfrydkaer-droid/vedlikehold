@@ -60,7 +60,6 @@ export async function login(
             body:JSON.stringify({
 
                 email,
-
                 password
 
             })
@@ -117,20 +116,17 @@ export async function createTask(
 
         }
 
-        export async function getPublicTask(
+    );
+
+}
+
+export async function getPublicTask(
     linkCode
 ){
 
-    const response =
-        await fetch(
+    return await request(
 
-            config.api + "/o/" + linkCode
-
-        );
-
-    return await response.json();
-
-}
+        "/o/" + linkCode
 
     );
 
