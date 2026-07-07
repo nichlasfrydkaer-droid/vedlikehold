@@ -1,4 +1,7 @@
-import { renderCongregationSelector }
+import {
+    renderCongregationSelector,
+    initCongregationSelector
+}
 from "./dashboardCongregationSelector.js";
 import {
     getUser,
