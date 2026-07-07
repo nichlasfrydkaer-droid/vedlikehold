@@ -74,9 +74,7 @@ export async function login(
 export async function getMe(){
 
     return await request(
-
         "/me"
-
     );
 
 }
@@ -84,9 +82,7 @@ export async function getMe(){
 export async function getInbox(){
 
     return await request(
-
         "/inbox"
-
     );
 
 }
