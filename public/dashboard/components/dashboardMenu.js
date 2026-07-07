@@ -1,7 +1,13 @@
 export function renderDashboardMenu() {
 
-    return `
+    const dashboard =
+        document.getElementById("dashboard");
 
+    dashboard.insertAdjacentHTML(
+
+        "beforeend",
+
+        `
         <div
             id="dashboardMenu"
             class="dashboard-menu-dropdown hidden"
@@ -58,8 +64,9 @@ export function renderDashboardMenu() {
             </button>
 
         </div>
+        `
 
-    `;
+    );
 
 }
 
@@ -75,7 +82,7 @@ export function initDashboardMenu(){
         return;
     }
 
-    button.addEventListener("click", e=>{
+    button.addEventListener("click",(e)=>{
 
         e.stopPropagation();
 
@@ -89,13 +96,13 @@ export function initDashboardMenu(){
 
     });
 
-    menu.addEventListener("click",e=>{
+    menu.addEventListener("click",(e)=>{
 
         e.stopPropagation();
 
     });
 
-    document.addEventListener("keydown",e=>{
+    document.addEventListener("keydown",(e)=>{
 
         if(e.key==="Escape"){
 
