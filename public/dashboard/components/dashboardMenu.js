@@ -196,6 +196,23 @@ export function initDashboardMenu(){
 
     document
         .getElementById(
+            "menuTasks"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                location.href =
+                    "/dashboard/task.html?report=test";
+
+            }
+
+        );
+
+    document
+        .getElementById(
             "menuLogout"
         )
         ?.addEventListener(
