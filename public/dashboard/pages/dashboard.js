@@ -1,5 +1,6 @@
 import { getMe } from "../js/api.js";
 import { state } from "../js/state.js";
+import { loadCongregation } from "../js/session.js";
 
 import { renderDashboardHeader } from "../components/dashboardHeader.js";
 import { renderDashboardMenu } from "../components/dashboardMenu.js";
@@ -19,32 +20,17 @@ export async function initDashboard() {
 
     dashboard.innerHTML = "";
 
-    //
-    // Hent den aktuelle bruger
-    //
-
     const me =
         await getMe();
 
-    if(me.success){
-
-        state.user =
-            me.user;
-
-        state.congregations =
-            me.congregations;
-
-        if(me.congregations.length){
-
-            state.congregation =
-                me.congregations[0];
-
-        }
-
-    }else{
+    if(!me.success){
 
         localStorage.removeItem(
             "dashboard_token"
+        );
+
+        localStorage.removeItem(
+            "dashboard_congregation"
         );
 
         window.location.href =
@@ -54,19 +40,28 @@ export async function initDashboard() {
 
     }
 
-    //
-    // Header
-    //
+    state.user =
+        me.user;
+
+    state.congregations =
+        me.congregations;
+
+    // Standard er første menighed
+    if(me.congregations.length){
+
+        state.congregation =
+            me.congregations[0];
+
+    }
+
+    // Overskriv med gemt valg hvis det findes
+    loadCongregation();
 
     renderDashboardHeader();
 
     renderDashboardMenu();
 
     initDashboardMenu();
-
-    //
-    // Dashboard Grid
-    //
 
     dashboard.insertAdjacentHTML(
 
@@ -80,10 +75,6 @@ export async function initDashboard() {
         `
 
     );
-
-    //
-    // Widgets
-    //
 
     renderDashboardNews();
 
