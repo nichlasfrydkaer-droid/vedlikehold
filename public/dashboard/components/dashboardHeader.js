@@ -1,4 +1,4 @@
-export function renderDashboardHeader(){
+export function renderDashboardHeader() {
 
     const dashboard =
         document.getElementById("dashboard");
@@ -8,19 +8,46 @@ export function renderDashboardHeader(){
         "beforeend",
 
         `
-        <section class="dashboard-card">
+        <header class="dashboard-header">
 
-            <h1>
-                Vedlikeholdsystem
-            </h1>
+            <div class="dashboard-logo">
 
-            <p>
+                <h1>
+                    Vedlikeholdsystem
+                </h1>
 
-                Velkommen.
+            </div>
 
-            </p>
+            <div class="dashboard-user">
 
-        </section>
+                <div class="dashboard-user-info">
+
+                    <div class="dashboard-user-name">
+
+                        Nichlas Frydkær
+
+                    </div>
+
+                    <div class="dashboard-user-congregation">
+
+                        Elverum
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="dashboard-user-button"
+                    title="Brukermeny"
+                >
+
+                    ☰
+
+                </button>
+
+            </div>
+
+        </header>
         `
 
     );
