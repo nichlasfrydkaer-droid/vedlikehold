@@ -1,91 +1,90 @@
-export function renderDashboardOverview() {
+import { createCard } from "./card.js";
 
-    const dashboard =
-        document.getElementById("dashboard");
+export function renderDashboardOverview(){
 
-    dashboard.insertAdjacentHTML(
+    const grid =
+        document.getElementById("dashboardGrid");
 
-        "beforeend",
+    const content = `
 
-        `
-        <section class="dashboard-card">
+        <div class="dashboard-overview-grid">
 
-            <h2>
+            <div class="dashboard-overview-box">
 
-                📊 Hurtigt overblik
+                <div class="dashboard-overview-number">
 
-            </h2>
-
-            <div class="dashboard-overview-grid">
-
-                <div class="dashboard-overview-box">
-
-                    <div class="dashboard-overview-number">
-
-                        -
-
-                    </div>
-
-                    <div class="dashboard-overview-title">
-
-                        Jobbkort
-
-                    </div>
+                    -
 
                 </div>
 
-                <div class="dashboard-overview-box">
+                <div class="dashboard-overview-title">
 
-                    <div class="dashboard-overview-number">
-
-                        -
-
-                    </div>
-
-                    <div class="dashboard-overview-title">
-
-                        Rapporter
-
-                    </div>
-
-                </div>
-
-                <div class="dashboard-overview-box">
-
-                    <div class="dashboard-overview-number">
-
-                        -
-
-                    </div>
-
-                    <div class="dashboard-overview-title">
-
-                        Oppdrag
-
-                    </div>
-
-                </div>
-
-                <div class="dashboard-overview-box">
-
-                    <div class="dashboard-overview-number">
-
-                        -
-
-                    </div>
-
-                    <div class="dashboard-overview-title">
-
-                        Brukere
-
-                    </div>
+                    Jobbkort
 
                 </div>
 
             </div>
 
-        </section>
-        `
+            <div class="dashboard-overview-box">
+
+                <div class="dashboard-overview-number">
+
+                    -
+
+                </div>
+
+                <div class="dashboard-overview-title">
+
+                    Rapporter
+
+                </div>
+
+            </div>
+
+            <div class="dashboard-overview-box">
+
+                <div class="dashboard-overview-number">
+
+                    -
+
+                </div>
+
+                <div class="dashboard-overview-title">
+
+                    Oppdrag
+
+                </div>
+
+            </div>
+
+            <div class="dashboard-overview-box">
+
+                <div class="dashboard-overview-number">
+
+                    -
+
+                </div>
+
+                <div class="dashboard-overview-title">
+
+                    Brukere
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+    grid.insertAdjacentHTML(
+
+        "beforeend",
+
+        createCard(
+            "📊 Hurtigt overblik",
+            content
+        )
 
     );
 
