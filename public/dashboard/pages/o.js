@@ -1,106 +1,243 @@
+import {
+    getPublicTask
+}
+from "../js/api.js";
+
 export async function initO(){
 
-    const page =
+    const container =
         document.getElementById(
             "taskPage"
         );
 
-    page.innerHTML = `
+    const linkCode =
+        location.pathname
+            .split("/")
+            .pop();
 
-    <div class="task-page">
+    const result =
+        await getPublicTask(
+            linkCode
+        );
 
-        <div class="dashboard-card">
+    if(!result.success){
 
-            <div class="task-title">
+        container.innerHTML = `
 
-                Bytt batteri i røykvarsler
+            <div class="dashboard-card">
 
-            </div>
+                <h2>
 
-            <div class="task-deadline">
+                    Oppdraget finnes ikke.
 
-                Frist:
-                14. august 2026
-
-            </div>
-
-            <div class="task-checklist">
-
-                <label class="task-check-item">
-
-                    <input type="checkbox">
-
-                    Kontroller røykvarsler
-
-                </label>
-
-                <label class="task-check-item">
-
-                    <input type="checkbox">
-
-                    Bytt batteri
-
-                </label>
-
-                <label class="task-check-item">
-
-                    <input type="checkbox">
-
-                    Test alarm
-
-                </label>
+                </h2>
 
             </div>
 
-            <h3>
+        `;
 
-                Kommentar
+        return;
 
-            </h3>
+    }
 
-            <textarea
-                id="comment"
-            ></textarea>
+    const task =
+        result.task;
 
-            <br><br>
+    const checklist =
+        JSON.parse(
+            task.checklist_json ?? "[]"
+        );
 
-            <h3>
+    container.innerHTML = `
 
-                Navn
+        <div class="task-page">
 
-            </h3>
+            <div class="dashboard-card">
 
-            <input
-                id="name"
-                type="text"
-            >
+                <h1>
 
-            <br><br>
+                    ${task.title}
 
-            <h3>
+                </h1>
 
-                Bilder
+                <p>
 
-            </h3>
+                    ${task.instructions ?? ""}
 
-            <button>
+                </p>
 
-                Legg til bilde
+                <br>
 
-            </button>
+                <strong>
 
-            <br><br>
+                    Frist
 
-            <button>
+                </strong>
 
-                Ferdigmeld oppdrag
+                <br>
 
-            </button>
+                ${task.deadline ?? "-"}
+
+                <hr>
+
+                <div
+                    id="checklist"
+                >
+
+                </div>
+
+                <hr>
+
+                <h3>
+
+                    Kommentar
+
+                </h3>
+
+                <textarea
+                    id="comment"
+                ></textarea>
+
+                <br><br>
+
+                <h3>
+
+                    Navn
+
+                </h3>
+
+                <input
+                    id="completedName"
+                    type="text"
+                >
+
+                <br><br>
+
+                <button
+                    id="finishButton"
+                    disabled
+                >
+
+                    Ferdigmeld
+
+                </button>
+
+            </div>
 
         </div>
 
-    </div>
-
     `;
+
+    const list =
+        document.getElementById(
+            "checklist"
+        );
+
+    checklist.forEach(
+
+        item=>{
+
+            list.insertAdjacentHTML(
+
+                "beforeend",
+
+                `
+
+                <label
+                    class="task-check-item"
+                >
+
+                    <input
+
+                        class="taskCheckbox"
+
+                        type="checkbox"
+
+                    >
+
+                    ${item.text}
+
+                </label>
+
+                <br>
+
+                `
+
+            );
+
+        }
+
+    );
+
+    validateForm();
+
+    document
+
+        .querySelectorAll(
+            ".taskCheckbox"
+        )
+
+        .forEach(
+
+            box=>
+
+                box.onchange =
+                    validateForm
+
+        );
+
+    document
+
+        .getElementById(
+            "completedName"
+        )
+
+        .oninput =
+            validateForm;
+
+}
+
+function validateForm(){
+
+    const name =
+        document
+            .getElementById(
+                "completedName"
+            );
+
+    if(!name){
+
+        return;
+
+    }
+
+    const allChecked =
+        [...document.querySelectorAll(
+
+            ".taskCheckbox"
+
+        )]
+
+        .every(
+
+            c=>c.checked
+
+        );
+
+    document
+
+        .getElementById(
+            "finishButton"
+        )
+
+        .disabled =
+
+            !(
+
+                allChecked &&
+
+                name.value.trim()
+
+            );
 
 }
