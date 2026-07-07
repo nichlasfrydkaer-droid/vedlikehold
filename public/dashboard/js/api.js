@@ -102,3 +102,25 @@ export async function getReport(
     );
 
 }
+
+export async function createTask(
+    task
+){
+
+    return await request(
+
+        "/task",
+
+        {
+
+            method:"POST",
+
+            body:JSON.stringify(
+                task
+            )
+
+        }
+
+    );
+
+}
