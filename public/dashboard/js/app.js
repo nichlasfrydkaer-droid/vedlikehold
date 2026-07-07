@@ -24,4 +24,11 @@ switch(page){
 
         break;
 
+    case "task":
+
+        import("../pages/task.js")
+            .then(m => m.initTask());
+
+        break;
+
 }
