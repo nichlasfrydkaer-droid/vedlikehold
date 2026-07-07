@@ -10,4 +10,11 @@ switch(page){
 
         break;
 
+    case "dashboard":
+
+        import("../pages/dashboard.js")
+            .then(m => m.initDashboard());
+
+        break;
+
 }
