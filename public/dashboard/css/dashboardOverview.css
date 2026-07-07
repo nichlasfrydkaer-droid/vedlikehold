@@ -1,1 +1,55 @@
+.dashboard-overview-grid{
 
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(180px,1fr)
+        );
+
+    gap:20px;
+
+}
+
+.dashboard-overview-box{
+
+    background:#f7f9fc;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.2s;
+
+    cursor:pointer;
+
+}
+
+.dashboard-overview-box:hover{
+
+    background:#eef4fb;
+
+}
+
+.dashboard-overview-number{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    color:#1565c0;
+
+    margin-bottom:12px;
+
+}
+
+.dashboard-overview-title{
+
+    font-size:17px;
+
+    color:#555;
+
+}
