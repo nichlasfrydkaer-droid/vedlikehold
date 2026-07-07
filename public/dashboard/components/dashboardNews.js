@@ -1,33 +1,35 @@
-export function renderDashboardNews() {
+import { createCard } from "./card.js";
+
+export function renderDashboardNews(){
 
     const dashboard =
         document.getElementById("dashboard");
+
+    const content = `
+
+        <div class="dashboard-news-list">
+
+            <div class="dashboard-news-item">
+
+                Ingen nye hendelser.
+
+            </div>
+
+        </div>
+
+    `;
 
     dashboard.insertAdjacentHTML(
 
         "beforeend",
 
-        `
-        <section class="dashboard-card">
+        createCard(
 
-            <h2>
+            "🔔 Nyt siden sist",
 
-                🔔 Nyt siden sidst
+            content
 
-            </h2>
-
-            <div class="dashboard-news-list">
-
-                <div class="dashboard-news-item">
-
-                    Ingen nye hendelser.
-
-                </div>
-
-            </div>
-
-        </section>
-        `
+        )
 
     );
 
