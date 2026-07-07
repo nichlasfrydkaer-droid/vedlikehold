@@ -1,9 +1,18 @@
-import { state } from "../js/state.js";
+import {
+    getUser,
+    getCongregation
+} from "../js/session.js";
 
 export function renderDashboardHeader() {
 
     const dashboard =
         document.getElementById("dashboard");
+
+    const user =
+        getUser();
+
+    const congregation =
+        getCongregation();
 
     dashboard.insertAdjacentHTML(
 
@@ -28,19 +37,13 @@ export function renderDashboardHeader() {
 
                     <div class="dashboard-user-name">
 
-                        ${
-                            state.user?.name ??
-                            ""
-                        }
+                        ${user?.name ?? ""}
 
                     </div>
 
                     <div class="dashboard-user-congregation">
 
-                        ${
-                            state.congregation?.name ??
-                            ""
-                        }
+                        ${congregation?.name ?? ""}
 
                     </div>
 
