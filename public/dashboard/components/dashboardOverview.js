@@ -1,9 +1,7 @@
 import { createCard } from "./card.js";
+import { addDashboardWidget } from "./dashboardWidget.js";
 
 export function renderDashboardOverview(){
-
-    const grid =
-        document.getElementById("dashboardGrid");
 
     const content = `
 
@@ -11,11 +9,7 @@ export function renderDashboardOverview(){
 
             <div class="dashboard-overview-box">
 
-                <div class="dashboard-overview-number">
-
-                    -
-
-                </div>
+                <div class="dashboard-overview-number">-</div>
 
                 <div class="dashboard-overview-title">
 
@@ -27,11 +21,7 @@ export function renderDashboardOverview(){
 
             <div class="dashboard-overview-box">
 
-                <div class="dashboard-overview-number">
-
-                    -
-
-                </div>
+                <div class="dashboard-overview-number">-</div>
 
                 <div class="dashboard-overview-title">
 
@@ -43,11 +33,7 @@ export function renderDashboardOverview(){
 
             <div class="dashboard-overview-box">
 
-                <div class="dashboard-overview-number">
-
-                    -
-
-                </div>
+                <div class="dashboard-overview-number">-</div>
 
                 <div class="dashboard-overview-title">
 
@@ -59,11 +45,7 @@ export function renderDashboardOverview(){
 
             <div class="dashboard-overview-box">
 
-                <div class="dashboard-overview-number">
-
-                    -
-
-                </div>
+                <div class="dashboard-overview-number">-</div>
 
                 <div class="dashboard-overview-title">
 
@@ -77,13 +59,14 @@ export function renderDashboardOverview(){
 
     `;
 
-    grid.insertAdjacentHTML(
-
-        "beforeend",
+    addDashboardWidget(
 
         createCard(
+
             "📊 Hurtigt overblik",
+
             content
+
         )
 
     );
