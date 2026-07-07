@@ -359,6 +359,12 @@ export async function initTask(){
 
             if(response.success){
 
+    location.href =
+
+        `/dashboard/taskCreated.html?id=${response.task.id}&code=${response.task.link_code}`;
+
+}
+
                 document
 
                     .getElementById(
