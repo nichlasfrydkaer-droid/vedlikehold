@@ -1,3 +1,5 @@
+import { renderDashboardMenu } from "./dashboardMenu.js";
+
 export function renderDashboardHeader() {
 
     const dashboard =
@@ -13,7 +15,9 @@ export function renderDashboardHeader() {
             <div class="dashboard-logo">
 
                 <h1>
+
                     Vedlikeholdsystem
+
                 </h1>
 
             </div>
@@ -36,22 +40,31 @@ export function renderDashboardHeader() {
 
                 </div>
 
-<div class="dashboard-menu">
+                <div class="dashboard-menu">
 
-    <button
-        id="menuButton"
-        class="dashboard-user-button">
+                    <button
+                        id="menuButton"
+                        class="dashboard-user-button"
+                        title="Meny">
 
-        ⠿
+                        ⠿
 
-    </button>
+                    </button>
 
-</div>
+                </div>
 
             </div>
 
         </header>
         `
+
+    );
+
+    dashboard.insertAdjacentHTML(
+
+        "beforeend",
+
+        renderDashboardMenu()
 
     );
 
