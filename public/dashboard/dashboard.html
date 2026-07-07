@@ -1,138 +1,33 @@
 <!DOCTYPE html>
 <html lang="no">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vedlikeholdsystem</title>
+    <meta charset="UTF-8">
 
-<style>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+    <title>Vedlikeholdsystem</title>
 
-body{
-    background:#f4f7fb;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-}
-
-.card{
-
-    background:white;
-
-    width:min(500px,90vw);
-
-    border-radius:18px;
-
-    padding:50px 35px;
-
-    text-align:center;
-
-    box-shadow:0 10px 35px rgba(0,0,0,.12);
-
-}
-
-h1{
-
-    color:#1565c0;
-
-    margin-bottom:35px;
-
-}
-
-.emoji{
-
-    font-size:70px;
-
-    margin-bottom:25px;
-
-    animation:pop .5s ease;
-
-}
-
-p{
-
-    font-size:20px;
-
-    color:#444;
-
-    margin-bottom:35px;
-
-}
-
-button{
-
-    background:#1565c0;
-
-    color:white;
-
-    border:none;
-
-    padding:15px 35px;
-
-    border-radius:10px;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-button:hover{
-
-    background:#0d47a1;
-
-}
-
-@keyframes pop{
-
-    from{
-
-        transform:scale(.5);
-        opacity:0;
-
-    }
-
-    to{
-
-        transform:scale(1);
-        opacity:1;
-
-    }
-
-}
-
-</style>
+    <link
+        rel="stylesheet"
+        href="/dashboard/css/dashboard.css"
+    >
 
 </head>
 
-<body>
+<body data-page="dashboard">
 
-<div class="card">
+    <main id="dashboard"></main>
 
-<h1>Vedlikeholdsystem</h1>
-
-<div class="emoji">😊</div>
-
-<p>
-Velkommen!<br>
-Du er nå logget inn.
-</p>
-
-<button onclick="location.href='congregations.html'">
-Gå til dashboard
-</button>
-
-</div>
+    <script
+        type="module"
+        src="/dashboard/js/app.js"
+    ></script>
 
 </body>
+
 </html>
