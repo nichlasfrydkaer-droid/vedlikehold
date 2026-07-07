@@ -1,3 +1,7 @@
+import {
+    createTask
+} from "../js/api.js";
+
 export async function initTask(){
 
     const task =
@@ -23,36 +27,11 @@ export async function initTask(){
             <p>
 
                 Rapport:
-
-                <strong>
-
-                    ${reportId}
-
-                </strong>
+                <strong>${reportId}</strong>
 
             </p>
 
             <hr>
-
-            <h2>
-
-                Original kommentar
-
-            </h2>
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    checked
-                    id="includeComment"
-                >
-
-                Inkluder kommentar i oppdrag
-
-            </label>
-
-            <br><br>
 
             <label>
 
@@ -92,13 +71,9 @@ export async function initTask(){
             >
 
                 <input
-
                     class="checkItem"
-
                     type="text"
-
                     placeholder="Første punkt..."
-
                 >
 
             </div>
@@ -115,27 +90,18 @@ export async function initTask(){
 
             <br><br>
 
-            <h2>
-
-                Bilder
-
-            </h2>
-
-            <p>
-
-                (kommer i neste steg)
-
-            </p>
-
-            <br>
-
             <button
-                id="createTask"
+                id="createTaskButton"
             >
 
                 Opprett oppdrag
 
             </button>
+
+            <div
+                id="result"
+                style="margin-top:30px;"
+            ></div>
 
         </div>
 
@@ -145,38 +111,132 @@ export async function initTask(){
         .getElementById(
             "addItem"
         )
-        .addEventListener(
+        .onclick = ()=>{
 
-            "click",
+            document
+                .getElementById(
+                    "checklist"
+                )
+                .insertAdjacentHTML(
 
-            ()=>{
+                    "beforeend",
+
+                    `
+
+                    <input
+                        class="checkItem"
+                        type="text"
+                        placeholder="Nytt punkt..."
+                    >
+
+                    `
+
+                );
+
+        };
+
+    document
+        .getElementById(
+            "createTaskButton"
+        )
+        .onclick = async ()=>{
+
+            const checklist =
+                [];
+
+            document
+                .querySelectorAll(
+                    ".checkItem"
+                )
+                .forEach(
+
+                    input=>{
+
+                        if(
+                            input.value.trim()
+                        ){
+
+                            checklist.push({
+
+                                text:
+                                    input.value.trim(),
+
+                                done:false
+
+                            });
+
+                        }
+
+                    }
+
+                );
+
+            const result =
+                await createTask({
+
+                    report_id:
+                        reportId,
+
+                    title:
+                        document
+                            .getElementById(
+                                "taskTitle"
+                            )
+                            .value,
+
+                    deadline:
+                        document
+                            .getElementById(
+                                "deadline"
+                            )
+                            .value,
+
+                    checklist,
+
+                    photos:[]
+
+                });
+
+            if(result.success){
 
                 document
                     .getElementById(
-                        "checklist"
+                        "result"
                     )
-                    .insertAdjacentHTML(
+                    .innerHTML = `
 
-                        "beforeend",
+                        <h2>
 
-                        `
+                            ✅ Oppdrag opprettet
 
-                        <input
+                        </h2>
 
-                            class="checkItem"
+                        <p>
 
-                            type="text"
+                            ID:
 
-                            placeholder="Nytt punkt..."
+                            ${result.task.id}
 
-                        >
+                        </p>
 
-                        `
+                        <p>
 
-                    );
+                            Link:
+
+                            https://vedlikeholdsystem.no/o/${result.task.link_code}
+
+                        </p>
+
+                    `;
+
+            }else{
+
+                alert(
+                    "Kunne ikke opprette oppdrag."
+                );
 
             }
 
-        );
+        };
 
 }
