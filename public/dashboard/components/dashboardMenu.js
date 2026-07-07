@@ -62,3 +62,47 @@ export function renderDashboardMenu() {
     `;
 
 }
+
+export function initDashboardMenu(){
+
+    const button =
+        document.getElementById("menuButton");
+
+    const menu =
+        document.getElementById("dashboardMenu");
+
+    if(!button || !menu){
+        return;
+    }
+
+    button.addEventListener("click", e=>{
+
+        e.stopPropagation();
+
+        menu.classList.toggle("hidden");
+
+    });
+
+    document.addEventListener("click",()=>{
+
+        menu.classList.add("hidden");
+
+    });
+
+    menu.addEventListener("click",e=>{
+
+        e.stopPropagation();
+
+    });
+
+    document.addEventListener("keydown",e=>{
+
+        if(e.key==="Escape"){
+
+            menu.classList.add("hidden");
+
+        }
+
+    });
+
+}
