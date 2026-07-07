@@ -86,6 +86,22 @@ export async function getInbox(){
 
 }
 
+export async function getReports(
+    congregationId
+){
+
+    return await request(
+
+        "/reports?congregation=" +
+
+        encodeURIComponent(
+            congregationId
+        )
+
+    );
+
+}
+
 export async function getReport(
     id
 ){
