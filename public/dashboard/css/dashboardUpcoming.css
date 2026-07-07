@@ -1,0 +1,47 @@
+.dashboard-upcoming-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.dashboard-upcoming-item{
+
+    background:#f7f9fc;
+
+    border-radius:12px;
+
+    padding:18px 20px;
+
+    transition:.2s;
+
+}
+
+.dashboard-upcoming-item:hover{
+
+    background:#eef4fb;
+
+}
+
+.dashboard-upcoming-title{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+.dashboard-upcoming-subtitle{
+
+    margin-top:6px;
+
+    font-size:14px;
+
+    color:#666;
+
+}
