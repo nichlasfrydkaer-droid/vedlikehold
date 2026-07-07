@@ -17,4 +17,11 @@ switch(page){
 
         break;
 
+    case "report":
+
+        import("../pages/report.js")
+            .then(m => m.initReport());
+
+        break;
+
 }
