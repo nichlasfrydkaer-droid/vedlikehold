@@ -27,6 +27,45 @@ export function setCongregation(id){
 
         );
 
+    if(!congregation){
+
+        return;
+
+    }
+
+    state.congregation =
+        congregation;
+
+    localStorage.setItem(
+
+        "dashboard_congregation",
+
+        congregation.id
+
+    );
+
+}
+
+export function loadCongregation(){
+
+    const id =
+        localStorage.getItem(
+            "dashboard_congregation"
+        );
+
+    if(!id){
+
+        return;
+
+    }
+
+    const congregation =
+        state.congregations.find(
+
+            c => c.id === id
+
+        );
+
     if(congregation){
 
         state.congregation =
@@ -46,6 +85,10 @@ export function logout(){
 
     localStorage.removeItem(
         "dashboard_token"
+    );
+
+    localStorage.removeItem(
+        "dashboard_congregation"
     );
 
     window.location.href =
