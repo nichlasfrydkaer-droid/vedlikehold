@@ -156,14 +156,15 @@ export async function initTask(){
                             input.value.trim()
                         ){
 
-                            checklist.push({
+checklist.push({
 
-                                text:
-                                    input.value.trim(),
+    id:
+        crypto.randomUUID(),
 
-                                done:false
+    text:
+        input.value.trim()
 
-                            });
+});
 
                         }
 
