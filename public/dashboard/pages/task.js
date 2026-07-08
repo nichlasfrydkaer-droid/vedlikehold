@@ -3,14 +3,6 @@ import {
 }
 from "../services/dashboard.js";
 
-const me =
-    await loadDashboard();
-
-if(!me){
-
-    return;
-
-}
 import {
     getReport
 }
@@ -28,6 +20,15 @@ import {
 from "../components/taskView.js";
 
 export async function initTask(){
+
+    const me =
+        await loadDashboard();
+
+    if(!me){
+
+        return;
+
+    }
 
     const container =
         document.getElementById(
@@ -178,10 +179,6 @@ export async function initTask(){
                 !!task
 
         });
-
-    //
-    // Kun ny oppgave kan opprettes ennå
-    //
 
     if(task){
 
