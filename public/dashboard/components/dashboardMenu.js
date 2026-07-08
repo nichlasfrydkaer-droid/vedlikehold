@@ -1,4 +1,6 @@
-export function renderDashboardMenu() {
+import { logout } from "../js/session.js";
+
+export function renderDashboardMenu(){
 
     const dashboard =
         document.getElementById("dashboard");
@@ -17,40 +19,75 @@ export function renderDashboardMenu() {
                 class="dashboard-menu-item"
                 id="menuJobcards"
             >
+
                 📋
-                <span>Jobbkort</span>
+
+                <span>
+
+                    Jobbkort
+
+                </span>
+
             </button>
 
             <button
                 class="dashboard-menu-item"
                 id="menuReports"
             >
+
                 📄
-                <span>Rapporter</span>
+
+                <span>
+
+                    Rapporter
+
+                </span>
+
             </button>
 
             <button
                 class="dashboard-menu-item"
                 id="menuTasks"
             >
+
                 🔧
-                <span>Oppdrag</span>
+
+                <span>
+
+                    Oppdrag
+
+                </span>
+
             </button>
 
             <button
                 class="dashboard-menu-item"
                 id="menuUsers"
             >
+
                 👥
-                <span>Brukere</span>
+
+                <span>
+
+                    Brukere
+
+                </span>
+
             </button>
 
             <button
                 class="dashboard-menu-item"
                 id="menuSettings"
             >
+
                 ⚙️
-                <span>Innstillinger</span>
+
+                <span>
+
+                    Innstillinger
+
+                </span>
+
             </button>
 
             <hr>
@@ -59,8 +96,15 @@ export function renderDashboardMenu() {
                 class="dashboard-menu-item"
                 id="menuLogout"
             >
+
                 🚪
-                <span>Logg ut</span>
+
+                <span>
+
+                    Logg ut
+
+                </span>
+
             </button>
 
         </div>
@@ -73,43 +117,110 @@ export function renderDashboardMenu() {
 export function initDashboardMenu(){
 
     const button =
-        document.getElementById("menuButton");
+        document.getElementById(
+            "menuButton"
+        );
 
     const menu =
-        document.getElementById("dashboardMenu");
+        document.getElementById(
+            "dashboardMenu"
+        );
 
     if(!button || !menu){
+
         return;
+
     }
 
-    button.addEventListener("click",(e)=>{
+    button.addEventListener(
 
-        e.stopPropagation();
+        "click",
 
-        menu.classList.toggle("hidden");
+        e=>{
 
-    });
+            e.stopPropagation();
 
-    document.addEventListener("click",()=>{
-
-        menu.classList.add("hidden");
-
-    });
-
-    menu.addEventListener("click",(e)=>{
-
-        e.stopPropagation();
-
-    });
-
-    document.addEventListener("keydown",(e)=>{
-
-        if(e.key==="Escape"){
-
-            menu.classList.add("hidden");
+            menu.classList.toggle(
+                "hidden"
+            );
 
         }
 
-    });
+    );
+
+    menu.addEventListener(
+
+        "click",
+
+        e=>{
+
+            e.stopPropagation();
+
+        }
+
+    );
+
+    document.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            menu.classList.add(
+                "hidden"
+            );
+
+        }
+
+    );
+
+    document.addEventListener(
+
+        "keydown",
+
+        e=>{
+
+            if(
+                e.key==="Escape"
+            ){
+
+                menu.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+    );
+
+    document
+        .getElementById(
+            "menuTasks"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                location.href =
+                    "/dashboard/task.html?report=test";
+
+            }
+
+        );
+
+    document
+        .getElementById(
+            "menuLogout"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            logout
+
+        );
 
 }

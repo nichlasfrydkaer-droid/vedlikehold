@@ -1,3 +1,4 @@
+import { buildReport } from "./report.js";
 import { checkPageSpace } from "./pdfHelpers.js";
 import { drawTasks } from "./pdfTasks.js";
 import { state } from "./state.js";
@@ -118,8 +119,18 @@ doc.text(
  10,
  y
 );
-const pdfBlob = doc.output("blob");
+const report =
+    buildReport();
 
-await uploadReport(pdfBlob);
+const pdfBlob =
+    doc.output("blob");
+
+await uploadReport(
+
+    pdfBlob,
+
+    report
+
+);
 
 }

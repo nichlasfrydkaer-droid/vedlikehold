@@ -1,0 +1,82 @@
+.dashboard-congregation-single{
+
+    margin-top:6px;
+
+    font-size:15px;
+
+    color:#666;
+
+}
+
+.dashboard-congregation-picker{
+
+    position:relative;
+
+    margin-top:6px;
+
+}
+
+.dashboard-congregation-button{
+
+    border:none;
+
+    background:none;
+
+    color:#1565c0;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    padding:0;
+
+}
+
+.dashboard-congregation-dropdown{
+
+    position:absolute;
+
+    top:30px;
+
+    left:0;
+
+    background:white;
+
+    border-radius:12px;
+
+    min-width:220px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.18);
+
+    overflow:hidden;
+
+    z-index:1000;
+
+}
+
+.dashboard-congregation-item{
+
+    width:100%;
+
+    border:none;
+
+    background:white;
+
+    text-align:left;
+
+    padding:14px 18px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.dashboard-congregation-item:hover{
+
+    background:#f4f7fb;
+
+}
