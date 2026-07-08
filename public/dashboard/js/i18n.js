@@ -39,9 +39,15 @@ export async function loadTranslations(language){
 
 }
 
-export function t(key){
+export function t(key, fallback = ""){
 
-    return translations[key] ?? key;
+    if(key in translations){
+
+        return translations[key];
+
+    }
+
+    return fallback || key;
 
 }
 
