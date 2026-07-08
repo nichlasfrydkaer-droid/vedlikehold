@@ -1,11 +1,13 @@
 import {
-
     createTask,
-
     getTask
-
 }
 from "../js/api.js";
+
+import {
+    getCongregation
+}
+from "../js/session.js";
 
 export async function loadTask(
     id
@@ -28,8 +30,16 @@ export async function saveTask(
     task
 ){
 
-    return await createTask(
-        task
-    );
+    const congregation =
+        getCongregation();
+
+    return await createTask({
+
+        ...task,
+
+        congregation_id:
+            congregation.id
+
+    });
 
 }
