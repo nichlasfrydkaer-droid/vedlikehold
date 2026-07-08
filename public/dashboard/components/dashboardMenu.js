@@ -132,25 +132,21 @@ export function initDashboardMenu(){
 
     }
 
-button.addEventListener(
+    button.addEventListener(
 
-    "click",
+        "click",
 
-    e=>{
+        e=>{
 
-        console.log("MENU CLICK");
+            e.stopPropagation();
 
-        e.stopPropagation();
+            menu.classList.toggle(
+                "hidden"
+            );
 
-        menu.classList.toggle(
-            "hidden"
-        );
+        }
 
-        console.log(menu.className);
-
-    }
-
-);
+    );
 
     menu.addEventListener(
 
@@ -184,9 +180,7 @@ button.addEventListener(
 
         e=>{
 
-            if(
-                e.key==="Escape"
-            ){
+            if(e.key==="Escape"){
 
                 menu.classList.add(
                     "hidden"
@@ -200,6 +194,23 @@ button.addEventListener(
 
     document
         .getElementById(
+            "menuReports"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                location.href =
+                    "/dashboard/reports.html";
+
+            }
+
+        );
+
+    document
+        .getElementById(
             "menuTasks"
         )
         ?.addEventListener(
@@ -209,7 +220,60 @@ button.addEventListener(
             ()=>{
 
                 location.href =
-                    "/dashboard/tasks";
+                    "/dashboard/tasks.html";
+
+            }
+
+        );
+
+    document
+        .getElementById(
+            "menuJobcards"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                location.href =
+                    "/dashboard/jobcards.html";
+
+            }
+
+        );
+
+    document
+        .getElementById(
+            "menuUsers"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                alert(
+                    "Brukere kommer snart."
+                );
+
+            }
+
+        );
+
+    document
+        .getElementById(
+            "menuSettings"
+        )
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                alert(
+                    "Innstillinger kommer snart."
+                );
 
             }
 
