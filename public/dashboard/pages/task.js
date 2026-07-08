@@ -79,31 +79,25 @@ try{
 
         <div class="dashboard-card">
 
-            <h1>
+<h2>
 
-                Opprett oppdrag
+    JOBBKORT ${report.job_number}
 
-            </h1>
+</h2>
 
-            <br>
+<h1 class="report-title">
 
-            <p>
+    ${report.title ?? ""}
 
-                <strong>Rapport:</strong>
+</h1>
 
-                ${report.report_number ?? report.id}
+<p class="report-subtitle">
 
-            </p>
+    ${report.subtitle ?? ""}
 
-            <p>
+</p>
 
-                <strong>Jobbkort:</strong>
-
-                ${report.jobcard_id ?? "-"}
-
-            </p>
-
-            <hr>
+<hr>
 
             <h2>
 
@@ -124,20 +118,21 @@ try{
             </label>
 
             <br><br>
+<div
+    id="originalComment"
+    class="report-comment"
+>
 
-            <textarea
-                id="originalComment"
-                rows="5"
-                readonly
-            >${report.comment ?? report.notes ?? ""}</textarea>
+    ${report.comment ?? report.notes ?? "-"}
+
+</div>
 
             <br><br>
+<h3>
 
-            <label>
+    Oppdragstittel
 
-                Tittel
-
-            </label>
+</h3>
 
             <input
                 id="taskTitle"
@@ -146,12 +141,11 @@ try{
             >
 
             <br><br>
+<h3>
 
-            <label>
+    Frist
 
-                Frist
-
-            </label>
+</h3>
 
             <input
                 id="deadline"
