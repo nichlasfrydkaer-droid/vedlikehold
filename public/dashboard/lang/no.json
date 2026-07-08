@@ -35,6 +35,7 @@
   "closePage": "Du kan nå lukke siden.",
 
   "task": "Oppdrag",
+  "taskId":"Oppdrag-ID",
   "tasks": "Oppdrag",
   "taskTitle": "Oppdragstittel",
   "createTask": "Opprett oppdrag",
