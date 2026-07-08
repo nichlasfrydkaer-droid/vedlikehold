@@ -1,268 +1,198 @@
 import {
-    getReport,
-    createTask
+    getReport
 }
 from "../js/api.js";
+
+import {
+    loadTask,
+    saveTask
+}
+from "../services/tasks.js";
+
+import {
+    renderTaskView
+}
+from "../components/taskView.js";
 
 export async function initTask(){
 
     const container =
-        document.getElementById("task");
-
-    const reportId =
-        new URLSearchParams(
-            location.search
-        ).get("report");
-
-    if(!reportId){
-
-        container.innerHTML = `
-
-            <div class="dashboard-card">
-
-                <h2>
-
-                    Rapport mangler.
-
-                </h2>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-    const result =
-        await getReport(reportId);
-
-    if(!result.success){
-
-        container.innerHTML = `
-
-            <div class="dashboard-card">
-
-                <h2>
-
-                    Rapport kunne ikke hentes.
-
-                </h2>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-    const report =
-        result.report;
-
-let checklist = [];
-
-try{
-
-    checklist =
-        JSON.parse(
-            report.tasks_json || "[]"
+        document.getElementById(
+            "task"
         );
 
-}catch{
+    const params =
+        new URLSearchParams(
+            location.search
+        );
 
-    checklist = [];
+    const reportId =
+        params.get("report");
 
-}
-    
-    container.innerHTML = `
+    const taskId =
+        params.get("id");
 
-        <div class="dashboard-card">
+    let report = null;
 
-<h2>
+    let task = null;
 
-    JOBBKORT ${report.job_number}
+    //
+    // Eksisterende oppdrag
+    //
 
-</h2>
+    if(taskId){
 
-<h1 class="report-title">
+        task =
+            await loadTask(
+                taskId
+            );
 
-    ${report.title ?? ""}
+        if(!task){
 
-</h1>
+            container.innerHTML = `
 
-<p class="report-subtitle">
+                <div class="dashboard-card">
 
-    ${report.subtitle ?? ""}
+                    <h2>
 
-</p>
+                        Oppdrag ikke funnet
 
-<hr>
+                    </h2>
 
-            <h2>
+                </div>
 
-                Original kommentar
+            `;
 
-            </h2>
+            return;
 
-            <label>
+        }
 
-                <input
-                    id="includeComment"
-                    type="checkbox"
-                    checked
-                >
+        const result =
+            await getReport(
+                task.report_id
+            );
 
-                Inkluder kommentar
+        if(!result.success){
 
-            </label>
+            container.innerHTML = `
 
-            <br><br>
-<div
-    id="originalComment"
-    class="report-comment"
->
+                <div class="dashboard-card">
 
-    ${report.comment ?? report.notes ?? "-"}
+                    <h2>
 
-</div>
+                        Rapport kunne ikke hentes
 
-            <br><br>
-<h3>
+                    </h2>
 
-    Oppdragstittel
+                </div>
 
-</h3>
+            `;
 
-            <input
-                id="taskTitle"
-                type="text"
-                value="${report.title ?? ""}"
-            >
+            return;
 
-            <br><br>
-<h3>
+        }
 
-    Frist
-
-</h3>
-
-            <input
-                id="deadline"
-                type="date"
-            >
-
-            <br><br>
-
-            <h2>
-
-                Sjekkpunkter
-
-            </h2>
-<div id="checklist">
-
-    ${
-
-        checklist.length
-
-        ?
-
-        checklist.map(item=>`
-
-            <input
-
-                class="checkItem"
-
-                value="${item.text}"
-
-            >
-
-        `).join("")
-
-        :
-
-        `
-
-        <input
-
-            class="checkItem"
-
-            placeholder="Første punkt..."
-
-        >
-
-        `
+        report =
+            result.report;
 
     }
 
-</div>
+    //
+    // Nytt oppdrag
+    //
 
-            <br>
+    else{
 
-            <button id="addItem">
+        if(!reportId){
 
-                + Legg til punkt
+            container.innerHTML = `
 
-            </button>
+                <div class="dashboard-card">
 
-            <hr>
+                    <h2>
 
-            <h2>
+                        Rapport mangler
 
-                Bilder
+                    </h2>
 
-            </h2>
+                </div>
 
-            <div id="photos">
+            `;
 
-                Ingen bilder ennå.
+            return;
 
-            </div>
+        }
 
-            <br>
+        const result =
+            await getReport(
+                reportId
+            );
 
-            <button id="createTask">
+        if(!result.success){
 
-                Opprett oppdrag
+            container.innerHTML = `
 
-            </button>
+                <div class="dashboard-card">
 
-        </div>
+                    <h2>
 
-    `;
+                        Rapport kunne ikke hentes
+
+                    </h2>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+        report =
+            result.report;
+
+    }
+
+    container.innerHTML =
+
+        renderTaskView({
+
+            report,
+
+            task,
+
+            isExisting:
+                !!task
+
+        });
+
+    //
+    // Kun ny oppgave kan opprettes ennå
+    //
+
+    if(task){
+
+        return;
+
+    }
 
     document
-        .getElementById("addItem")
-        .onclick = () => {
 
-            document
-                .getElementById("checklist")
-                .insertAdjacentHTML(
+        .getElementById(
+            "saveTask"
+        )
 
-                    "beforeend",
-
-                    `
-
-                    <input
-                        class="checkItem"
-                        placeholder="Nytt punkt..."
-                    >
-
-                    `
-
-                );
-
-        };
-
-    document
-        .getElementById("createTask")
-        .onclick = async () => {
+        .onclick = async ()=>{
 
             const checklist = [];
 
             document
-                .querySelectorAll(".checkItem")
-                .forEach(input => {
+
+                .querySelectorAll(
+                    ".checkItem"
+                )
+
+                .forEach(input=>{
 
                     if(input.value.trim()){
 
@@ -281,25 +211,30 @@ try{
                 });
 
             const response =
-                await createTask({
+
+                await saveTask({
 
                     report_id:
                         report.id,
 
                     title:
                         document
-                            .getElementById("taskTitle")
+                            .getElementById(
+                                "taskTitle"
+                            )
                             .value,
 
-                    instructions:
+                    description:
 
                         document
-                            .getElementById("includeComment")
+                            .getElementById(
+                                "includeComment"
+                            )
                             .checked
 
                         ?
 
-                        (report.comment ?? report.notes ?? "")
+                        report.notes ?? ""
 
                         :
 
@@ -307,7 +242,9 @@ try{
 
                     deadline:
                         document
-                            .getElementById("deadline")
+                            .getElementById(
+                                "deadline"
+                            )
                             .value,
 
                     checklist,
@@ -316,24 +253,29 @@ try{
 
                 });
 
-            console.log(response);
-
             if(response.success){
 
                 location.href =
-                    `/dashboard/taskCreated.html?id=${response.task.id}&code=${response.task.link_code}`;
 
-                return;
+                    "/dashboard/taskCreated.html?id=" +
+
+                    response.task.id +
+
+                    "&code=" +
+
+                    response.task.link_code;
 
             }
 
-            alert(
+            else{
 
-                response.message ??
+                alert(
 
-                "Kunne ikke opprette oppdrag."
+                    "Kunne ikke opprette oppdrag."
 
-            );
+                );
+
+            }
 
         };
 
