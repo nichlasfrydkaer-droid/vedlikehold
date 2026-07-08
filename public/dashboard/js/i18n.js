@@ -1,6 +1,11 @@
 let translations = {};
 
+import { state } from "./state.js";
+
 export async function loadTranslations(language){
+
+    state.language =
+        language;
 
     try{
 
