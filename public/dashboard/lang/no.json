@@ -1,0 +1,172 @@
+{
+  "appName": "Vedlikeholdssystem",
+
+  "login": "Logg inn",
+  "logout": "Logg ut",
+  "email": "E-post",
+  "password": "Passord",
+  "forgotPassword": "Glemt passord?",
+  "unauthorized": "Ingen tilgang.",
+  "loginFailed": "Kunne ikke logge inn.",
+
+  "dashboard": "Dashboard",
+  "home": "Hjem",
+  "news": "Nyheter",
+  "overview": "Oversikt",
+  "upcoming": "Kommende",
+  "statistics": "Statistikk",
+
+  "jobcard": "Jobbkort",
+  "jobcards": "Jobbkort",
+  "jobNumber": "Jobbkort",
+  "title": "Tittel",
+  "subtitle": "Undertittel",
+  "description": "Beskrivelse",
+  "frequency": "Frekvens",
+
+  "report": "Rapport",
+  "reports": "Rapporter",
+  "reportId": "Rapport-ID",
+  "reportNotFound": "Rapport ikke funnet.",
+  "reportLoadFailed": "Rapport kunne ikke lastes.",
+  "reportCreated": "Rapport opprettet.",
+  "reportSent": "Rapport sendt.",
+  "reportSentText": "Rapporten er sendt til vedlikeholdssystemet.",
+  "closePage": "Du kan nå lukke siden.",
+
+  "task": "Oppdrag",
+  "tasks": "Oppdrag",
+  "taskTitle": "Oppdragstittel",
+  "createTask": "Opprett oppdrag",
+  "openTask": "Åpne oppdrag",
+  "taskCreated": "Oppdrag opprettet",
+  "taskCreatedText": "Oppdraget er opprettet.",
+  "taskNotFound": "Oppdrag ikke funnet.",
+
+  "users": "Brukere",
+  "user": "Bruker",
+
+  "settings": "Innstillinger",
+
+  "congregation": "Menighet",
+  "congregations": "Menigheter",
+
+  "status": "Status",
+  "completed": "Fullført",
+  "open": "Åpen",
+  "closed": "Lukket",
+  "pending": "Venter",
+  "inProgress": "Pågår",
+  "requiresAction": "Krever handling",
+  "taskCreatedStatus": "Oppdrag opprettet",
+  "taskFinishedStatus": "Oppdrag ferdig",
+
+  "performedBy": "Utført av",
+  "assignedTo": "Ansvarlig",
+
+  "date": "Dato",
+  "time": "Tid",
+  "created": "Opprettet",
+  "finished": "Fullført",
+  "duration": "Varighet",
+  "deadline": "Frist",
+
+  "comment": "Kommentar",
+  "comments": "Kommentarer",
+  "originalComment": "Original kommentar",
+  "notes": "Notater",
+
+  "checklist": "Sjekkpunkter",
+  "checkItem": "Sjekkpunkt",
+  "addChecklistItem": "Legg til punkt",
+  "removeChecklistItem": "Fjern punkt",
+  "completedItem": "Utført",
+  "notCompletedItem": "Ikke utført",
+
+  "photos": "Bilder",
+  "photo": "Bilde",
+  "photoCount": "Antall bilder",
+  "addPhoto": "Legg til bilde",
+  "removePhoto": "Fjern bilde",
+  "noPhotos": "Ingen bilder ennå.",
+
+  "pdf": "PDF",
+  "downloadPdf": "Last ned PDF",
+  "openPdf": "Åpne PDF",
+
+  "history": "Historikk",
+
+  "start": "Start",
+  "startWork": "Start arbeidet",
+  "finish": "Fullfør",
+  "finishReport": "Fullfør rapport",
+  "send": "Send",
+  "sending": "Sender...",
+  "saving": "Lagrer...",
+  "saved": "Lagret",
+
+  "save": "Lagre",
+  "cancel": "Avbryt",
+  "delete": "Slett",
+  "edit": "Rediger",
+  "create": "Opprett",
+  "openButton": "Åpne",
+  "close": "Lukk",
+  "back": "Tilbake",
+  "next": "Neste",
+  "search": "Søk",
+  "filter": "Filter",
+  "refresh": "Oppdater",
+  "download": "Last ned",
+  "upload": "Last opp",
+  "print": "Skriv ut",
+
+  "yes": "Ja",
+  "no": "Nei",
+  "ok": "OK",
+
+  "loading": "Laster...",
+  "success": "Vellykket",
+  "error": "Feil",
+  "warning": "Advarsel",
+  "information": "Informasjon",
+
+  "saveQuestion": "Vil du lagre endringene?",
+  "deleteQuestion": "Er du sikker på at du vil slette dette?",
+  "unsavedChanges": "Du har ulagrede endringer.",
+
+  "noReports": "Ingen rapporter ennå.",
+  "noTasks": "Ingen oppdrag ennå.",
+  "noUsers": "Ingen brukere.",
+  "noResults": "Ingen treff.",
+
+  "today": "I dag",
+  "yesterday": "I går",
+  "tomorrow": "I morgen",
+
+  "minute": "minutt",
+  "minutes": "minutter",
+  "hour": "time",
+  "hours": "timer",
+  "day": "dag",
+  "days": "dager",
+
+  "unknown": "Ukjent",
+  "none": "Ingen",
+  "notAvailable": "Ikke tilgjengelig",
+
+  "createdBy": "Opprettet av",
+  "lastUpdated": "Sist oppdatert",
+  "version": "Versjon",
+
+  "copy": "Kopier",
+  "copied": "Kopiert",
+
+  "attachments": "Vedlegg",
+  "documents": "Dokumenter",
+
+  "active": "Aktiv",
+  "inactive": "Inaktiv",
+
+  "copyright": "© Vedlikeholdssystem"
+}
