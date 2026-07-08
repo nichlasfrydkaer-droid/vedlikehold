@@ -13,32 +13,53 @@ import { renderDashboardTasks } from "../components/dashboardTasks.js";
 import { renderDashboardReports } from "../components/dashboardReports.js";
 import { renderDashboardFooter } from "../components/dashboardFooter.js";
 
-export async function initDashboard() {
+export function initDashboardMenu(){
 
-    const dashboard =
-        document.getElementById("dashboard");
+    const button =
+        document.getElementById("menuButton");
 
-    dashboard.innerHTML = "";
+    const menu =
+        document.getElementById("dashboardMenu");
 
-    const me =
-        await getMe();
+    console.log("INIT");
 
-    if(!me.success){
+    console.log(button);
 
-        localStorage.removeItem(
-            "dashboard_token"
-        );
+    console.log(menu);
 
-        localStorage.removeItem(
-            "dashboard_congregation"
-        );
-
-        window.location.href =
-            "/dashboard/login.html";
+    if(!button || !menu){
 
         return;
 
     }
+
+    button.onclick = e=>{
+
+        console.log("BUTTON");
+
+        e.stopPropagation();
+
+        menu.classList.toggle("hidden");
+
+    };
+
+    menu.onclick = e=>{
+
+        console.log("MENU");
+
+        e.stopPropagation();
+
+    };
+
+    document.onclick = ()=>{
+
+        console.log("DOCUMENT");
+
+        menu.classList.add("hidden");
+
+    };
+
+}
 
     state.user =
         me.user;
