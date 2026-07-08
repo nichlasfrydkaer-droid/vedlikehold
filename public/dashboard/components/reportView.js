@@ -41,16 +41,15 @@ export function renderReportView(
                 ${report.subtitle ?? ""}
 
             </p>
+${
 
-            ${status(
+    task
 
-                task
+        ? status(task.status)
 
-                    ? task.status
+        : ""
 
-                    : "created"
-
-            )}
+}
 
             <br>
 
@@ -88,7 +87,7 @@ export function renderReportView(
 
                     "📷",
 
-                    report.photo_count + " bilder"
+                    `${report.photo_count} ${t("photos")}`
 
                 )}
 
@@ -205,6 +204,49 @@ export function renderReportView(
             >
 
                 ${report.id}
+
+${
+
+    task
+
+        ?
+
+        `
+
+        <br>
+
+        <p
+            style="
+                font-size:12px;
+                color:#999;
+                margin-top:16px;
+                margin-bottom:4px;
+            "
+        >
+
+            ${t("taskId")}
+
+        </p>
+
+        <p
+            style="
+                font-size:11px;
+                color:#bbb;
+                word-break:break-all;
+            "
+        >
+
+            ${task.id}
+
+        </p>
+
+        `
+
+        :
+
+        ""
+
+}                
 
             </p>
 
