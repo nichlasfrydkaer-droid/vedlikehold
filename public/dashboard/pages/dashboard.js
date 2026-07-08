@@ -1,7 +1,7 @@
 import { getMe } from "../js/api.js";
 import { state } from "../js/state.js";
 import { loadCongregation } from "../js/session.js";
-
+import { loadTranslations } from "../js/i18n.js";
 import { renderDashboardHeader } from "../components/dashboardHeader.js";
 import { renderDashboardMenu } from "../components/dashboardMenu.js";
 import { initDashboardMenu } from "../components/dashboardMenu.js";
@@ -45,21 +45,29 @@ export async function initDashboard() {
 
     state.congregations =
         me.congregations;
+// Standard er første menighed
+if(me.congregations.length){
 
-    // Standard er første menighed
-    if(me.congregations.length){
+    state.congregation =
+        me.congregations[0];
 
-        state.congregation =
-            me.congregations[0];
+}
 
-    }
+// Overskriv med gemt valg hvis det findes
+loadCongregation();
 
-    // Overskriv med gemt valg hvis det findes
-    loadCongregation();
+// Indlæs oversættelser for den valgte menighed
+await loadTranslations(
 
-    renderDashboardHeader();
+    state.congregation?.language ?? "no"
 
-    renderDashboardMenu();
+);
+
+renderDashboardHeader();
+
+renderDashboardMenu();
+
+initDashboardMenu();
 
     initDashboardMenu();
 
