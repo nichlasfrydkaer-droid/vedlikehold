@@ -1,3 +1,16 @@
+import {
+    loadDashboard
+}
+from "../services/dashboard.js";
+
+const me =
+    await loadDashboard();
+
+if(!me){
+
+    return;
+
+}
 import { getMe, getReports } from "../js/api.js";
 import { state } from "../js/state.js";
 import { loadCongregation } from "../js/session.js";
