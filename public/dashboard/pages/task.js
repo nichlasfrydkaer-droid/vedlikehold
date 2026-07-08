@@ -60,6 +60,21 @@ export async function initTask(){
     const report =
         result.report;
 
+let checklist = [];
+
+try{
+
+    checklist =
+        JSON.parse(
+            report.tasks_json || "[]"
+        );
+
+}catch{
+
+    checklist = [];
+
+}
+    
     container.innerHTML = `
 
         <div class="dashboard-card">
@@ -150,15 +165,43 @@ export async function initTask(){
                 Sjekkpunkter
 
             </h2>
+<div id="checklist">
 
-            <div id="checklist">
+    ${
 
-                <input
-                    class="checkItem"
-                    placeholder="Første punkt..."
-                >
+        checklist.length
 
-            </div>
+        ?
+
+        checklist.map(item=>`
+
+            <input
+
+                class="checkItem"
+
+                value="${item.text}"
+
+            >
+
+        `).join("")
+
+        :
+
+        `
+
+        <input
+
+            class="checkItem"
+
+            placeholder="Første punkt..."
+
+        >
+
+        `
+
+    }
+
+</div>
 
             <br>
 
