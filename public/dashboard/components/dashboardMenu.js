@@ -132,21 +132,25 @@ export function initDashboardMenu(){
 
     }
 
-    button.addEventListener(
+button.addEventListener(
 
-        "click",
+    "click",
 
-        e=>{
+    e=>{
 
-            e.stopPropagation();
+        console.log("MENU CLICK");
 
-            menu.classList.toggle(
-                "hidden"
-            );
+        e.stopPropagation();
 
-        }
+        menu.classList.toggle(
+            "hidden"
+        );
 
-    );
+        console.log(menu.className);
+
+    }
+
+);
 
     menu.addEventListener(
 
