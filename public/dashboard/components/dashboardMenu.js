@@ -209,7 +209,7 @@ button.addEventListener(
             ()=>{
 
                 location.href =
-                    "/dashboard/task.html?report=test";
+                    "/dashboard/tasks";
 
             }
 
