@@ -108,7 +108,27 @@ export async function getReport(
 
     return await request(
 
-        "/report?id=" + id
+        "/report?id=" +
+
+        encodeURIComponent(
+            id
+        )
+
+    );
+
+}
+
+export async function getTask(
+    id
+){
+
+    return await request(
+
+        "/task?id=" +
+
+        encodeURIComponent(
+            id
+        )
 
     );
 
@@ -142,7 +162,11 @@ export async function getPublicTask(
 
     return await request(
 
-        "/o/" + linkCode
+        "/o/" +
+
+        encodeURIComponent(
+            linkCode
+        )
 
     );
 
