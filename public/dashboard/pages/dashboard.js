@@ -1,94 +1,100 @@
 import { getMe } from "../js/api.js";
 import { state } from "../js/state.js";
-import { loadCongregation } from "../js/session.js";
-import { loadTranslations } from "../js/i18n.js";
-import { renderDashboardHeader } from "../components/dashboardHeader.js";
-import { renderDashboardMenu } from "../components/dashboardMenu.js";
-import { initDashboardMenu } from "../components/dashboardMenu.js";
+import {
+    loadCongregation
+} from "../js/session.js";
+import {
+    loadTranslations
+} from "../js/i18n.js";
 
-import { renderDashboardNews } from "../components/dashboardNews.js";
-import { renderDashboardOverview } from "../components/dashboardOverview.js";
-import { renderDashboardUpcoming } from "../components/dashboardUpcoming.js";
-import { renderDashboardTasks } from "../components/dashboardTasks.js";
-import { renderDashboardReports } from "../components/dashboardReports.js";
-import { renderDashboardFooter } from "../components/dashboardFooter.js";
+import {
+    renderDashboardHeader
+} from "../components/dashboardHeader.js";
 
-export function initDashboardMenu(){
+import {
+    renderDashboardMenu,
+    initDashboardMenu
+} from "../components/dashboardMenu.js";
 
-    const button =
-        document.getElementById("menuButton");
+import {
+    renderDashboardNews
+} from "../components/dashboardNews.js";
 
-    const menu =
-        document.getElementById("dashboardMenu");
+import {
+    renderDashboardOverview
+} from "../components/dashboardOverview.js";
 
-    console.log("INIT");
+import {
+    renderDashboardUpcoming
+} from "../components/dashboardUpcoming.js";
 
-    console.log(button);
+import {
+    renderDashboardTasks
+} from "../components/dashboardTasks.js";
 
-    console.log(menu);
+import {
+    renderDashboardReports
+} from "../components/dashboardReports.js";
 
-    if(!button || !menu){
+import {
+    renderDashboardFooter
+} from "../components/dashboardFooter.js";
+
+export async function initDashboard(){
+
+    const dashboard =
+        document.getElementById(
+            "dashboard"
+        );
+
+    dashboard.innerHTML = "";
+
+    const me =
+        await getMe();
+
+    if(!me.success){
+
+        localStorage.removeItem(
+            "dashboard_token"
+        );
+
+        localStorage.removeItem(
+            "dashboard_congregation"
+        );
+
+        location.href =
+            "/dashboard/login.html";
 
         return;
 
     }
-
-    button.onclick = e=>{
-
-        console.log("BUTTON");
-
-        e.stopPropagation();
-
-        menu.classList.toggle("hidden");
-
-    };
-
-    menu.onclick = e=>{
-
-        console.log("MENU");
-
-        e.stopPropagation();
-
-    };
-
-    document.onclick = ()=>{
-
-        console.log("DOCUMENT");
-
-        menu.classList.add("hidden");
-
-    };
-
-}
 
     state.user =
         me.user;
 
     state.congregations =
         me.congregations;
-// Standard er første menighed
-if(me.congregations.length){
 
-    state.congregation =
-        me.congregations[0];
+    if(me.congregations.length){
 
-}
+        state.congregation =
+            me.congregations[0];
 
-// Overskriv med gemt valg hvis det findes
-loadCongregation();
+    }
 
-// Indlæs oversættelser for den valgte menighed
-await loadTranslations(
+    loadCongregation();
 
-    state.congregation?.language ?? "no"
+    await loadTranslations(
 
-);
+        state.congregation?.language ??
 
-renderDashboardHeader();
+        "no"
 
-renderDashboardMenu();
+    );
 
-initDashboardMenu();
+    renderDashboardHeader();
+
+    renderDashboardMenu();
 
     initDashboardMenu();
 
@@ -99,8 +105,8 @@ initDashboardMenu();
         `
         <div
             id="dashboardGrid"
-            class="dashboard-grid">
-        </div>
+            class="dashboard-grid"
+        ></div>
         `
 
     );
