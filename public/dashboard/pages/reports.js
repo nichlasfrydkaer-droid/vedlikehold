@@ -1,62 +1,60 @@
 import {
+
     loadDashboard
+
 }
+
 from "../services/dashboard.js";
 
-const me =
-    await loadDashboard();
+import {
 
-if(!me){
-
-    return;
+    getReports
 
 }
-import { getMe, getReports } from "../js/api.js";
-import { state } from "../js/state.js";
-import { loadCongregation } from "../js/session.js";
-import { renderReportCard } from "../components/reportCard.js";
+
+from "../js/api.js";
+
+import {
+
+    getCongregation
+
+}
+
+from "../js/session.js";
+
+import {
+
+    renderReportCard
+
+}
+
+from "../components/reportCard.js";
 
 export async function initReports(){
 
-    const container =
-        document.getElementById("reports");
-
     const me =
-        await getMe();
 
-    if(!me.success){
+        await loadDashboard();
 
-        localStorage.removeItem(
-            "dashboard_token"
-        );
-
-        localStorage.removeItem(
-            "dashboard_congregation"
-        );
-
-        location.href =
-            "/dashboard/login.html";
+    if(!me){
 
         return;
 
     }
 
-    state.user =
-        me.user;
+    const container =
 
-    state.congregations =
-        me.congregations;
+        document.getElementById(
 
-    if(me.congregations.length){
+            "reports"
 
-        state.congregation =
-            me.congregations[0];
+        );
 
-    }
+    const congregation =
 
-    loadCongregation();
+        getCongregation();
 
-    if(!state.congregation){
+    if(!congregation){
 
         container.innerHTML = `
 
@@ -73,8 +71,11 @@ export async function initReports(){
     }
 
     const result =
+
         await getReports(
-            state.congregation.id
+
+            congregation.id
+
         );
 
     if(!result.success){
@@ -93,7 +94,7 @@ export async function initReports(){
 
     }
 
-    if(result.reports.length === 0){
+    if(result.reports.length===0){
 
         container.innerHTML = `
 
@@ -110,18 +111,33 @@ export async function initReports(){
     }
 
     container.innerHTML =
+
         result.reports
-            .map(renderReportCard)
+
+            .map(
+
+                renderReportCard
+
+            )
+
             .join("");
 
     container
-        .querySelectorAll(".report-card")
+
+        .querySelectorAll(
+
+            ".report-card"
+
+        )
+
         .forEach(card=>{
 
             card.onclick = ()=>{
 
                 location.href =
+
                     "/dashboard/report.html?id=" +
+
                     card.dataset.id;
 
             };
