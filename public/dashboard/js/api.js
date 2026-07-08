@@ -118,6 +118,22 @@ export async function getReport(
 
 }
 
+export async function getTasks(
+    congregationId
+){
+
+    return await request(
+
+        "/tasks?congregation=" +
+
+        encodeURIComponent(
+            congregationId
+        )
+
+    );
+
+}
+
 export async function getTask(
     id
 ){
