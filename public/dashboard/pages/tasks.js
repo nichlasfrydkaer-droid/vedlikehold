@@ -53,29 +53,12 @@ export async function initTasks(){
 
     }
 
-console.log(
-    "Congregation:",
-    congregation
-);
-
-console.log(
-    "Congregation ID:",
-    congregation.id
-);
-    
     const result =
         await getTasks(
 
             congregation.id
 
         );
-
-    const result =
-    await getTasks(
-
-        congregation.id
-
-    );
 
     if(!result.success){
 
