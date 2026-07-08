@@ -1,3 +1,16 @@
+import {
+    loadDashboard
+}
+from "../services/dashboard.js";
+
+const me =
+    await loadDashboard();
+
+if(!me){
+
+    return;
+
+}
 import { getReport } from "../js/api.js";
 import { renderReportView } from "../components/reportView.js";
 
