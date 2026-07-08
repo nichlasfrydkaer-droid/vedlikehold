@@ -11,7 +11,7 @@ export async function loadTranslations(language){
 
         const response =
             await fetch(
-                `/dashboard/translations/${language}.json`
+                `/dashboard/lang/${language}.json`
             );
 
         if(response.ok){
@@ -31,7 +31,7 @@ export async function loadTranslations(language){
 
     const fallback =
         await fetch(
-            "/dashboard/translations/no.json"
+            "/dashboard/lang/no.json"
         );
 
     translations =
