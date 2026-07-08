@@ -3,18 +3,26 @@ import {
 }
 from "../services/dashboard.js";
 
-const me =
-    await loadDashboard();
-
-if(!me){
-
-    return;
-
+import {
+    getReport
 }
-import { getReport } from "../js/api.js";
-import { renderReportView } from "../components/reportView.js";
+from "../js/api.js";
+
+import {
+    renderReportView
+}
+from "../components/reportView.js";
 
 export async function initReport(){
+
+    const me =
+        await loadDashboard();
+
+    if(!me){
+
+        return;
+
+    }
 
     const container =
         document.getElementById(
@@ -101,11 +109,14 @@ export async function initReport(){
 
         );
 
-    document
-        .getElementById(
+    const taskButton =
+        document.getElementById(
             "taskButton"
-        )
-        .onclick = ()=>{
+        );
+
+    if(taskButton){
+
+        taskButton.onclick = ()=>{
 
             if(task){
 
@@ -126,5 +137,7 @@ export async function initReport(){
             }
 
         };
+
+    }
 
 }
