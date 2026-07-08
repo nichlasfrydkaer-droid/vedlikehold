@@ -19,7 +19,7 @@ export async function initReport(){
 
         reportElement.innerHTML = `
 
-            <div class="dashboard-card">
+            <div class="dashboard-card report-page">
 
                 <h2>
 
@@ -100,68 +100,69 @@ export async function initReport(){
 
             <br>
 
-            <p>
+<div class="report-info">
 
-                👤
+    <div>
 
-                ${report.performed_by || "-"}
+        👤 ${report.performed_by || "-"}
 
-            </p>
+    </div>
 
-            <p>
+    <div>
 
-                📅
+        📅 ${report.finished_at
+            ? new Date(report.finished_at)
+                .toLocaleString("no-NO")
+            : "-"}
 
-                ${report.finished_at
-                    ? new Date(report.finished_at)
-                        .toLocaleString("no-NO")
-                    : "-"}
+    </div>
 
-            </p>
+    <div>
 
-            <p>
+        ⏱ ${report.duration_seconds
+            ? Math.round(report.duration_seconds / 60) + " min"
+            : "-"}
 
-                ⏱
+    </div>
 
-                ${report.duration_seconds
-                    ? Math.round(report.duration_seconds / 60) + " min"
-                    : "-"}
+    <div>
 
-            </p>
+        📷 ${report.photo_count} bilder
 
-            <p>
+    </div>
 
-                📷
-
-                ${report.photo_count}
-
-                bilder
-
-            </p>
+</div>
 
             <hr>
+<div class="report-section">
 
-            <h3>
+    <h3>
 
-                Kommentar
+        Kommentar
 
-            </h3>
+    </h3>
 
-            <p>
+    <div class="report-comment">
 
-                ${report.notes || "-"}
+        ${report.notes || "-"}
 
-            </p>
+    </div>
+
+</div>
 
             <hr>
+<div class="report-section">
 
-            <h3>
+    <h3>
 
-                Sjekkpunkter
+        Sjekkpunkter
 
-            </h3>
+    </h3>
 
-            <div id="taskList">
+    <div
+        id="taskList"
+        class="report-checklist"
+    >
 
                 ${checklist.length
 
@@ -187,23 +188,22 @@ export async function initReport(){
 
             </div>
 
+</div>
+
             <hr>
 
             ${report.pdf_url ? `
 
                 <p>
+<a
+    href="${report.pdf_url}"
+    target="_blank"
+    class="button-primary report-button"
+>
 
-                    <a
+    📄 Last ned PDF
 
-                        href="${report.pdf_url}"
-
-                        target="_blank"
-
-                    >
-
-                        📄 Last ned PDF
-
-                    </a>
+</a>
 
                 </p>
 
