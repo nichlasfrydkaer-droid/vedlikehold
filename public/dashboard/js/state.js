@@ -9,6 +9,8 @@ export const state = {
 
     congregation:null,
 
-    congregations:[]
+    congregations:[],
+
+    language:"no"
 
 };
