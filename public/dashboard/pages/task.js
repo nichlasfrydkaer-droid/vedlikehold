@@ -1,292 +1,297 @@
-import {
-    loadDashboard
-}
-from "../services/dashboard.js";
+import { authenticate } from "../services/auth.js";
 
 import {
-    getReport
+    generateTaskId,
+    generateLinkCode
 }
-from "../js/api.js";
+from "../services/id.js";
 
 import {
-    loadTask,
-    saveTask
+    createTask,
+    getTaskById
 }
-from "../services/tasks.js";
+from "../repositories/tasks.js";
 
 import {
-    renderTaskView
+    getUserCongregations
 }
-from "../components/taskView.js";
+from "../repositories/congregations.js";
 
-export async function initTask(){
+export async function handleTask(
+    request,
+    env,
+    corsHeaders
+){
 
-    const me =
-        await loadDashboard();
+    const session =
+        await authenticate(
+            request,
+            env.DB
+        );
 
-    if(!me){
+    if(!session){
 
-        return;
+        return new Response(
+
+            JSON.stringify({
+
+                success:false,
+
+                message:"Unauthorized"
+
+            }),
+
+            {
+
+                status:401,
+
+                headers:{
+                    ...corsHeaders,
+                    "Content-Type":"application/json"
+                }
+
+            }
+
+        );
 
     }
 
-    const container =
-        document.getElementById(
-            "task"
-        );
-
-    const params =
-        new URLSearchParams(
-            location.search
-        );
-
-    const reportId =
-        params.get("report");
-
-    const taskId =
-        params.get("id");
-
-    let report = null;
-
-    let task = null;
-
     //
-    // Eksisterende oppdrag
+    // Hent eksisterende oppdrag
     //
 
-    if(taskId){
+    if(request.method==="GET"){
 
-        task =
-            await loadTask(
-                taskId
+        const id =
+            new URL(request.url)
+                .searchParams
+                .get("id");
+
+        if(!id){
+
+            return new Response(
+
+                JSON.stringify({
+
+                    success:false,
+
+                    message:"Missing id"
+
+                }),
+
+                {
+
+                    status:400,
+
+                    headers:{
+                        ...corsHeaders,
+                        "Content-Type":"application/json"
+                    }
+
+                }
+
+            );
+
+        }
+
+        const task =
+            await getTaskById(
+
+                env.DB,
+
+                id
+
             );
 
         if(!task){
 
-            container.innerHTML = `
+            return new Response(
 
-                <div class="dashboard-card">
+                JSON.stringify({
 
-                    <h2>
+                    success:false,
 
-                        Oppdrag ikke funnet
+                    message:"Task not found"
 
-                    </h2>
+                }),
 
-                </div>
+                {
 
-            `;
+                    status:404,
 
-            return;
-
-        }
-
-        const result =
-            await getReport(
-                task.report_id
-            );
-
-        if(!result.success){
-
-            container.innerHTML = `
-
-                <div class="dashboard-card">
-
-                    <h2>
-
-                        Rapport kunne ikke hentes
-
-                    </h2>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-        report =
-            result.report;
-
-    }
-
-    //
-    // Nytt oppdrag
-    //
-
-    else{
-
-        if(!reportId){
-
-            container.innerHTML = `
-
-                <div class="dashboard-card">
-
-                    <h2>
-
-                        Rapport mangler
-
-                    </h2>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-        const result =
-            await getReport(
-                reportId
-            );
-
-        if(!result.success){
-
-            container.innerHTML = `
-
-                <div class="dashboard-card">
-
-                    <h2>
-
-                        Rapport kunne ikke hentes
-
-                    </h2>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-        report =
-            result.report;
-
-    }
-
-    container.innerHTML =
-
-        renderTaskView({
-
-            report,
-
-            task,
-
-            isExisting:
-                !!task
-
-        });
-
-    if(task){
-
-        return;
-
-    }
-
-    document
-
-        .getElementById(
-            "saveTask"
-        )
-
-        .onclick = async ()=>{
-
-            const checklist = [];
-
-            document
-
-                .querySelectorAll(
-                    ".checkItem"
-                )
-
-                .forEach(input=>{
-
-                    if(input.value.trim()){
-
-                        checklist.push({
-
-                            id:
-                                crypto.randomUUID(),
-
-                            text:
-                                input.value.trim()
-
-                        });
-
+                    headers:{
+                        ...corsHeaders,
+                        "Content-Type":"application/json"
                     }
 
-                });
+                }
 
-            const response =
+            );
 
-                await saveTask({
+        }
 
-                    report_id:
-                        report.id,
+        return new Response(
 
-                    title:
-                        document
-                            .getElementById(
-                                "taskTitle"
-                            )
-                            .value,
+            JSON.stringify({
 
-                    description:
+                success:true,
 
-                        document
-                            .getElementById(
-                                "includeComment"
-                            )
-                            .checked
+                task
 
-                        ?
+            }),
 
-                        report.notes ?? ""
+            {
 
-                        :
-
-                        "",
-
-                    deadline:
-                        document
-                            .getElementById(
-                                "deadline"
-                            )
-                            .value,
-
-                    checklist,
-
-                    photos:[]
-
-                });
-
-            if(response.success){
-
-                location.href =
-
-                    "/dashboard/taskCreated.html?id=" +
-
-                    response.task.id +
-
-                    "&code=" +
-
-                    response.task.link_code;
+                headers:{
+                    ...corsHeaders,
+                    "Content-Type":"application/json"
+                }
 
             }
 
-            else{
+        );
 
-                alert(
+    }
 
-                    "Kunne ikke opprette oppdrag."
+    //
+    // Opprett nytt oppdrag
+    //
 
-                );
+    if(request.method!=="POST"){
+
+        return new Response(
+
+            "Method Not Allowed",
+
+            {
+
+                status:405,
+
+                headers:corsHeaders
 
             }
 
-        };
+        );
+
+    }
+
+    const body =
+        await request.json();
+
+    const congregationResult =
+        await getUserCongregations(
+
+            env.DB,
+
+            session.user_id
+
+        );
+
+    const allowed =
+        congregationResult.results.find(
+
+            c =>
+
+                c.id ===
+
+                body.congregation_id
+
+        );
+
+    if(!allowed){
+
+        return new Response(
+
+            JSON.stringify({
+
+                success:false,
+
+                message:"Invalid congregation"
+
+            }),
+
+            {
+
+                status:403,
+
+                headers:{
+                    ...corsHeaders,
+                    "Content-Type":"application/json"
+                }
+
+            }
+
+        );
+
+    }
+
+    const task = {
+
+        id:
+            generateTaskId(),
+
+        link_code:
+            generateLinkCode(),
+
+        report_id:
+            body.report_id,
+
+        congregation_id:
+            body.congregation_id,
+
+        title:
+            body.title,
+
+        description:
+            body.description ?? "",
+
+        checklist:
+            body.checklist ?? [],
+
+        photos:
+            body.photos ?? [],
+
+        deadline:
+            body.deadline,
+
+        created_at:
+            new Date().toISOString(),
+
+        created_by:
+            session.user_id,
+
+        status:
+            "open"
+
+    };
+
+    await createTask(
+
+        env.DB,
+
+        task
+
+    );
+
+    return new Response(
+
+        JSON.stringify({
+
+            success:true,
+
+            task
+
+        }),
+
+        {
+
+            headers:{
+                ...corsHeaders,
+                "Content-Type":"application/json"
+            }
+
+        }
+
+    );
 
 }
