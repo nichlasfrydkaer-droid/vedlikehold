@@ -111,8 +111,9 @@ export async function initReport(){
     <div>
 
         📅 ${report.finished_at
-            ? new Date(report.finished_at)
-                .toLocaleString("no-NO")
+formatDate(
+    report.finished_at
+)
             : "-"}
 
     </div>
@@ -120,7 +121,9 @@ export async function initReport(){
     <div>
 
         ⏱ ${report.duration_seconds
-            ? Math.round(report.duration_seconds / 60) + " min"
+            formatMinutes(
+    report.duration_seconds
+)
             : "-"}
 
     </div>
