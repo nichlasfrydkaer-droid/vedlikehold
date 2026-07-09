@@ -47,7 +47,6 @@ export async function initTask(){
         params.get("id");
 
     let report = null;
-
     let task = null;
 
     //
@@ -180,11 +179,66 @@ export async function initTask(){
 
         });
 
+    //
+    // Eksisterende task
+    //
+
     if(task){
 
         return;
 
     }
+
+    //
+    // Tilføj checklistpunkt
+    //
+
+    document
+
+        .getElementById(
+            "addItem"
+        )
+
+        ?.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                const wrapper =
+                    document.getElementById(
+                        "checklist"
+                    );
+
+                wrapper.insertAdjacentHTML(
+
+                    "beforeend",
+
+                    `
+
+                    <div class="checklist-row">
+
+                        <input
+
+                            class="checkItem"
+
+                            type="text"
+
+                        >
+
+                    </div>
+
+                    `
+
+                );
+
+            }
+
+        );
+
+    //
+    // Gem task
+    //
 
     document
 
@@ -204,21 +258,61 @@ export async function initTask(){
 
                 .forEach(input=>{
 
-                    if(input.value.trim()){
+                    const text =
+                        input.value.trim();
+
+                    if(text){
 
                         checklist.push({
 
                             id:
                                 crypto.randomUUID(),
 
-                            text:
-                                input.value.trim()
+                            text
 
                         });
 
                     }
 
                 });
+
+            let description =
+
+                document
+
+                    .getElementById(
+                        "taskComment"
+                    )
+
+                    .value
+
+                    .trim();
+
+            if(
+
+                document
+
+                    .getElementById(
+                        "includeComment"
+                    )
+
+                    .checked
+
+            ){
+
+                if(report.notes){
+
+                    description =
+
+                        report.notes +
+
+                        "\n\n" +
+
+                        description;
+
+                }
+
+            }
 
             const response =
 
@@ -228,33 +322,27 @@ export async function initTask(){
                         report.id,
 
                     title:
+
                         document
+
                             .getElementById(
                                 "taskTitle"
                             )
-                            .value,
 
-                    description:
+                            .value
 
-                        document
-                            .getElementById(
-                                "includeComment"
-                            )
-                            .checked
+                            .trim(),
 
-                        ?
-
-                        report.notes ?? ""
-
-                        :
-
-                        "",
+                    description,
 
                     deadline:
+
                         document
+
                             .getElementById(
                                 "deadline"
                             )
+
                             .value,
 
                     checklist,
@@ -275,17 +363,17 @@ export async function initTask(){
 
                     response.task.link_code;
 
-            }
-
-            else{
-
-                alert(
-
-                    "Kunne ikke opprette oppdrag."
-
-                );
+                return;
 
             }
+
+            alert(
+
+                response.message ??
+
+                "Kunne ikke opprette oppdrag."
+
+            );
 
         };
 
