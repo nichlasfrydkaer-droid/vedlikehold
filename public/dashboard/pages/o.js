@@ -10,10 +10,12 @@ export async function initO(){
             "taskPage"
         );
 
-    const linkCode =
-        location.pathname
-            .split("/")
-            .pop();
+const linkCode =
+    new URLSearchParams(
+        location.search
+    ).get(
+        "code"
+    );
 
     const result =
         await getPublicTask(
