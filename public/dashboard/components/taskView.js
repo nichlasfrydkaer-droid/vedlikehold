@@ -15,6 +15,20 @@ export function renderTaskView({
 
 }){
 
+    const checklist =
+
+        task?.checklist ??
+
+        [
+
+            {
+
+                text:""
+
+            }
+
+        ];
+
     return page(
 
         card(
@@ -23,11 +37,13 @@ export function renderTaskView({
 
             <h2>
 
-                ${isExisting
+                ${
 
-                    ? t("task")
+                    isExisting
 
-                    : t("createTask")
+                        ? t("task")
+
+                        : t("createTask")
 
                 }
 
@@ -67,6 +83,22 @@ export function renderTaskView({
 
                 `
 
+                <div
+                    class="task-original-comment"
+                >
+
+                    ${
+
+                        report.notes ??
+
+                        "<em>Ingen kommentar.</em>"
+
+                    }
+
+                </div>
+
+                <br>
+
                 <label>
 
                     <input
@@ -82,18 +114,6 @@ export function renderTaskView({
                     ${t("includeComment")}
 
                 </label>
-
-                <br><br>
-
-                <textarea
-
-                    id="originalComment"
-
-                    rows="5"
-
-                    readonly
-
-                >${report.notes ?? ""}</textarea>
 
                 `
 
@@ -113,7 +133,15 @@ export function renderTaskView({
 
                     type="text"
 
-                    value="${task?.title ?? report.title ?? ""}"
+                    value="${
+
+                        task?.title ??
+
+                        report.title ??
+
+                        ""
+
+                    }"
 
                 >
 
@@ -121,7 +149,35 @@ export function renderTaskView({
 
             )}
 
-            <br>
+            <hr>
+
+            ${section(
+
+                t("comment"),
+
+                `
+
+                <textarea
+
+                    id="taskComment"
+
+                    rows="5"
+
+                    placeholder="${t("comment")}"
+
+                >${
+
+                    task?.description ??
+
+                    ""
+
+                }</textarea>
+
+                `
+
+            )}
+
+            <hr>
 
             ${section(
 
@@ -135,7 +191,13 @@ export function renderTaskView({
 
                     type="date"
 
-                    value="${task?.deadline ?? ""}"
+                    value="${
+
+                        task?.deadline ??
+
+                        ""
+
+                    }"
 
                 >
 
@@ -151,7 +213,41 @@ export function renderTaskView({
 
                 `
 
-                <div id="checklist"></div>
+                <div id="checklist">
+
+                    ${
+
+                        checklist.map(
+
+                            item=>`
+
+                                <div class="checklist-row">
+
+                                    <input
+
+                                        class="checkItem"
+
+                                        type="text"
+
+                                        value="${
+
+                                            item.text ??
+
+                                            ""
+
+                                        }"
+
+                                    >
+
+                                </div>
+
+                            `
+
+                        ).join("")
+
+                    }
+
+                </div>
 
                 <br>
 
@@ -159,9 +255,17 @@ export function renderTaskView({
 
                     id="addItem"
 
+                    type="button"
+
                 >
 
-                    + ${t("addChecklistItem")}
+                    +
+
+                    ${
+
+                        t("addChecklistItem")
+
+                    }
 
                 </button>
 
@@ -179,7 +283,11 @@ export function renderTaskView({
 
                 <div id="photos">
 
-                    ${t("noPhotos")}
+                    ${
+
+                        t("noPhotos")
+
+                    }
 
                 </div>
 
@@ -191,7 +299,9 @@ export function renderTaskView({
 
             ${button({
 
-                id:"saveTask",
+                id:
+
+                    "saveTask",
 
                 text:
 
