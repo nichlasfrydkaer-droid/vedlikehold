@@ -1,5 +1,6 @@
 import {
-    getPublicTask
+    getPublicTask,
+    completePublicTask
 }
 from "../js/api.js";
 
@@ -10,12 +11,12 @@ export async function initO(){
             "taskPage"
         );
 
-const linkCode =
-    new URLSearchParams(
-        location.search
-    ).get(
-        "code"
-    );
+    const linkCode =
+        new URLSearchParams(
+            location.search
+        ).get(
+            "code"
+        );
 
     const result =
         await getPublicTask(
@@ -196,6 +197,111 @@ const linkCode =
 
         .oninput =
             validateForm;
+
+    document
+
+        .getElementById(
+            "finishButton"
+        )
+
+        .onclick = async ()=>{
+
+            const completedChecklist =
+
+                [...document.querySelectorAll(
+
+                    ".taskCheckbox"
+
+                )]
+
+                .map(
+
+                    (box,index)=>({
+
+                        text:
+                            checklist[index].text,
+
+                        checked:
+                            box.checked
+
+                    })
+
+                );
+
+            const response =
+
+                await completePublicTask({
+
+                    link_code:
+                        linkCode,
+
+                    completed_name:
+
+                        document
+
+                            .getElementById(
+                                "completedName"
+                            )
+
+                            .value
+
+                            .trim(),
+
+                    completed_comment:
+
+                        document
+
+                            .getElementById(
+                                "comment"
+                            )
+
+                            .value
+
+                            .trim(),
+
+                    checklist:
+
+                        completedChecklist,
+
+                    completed_photos:[]
+
+                });
+
+            if(!response.success){
+
+                alert(
+
+                    "Kunne ikke ferdigmelde oppdrag."
+
+                );
+
+                return;
+
+            }
+
+            container.innerHTML = `
+
+                <div class="dashboard-card">
+
+                    <h1>
+
+                        ✅ Takk!
+
+                    </h1>
+
+                    <br>
+
+                    <p>
+
+                        Oppdraget er ferdigmeldt.
+
+                    </p>
+
+                </div>
+
+            `;
+
+        };
 
 }
 
