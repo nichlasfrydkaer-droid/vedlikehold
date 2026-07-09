@@ -17,7 +17,7 @@ export function initTaskCreated(){
         params.get("code");
 
     const url =
-        `${location.origin}/o/${code}`;
+        `${location.origin}/o.html?code=${encodeURIComponent(code)}`;
 
     container.innerHTML = `
 
@@ -95,7 +95,9 @@ export function initTaskCreated(){
 
             await navigator
                 .clipboard
-                .writeText(url);
+                .writeText(
+                    url
+                );
 
             alert(
                 "Link kopiert."
