@@ -62,7 +62,7 @@ export async function initO(){
 
                 <p>
 
-                    ${task.instructions ?? ""}
+                    ${task.description ?? ""}
 
                 </p>
 
