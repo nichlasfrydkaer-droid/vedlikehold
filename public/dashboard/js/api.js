@@ -187,3 +187,25 @@ export async function getPublicTask(
     );
 
 }
+
+export async function completePublicTask(
+    data
+){
+
+    return await request(
+
+        "/o/complete",
+
+        {
+
+            method:"POST",
+
+            body:JSON.stringify(
+                data
+            )
+
+        }
+
+    );
+
+}
