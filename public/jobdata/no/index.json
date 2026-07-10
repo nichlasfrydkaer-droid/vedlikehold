@@ -1,212 +1,122 @@
 [
   {
     "nummer": "1",
-    "titel": "Tak og takrenner",
-    "undertittel": "Utvendig bygningskontroll",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Tak og takrenner"
   },
   {
     "nummer": "2",
-    "titel": "Murpussede vegger og grunnmur",
-    "undertittel": "Utvendig bygningskontroll",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Murpussede vegger og grunnmur"
   },
   {
     "nummer": "3A",
-    "titel": "Bordkledning",
-    "undertittel": "Utvendig bygningskontroll",
-    "frekvens": "Årlig inspeksjon",
-    "intervalMonths": 12
+    "titel": "Bordkledning"
   },
   {
     "nummer": "4",
-    "titel": "Belegningsstein og fortau",
-    "undertittel": "Utvendig bygningskontroll",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Belegningsstein og fortau"
   },
   {
     "nummer": "5",
-    "titel": "Hageområder",
-    "undertittel": "Utvendig bygningskontroll",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Hageområder"
   },
   {
     "nummer": "7",
-    "titel": "Innvendige vegger, tak og gulv",
-    "undertittel": "Innvendig bygningskontroll",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Innvendige vegger, tak og gulv"
   },
   {
     "nummer": "8",
-    "titel": "Møbler og stoler",
-    "undertittel": "Innvendig bygningskontroll",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Møbler og stoler"
   },
   {
     "nummer": "9",
-    "titel": "Bygningens struktur",
-    "undertittel": "Strukturelle elementer",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Bygningens struktur"
   },
   {
     "nummer": "10",
-    "titel": "Dører og vinduer",
-    "undertittel": "Dører og vinduer",
-    "frekvens": "Halvårlig vedlikehold",
-    "intervalMonths": 6
+    "titel": "Dører og vinduer"
   },
   {
     "nummer": "11",
-    "titel": "Brannslukkere – alle typer",
-    "undertittel": "Brannslukkere",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Brannslukkere – alle typer"
   },
   {
     "nummer": "12",
-    "titel": "Brannslukkere – alle typer",
-    "undertittel": "Brannslukkere",
-    "frekvens": "Månedlig kontroll",
-    "intervalMonths": 1
+    "titel": "Brannslukkere – alle typer"
   },
   {
     "nummer": "13",
-    "titel": "VVS komponenter",
-    "undertittel": "VVS anlegg",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "VVS komponenter"
   },
   {
     "nummer": "14",
-    "titel": "Tøm utvendige kraner",
-    "undertittel": "VVS anlegg",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Tøm utvendige kraner"
   },
   {
     "nummer": "21",
-    "titel": "Avtrekksvifte",
-    "undertittel": "Ventilasjonsanlegg",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Avtrekksvifte"
   },
   {
     "nummer": "25",
-    "titel": "Varmtvannsbereder",
-    "undertittel": "Varmtvannsbereder",
-    "frekvens": "Toårlig vedlikehold",
-    "intervalMonths": 24
+    "titel": "Varmtvannsbereder"
   },
   {
     "nummer": "26",
-    "titel": "Sikringsskap",
-    "undertittel": "Strømfordeling",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Sikringsskap"
   },
   {
     "nummer": "27",
-    "titel": "Nødlys - utgangslys",
-    "undertittel": "Lys",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Nødlys - utgangslys"
   },
   {
     "nummer": "28",
-    "titel": "Alle lysarmaturer og elektriske komponenter",
-    "undertittel": "Lys",
-    "frekvens": "Vedlikehold hvert 2. år",
-    "intervalMonths": 24
+    "titel": "Alle lysarmaturer og elektriske komponenter"
   },
   {
     "nummer": "29",
-    "titel": "Utvendig belysning",
-    "undertittel": "Lys",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Utvendig belysning"
   },
   {
     "nummer": "31",
-    "titel": "Overspenningsvern",
-    "undertittel": "Alle elektriske tavler og sikringsskap med overspenningsvern",
-    "frekvens": "Årlig kontroll",
-    "intervalMonths": 12
+    "titel": "Overspenningsvern"
   },
   {
     "nummer": "33",
-    "titel": "Støvsugere",
-    "undertittel": "Husholdningsutstyr",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Støvsugere"
   },
   {
     "nummer": "34",
-    "titel": "Gressklipper",
-    "undertittel": "Utstyr",
-    "frekvens": "Halvårlig",
-    "intervalMonths": 6
+    "titel": "Gressklipper"
   },
   {
     "nummer": "35",
-    "titel": "Stiger",
-    "undertittel": "Verktøy",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Stiger"
   },
   {
     "nummer": "36",
-    "titel": "Feiemaskin",
-    "undertittel": "Verktøy",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Feiemaskin"
   },
   {
     "nummer": "37",
-    "titel": "Datamaskin",
-    "undertittel": "Teknisk utstyr",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Datamaskin"
   },
   {
     "nummer": "38",
-    "titel": "Lydanlegg",
-    "undertittel": "Teknisk utstyr",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Lydanlegg"
   },
   {
     "nummer": "40",
-    "titel": "Skjermer",
-    "undertittel": "Teknisk utstyr",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Skjermer"
   },
   {
     "nummer": "41",
-    "titel": "Brann og innbruddsalarm",
-    "undertittel": "Teknisk vedlikehold",
-    "frekvens": "Hver 3. måned",
-    "intervalMonths": 3
+    "titel": "Brann og innbruddsalarm"
   },
   {
     "nummer": "43",
-    "titel": "Medisinskap og førstehjelp",
-    "undertittel": "",
-    "frekvens": "Årlig vedlikehold",
-    "intervalMonths": 12
+    "titel": "Medisinskap og førstehjelp"
   },
   {
     "nummer": "45",
-    "titel": "Hvitevarer",
-    "undertittel": "Husholdningsutstyr",
-    "frekvens": "Toårlig",
-    "intervalMonths": 24
+    "titel": "Hvitevarer"
   }
 ]
