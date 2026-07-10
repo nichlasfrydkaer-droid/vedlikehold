@@ -218,15 +218,44 @@ export async function getJobcards(
     congregationId
 ){
 
-    return await request(
+    const language =
+        congregationId === "Elverum"
+            ? "no"
+            : "da";
 
-        "/jobcards?congregation=" +
+    const response =
+        await fetch(
+            `https://vedlikeholdsystem.no/jobdata/${language}/index.json`
+        );
 
-        encodeURIComponent(
-            congregationId
-        )
+    if(!response.ok){
 
-    );
+        return {
+            success:false,
+            error:"Kunne ikke hente jobkort"
+        };
+
+    }
+
+    const data = await response.json();
+
+    const jobcards = Array.isArray(data)
+        ? data.map(jobcard => ({
+            id: jobcard.nummer,
+            title: jobcard.titel || jobcard.nummer,
+            description: jobcard.undertittel || "",
+            jobcard_number: jobcard.nummer,
+            interval: jobcard.frekvens || "",
+            next_execution: "",
+            visible: true,
+            raw: jobcard
+        }))
+        : [];
+
+    return {
+        success:true,
+        jobcards
+    };
 
 }
 
