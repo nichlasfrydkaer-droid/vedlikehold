@@ -1,6 +1,6 @@
 import { createCard } from "./card.js";
 import { addDashboardWidget } from "./dashboardWidget.js";
-import { getReports, getTasks } from "../js/api.js";
+import { getJobcards, getReports, getTasks } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 
 export async function renderDashboardOverview(){
@@ -11,7 +11,7 @@ export async function renderDashboardOverview(){
 
             <button type="button" class="dashboard-overview-box" data-overview-target="jobcards">
 
-                <div class="dashboard-overview-number">-</div>
+                <div id="overviewJobcardsCount" class="dashboard-overview-number">-</div>
 
                 <div class="dashboard-overview-title">
 
@@ -81,12 +81,17 @@ export async function renderDashboardOverview(){
 
     }
 
-    const [tasksResult, reportsResult] = await Promise.all([
+    const [jobcardsResult, tasksResult, reportsResult] = await Promise.all([
 
+        getJobcards(congregation.id),
         getTasks(congregation.id),
         getReports(congregation.id)
 
     ]);
+
+    const jobcardsCount = jobcardsResult?.success
+        ? jobcardsResult.jobcards?.length ?? 0
+        : 0;
 
     const reportsCount = reportsResult?.success
         ? reportsResult.reports?.length ?? 0
@@ -96,8 +101,15 @@ export async function renderDashboardOverview(){
         ? tasksResult.tasks?.length ?? 0
         : 0;
 
+    const jobcardsElement = document.getElementById("overviewJobcardsCount");
     const reportsElement = document.getElementById("overviewReportsCount");
     const tasksElement = document.getElementById("overviewTasksCount");
+
+    if(jobcardsElement){
+
+        jobcardsElement.textContent = String(jobcardsCount);
+
+    }
 
     if(reportsElement){
 
