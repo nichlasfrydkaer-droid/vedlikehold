@@ -188,6 +188,56 @@ async function loadTranslations(language){
 
 }
   
+function resolveLanguage(congregation){
+
+  const value =
+    String(congregation || "")
+      .trim()
+      .toLowerCase();
+
+  if(!value){
+
+    try{
+
+      const currentCongregation =
+        JSON.parse(
+          localStorage.getItem("congregationData") || "null"
+        );
+
+      return currentCongregation?.language || "no";
+
+    }catch(error){
+
+      return "no";
+
+    }
+
+  }
+
+  if(value.includes("dk") || value.includes("da") || value.includes("dan")){
+    return "da";
+  }
+
+  if(value.includes("elverum") || value.includes("no") || value.includes("nor") || value.includes("norsk")){
+    return "no";
+  }
+
+  try{
+
+    const currentCongregation =
+      JSON.parse(
+        localStorage.getItem("congregationData") || "null"
+      );
+
+    return currentCongregation?.language || "no";
+
+  }catch(error){
+
+    return "no";
+  }
+
+}
+
 async function loadMenu(){
 
   const params =
@@ -197,23 +247,10 @@ async function loadMenu(){
     params.get("id") || "41";
 
   const congregation =
-  params.get("congregation");
+    params.get("congregation");
 
-let language = "no";
-
-if(congregation){
-
-  const currentCongregation =
-    JSON.parse(
-      localStorage.getItem(
-        "congregationData"
-      )
-    );
-
-  language =
-    currentCongregation?.language || "no";
-
-}
+  const language =
+    resolveLanguage(congregation);
 
   await loadTranslations(language);  
   
