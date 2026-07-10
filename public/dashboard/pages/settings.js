@@ -15,6 +15,21 @@ function eyeIcon(visible){
         : `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.5 0 10 6 10 6a18.2 18.2 0 0 1-3.1 3.7M6.3 8.1A18.4 18.4 0 0 0 2 12s3.5 6 10 6a10.8 10.8 0 0 0 3.1-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>`;
 }
 
+const manualIntervals = [
+    [1, "manualIntervalMonthly", "Månedlig"],
+    [2, "manualIntervalEveryTwoMonths", "Hver 2. måned"],
+    [3, "manualIntervalQuarterly", "Hvert kvartal"],
+    [6, "manualIntervalEverySixMonths", "Hver 6. måned"],
+    [12, "manualIntervalYearly", "Årlig"],
+    [24, "manualIntervalEveryTwoYears", "Hvert 2. år"]
+];
+
+function renderManualIntervalOptions(selectedMonths){
+    return manualIntervals.map(([months, key, fallback]) => `
+        <option value="${months}" ${months === selectedMonths ? "selected" : ""}>${t(key, fallback)}</option>
+    `).join("");
+}
+
 export async function initSettings(){
     const container = document.getElementById("settings");
 
@@ -60,7 +75,7 @@ export async function initSettings(){
                     <th>${t("title", "Titel")}</th>
                     <th>${t("jobcardSuggestedInterval", "Foreslået interval")}</th>
                     <th>${t("jobcardAutoInterval", "Automatisk interval")}</th>
-                    <th>${t("jobcardNextExecution", "Næste udførelse")}</th>
+                    <th>${t("jobcardManualInterval", "Manuelt interval")}</th>
                     <th>${t("jobcardVisibility", "Synlighed")}</th>
                 </tr></thead>
                 <tbody>${jobcards.map(jobcard => `
@@ -71,7 +86,7 @@ export async function initSettings(){
                         </td>
                         <td>${jobcard.interval || "-"}</td>
                         <td><label class="dashboard-switch"><input type="checkbox" data-auto-interval ${jobcard.autoInterval ? "checked" : ""}><span></span><span class="dashboard-switch-label">${jobcard.autoInterval ? t("automatic", "Automatisk") : t("manual", "Manuel")}</span></label></td>
-                        <td><input type="date" class="dashboard-input" data-next-execution value="${jobcard.nextExecution || ""}" ${jobcard.autoInterval ? "disabled" : ""}></td>
+                        <td><select class="dashboard-input" data-manual-interval ${jobcard.autoInterval ? "disabled" : ""}>${renderManualIntervalOptions(jobcard.manualIntervalMonths || jobcard.intervalMonths || 12)}</select></td>
                         <td><button type="button" class="dashboard-icon-button" data-visibility aria-pressed="${jobcard.visible}" aria-label="${jobcard.visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult")}" title="${jobcard.visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult")}">${eyeIcon(jobcard.visible)}</button></td>
                     </tr>
                 `).join("")}</tbody>
@@ -81,7 +96,7 @@ export async function initSettings(){
     for(const row of container.querySelectorAll("[data-jobcard-id]")){
         const id = row.dataset.jobcardId;
         const autoInput = row.querySelector("[data-auto-interval]");
-        const nextInput = row.querySelector("[data-next-execution]");
+        const manualIntervalInput = row.querySelector("[data-manual-interval]");
         const visibilityButton = row.querySelector("[data-visibility]");
 
         const save = async () => {
@@ -91,7 +106,7 @@ export async function initSettings(){
                 jobcard_id: id,
                 visible,
                 auto_interval: autoInput.checked,
-                manual_next_execution: nextInput.value || null
+                manual_interval_months: Number(manualIntervalInput.value)
             });
             if(!result?.success){
                 console.error("Could not save jobcard settings", result);
@@ -99,11 +114,11 @@ export async function initSettings(){
         };
 
         autoInput.addEventListener("change", () => {
-            nextInput.disabled = autoInput.checked;
+            manualIntervalInput.disabled = autoInput.checked;
             row.querySelector(".dashboard-switch-label").textContent = autoInput.checked ? t("automatic", "Automatisk") : t("manual", "Manuel");
             save();
         });
-        nextInput.addEventListener("change", save);
+        manualIntervalInput.addEventListener("change", save);
         visibilityButton.addEventListener("click", () => {
             const visible = visibilityButton.getAttribute("aria-pressed") !== "true";
             visibilityButton.setAttribute("aria-pressed", String(visible));

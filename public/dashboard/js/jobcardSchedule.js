@@ -33,24 +33,33 @@ export function mergeJobcardSchedules(jobcards, response){
     const completed = new Map(
         (response?.completed || []).map(item => [String(item.jobcard_id), item.last_performed_at])
     );
+    const intervals = new Map(
+        (response?.intervals || []).map(interval => [String(interval.jobcard_id), interval])
+    );
 
     return jobcards.map(jobcard => {
         const setting = settings.get(String(jobcard.id)) || {};
+        const definition = intervals.get(String(jobcard.id)) || {};
         const autoInterval = setting.auto_interval !== 0;
         const lastPerformedAt = completed.get(String(jobcard.id)) || null;
-        const intervalMonths = Number(jobcard.intervalMonths) || null;
-        const automaticNext = autoInterval && intervalMonths
-            ? formatDateInput(addMonths(toDateOnly(lastPerformedAt) || new Date(), intervalMonths))
+        const intervalMonths = Number(definition.interval_months) || null;
+        const manualIntervalMonths = Number(setting.manual_interval_months) || null;
+        const effectiveIntervalMonths = autoInterval
+            ? intervalMonths
+            : manualIntervalMonths;
+        const nextExecution = effectiveIntervalMonths
+            ? formatDateInput(addMonths(toDateOnly(lastPerformedAt) || new Date(), effectiveIntervalMonths))
             : "";
 
         return {
             ...jobcard,
+            interval: definition.display_label || jobcard.interval || "",
+            intervalMonths,
             visible: setting.visible !== 0,
             autoInterval,
             lastPerformedAt,
-            nextExecution: autoInterval
-                ? automaticNext
-                : (setting.manual_next_execution || "")
+            manualIntervalMonths,
+            nextExecution
         };
     });
 }
