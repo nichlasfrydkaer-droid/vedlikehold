@@ -52,6 +52,15 @@
   "user": "Bruker",
 
   "settings": "Innstillinger",
+  "settingsLandingTitle": "Innstillinger",
+  "settingsLandingDescription": "Administrer innstillinger og jobbkort for denne menigheten.",
+  "jobcardVisibility": "Synlighet",
+  "jobcardNextExecution": "Neste utførelse",
+  "jobcardSuggestedInterval": "Foreslått intervall",
+  "jobcardVisible": "Synlig",
+  "jobcardHidden": "Skjult",
+  "jobcardVisibleOnPage": "Synlig på jobbkort-siden",
+  "jobcardHiddenOnPage": "Skjult på jobbkort-siden",
 
   "congregation": "Menighet",
   "congregations": "Menigheter",

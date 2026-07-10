@@ -11,5 +11,14 @@
   "tasks": "Opgaver",
   "users": "Brugere",
   "settings": "Indstillinger",
+  "settingsLandingTitle": "Indstillinger",
+  "settingsLandingDescription": "Administrer indstillinger og jobkort for denne menighed.",
+  "jobcardVisibility": "Synlighed",
+  "jobcardNextExecution": "Næste udførelse",
+  "jobcardSuggestedInterval": "Foreslået interval",
+  "jobcardVisible": "Synlig",
+  "jobcardHidden": "Skjult",
+  "jobcardVisibleOnPage": "Synlig på jobkort-siden",
+  "jobcardHiddenOnPage": "Skjult på jobkort-siden",
   "logout": "Log ud"
 }

@@ -11,5 +11,14 @@
   "tasks": "Tasks",
   "users": "Users",
   "settings": "Settings",
+  "settingsLandingTitle": "Settings",
+  "settingsLandingDescription": "Manage settings and job cards for this congregation.",
+  "jobcardVisibility": "Visibility",
+  "jobcardNextExecution": "Next execution",
+  "jobcardSuggestedInterval": "Suggested interval",
+  "jobcardVisible": "Visible",
+  "jobcardHidden": "Hidden",
+  "jobcardVisibleOnPage": "Visible on the job cards page",
+  "jobcardHiddenOnPage": "Hidden on the job cards page",
   "logout": "Log out"
 }

@@ -109,6 +109,16 @@ switch(page){
 
         break;
 
+    case "settings":
+
+        initPage(
+            import("../pages/settings.js"),
+            "initSettings",
+            { dashboardLayout:true }
+        );
+
+        break;
+
     case "o":
 
         initPage(

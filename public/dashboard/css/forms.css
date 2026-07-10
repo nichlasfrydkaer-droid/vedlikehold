@@ -1,0 +1,50 @@
+.dashboard-table-wrapper{
+    overflow-x:auto;
+}
+
+.dashboard-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+.dashboard-table th,
+.dashboard-table td{
+    padding:12px 10px;
+    border-bottom:1px solid #e0e7ef;
+    text-align:left;
+    vertical-align:top;
+}
+
+.dashboard-table th{
+    font-weight:700;
+    color:#1565c0;
+}
+
+.dashboard-table-muted{
+    color:#6b7280;
+    font-size:14px;
+    margin-top:4px;
+}
+
+.dashboard-input{
+    width:100%;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:15px;
+}
+
+.dashboard-visibility-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    color:#334155;
+}
+
+.dashboard-visibility-toggle input{
+    width:16px;
+    height:16px;
+    cursor:pointer;
+}
