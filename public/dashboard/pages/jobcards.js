@@ -43,6 +43,10 @@ export async function initJobcards(){
 
     if(!result || (!result.success && !Array.isArray(result) && !result.jobcards)){
 
+        const errorMessage = typeof result === "string"
+            ? result
+            : (result?.error || result?.message || "Worker OK");
+
         container.innerHTML = `
 
             <div class="dashboard-card">
@@ -50,6 +54,7 @@ export async function initJobcards(){
                 <h2>${t("jobcards", "Jobbkort")}</h2>
 
                 <p>${t("jobcardsLoadFailed", "Kunne ikke hente jobbkort.")}</p>
+                <p style="color: #b91c1c;">${errorMessage}</p>
 
             </div>
 
