@@ -83,7 +83,7 @@ export async function initDashboard(){
 
     renderDashboardNews();
 
-    renderDashboardOverview();
+    await renderDashboardOverview();
 
     renderDashboardUpcoming();
 
