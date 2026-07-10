@@ -218,8 +218,11 @@ export async function getJobcards(
     congregationId
 ){
 
+    const congregationName =
+        String(congregationId || "").trim();
+
     const language =
-        congregationId === "Elverum"
+        congregationName === "Elverum"
             ? "no"
             : "da";
 
@@ -239,7 +242,7 @@ export async function getJobcards(
 
     const data = await response.json();
 
-    const jobcards = Array.isArray(data)
+    let jobcards = Array.isArray(data)
         ? data.map(jobcard => ({
             id: jobcard.nummer,
             title: jobcard.titel || jobcard.nummer,
@@ -251,6 +254,19 @@ export async function getJobcards(
             raw: jobcard
         }))
         : [];
+
+    const allowedIds =
+        congregationName === "Test DK"
+            ? ["1"]
+            : (congregationName === "Elverum"
+                ? null
+                : null);
+
+    if(allowedIds){
+
+        jobcards = jobcards.filter(jobcard => allowedIds.includes(String(jobcard.id)));
+
+    }
 
     return {
         success:true,
