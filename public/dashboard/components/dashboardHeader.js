@@ -41,7 +41,10 @@ export function renderDashboardHeader(
         `
         <header class="dashboard-header">
 
-            <div class="dashboard-logo">
+            <a
+                class="dashboard-logo"
+                href="/dashboard/dashboard.html"
+                aria-label="Gå til dashboard">
 
                 <h1>
 
@@ -49,7 +52,7 @@ export function renderDashboardHeader(
 
                 </h1>
 
-            </div>
+            </a>
 
             <div class="dashboard-user">
 
