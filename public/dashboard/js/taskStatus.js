@@ -1,6 +1,9 @@
 import { t } from "./i18n.js";
 
 export function getTaskStatus(task, now = new Date()){
+    if(task.deleted_at){
+        return "deleted";
+    }
     if(task.status === "completed"){
         return "completed";
     }
@@ -23,6 +26,7 @@ export function renderTaskStatus(task){
         started:t("taskStarted", "Startet"),
         completed:t("taskCompleted", "Utført"),
         overdue:t("taskOverdue", "Overskredet")
+        ,deleted:t("taskDeleted", "Slettet")
     };
 
     return `<span class="task-status task-status-${status}"><span class="task-status-dot"></span>${labels[status]}</span>`;

@@ -234,6 +234,10 @@ export async function getTask(
 
 }
 
+export async function reopenTask(taskId, deadline){
+    return await request("/task/reopen", {method:"POST",body:JSON.stringify({task_id:taskId,deadline})});
+}
+
 function normalizeJobcardLanguage(value = ""){
 
     const normalized = String(value || "").trim().toLowerCase();
