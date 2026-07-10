@@ -16,26 +16,55 @@ export async function loadTranslations(language){
 
         if(response.ok){
 
-            translations =
-                await response.json();
+            const text =
+                await response.text();
 
-            return;
+            if(text){
+
+                try{
+
+                    translations =
+                        JSON.parse(text);
+
+                    return;
+
+                }catch(error){
+
+                    console.error(error);
+
+                }
+
+            }
 
         }
 
-    }catch(e){
+    }catch(error){
 
-        console.error(e);
+        console.error(error);
 
     }
 
-    const fallback =
-        await fetch(
-            "/dashboard/lang/no.json"
-        );
+    try{
 
-    translations =
-        await fallback.json();
+        const fallback =
+            await fetch(
+                "/dashboard/lang/no.json"
+            );
+
+        const fallbackText =
+            await fallback.text();
+
+        translations =
+            fallbackText
+                ? JSON.parse(fallbackText)
+                : {};
+
+    }catch(error){
+
+        console.error(error);
+        translations = {};
+
+    }
 
 }
 

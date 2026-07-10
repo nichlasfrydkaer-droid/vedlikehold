@@ -40,7 +40,71 @@ async function request(
 
         );
 
-    return await response.json();
+    const contentType =
+        response.headers.get(
+            "content-type"
+        ) || "";
+
+    let data = {};
+
+    try{
+
+        if(
+            contentType.includes(
+                "application/json"
+            )
+        ){
+
+            data = await response.json();
+
+        }else{
+
+            const text =
+                await response.text();
+
+            if(text){
+
+                try{
+
+                    data = JSON.parse(text);
+
+                }catch(error){
+
+                    data = {
+                        success:false,
+                        error:text
+                    };
+
+                }
+
+            }
+
+        }
+
+    }catch(error){
+
+        return {
+            success:false,
+            status:response.status,
+            statusText:response.statusText,
+            error:error.message
+        };
+
+    }
+
+    if(!response.ok){
+
+        return {
+            success:false,
+            status:response.status,
+            statusText:response.statusText,
+            ...(typeof data === "object" && data && !Array.isArray(data) ? data : {}),
+            error:data?.error || "Request failed"
+        };
+
+    }
+
+    return data;
 
 }
 
