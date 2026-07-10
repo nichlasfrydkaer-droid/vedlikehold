@@ -14,7 +14,7 @@ async function request(
     };
 
     const token =
-        localStorage.getItem(
+        sessionStorage.getItem(
             "dashboard_token"
         );
 
@@ -133,6 +133,15 @@ export async function login(
     );
 
 }
+
+export async function getMembers(congregationId){ return request("/members?congregation=" + encodeURIComponent(congregationId)); }
+export async function inviteMember(congregationId, member){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"POST",body:JSON.stringify(member)}); }
+export async function updateMember(congregationId, member){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"PUT",body:JSON.stringify(member)}); }
+export async function removeMember(congregationId, userId){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"DELETE",body:JSON.stringify({user_id:userId})}); }
+export async function getCongregationManagement(){ return request("/congregations"); }
+export async function createCongregation(data){ return request("/congregations",{method:"POST",body:JSON.stringify(data)}); }
+export async function updateCongregation(data){ return request("/congregations",{method:"PUT",body:JSON.stringify(data)}); }
+export async function account(action,data){ return request("/account?action="+encodeURIComponent(action),{method:"POST",body:JSON.stringify(data)}); }
 
 export async function getMe(){
 

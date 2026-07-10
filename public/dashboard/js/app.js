@@ -119,6 +119,36 @@ switch(page){
 
         break;
 
+    case "users":
+
+        initPage(import("../pages/users.js"), "initUsers", { dashboardLayout:true });
+
+        break;
+
+    case "congregations":
+
+        initPage(import("../pages/congregations.js"), "initCongregations", { dashboardLayout:true });
+
+        break;
+
+    case "activate":
+
+        initPage(import("../pages/accountLink.js"), "initActivate");
+
+        break;
+
+    case "resetPassword":
+
+        initPage(import("../pages/accountLink.js"), "initResetPassword");
+
+        break;
+
+    case "forgotPassword":
+
+        initPage(import("../pages/accountLink.js"), "initForgotPassword");
+
+        break;
+
     case "o":
 
         initPage(

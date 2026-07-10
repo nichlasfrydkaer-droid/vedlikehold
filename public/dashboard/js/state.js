@@ -1,7 +1,7 @@
 export const state = {
 
     token:
-        localStorage.getItem(
+        sessionStorage.getItem(
             "dashboard_token"
         ),
 

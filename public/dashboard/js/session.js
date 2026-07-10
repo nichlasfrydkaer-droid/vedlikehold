@@ -83,9 +83,11 @@ export function isLoggedIn(){
 
 export function logout(){
 
-    localStorage.removeItem(
+    sessionStorage.removeItem(
         "dashboard_token"
     );
+
+    localStorage.removeItem("dashboard_token");
 
     localStorage.removeItem(
         "dashboard_congregation"

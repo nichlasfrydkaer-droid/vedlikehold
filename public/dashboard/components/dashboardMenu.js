@@ -1,4 +1,4 @@
-import { logout } from "../js/session.js";
+import { logout, getUser } from "../js/session.js";
 
 export function renderDashboardMenu(
 
@@ -48,6 +48,8 @@ export function renderDashboardMenu(
                 </span>
 
             </button>
+
+            ${getUser()?.is_owner ? `<button class="dashboard-menu-item" id="menuCongregations"><span>⛪</span><span>Menigheter</span></button>` : ""}
 
             <button
                 class="dashboard-menu-item"
@@ -272,13 +274,13 @@ export function initDashboardMenu(){
 
             ()=>{
 
-                alert(
-                    "Brukere kommer snart."
-                );
+                location.href = "/dashboard/users.html";
 
             }
 
         );
+
+    document.getElementById("menuCongregations")?.addEventListener("click",()=>{ location.href="/dashboard/congregations.html"; });
 
     document
         .getElementById(
