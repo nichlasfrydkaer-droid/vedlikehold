@@ -23,10 +23,13 @@ export async function renderDashboardUpcoming(){
         }
     }
 
+    const visibleJobcards = jobcards.slice(0, 3);
+    const remainingCount = jobcards.length - visibleJobcards.length;
+
     const content = jobcards.length ? `
 
         <div class="dashboard-upcoming-list">
-            ${jobcards.map(jobcard => `
+            ${visibleJobcards.map(jobcard => `
                 <div class="dashboard-upcoming-item">
                     <div class="dashboard-upcoming-title">${jobcard.title}</div>
                     <div class="dashboard-upcoming-subtitle">
@@ -36,6 +39,9 @@ export async function renderDashboardUpcoming(){
                     </div>
                 </div>
             `).join("")}
+            ${remainingCount > 0 ? `
+                <a class="dashboard-upcoming-more" href="/dashboard/jobcards.html">${t("upcomingMore", "{count} more").replace("{count}", remainingCount)}</a>
+            ` : ""}
         </div>
 
     ` : `
