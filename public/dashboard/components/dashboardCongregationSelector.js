@@ -16,6 +16,14 @@ function isEditableField(element){
 
     }
 
+    // Only real edit forms opt in. Navigation, sorting and auto-saved
+    // settings must never trigger Safari's leave-page warning.
+    if(!element.closest("[data-unsaved-changes]")){
+
+        return false;
+
+    }
+
     if(
         element.tagName === "INPUT" &&
         [

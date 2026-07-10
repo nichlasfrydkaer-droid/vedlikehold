@@ -34,7 +34,7 @@ function renderCards(container, jobcards, congregation){
                 <article class="dashboard-jobcard-card">
                     <div class="dashboard-jobcard-main">
                         <h3>${jobcard.title}</h3>
-                        <p class="dashboard-table-muted">${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number}</p>
+                        <p class="dashboard-jobcard-number">${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number}</p>
                         ${jobcard.description ? `<p class="dashboard-jobcard-description">${jobcard.description}</p>` : ""}
                         <div class="dashboard-jobcard-meta">
                             <span>${icon("interval")}${t("jobcardSuggestedInterval", "Foreslått intervall")}: ${jobcard.interval || "-"}</span>

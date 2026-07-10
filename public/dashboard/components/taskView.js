@@ -35,6 +35,8 @@ export function renderTaskView({
 
             `
 
+            <div data-unsaved-changes>
+
             <h2>
 
                 ${
@@ -312,6 +314,8 @@ export function renderTaskView({
                         : t("createTask")
 
             })}
+
+            </div>
 
             `
 
