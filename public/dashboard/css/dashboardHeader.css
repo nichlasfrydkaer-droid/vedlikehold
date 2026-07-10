@@ -64,6 +64,17 @@
 
 }
 
+.dashboard-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.dashboard-action-button,
 .dashboard-user-button{
 
     width:46px;
@@ -86,6 +97,7 @@
 
 }
 
+.dashboard-action-button:hover,
 .dashboard-user-button:hover{
 
     background:#0d47a1;

@@ -59,6 +59,16 @@ switch(page){
 
         break;
 
+    case "jobcards":
+
+        initPage(
+            import("../pages/jobcards.js"),
+            "initJobcards",
+            { dashboardLayout:true }
+        );
+
+        break;
+
     case "report":
 
         initPage(

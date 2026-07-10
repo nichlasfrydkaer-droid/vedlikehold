@@ -1,0 +1,13 @@
+{
+  "appName": "Maintenance System",
+  "dashboard": "Dashboard",
+  "home": "Home",
+  "jobcards": "Job cards",
+  "jobcardsDescription": "Here you can view and manage job cards for this congregation.",
+  "noCongregationSelected": "No congregation selected.",
+  "reports": "Reports",
+  "tasks": "Tasks",
+  "users": "Users",
+  "settings": "Settings",
+  "logout": "Log out"
+}

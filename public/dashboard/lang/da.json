@@ -1,0 +1,13 @@
+{
+  "appName": "Vedligeholdssystem",
+  "dashboard": "Dashboard",
+  "home": "Hjem",
+  "jobcards": "Jobkort",
+  "jobcardsDescription": "Her kan du se og administrere jobkort for denne menighed.",
+  "noCongregationSelected": "Ingen menighed valgt.",
+  "reports": "Rapporter",
+  "tasks": "Opgaver",
+  "users": "Brugere",
+  "settings": "Indstillinger",
+  "logout": "Log ud"
+}
