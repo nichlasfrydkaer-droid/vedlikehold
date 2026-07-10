@@ -41,7 +41,7 @@ export async function initJobcards(){
 
     const result = await getJobcards(congregation.id);
 
-    if(!result.success){
+    if(!result || (!result.success && !Array.isArray(result) && !result.jobcards)){
 
         container.innerHTML = `
 
@@ -59,7 +59,9 @@ export async function initJobcards(){
 
     }
 
-    const jobcards = result.jobcards ?? [];
+    const jobcards = Array.isArray(result)
+        ? result
+        : (result?.jobcards ?? []);
 
     if(jobcards.length === 0){
 

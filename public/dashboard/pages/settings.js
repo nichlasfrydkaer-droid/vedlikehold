@@ -43,7 +43,9 @@ export async function initSettings(){
 
     const result = await getJobcards(congregation.id);
 
-    const jobcards = result?.success ? (result.jobcards ?? []) : [];
+    const jobcards = Array.isArray(result)
+        ? result
+        : (result?.success ? (result.jobcards ?? []) : (result?.jobcards ?? []));
 
     container.innerHTML = `
 
