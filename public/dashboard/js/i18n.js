@@ -2,41 +2,96 @@ let translations = {};
 
 import { state } from "./state.js";
 
+function normalizeLanguage(language = ""){
+
+    const normalized =
+        String(language || "")
+            .trim()
+            .toLowerCase();
+
+    if(!normalized){
+
+        return "no";
+
+    }
+
+    if(
+        ["da", "danish", "dansk"]
+            .includes(normalized)
+    ){
+
+        return "da";
+
+    }
+
+    if(
+        ["nb", "nn", "no", "norwegian", "norsk", "bokmål", "nynorsk"]
+            .includes(normalized)
+    ){
+
+        return "no";
+
+    }
+
+    if(
+        ["en", "eng", "english", "engelsk"]
+            .includes(normalized)
+    ){
+
+        return "en";
+
+    }
+
+    return normalized;
+
+}
+
+async function loadLanguageFile(language){
+
+    const normalizedLanguage =
+        normalizeLanguage(language);
+
+    const response =
+        await fetch(
+            `/dashboard/lang/${normalizedLanguage}.json`
+        );
+
+    if(!response.ok){
+
+        throw new Error(
+            `Language file not found: ${normalizedLanguage}`
+        );
+
+    }
+
+    const text =
+        await response.text();
+
+    if(!text){
+
+        throw new Error(
+            `Empty language file: ${normalizedLanguage}`
+        );
+
+    }
+
+    return JSON.parse(text);
+
+}
+
 export async function loadTranslations(language){
 
     state.language =
-        language;
+        normalizeLanguage(language);
 
     try{
 
-        const response =
-            await fetch(
-                `/dashboard/lang/${language}.json`
+        translations =
+            await loadLanguageFile(
+                state.language
             );
 
-        if(response.ok){
-
-            const text =
-                await response.text();
-
-            if(text){
-
-                try{
-
-                    translations =
-                        JSON.parse(text);
-
-                    return;
-
-                }catch(error){
-
-                    console.error(error);
-
-                }
-
-            }
-
-        }
+        return;
 
     }catch(error){
 
@@ -46,18 +101,8 @@ export async function loadTranslations(language){
 
     try{
 
-        const fallback =
-            await fetch(
-                "/dashboard/lang/no.json"
-            );
-
-        const fallbackText =
-            await fallback.text();
-
         translations =
-            fallbackText
-                ? JSON.parse(fallbackText)
-                : {};
+            await loadLanguageFile("no");
 
     }catch(error){
 

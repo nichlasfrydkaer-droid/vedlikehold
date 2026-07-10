@@ -58,9 +58,21 @@ export async function initSettings(){
 
         jobcards = result.jobcards;
 
+    }else if(typeof result === "string"){
+
+        loadError = result;
+
     }else if(result?.error){
 
         loadError = result.error;
+
+    }else if(result?.message){
+
+        loadError = result.message;
+
+    }else {
+
+        loadError = "Worker OK";
 
     }
 
