@@ -11,6 +11,7 @@ import {
     loadTranslations
 }
 from "../js/i18n.js";
+import { rotateSession } from "../js/api.js";
 
 export async function loadDashboard(){
 
@@ -28,6 +29,10 @@ export async function loadDashboard(){
                 me.congregations || [];
 
             state.sessionStartedAt = me.sessionStartedAt || null;
+
+            state.csrfToken = me.csrfToken || null;
+
+            rotateSession().catch(()=>{});
 
             if(
                 state.congregations.length &&

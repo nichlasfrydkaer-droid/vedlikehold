@@ -77,17 +77,17 @@ export function loadCongregation(){
 
 export function isLoggedIn(){
 
-    return !!state.token;
+    return !!state.user;
 
 }
 
-export function logout(){
-
-    sessionStorage.removeItem(
-        "dashboard_token"
-    );
-
-    localStorage.removeItem("dashboard_token");
+export async function logout(){
+    try{
+        const { logoutRequest } = await import("./api.js");
+        await logoutRequest();
+    }catch(error){
+        // The browser still leaves the protected UI if the network is unavailable.
+    }
 
     localStorage.removeItem(
         "dashboard_congregation"

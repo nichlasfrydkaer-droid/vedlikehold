@@ -1,11 +1,8 @@
 export const state = {
 
-    token:
-        sessionStorage.getItem(
-            "dashboard_token"
-        ),
-
     user:null,
+
+    csrfToken:null,
 
     congregation:null,
 

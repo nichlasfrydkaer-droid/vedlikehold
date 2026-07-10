@@ -1,4 +1,5 @@
 import { config } from "./config.js";
+import { state } from "./state.js";
 
 async function request(
     endpoint,
@@ -13,16 +14,10 @@ async function request(
 
     };
 
-    const token =
-        sessionStorage.getItem(
-            "dashboard_token"
-        );
+    const csrf = state.csrfToken;
 
-    if(token){
-
-        headers.Authorization =
-            "Bearer " + token;
-
+    if(csrf && ["POST","PUT","PATCH","DELETE"].includes(String(options.method || "GET").toUpperCase())){
+        headers["X-CSRF-Token"] = decodeURIComponent(csrf);
     }
 
     const response =
@@ -34,7 +29,9 @@ async function request(
 
                 ...options,
 
-                headers
+                headers,
+
+                credentials:"include"
 
             }
 
@@ -133,6 +130,9 @@ export async function login(
     );
 
 }
+
+export async function logoutRequest(){ return await request("/logout", {method:"POST"}); }
+export async function rotateSession(){ const result=await request("/session/rotate", {method:"POST"}); if(result?.csrfToken) state.csrfToken=result.csrfToken; return result; }
 
 export async function getMembers(congregationId){ return request("/members?congregation=" + encodeURIComponent(congregationId)); }
 export async function inviteMember(congregationId, member){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"POST",body:JSON.stringify(member)}); }
