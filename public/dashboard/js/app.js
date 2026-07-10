@@ -1,61 +1,110 @@
 const page =
     document.body.dataset.page;
 
+async function initPage(
+
+    loader,
+
+    init,
+
+    options = {}
+
+){
+
+    const module =
+        await loader;
+
+    await module[init]();
+
+    if(options.dashboardLayout){
+
+        const layout =
+            await import(
+                "../layouts/dashboardLayout.js"
+            );
+
+        layout.renderDashboardLayout();
+
+    }
+
+}
+
 switch(page){
 
     case "login":
 
-        import("../pages/login.js")
-            .then(m=>m.initLogin());
+        initPage(
+            import("../pages/login.js"),
+            "initLogin"
+        );
 
         break;
 
     case "dashboard":
 
-        import("../pages/dashboard.js")
-            .then(m=>m.initDashboard());
+        initPage(
+            import("../pages/dashboard.js"),
+            "initDashboard"
+        );
 
         break;
 
     case "reports":
 
-        import("../pages/reports.js")
-            .then(m=>m.initReports());
+        initPage(
+            import("../pages/reports.js"),
+            "initReports",
+            { dashboardLayout:true }
+        );
 
         break;
 
     case "report":
 
-        import("../pages/report.js")
-            .then(m=>m.initReport());
+        initPage(
+            import("../pages/report.js"),
+            "initReport",
+            { dashboardLayout:true }
+        );
 
         break;
 
     case "tasks":
 
-        import("../pages/tasks.js")
-            .then(m=>m.initTasks());
+        initPage(
+            import("../pages/tasks.js"),
+            "initTasks",
+            { dashboardLayout:true }
+        );
 
         break;
 
     case "task":
 
-        import("../pages/task.js")
-            .then(m=>m.initTask());
+        initPage(
+            import("../pages/task.js"),
+            "initTask",
+            { dashboardLayout:true }
+        );
 
         break;
 
     case "taskCreated":
 
-        import("../pages/taskCreated.js")
-            .then(m=>m.initTaskCreated());
+        initPage(
+            import("../pages/taskCreated.js"),
+            "initTaskCreated",
+            { dashboardLayout:true }
+        );
 
         break;
 
     case "o":
 
-        import("../pages/o.js")
-            .then(m=>m.initO());
+        initPage(
+            import("../pages/o.js"),
+            "initO"
+        );
 
         break;
 

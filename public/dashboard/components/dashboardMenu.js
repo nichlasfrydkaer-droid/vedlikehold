@@ -1,9 +1,28 @@
 import { logout } from "../js/session.js";
 
-export function renderDashboardMenu(){
+export function renderDashboardMenu(
+
+    target = document.getElementById(
+        "dashboard"
+    )
+
+){
 
     const dashboard =
-        document.getElementById("dashboard");
+
+        typeof target === "string"
+
+            ? document.getElementById(
+                target
+            )
+
+            : target;
+
+    if(!dashboard){
+
+        return;
+
+    }
 
     dashboard.insertAdjacentHTML(
 

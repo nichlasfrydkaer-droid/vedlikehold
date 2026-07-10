@@ -7,10 +7,29 @@ import {
     getUser
 } from "../js/session.js";
 
-export function renderDashboardHeader() {
+export function renderDashboardHeader(
+
+    target = document.getElementById(
+        "dashboard"
+    )
+
+) {
 
     const dashboard =
-        document.getElementById("dashboard");
+
+        typeof target === "string"
+
+            ? document.getElementById(
+                target
+            )
+
+            : target;
+
+    if(!dashboard){
+
+        return;
+
+    }
 
     const user =
         getUser();
