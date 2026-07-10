@@ -150,6 +150,22 @@ export async function getTask(
 
 }
 
+export async function getJobcards(
+    congregationId
+){
+
+    return await request(
+
+        "/jobcards?congregation=" +
+
+        encodeURIComponent(
+            congregationId
+        )
+
+    );
+
+}
+
 export async function createTask(
     task
 ){

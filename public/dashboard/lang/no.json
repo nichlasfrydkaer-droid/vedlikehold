@@ -19,6 +19,8 @@
   "jobcard": "Jobbkort",
   "jobcards": "Jobbkort",
   "jobcardsDescription": "Her kan du se og administrere jobbkort for denne menigheten.",
+  "jobcardsLoadFailed": "Kunne ikke hente jobbkort.",
+  "noJobcards": "Ingen jobbkort tilgjengelig for denne menigheten.",
   "noCongregationSelected": "Ingen menighet valgt.",
   "jobNumber": "Jobbkort",
   "title": "Tittel",

@@ -1,4 +1,5 @@
 import { loadDashboard } from "../services/dashboard.js";
+import { getJobcards } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { t } from "../js/i18n.js";
 
@@ -38,6 +39,46 @@ export async function initJobcards(){
 
     }
 
+    const result = await getJobcards(congregation.id);
+
+    if(!result.success){
+
+        container.innerHTML = `
+
+            <div class="dashboard-card">
+
+                <h2>${t("jobcards", "Jobbkort")}</h2>
+
+                <p>${t("jobcardsLoadFailed", "Kunne ikke hente jobbkort.")}</p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    const jobcards = result.jobcards ?? [];
+
+    if(jobcards.length === 0){
+
+        container.innerHTML = `
+
+            <div class="dashboard-card">
+
+                <h2>${t("jobcards", "Jobbkort")}</h2>
+
+                <p>${t("noJobcards", "Ingen jobbkort tilgjengelig for denne menigheten.")}</p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
     container.innerHTML = `
 
         <div class="dashboard-card">
@@ -47,6 +88,14 @@ export async function initJobcards(){
             <p>${t("jobcardsDescription", "Her kan du se og administrere jobbkort for denne menigheten.")}</p>
 
         </div>
+
+        ${jobcards.map(jobcard => `
+            <div class="dashboard-card">
+                <h3>${jobcard.title ?? jobcard.id}</h3>
+                <p>${jobcard.description ?? ""}</p>
+                <small>${t("jobNumber", "Jobbkort")}: ${jobcard.jobcard_number ?? jobcard.id}</small>
+            </div>
+        `).join("")}
 
     `;
 

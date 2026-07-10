@@ -4,6 +4,8 @@
   "home": "Hjem",
   "jobcards": "Jobkort",
   "jobcardsDescription": "Her kan du se og administrere jobkort for denne menighed.",
+  "jobcardsLoadFailed": "Kunne ikke hente jobkort.",
+  "noJobcards": "Ingen jobkort er tilgængelige for denne menighed.",
   "noCongregationSelected": "Ingen menighed valgt.",
   "reports": "Rapporter",
   "tasks": "Opgaver",
