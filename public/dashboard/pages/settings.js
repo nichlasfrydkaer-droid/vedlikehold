@@ -43,9 +43,26 @@ export async function initSettings(){
 
     const result = await getJobcards(congregation.id);
 
-    const jobcards = Array.isArray(result)
-        ? result
-        : (result?.success ? (result.jobcards ?? []) : (result?.jobcards ?? []));
+    let jobcards = [];
+    let loadError = "";
+
+    if(Array.isArray(result)){
+
+        jobcards = result;
+
+    }else if(result?.success && Array.isArray(result.jobcards)){
+
+        jobcards = result.jobcards;
+
+    }else if(result?.jobcards){
+
+        jobcards = result.jobcards;
+
+    }else if(result?.error){
+
+        loadError = result.error;
+
+    }
 
     container.innerHTML = `
 
@@ -60,6 +77,8 @@ export async function initSettings(){
         <div class="dashboard-card dashboard-full">
 
             <h3>${t("jobcards", "Jobbkort")}</h3>
+
+            ${loadError ? `<p style="color: #b91c1c;">${loadError}</p>` : ""}
 
             ${jobcards.length === 0 ? `<p>${t("noJobcards", "Ingen jobbkort tilgjengelig for denne menigheten.")}</p>` : `
 
