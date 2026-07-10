@@ -19,13 +19,6 @@ export function getEnabledJobcardIds(congregationId = "", jobcards = []){
         .map(value => String(value))
         .filter(Boolean);
 
-      const congregationName = String(congregationId || "").trim();
-      const isLegacySingleSelection = normalizedIds.length === 1 && normalizedIds[0] === "1" && congregationName !== "Test DK";
-
-      if(isLegacySingleSelection){
-        return allIds;
-      }
-
       return normalizedIds;
     }
   }catch(error){

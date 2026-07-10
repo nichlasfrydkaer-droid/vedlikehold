@@ -10,6 +10,14 @@ import {
 
 export async function initSettings(){
 
+    const container = document.getElementById("settings");
+
+    if(!container){
+
+        return;
+
+    }
+
     const me = await loadDashboard();
 
     if(!me || (!me.success && !me.fallback)){
@@ -25,14 +33,6 @@ export async function initSettings(){
             </div>
 
         `;
-
-        return;
-
-    }
-
-    const container = document.getElementById("settings");
-
-    if(!container){
 
         return;
 

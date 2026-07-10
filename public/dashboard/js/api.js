@@ -219,7 +219,7 @@ function normalizeJobcardLanguage(value = ""){
     const normalized = String(value || "").trim().toLowerCase();
 
     if(!normalized){
-        return "da";
+        return null;
     }
 
     if(["no", "nb", "nn", "norsk", "norwegian"].includes(normalized)){
@@ -230,15 +230,7 @@ function normalizeJobcardLanguage(value = ""){
         return "da";
     }
 
-    if(normalized.includes("no") || normalized.includes("nor") || normalized.includes("norsk")){
-        return "no";
-    }
-
-    if(normalized.includes("da") || normalized.includes("dk") || normalized.includes("dan")){
-        return "da";
-    }
-
-    return "da";
+    return null;
 
 }
 
@@ -265,18 +257,14 @@ export function resolveJobcardContext(congregation){
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
+    // The API owns this value.  A congregation name is not a reliable source
+    // for language and must not decide which jobcards a congregation sees.
     const language = normalizeJobcardLanguage(
-        congregation?.language ||
-        congregation?.lang ||
-        name ||
-        reference
+        congregation?.language || congregation?.lang
     );
-
-    const isTestCongregation = /(^|-)test(-|$)/.test(slug) || /test\s*dk/i.test(name);
 
     return {
         language,
-        allowedIds: isTestCongregation ? ["1"] : null,
         congregationName: name,
         congregationSlug: slug || "menighed"
     };
@@ -307,6 +295,15 @@ export async function getJobcards(
     const context = resolveJobcardContext(congregation);
     const language = context.language;
 
+    if(!language){
+
+        return {
+            success:false,
+            error:"Menigheden mangler et gyldigt sprog."
+        };
+
+    }
+
     const response =
         await fetch(
             `https://vedlikeholdsystem.no/jobdata/${language}/index.json`
@@ -335,12 +332,6 @@ export async function getJobcards(
             raw: jobcard
         }))
         : [];
-
-    if(context.allowedIds){
-
-        jobcards = jobcards.filter(jobcard => allowedIds.includes(String(jobcard.id)));
-
-    }
 
     return {
         success:true,

@@ -6,6 +6,14 @@ import { getVisibleJobcards } from "../js/jobcardVisibility.js";
 
 export async function initJobcards(){
 
+    const container = document.getElementById("jobcards");
+
+    if(!container){
+
+        return;
+
+    }
+
     const me = await loadDashboard();
 
     if(!me || (!me.success && !me.fallback)){
@@ -21,14 +29,6 @@ export async function initJobcards(){
             </div>
 
         `;
-
-        return;
-
-    }
-
-    const container = document.getElementById("jobcards");
-
-    if(!container){
 
         return;
 
