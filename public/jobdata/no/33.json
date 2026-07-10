@@ -3,17 +3,11 @@
   "titel": "Støvsugere",
   "undertittel": "Husholdningsutstyr",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 33.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "<strong>ADVARSEL: Dra ut støpsel før det utføres vedlikehold eller reparasjoner!</strong>",
-
   "oppgaver": [
     "Utfør en generell elektrisk kontroll. Sjekk tilstanden på elektriske kabler og støpsler.",
     "Sjekk tilstanden og funksjonen på alle brytere og bryterhjul.",
@@ -29,6 +23,6 @@
     "Sjekk om tilbehøret er i en god tilstand og fungerer.",
     "Utfør en funksjonstest."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

@@ -3,6 +3,7 @@
   "dashboard": "Dashboard",
   "home": "Home",
   "jobcards": "Job cards",
+  "jobcard": "Job card",
   "jobcardsDescription": "Here you can view and manage job cards for this congregation.",
   "jobcardsLoadFailed": "Could not load job cards.",
   "noJobcards": "No job cards are available for this congregation.",
@@ -20,5 +21,14 @@
   "jobcardHidden": "Hidden",
   "jobcardVisibleOnPage": "Visible on the job cards page",
   "jobcardHiddenOnPage": "Hidden on the job cards page",
+  "jobcardAutoInterval": "Automatic interval",
+  "automatic": "Automatic",
+  "manual": "Manual",
+  "upcomingJobcards": "Upcoming job cards",
+  "noUpcomingJobcards": "No upcoming job cards.",
+  "allUpdated": "Everything is up to date.",
+  "openJobcard": "Open job card",
+  "title": "Title",
+  "dashboardLoadFailed": "Could not load dashboard data right now.",
   "logout": "Log out"
 }

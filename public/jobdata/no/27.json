@@ -3,15 +3,10 @@
   "titel": "Nødlys - utgangslys",
   "undertittel": "Lys",
   "frekvens": "Årlig kontroll",
-
   "jobbkortPdf": "Jobbkort 27.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "oppgaver": [
     "Sjekk at alle markeringslys fungerer i vanlig driftstilstand (Skal lyse hele tiden.) Sjekk at LED diodene på armaturen indikerer at alt fungerer. (Se armaturens manual.) Markeringslysene har en selvtest som den kjører med regelmessige intervaller.",
     "Test batteriet om det er intakt ved slå av strømmen til nødlys. Dette gjøres ved å slå av sikringen. De skal da lyse i 30 minutter.",
@@ -19,6 +14,6 @@
     "Slå på strømmen igjen og sjekk om alle nødlys er tilbake i vanlig driftstilstand.",
     "Før opp testresultater i loggboken for nødlys (Perm 2)."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

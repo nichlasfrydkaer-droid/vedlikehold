@@ -1,6 +1,9 @@
 [
   {
     "nummer": "1",
-    "titel": "Tag og tagrender"
+    "titel": "Tag og tagrender",
+    "undertittel": "Udvendig bygningskontrol",
+    "frekvens": "Årlig kontrol",
+    "intervalMonths": 12
   }
 ]

@@ -1,0 +1,77 @@
+function toDateOnly(value){
+    if(!value){
+        return null;
+    }
+
+    const date = new Date(value);
+
+    if(Number.isNaN(date.getTime())){
+        return null;
+    }
+
+    return new Date(Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate()
+    ));
+}
+
+function formatDateInput(date){
+    return date ? date.toISOString().slice(0, 10) : "";
+}
+
+function addMonths(date, months){
+    const result = new Date(date);
+    result.setUTCMonth(result.getUTCMonth() + months);
+    return result;
+}
+
+export function mergeJobcardSchedules(jobcards, response){
+    const settings = new Map(
+        (response?.settings || []).map(setting => [String(setting.jobcard_id), setting])
+    );
+    const completed = new Map(
+        (response?.completed || []).map(item => [String(item.jobcard_id), item.last_performed_at])
+    );
+
+    return jobcards.map(jobcard => {
+        const setting = settings.get(String(jobcard.id)) || {};
+        const autoInterval = setting.auto_interval !== 0;
+        const lastPerformedAt = completed.get(String(jobcard.id)) || null;
+        const intervalMonths = Number(jobcard.intervalMonths) || null;
+        const automaticNext = autoInterval && intervalMonths
+            ? formatDateInput(addMonths(toDateOnly(lastPerformedAt) || new Date(), intervalMonths))
+            : "";
+
+        return {
+            ...jobcard,
+            visible: setting.visible !== 0,
+            autoInterval,
+            lastPerformedAt,
+            nextExecution: autoInterval
+                ? automaticNext
+                : (setting.manual_next_execution || "")
+        };
+    });
+}
+
+export function isUpcoming(jobcard, today = new Date()){
+    if(!jobcard.visible){
+        return false;
+    }
+
+    if(jobcard.autoInterval){
+        // New jobcards have no completion date and are intentionally shown.
+        return true;
+    }
+
+    const next = toDateOnly(jobcard.nextExecution);
+
+    if(!next){
+        return false;
+    }
+
+    const limit = toDateOnly(today);
+    limit.setUTCDate(limit.getUTCDate() + 30);
+    return next <= limit;
+}

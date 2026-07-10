@@ -3,15 +3,10 @@
   "titel": "Varmtvannsbereder",
   "undertittel": "Varmtvannsbereder",
   "frekvens": "Toårlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 25.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "oppgaver": [
     {
       "overskrift": "Varmtvannsbereder",
@@ -55,6 +50,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 24
 }

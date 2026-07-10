@@ -3,17 +3,11 @@
   "titel": "VVS komponenter",
   "undertittel": "VVS anlegg",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 13.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Informer alle som oppholder seg i bygget i god tid før kontrollen finner sted.<br><br><strong>OBS!</strong> Hvis man merker at en Ballofix-ventil er treg å dreie på, skal man ikke tvinge den!",
-
   "oppgaver": [
     {
       "overskrift": "Ventiler",
@@ -73,6 +67,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

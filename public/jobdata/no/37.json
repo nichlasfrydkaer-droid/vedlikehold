@@ -3,17 +3,11 @@
   "titel": "Datamaskin",
   "undertittel": "Teknisk utstyr",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 37.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "<strong>ADVARSEL:</strong> Aldri bruk alkohol eller tynner for å rengjøre deler på datamaskinen. Dette kan skade datamaskinens deler og deksel. Ta ut datamaskinens støpsel.",
-
   "oppgaver": [
     "Ta ut datamaskinens støpsel.",
     "Utfør en generell elektrisk sjekk. Sjekk tilstanden til kabler, kontakter og ledninger til maskinen.",
@@ -25,6 +19,6 @@
     "Rengjør datamaskinens kabinett med et mildt vaskemiddel.",
     "Rengjør vanskelige merker på skjermen med et nøytralt vaskemiddel."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

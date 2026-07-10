@@ -3,21 +3,14 @@
   "titel": "Hvitevarer",
   "undertittel": "Husholdningsutstyr",
   "frekvens": "Toårlig",
-
   "jobbkortPdf": "Jobbkort 45.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "<strong>ADVARSEL:</strong> Dra ut støpsel før det utføres vedlikehold eller reparasjoner!",
-
   "oppgaver": [
     "Utfør en generell elektrisk kontroll. Sjekk tilstanden på elektriske kabler og støpsler.",
     "Sjekk tilstanden og funksjonen på alle brytere og bryterhjul.",
-
     {
       "overskrift": "Platetopp",
       "punkter": [
@@ -25,7 +18,6 @@
         "Gjør en visuell sjekk og funksjonssjekk."
       ]
     },
-
     {
       "overskrift": "Ventilator",
       "punkter": [
@@ -33,7 +25,6 @@
         "Sjekk vifte og viftehus, for skader. Sjekk at alt er forsvarlig festet og skrudd fast. Rengjør om nødvendig."
       ]
     },
-
     {
       "overskrift": "Oppvaskmaskin",
       "punkter": [
@@ -42,7 +33,6 @@
         "Start maskina på ett kort program og hør etter ulyder."
       ]
     },
-
     {
       "overskrift": "Kjøleskap",
       "punkter": [
@@ -52,6 +42,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 24
 }

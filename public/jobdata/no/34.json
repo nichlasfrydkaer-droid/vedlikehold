@@ -3,17 +3,11 @@
   "titel": "Gressklipper",
   "undertittel": "Utstyr",
   "frekvens": "Halvårlig",
-
   "jobbkortPdf": "Jobbkort 34.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "<strong>HUSK: Vedlikehold av maskiner skal skje i henhold til produsentens anvisninger</strong>",
-
   "oppgaver": [
     {
       "overskrift": "Om våren (før klippesesongen)",
@@ -54,6 +48,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 6
 }

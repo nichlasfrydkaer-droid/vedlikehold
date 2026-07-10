@@ -3,17 +3,11 @@
   "titel": "Tak og takrenner",
   "undertittel": "Utvendig bygningskontroll",
   "frekvens": "Årlig kontroll",
-
   "jobbkortPdf": "Jobbkort 1.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "ADVARSEL: Utfør arbeidet på en sikker måte og vær nøye med å følge gjeldende sikkerhetskrav. (Les DC-82 og fyll ut DC-85) Inspeksjonen innebærer ikke at noen skal gå opp på taket.",
-
   "oppgaver": [
     "Sjekk for skader på takstein. Ved skader gi beskjed til vedlikeholdskoordinator.",
     "Vurder behovet for rengjøring av takstein. Se etter mosevekst og annet som forringer taksteinen. Eventuelle utbedringer skjer i samarbeid med vedlikeholdskoordinator og LDC.",
@@ -27,6 +21,6 @@
     "Sjekk tilstanden til gradrenner.",
     "Sjekk at det ikke kommer vann ned innenfor takrennene ved nedbør. (Se etter rennmerker av vann. Ved mistanke: spyl vann på taket og sjekk.)"
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

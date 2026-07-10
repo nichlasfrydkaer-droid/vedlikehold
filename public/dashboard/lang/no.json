@@ -61,6 +61,12 @@
   "jobcardHidden": "Skjult",
   "jobcardVisibleOnPage": "Synlig på jobbkort-siden",
   "jobcardHiddenOnPage": "Skjult på jobbkort-siden",
+  "jobcardAutoInterval": "Automatisk intervall",
+  "automatic": "Automatisk",
+  "manual": "Manuell",
+  "upcomingJobcards": "Kommende jobbkort",
+  "noUpcomingJobcards": "Ingen kommende jobbkort.",
+  "allUpdated": "Alt er oppdatert.",
 
   "congregation": "Menighet",
   "congregations": "Menigheter",

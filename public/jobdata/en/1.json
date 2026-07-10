@@ -3,14 +3,11 @@
   "titel": "Roof and Gutters",
   "undertittel": "Exterior Building Inspection",
   "frekvens": "Annual inspection",
-
   "jobbkortPdf": "Jobbkort 1.pdf",
   "sjaPdf": "DC-85_N.pdf",
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "WARNING: Carry out the work safely and follow all applicable safety requirements. (Read DC-82 and complete DC-85.) This inspection does not require anyone to climb onto the roof.",
-
   "oppgaver": [
     "Inspect the roof tiles for damage. Report any damage to the maintenance coordinator.",
     "Assess whether the roof needs cleaning. Look for moss or other growth. Any repairs should be coordinated with the maintenance coordinator.",
@@ -24,6 +21,6 @@
     "Inspect the valley gutters.",
     "Check during rainfall that water flows correctly into the gutters."
   ],
-
-  "notatInfo": "Record below any issues you discover that you are not able or authorized to correct yourself."
+  "notatInfo": "Record below any issues you discover that you are not able or authorized to correct yourself.",
+  "intervalMonths": 12
 }

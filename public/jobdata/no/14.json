@@ -3,20 +3,15 @@
   "titel": "Tøm utvendige kraner",
   "undertittel": "VVS anlegg",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 14.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "oppgaver": [
     "Steng av vanntilførselen til utvendige kraner.",
     "Tøm slanger som har vært på kran hvor vanntilførselen er stengt. Hvis nødvendig, blås ut resterende vann ved hjelp av høytrykksluft.",
     "La utvendig kran stå i åpen posisjon."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

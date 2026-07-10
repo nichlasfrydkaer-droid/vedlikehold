@@ -1,6 +1,9 @@
 [
   {
     "nummer": "1",
-    "titel": "Roof and Gutters"
+    "titel": "Roof and Gutters",
+    "undertittel": "Exterior Building Inspection",
+    "frekvens": "Annual inspection",
+    "intervalMonths": 12
   }
 ]

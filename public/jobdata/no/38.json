@@ -3,15 +3,10 @@
   "titel": "Lydanlegg",
   "undertittel": "Teknisk utstyr",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 38.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "oppgaver": [
     {
       "overskrift": "Lydutstyr",
@@ -39,6 +34,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

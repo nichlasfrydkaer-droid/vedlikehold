@@ -3,17 +3,11 @@
   "titel": "Bordkledning",
   "undertittel": "Utvendig bygningskontroll",
   "frekvens": "Årlig inspeksjon",
-
   "jobbkortPdf": "Jobbkort 3A.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Ved inspeksjon skal hver enkelt vegg undersøkes.",
-
   "oppgaver": [
     "Kontroller om det finnes synlige skader på veggen.",
     "Ta vannprøve på bordkledningen. Hiv på vann og se at det ikke trenger inn i treverket, men preller fint av.",
@@ -28,6 +22,6 @@
     "Kontroller at Rikets sal-skiltet og JW.org-skiltet ikke er skadet og sitter godt fast. Kontroller at oppslag for møtetider er lett leselig og korrekt utfylt.",
     "Rengjør veggene med fasadevask. Ikke bruk høytrykk."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

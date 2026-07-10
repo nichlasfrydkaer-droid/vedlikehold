@@ -3,17 +3,11 @@
   "titel": "Sikringsskap",
   "undertittel": "Strømfordeling",
   "frekvens": "Årlig kontroll",
-
   "jobbkortPdf": "Jobbkort 26.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Vær alltid <strong>2 personer</strong> på denne oppgaven. Husk lommelykt, det kan bli mørkt når du tar sikringen. Ikke skru av noen deksler i skapet, eller berør strømførende deler. Kun <strong>sertifiserte elektrikere</strong> i samarbeid med <strong>autorisert installatør</strong> får utføre arbeid i sikringskapet/tavlen. Følg gjeldende sikkerhetsrutiner.",
-
   "oppgaver": [
     "Vurder sikkerheten! Er det ting i tavla som ser farlig ut, løse ledninger, åpne felt som gjør det mulig å ta på strømførende komponenter? Noter ned info, avslutt kontrollen og ta kontakt med driftsutvalget.",
     "Se etter varmgang i komponenter. Kjenn med fingrene utenpå sikringene om de er varm. Ved varme over 37 grader, meld fra til vedlikeholdskoordinator.",
@@ -27,6 +21,6 @@
     "Sjekk at sikkerhetssystemet for å låse sikringer og servicebrytere er tilgjengelig, og er i orden. (Lockout/tagout-system - LOTO).",
     "Sjekk at det er utført el-kontroll av bygget av autorisert elektroinstallatør innenfor de 4 siste årene. Informasjon om dette skal oppbevares i perm 1 (Kap. 3 punkt 1) og at eventuelle avvik er lukket."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

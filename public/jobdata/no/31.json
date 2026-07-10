@@ -3,20 +3,14 @@
   "titel": "Overspenningsvern",
   "undertittel": "Alle elektriske tavler og sikringsskap med overspenningsvern",
   "frekvens": "Årlig kontroll",
-
   "jobbkortPdf": "Jobbkort 31.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "<strong>Dette er kun en visuell kontroll. Ingen deksler må demonteres.</strong> Eventuell feilsøking og utbedring må utføres av sertifisert elektriker i samarbeid med autorisert installatør.",
-
   "oppgaver": [
     "Sjekk at indikatorer på overspenningsvern viser normal drift. Dette gjøres ved å se om det er grønn indikator på overspenningsvernet. Hvis det ikke er det, gi beskjed til vedlikeholdskoordinator."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

@@ -1,220 +1,116 @@
 import { loadDashboard } from "../services/dashboard.js";
-import { buildJobcardMenuUrl, getJobcards } from "../js/api.js";
-import { getCongregation } from "../js/session.js";
-import { t } from "../js/i18n.js";
 import {
-    getEnabledJobcardIds,
-    setEnabledJobcardIds,
-    getVisibleJobcards
-} from "../js/jobcardVisibility.js";
+    buildJobcardMenuUrl,
+    getJobcards,
+    getJobcardSettings,
+    saveJobcardSettings
+} from "../js/api.js";
+import { getCongregation } from "../js/session.js";
+import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
+import { t } from "../js/i18n.js";
+
+function eyeIcon(visible){
+    return visible
+        ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.75"/></svg>`
+        : `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.5 0 10 6 10 6a18.2 18.2 0 0 1-3.1 3.7M6.3 8.1A18.4 18.4 0 0 0 2 12s3.5 6 10 6a10.8 10.8 0 0 0 3.1-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>`;
+}
 
 export async function initSettings(){
-
     const container = document.getElementById("settings");
 
     if(!container){
-
         return;
-
     }
 
     const me = await loadDashboard();
 
     if(!me || (!me.success && !me.fallback)){
-
-        container.innerHTML = `
-
-            <div class="dashboard-card dashboard-full">
-
-                <h2>${t("settingsLandingTitle", "Indstillinger")}</h2>
-
-                <p>Kunne ikke hente dashboarddata lige nu. Prøv at genindlæse siden.</p>
-
-            </div>
-
-        `;
-
+        container.innerHTML = `<div class="dashboard-card dashboard-full"><h2>${t("settingsLandingTitle", "Indstillinger")}</h2><p>${t("dashboardLoadFailed", "Kunne ikke hente dashboarddata lige nu.")}</p></div>`;
         return;
-
     }
 
     const congregation = getCongregation();
 
     if(!congregation){
-
-        container.innerHTML = `
-
-            <div class="dashboard-card dashboard-full">
-
-                <h2>${t("settingsLandingTitle", "Indstillinger")}</h2>
-
-                <p>${t("noCongregationSelected", "Ingen menighet valgt.")}</p>
-
-            </div>
-
-        `;
-
+        container.innerHTML = `<div class="dashboard-card dashboard-full"><h2>${t("settingsLandingTitle", "Indstillinger")}</h2><p>${t("noCongregationSelected", "Ingen menighed valgt.")}</p></div>`;
         return;
-
     }
 
-    const result = await getJobcards(congregation);
+    const [cardsResult, settingsResult] = await Promise.all([
+        getJobcards(congregation),
+        getJobcardSettings(congregation.id)
+    ]);
 
-    let jobcards = [];
-    let loadError = "";
-
-    if(Array.isArray(result)){
-
-        jobcards = result;
-
-    }else if(result?.success && Array.isArray(result.jobcards)){
-
-        jobcards = result.jobcards;
-
-    }else if(result?.jobcards){
-
-        jobcards = result.jobcards;
-
-    }else if(typeof result === "string"){
-
-        loadError = result;
-
-    }else if(result?.error){
-
-        loadError = result.error;
-
-    }else if(result?.message){
-
-        loadError = result.message;
-
-    }else {
-
-        loadError = "Worker OK";
-
+    if(!cardsResult?.success || !settingsResult?.success){
+        container.innerHTML = `<div class="dashboard-card dashboard-full"><h2>${t("settingsLandingTitle", "Indstillinger")}</h2><p>${t("jobcardsLoadFailed", "Kunne ikke hente jobkort.")}</p></div>`;
+        return;
     }
 
-    const enabledIds = new Set(getEnabledJobcardIds(congregation.id, jobcards));
-    const visibleJobcards = getVisibleJobcards(congregation.id, jobcards);
+    const jobcards = mergeJobcardSchedules(cardsResult.jobcards, settingsResult);
 
     container.innerHTML = `
-
         <div class="dashboard-card dashboard-full">
-
             <h2>${t("settingsLandingTitle", "Indstillinger")}</h2>
-
-            <p>${t("settingsLandingDescription", "Administrer innstillinger og jobbkort for denne menigheten.")}</p>
-
+            <p>${t("settingsLandingDescription", "Administrer indstillinger og jobkort for denne menighed.")}</p>
         </div>
-
         <div class="dashboard-card dashboard-full">
-
             <h3>${t("jobcards", "Jobbkort")}</h3>
+            <div class="dashboard-table-wrapper"><table class="dashboard-table">
+                <thead><tr>
+                    <th>${t("title", "Titel")}</th>
+                    <th>${t("jobcardSuggestedInterval", "Foreslået interval")}</th>
+                    <th>${t("jobcardAutoInterval", "Automatisk interval")}</th>
+                    <th>${t("jobcardNextExecution", "Næste udførelse")}</th>
+                    <th>${t("jobcardVisibility", "Synlighed")}</th>
+                </tr></thead>
+                <tbody>${jobcards.map(jobcard => `
+                    <tr data-jobcard-id="${jobcard.id}">
+                        <td><strong>${jobcard.title}</strong>
+                            <div class="dashboard-table-muted">${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number}</div>
+                            <a href="${buildJobcardMenuUrl(jobcard, congregation)}" target="_blank" rel="noopener noreferrer" class="dashboard-jobcard-link">${t("openJobcard", "Åbn jobkort")}</a>
+                        </td>
+                        <td>${jobcard.interval || "-"}</td>
+                        <td><label class="dashboard-switch"><input type="checkbox" data-auto-interval ${jobcard.autoInterval ? "checked" : ""}><span></span><span class="dashboard-switch-label">${jobcard.autoInterval ? t("automatic", "Automatisk") : t("manual", "Manuel")}</span></label></td>
+                        <td><input type="date" class="dashboard-input" data-next-execution value="${jobcard.nextExecution || ""}" ${jobcard.autoInterval ? "disabled" : ""}></td>
+                        <td><button type="button" class="dashboard-icon-button" data-visibility aria-pressed="${jobcard.visible}" aria-label="${jobcard.visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult")}" title="${jobcard.visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult")}">${eyeIcon(jobcard.visible)}</button></td>
+                    </tr>
+                `).join("")}</tbody>
+            </table></div>
+        </div>`;
 
-            ${loadError ? `<p style="color: #b91c1c;">${loadError}</p>` : ""}
+    for(const row of container.querySelectorAll("[data-jobcard-id]")){
+        const id = row.dataset.jobcardId;
+        const autoInput = row.querySelector("[data-auto-interval]");
+        const nextInput = row.querySelector("[data-next-execution]");
+        const visibilityButton = row.querySelector("[data-visibility]");
 
-            ${jobcards.length === 0 ? `<p>${t("noJobcards", "Ingen jobbkort tilgjengelig for denne menigheten.")}</p>` : `
+        const save = async () => {
+            const visible = visibilityButton.getAttribute("aria-pressed") === "true";
+            const result = await saveJobcardSettings({
+                congregation_id: congregation.id,
+                jobcard_id: id,
+                visible,
+                auto_interval: autoInput.checked,
+                manual_next_execution: nextInput.value || null
+            });
+            if(!result?.success){
+                console.error("Could not save jobcard settings", result);
+            }
+        };
 
-                <div class="dashboard-table-wrapper">
-
-                    <table class="dashboard-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>${t("title", "Titel")}</th>
-
-                                <th>${t("jobcardSuggestedInterval", "Foreslått intervall")}</th>
-
-                                <th>${t("jobcardNextExecution", "Neste utførelse")}</th>
-
-                                <th>${t("jobcardVisibility", "Synlighet")}</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            ${jobcards.map(jobcard => `
-
-                                <tr>
-
-                                    <td>
-
-                                        <strong>${jobcard.title ?? jobcard.id}</strong>
-
-                                        <div class="dashboard-table-muted">${jobcard.jobcard_number ?? jobcard.id}</div>
-                                        <div style="margin-top: 0.35rem;">
-                                            <a
-                                                href="${buildJobcardMenuUrl(jobcard, congregation)}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                style="display: inline-block; padding: 0.35rem 0.6rem; background: #2563eb; color: #fff; border-radius: 0.375rem; text-decoration: none; font-size: 0.875rem;"
-                                            >
-                                                ${t("openJobcard", "Åbn jobkort")}
-                                            </a>
-                                        </div>
-
-                                    </td>
-
-                                    <td>${jobcard.interval ?? "-"}</td>
-
-                                    <td>
-
-                                        <input
-                                            type="date"
-                                            class="dashboard-input"
-                                            value="${jobcard.next_execution ?? ""}"
-                                            aria-label="${t("jobcardNextExecution", "Neste utførelse")}" 
-                                        >
-
-                                    </td>
-
-                                    <td>
-
-                                        <label class="dashboard-visibility-toggle">
-
-                                            <input
-                                                type="checkbox"
-                                                data-jobcard-id="${jobcard.id ?? jobcard.jobcard_number ?? jobcard.number ?? jobcard.title}"
-                                                ${enabledIds.has(String(jobcard.id ?? jobcard.jobcard_number ?? jobcard.number ?? jobcard.title)) ? "checked" : ""}
-                                            >
-
-                                            <span>${enabledIds.has(String(jobcard.id ?? jobcard.jobcard_number ?? jobcard.number ?? jobcard.title)) ? t("jobcardVisibleOnPage", "Synlig på jobbkort-siden") : t("jobcardHiddenOnPage", "Skjult på jobbkort-siden")}</span>
-
-                                        </label>
-
-                                    </td>
-
-                                </tr>
-
-                            `).join("")}
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            `}
-
-        </div>
-
-    `;
-
-    container.querySelectorAll("[data-jobcard-id]").forEach(checkbox => {
-
-        checkbox.addEventListener("change", () => {
-
-            const jobcardId = checkbox.dataset.jobcardId;
-            const selectedIds = Array.from(container.querySelectorAll("[data-jobcard-id]:checked"))
-                .map(input => input.dataset.jobcardId);
-
-            setEnabledJobcardIds(congregation.id, selectedIds);
-
+        autoInput.addEventListener("change", () => {
+            nextInput.disabled = autoInput.checked;
+            row.querySelector(".dashboard-switch-label").textContent = autoInput.checked ? t("automatic", "Automatisk") : t("manual", "Manuel");
+            save();
         });
-
-    });
-
+        nextInput.addEventListener("change", save);
+        visibilityButton.addEventListener("click", () => {
+            const visible = visibilityButton.getAttribute("aria-pressed") !== "true";
+            visibilityButton.setAttribute("aria-pressed", String(visible));
+            visibilityButton.setAttribute("aria-label", visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult"));
+            visibilityButton.title = visibilityButton.getAttribute("aria-label");
+            visibilityButton.innerHTML = eyeIcon(visible);
+            save();
+        });
+    }
 }

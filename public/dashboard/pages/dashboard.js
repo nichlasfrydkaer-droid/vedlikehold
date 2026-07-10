@@ -85,7 +85,7 @@ export async function initDashboard(){
 
     await renderDashboardOverview();
 
-    renderDashboardUpcoming();
+    await renderDashboardUpcoming();
 
     renderDashboardTasks();
 

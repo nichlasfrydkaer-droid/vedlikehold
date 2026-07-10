@@ -3,17 +3,11 @@
   "titel": "Murpussede vegger og grunnmur",
   "undertittel": "Utvendig bygningskontroll",
   "frekvens": "Årlig kontroll",
-
   "jobbkortPdf": "Jobbkort 2.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Ved inspeksjon skal hver enkelt vegg undersøkes.",
-
   "oppgaver": [
     "Se etter synlige skader på overflaten.",
     "Se etter sprekker, flass, og hull på overflaten av murpussen. Vurder hvilken type skade det er, og reparer.",
@@ -26,6 +20,6 @@
     "Sjekk tilstanden til mørtelen brukt mellom betong blokker, der den er synlig.",
     "Se etter rustutslag fra armeringen i muren. Males med egnet maling og pusses inn med betong."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

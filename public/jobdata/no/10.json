@@ -3,17 +3,11 @@
   "titel": "Dører og vinduer",
   "undertittel": "Dører og vinduer",
   "frekvens": "Halvårlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 10.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Aldri bruk smøremidler med grafitt i nøkkelsylindere, da dette vil føre til slitasje over tid. Bruk bare PTFE (Teflon) og silikonspray.",
-
   "oppgaver": [
     "Åpne og lukk dører for å sjekke at hengsler, dørlås og dørlukker fungerer og at dør er riktig justert.",
     "Se etter slitasje eller metalltretthet på alle bevegelige deler, håndtak, hengsler osv. Smør og juster hvis nødvendig. Tørk av overflødig smøremiddel.",
@@ -28,7 +22,6 @@
     "Smør hengsel og kontroller at barnesikring virker (vindu skal bare kunne åpnes litt – før barnesikring aktiveres).",
     "Sjekk utvendig treverk på vinduene for uttørking og råte. Pusses og males (skift råtne deler) ved behov.",
     "Sjekk tilstanden til gardiner. At de er rene og fungerer som de skal. Kontroller at de ikke dekker til panelovner.",
-
     {
       "overskrift": "Inngangsparti & Rømningsdører",
       "punkter": [
@@ -37,6 +30,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 6
 }

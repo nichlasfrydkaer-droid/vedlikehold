@@ -1,122 +1,212 @@
 [
   {
     "nummer": "1",
-    "titel": "Tak og takrenner"
+    "titel": "Tak og takrenner",
+    "undertittel": "Utvendig bygningskontroll",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "2",
-    "titel": "Murpussede vegger og grunnmur"
+    "titel": "Murpussede vegger og grunnmur",
+    "undertittel": "Utvendig bygningskontroll",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "3A",
-    "titel": "Bordkledning"
+    "titel": "Bordkledning",
+    "undertittel": "Utvendig bygningskontroll",
+    "frekvens": "Årlig inspeksjon",
+    "intervalMonths": 12
   },
   {
     "nummer": "4",
-    "titel": "Belegningsstein og fortau"
+    "titel": "Belegningsstein og fortau",
+    "undertittel": "Utvendig bygningskontroll",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "5",
-    "titel": "Hageområder"
+    "titel": "Hageområder",
+    "undertittel": "Utvendig bygningskontroll",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "7",
-    "titel": "Innvendige vegger, tak og gulv"
+    "titel": "Innvendige vegger, tak og gulv",
+    "undertittel": "Innvendig bygningskontroll",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "8",
-    "titel": "Møbler og stoler"
+    "titel": "Møbler og stoler",
+    "undertittel": "Innvendig bygningskontroll",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "9",
-    "titel": "Bygningens struktur"
+    "titel": "Bygningens struktur",
+    "undertittel": "Strukturelle elementer",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "10",
-    "titel": "Dører og vinduer"
+    "titel": "Dører og vinduer",
+    "undertittel": "Dører og vinduer",
+    "frekvens": "Halvårlig vedlikehold",
+    "intervalMonths": 6
   },
   {
     "nummer": "11",
-    "titel": "Brannslukkere – alle typer"
+    "titel": "Brannslukkere – alle typer",
+    "undertittel": "Brannslukkere",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "12",
-    "titel": "Brannslukkere – alle typer"
+    "titel": "Brannslukkere – alle typer",
+    "undertittel": "Brannslukkere",
+    "frekvens": "Månedlig kontroll",
+    "intervalMonths": 1
   },
   {
     "nummer": "13",
-    "titel": "VVS komponenter"
+    "titel": "VVS komponenter",
+    "undertittel": "VVS anlegg",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "14",
-    "titel": "Tøm utvendige kraner"
+    "titel": "Tøm utvendige kraner",
+    "undertittel": "VVS anlegg",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "21",
-    "titel": "Avtrekksvifte"
+    "titel": "Avtrekksvifte",
+    "undertittel": "Ventilasjonsanlegg",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "25",
-    "titel": "Varmtvannsbereder"
+    "titel": "Varmtvannsbereder",
+    "undertittel": "Varmtvannsbereder",
+    "frekvens": "Toårlig vedlikehold",
+    "intervalMonths": 24
   },
   {
     "nummer": "26",
-    "titel": "Sikringsskap"
+    "titel": "Sikringsskap",
+    "undertittel": "Strømfordeling",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "27",
-    "titel": "Nødlys - utgangslys"
+    "titel": "Nødlys - utgangslys",
+    "undertittel": "Lys",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "28",
-    "titel": "Alle lysarmaturer og elektriske komponenter"
+    "titel": "Alle lysarmaturer og elektriske komponenter",
+    "undertittel": "Lys",
+    "frekvens": "Vedlikehold hvert 2. år",
+    "intervalMonths": 24
   },
   {
     "nummer": "29",
-    "titel": "Utvendig belysning"
+    "titel": "Utvendig belysning",
+    "undertittel": "Lys",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "31",
-    "titel": "Overspenningsvern"
+    "titel": "Overspenningsvern",
+    "undertittel": "Alle elektriske tavler og sikringsskap med overspenningsvern",
+    "frekvens": "Årlig kontroll",
+    "intervalMonths": 12
   },
   {
     "nummer": "33",
-    "titel": "Støvsugere"
+    "titel": "Støvsugere",
+    "undertittel": "Husholdningsutstyr",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "34",
-    "titel": "Gressklipper"
+    "titel": "Gressklipper",
+    "undertittel": "Utstyr",
+    "frekvens": "Halvårlig",
+    "intervalMonths": 6
   },
   {
     "nummer": "35",
-    "titel": "Stiger"
+    "titel": "Stiger",
+    "undertittel": "Verktøy",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "36",
-    "titel": "Feiemaskin"
+    "titel": "Feiemaskin",
+    "undertittel": "Verktøy",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "37",
-    "titel": "Datamaskin"
+    "titel": "Datamaskin",
+    "undertittel": "Teknisk utstyr",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "38",
-    "titel": "Lydanlegg"
+    "titel": "Lydanlegg",
+    "undertittel": "Teknisk utstyr",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "40",
-    "titel": "Skjermer"
+    "titel": "Skjermer",
+    "undertittel": "Teknisk utstyr",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "41",
-    "titel": "Brann og innbruddsalarm"
+    "titel": "Brann og innbruddsalarm",
+    "undertittel": "Teknisk vedlikehold",
+    "frekvens": "Hver 3. måned",
+    "intervalMonths": 3
   },
   {
     "nummer": "43",
-    "titel": "Medisinskap og førstehjelp"
+    "titel": "Medisinskap og førstehjelp",
+    "undertittel": "",
+    "frekvens": "Årlig vedlikehold",
+    "intervalMonths": 12
   },
   {
     "nummer": "45",
-    "titel": "Hvitevarer"
+    "titel": "Hvitevarer",
+    "undertittel": "Husholdningsutstyr",
+    "frekvens": "Toårlig",
+    "intervalMonths": 24
   }
 ]

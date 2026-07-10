@@ -3,17 +3,11 @@
   "titel": "Bygningens struktur",
   "undertittel": "Strukturelle elementer",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 9.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Kontroller alle bærende konstruksjonselementer (takstoler, dragere, søyler, bjelker, vegger, overliggere og gulv). Under kontrollen bør hvert enkelt element bli undersøkt.",
-
   "oppgaver": [
     "Sjekk for nye eller ekspanderende sprekker i gulv, teglsteinsmurer, Leca eller betongmurer.",
     "Sjekk for synlige ujevnheter og sprekker i gulv.",
@@ -27,6 +21,6 @@
     "Se etter muggdannelser (hvitt hårete belegg) eller jordslag (sorte prikker i konsentrerte områder).",
     "Sjekk at luftingen er i orden og tilstrekkelig."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

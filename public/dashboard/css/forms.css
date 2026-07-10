@@ -35,6 +35,86 @@
     font-size:15px;
 }
 
+.dashboard-icon-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:2.25rem;
+  height:2.25rem;
+  border:1px solid var(--dashboard-border, #d1d5db);
+  border-radius:0.5rem;
+  background:#fff;
+  color:var(--dashboard-primary, #2563eb);
+  cursor:pointer;
+}
+
+.dashboard-icon-button svg{
+  width:1.2rem;
+  height:1.2rem;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.dashboard-icon-button[aria-pressed="false"]{
+  color:#6b7280;
+}
+
+.dashboard-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:0.55rem;
+  cursor:pointer;
+}
+
+.dashboard-switch input{
+  position:absolute;
+  opacity:0;
+}
+
+.dashboard-switch > span:first-of-type{
+  position:relative;
+  width:2.25rem;
+  height:1.25rem;
+  border-radius:999px;
+  background:#9ca3af;
+  transition:background .15s ease;
+}
+
+.dashboard-switch > span:first-of-type::after{
+  content:"";
+  position:absolute;
+  top:0.15rem;
+  left:0.15rem;
+  width:0.95rem;
+  height:0.95rem;
+  border-radius:50%;
+  background:#fff;
+  transition:transform .15s ease;
+}
+
+.dashboard-switch input:checked + span{
+  background:var(--dashboard-primary, #2563eb);
+}
+
+.dashboard-switch input:checked + span::after{
+  transform:translateX(1rem);
+}
+
+.dashboard-switch input:focus-visible + span{
+  outline:2px solid var(--dashboard-primary, #2563eb);
+  outline-offset:2px;
+}
+
+.dashboard-jobcard-link{
+  display:inline-block;
+  margin-top:0.4rem;
+  color:var(--dashboard-primary, #2563eb);
+  font-size:0.875rem;
+}
+
 .dashboard-visibility-toggle{
     display:flex;
     align-items:center;

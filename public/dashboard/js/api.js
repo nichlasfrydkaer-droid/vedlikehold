@@ -198,6 +198,26 @@ export async function getTasks(
 
 }
 
+export async function getJobcardSettings(congregationId){
+
+    return await request(
+        "/jobcard-settings?congregation=" + encodeURIComponent(congregationId)
+    );
+
+}
+
+export async function saveJobcardSettings(settings){
+
+    return await request(
+        "/jobcard-settings",
+        {
+            method:"PUT",
+            body:JSON.stringify(settings)
+        }
+    );
+
+}
+
 export async function getTask(
     id
 ){
@@ -327,7 +347,9 @@ export async function getJobcards(
             description: jobcard.undertittel || "",
             jobcard_number: jobcard.nummer,
             interval: jobcard.frekvens || "",
-            next_execution: "",
+            intervalMonths: Number.isInteger(jobcard.intervalMonths)
+                ? jobcard.intervalMonths
+                : null,
             visible: true,
             raw: jobcard
         }))

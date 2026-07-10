@@ -3,15 +3,10 @@
   "titel": "Innvendige vegger, tak og gulv",
   "undertittel": "Innvendig bygningskontroll",
   "frekvens": "Årlig kontroll",
-
   "jobbkortPdf": "Jobbkort 7.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "oppgaver": [
     {
       "overskrift": "Vegger",
@@ -51,6 +46,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter på baksiden ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }

@@ -3,17 +3,11 @@
   "titel": "Brannslukkere – alle typer",
   "undertittel": "Brannslukkere",
   "frekvens": "Månedlig kontroll",
-
   "jobbkortPdf": "Jobbkort 12.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Personen som utfører dette må ha fått opplæring av personell som kjenner til bransjens anbefalte vedlikeholdsrutiner av brannslukkere.",
-
   "oppgaver": [
     "Sjekk at brannslukker er lokalisert der den skal være ifølge orienteringsplan, at den ikke er tildekket og at den er merket med selvlysende skilt. Sjekk brannslukker for synlige skader.",
     "Sjekk at instruksjonsmanual er ren, leselig og er plassert på riktig sted.",
@@ -22,6 +16,6 @@
     "For pulverapparat: Vend slukker opp ned flere ganger for å sikre at pulver er løst.",
     "Sjekk at brannslange er lett tilgjengelig, merket med selvlysende skilt og i orden."
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 1
 }

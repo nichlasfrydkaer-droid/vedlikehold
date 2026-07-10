@@ -3,17 +3,11 @@
   "titel": "Møbler og stoler",
   "undertittel": "Innvendig bygningskontroll",
   "frekvens": "Årlig vedlikehold",
-
   "jobbkortPdf": "Jobbkort 8.pdf",
-
   "sjaPdf": "DC-85_N.pdf",
-
   "sjaVeiledningPdf": "Veiledning Sikker jobb-analyse.pdf",
-
   "arbeidTrygtPdf": "Arbeid trygt sammen.pdf",
-
   "merk": "Dette inkluderer alle møbler i bygget, på plattform og så videre.",
-
   "oppgaver": [
     {
       "overskrift": "Møbler",
@@ -36,6 +30,6 @@
       ]
     }
   ],
-
-  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med."
+  "notatInfo": "Noter nedenfor ting som du oppdaget og som du selv ikke kan eller har lov til å gjøre noe med.",
+  "intervalMonths": 12
 }
