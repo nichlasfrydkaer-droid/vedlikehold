@@ -2,6 +2,7 @@ import { loadDashboard } from "../services/dashboard.js";
 import { getJobcards } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { t } from "../js/i18n.js";
+import { getVisibleJobcards } from "../js/jobcardVisibility.js";
 
 export async function initJobcards(){
 
@@ -64,9 +65,12 @@ export async function initJobcards(){
 
     }
 
-    const jobcards = Array.isArray(result)
-        ? result
-        : (result?.jobcards ?? []);
+    const jobcards = getVisibleJobcards(
+        congregation.id,
+        Array.isArray(result)
+            ? result
+            : (result?.jobcards ?? [])
+    );
 
     if(jobcards.length === 0){
 

@@ -1,14 +1,14 @@
-const DEFAULT_JOBCARDS = [
-  {
-    id: 1,
-    title: "Jobkort 1",
-    description: "Standard jobkort for testmenigheden.",
-    jobcard_number: 1,
-    interval: "30 dage",
-    next_execution: "",
-    visible: true
+async function readJobcardData(language) {
+  const response = await fetch(`https://vedlikeholdsystem.no/jobdata/${language}/index.json`);
+
+  if (!response.ok) {
+    return [];
   }
-];
+
+  const data = await response.json();
+
+  return Array.isArray(data) ? data : [];
+}
 
 function jsonResponse(body, init = {}) {
   return new Response(JSON.stringify(body), {
@@ -42,12 +42,21 @@ export default {
 
     if (path === "/jobcards") {
       const congregation = url.searchParams.get("congregation") || "Test DK";
+      const language = congregation === "Elverum" ? "no" : "da";
+      const jobcards = await readJobcardData(language);
+
       return jsonResponse({
         success: true,
         congregation,
-        jobcards: DEFAULT_JOBCARDS.map(jobcard => ({
-          ...jobcard,
-          title: congregation === "Elverum" ? `${jobcard.title} (${congregation})` : jobcard.title
+        jobcards: jobcards.map(jobcard => ({
+          id: jobcard.nummer,
+          title: jobcard.titel || jobcard.nummer,
+          description: jobcard.undertittel || "",
+          jobcard_number: jobcard.nummer,
+          interval: jobcard.frekvens || "",
+          next_execution: "",
+          visible: true,
+          raw: jobcard
         }))
       });
     }

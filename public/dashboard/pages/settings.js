@@ -2,6 +2,11 @@ import { loadDashboard } from "../services/dashboard.js";
 import { getJobcards } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { t } from "../js/i18n.js";
+import {
+    getEnabledJobcardIds,
+    setEnabledJobcardIds,
+    getVisibleJobcards
+} from "../js/jobcardVisibility.js";
 
 export async function initSettings(){
 
@@ -76,6 +81,9 @@ export async function initSettings(){
 
     }
 
+    const enabledIds = new Set(getEnabledJobcardIds(congregation.id, jobcards));
+    const visibleJobcards = getVisibleJobcards(congregation.id, jobcards);
+
     container.innerHTML = `
 
         <div class="dashboard-card dashboard-full">
@@ -147,10 +155,11 @@ export async function initSettings(){
 
                                             <input
                                                 type="checkbox"
-                                                ${jobcard.visible === 1 || jobcard.visible === true ? "checked" : ""}
+                                                data-jobcard-id="${jobcard.id ?? jobcard.jobcard_number ?? jobcard.number ?? jobcard.title}"
+                                                ${enabledIds.has(String(jobcard.id ?? jobcard.jobcard_number ?? jobcard.number ?? jobcard.title)) ? "checked" : ""}
                                             >
 
-                                            <span>${jobcard.visible === 1 || jobcard.visible === true ? t("jobcardVisibleOnPage", "Synlig på jobbkort-siden") : t("jobcardHiddenOnPage", "Skjult på jobbkort-siden")}</span>
+                                            <span>${enabledIds.has(String(jobcard.id ?? jobcard.jobcard_number ?? jobcard.number ?? jobcard.title)) ? t("jobcardVisibleOnPage", "Synlig på jobbkort-siden") : t("jobcardHiddenOnPage", "Skjult på jobbkort-siden")}</span>
 
                                         </label>
 
@@ -171,5 +180,19 @@ export async function initSettings(){
         </div>
 
     `;
+
+    container.querySelectorAll("[data-jobcard-id]").forEach(checkbox => {
+
+        checkbox.addEventListener("change", () => {
+
+            const jobcardId = checkbox.dataset.jobcardId;
+            const selectedIds = Array.from(container.querySelectorAll("[data-jobcard-id]:checked"))
+                .map(input => input.dataset.jobcardId);
+
+            setEnabledJobcardIds(congregation.id, selectedIds);
+
+        });
+
+    });
 
 }
