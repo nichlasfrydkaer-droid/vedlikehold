@@ -3,6 +3,11 @@ import {
 }
 from "../js/format.js";
 
+import {
+    renderTaskStatus
+}
+from "../js/taskStatus.js";
+
 export function renderTaskCard(
     task
 ){
@@ -54,21 +59,7 @@ export function renderTaskCard(
 
             </p>
 
-            <p>
-
-                ${task.status==="completed"
-
-                    ? "🟢 Fullført"
-
-                    : task.status==="open"
-
-                        ? "🟠 Åpent"
-
-                        : "⚪ Opprettet"
-
-                }
-
-            </p>
+            <p>${renderTaskStatus(task)}</p>
 
         </div>
 

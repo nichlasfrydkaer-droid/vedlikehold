@@ -27,6 +27,8 @@ export async function loadDashboard(){
             state.congregations =
                 me.congregations || [];
 
+            state.sessionStartedAt = me.sessionStartedAt || null;
+
             if(
                 state.congregations.length &&
                 !state.congregation

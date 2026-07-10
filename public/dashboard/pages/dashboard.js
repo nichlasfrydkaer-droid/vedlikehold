@@ -81,13 +81,13 @@ export async function initDashboard(){
 
     );
 
-    renderDashboardNews();
+    await renderDashboardNews();
 
     await renderDashboardOverview();
 
     await renderDashboardUpcoming();
 
-    renderDashboardTasks();
+    await renderDashboardTasks();
 
     renderDashboardReports();
 

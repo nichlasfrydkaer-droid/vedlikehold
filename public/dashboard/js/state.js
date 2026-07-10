@@ -11,6 +11,8 @@ export const state = {
 
     congregations:[],
 
-    language:"no"
+    language:"no",
+
+    sessionStartedAt:null
 
 };

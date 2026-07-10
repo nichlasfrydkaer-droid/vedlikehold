@@ -1,0 +1,26 @@
+.task-status{
+    display:inline-flex;
+    align-items:center;
+    gap:.4rem;
+    padding:.3rem .55rem;
+    border-radius:999px;
+    font-size:.8rem;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.task-status-dot{
+    width:.55rem;
+    height:.55rem;
+    border-radius:50%;
+    background:currentColor;
+    animation:task-status-pulse 1.8s ease-in-out infinite;
+}
+
+.task-status-open{background:#dbeafe;color:#1d4ed8}
+.task-status-started{background:#fef3c7;color:#b45309}
+.task-status-completed{background:#dcfce7;color:#15803d}
+.task-status-overdue{background:#fee2e2;color:#b91c1c}
+.task-status-completed .task-status-dot{animation:none}
+
+@keyframes task-status-pulse{50%{transform:scale(1.45);opacity:.5}}

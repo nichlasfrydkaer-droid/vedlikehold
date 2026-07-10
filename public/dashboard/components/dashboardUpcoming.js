@@ -34,7 +34,7 @@ export async function renderDashboardUpcoming(){
                     <div class="dashboard-upcoming-title">${jobcard.title}</div>
                     <div class="dashboard-upcoming-subtitle">
                         ${jobcard.autoInterval
-                            ? `${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number} · ${jobcard.interval}`
+                            ? `${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number} · ${t("dueBy", "Skal utføres innen")}: ${jobcard.nextExecution || "-"}`
                             : `${t("jobcardNextExecution", "Neste utførelse")}: ${jobcard.nextExecution}`}
                     </div>
                 </div>

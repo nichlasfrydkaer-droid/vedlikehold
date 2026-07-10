@@ -1,6 +1,7 @@
 import {
     getPublicTask,
-    completePublicTask
+    completePublicTask,
+    startPublicTask
 }
 from "../js/api.js";
 
@@ -81,6 +82,14 @@ export async function initO(){
 
                 ${task.deadline ?? "-"}
 
+                ${task.status === "open" ? `
+
+                    <br><br>
+
+                    <button id="startButton" type="button">Start</button>
+
+                ` : ""}
+
                 <hr>
 
                 <div
@@ -135,6 +144,21 @@ export async function initO(){
         document.getElementById(
             "checklist"
         );
+
+    document
+        .getElementById("startButton")
+        ?.addEventListener("click", async event => {
+
+            const response = await startPublicTask(linkCode);
+
+            if(response.success){
+
+                event.currentTarget.textContent = "Startet";
+                event.currentTarget.disabled = true;
+
+            }
+
+        });
 
     checklist.forEach(
 

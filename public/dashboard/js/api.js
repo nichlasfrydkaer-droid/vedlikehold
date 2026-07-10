@@ -421,3 +421,15 @@ export async function completePublicTask(
     );
 
 }
+
+export async function startPublicTask(linkCode){
+
+    return await request(
+        "/o/start",
+        {
+            method:"POST",
+            body:JSON.stringify({ link_code:linkCode })
+        }
+    );
+
+}
