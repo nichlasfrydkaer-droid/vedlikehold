@@ -214,6 +214,34 @@ export async function getTask(
 
 }
 
+export function buildJobcardMenuUrl(jobcard, congregation){
+
+    const congregationName =
+        String(
+            congregation?.name ||
+            congregation?.title ||
+            congregation?.slug ||
+            congregation?.id || ""
+        ).trim();
+
+    const congregationSlug = String(
+        congregation?.slug ||
+        congregation?.congregation_slug ||
+        congregationName
+    )
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+    const finalSlug = congregationSlug || String(congregation?.id || "").trim().toLowerCase() || "menighed";
+    const jobcardId = jobcard?.id ?? jobcard?.jobcard_number ?? jobcard?.number ?? 1;
+
+    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(String(jobcardId))}&congregation=${encodeURIComponent(finalSlug)}`;
+
+}
+
 export async function getJobcards(
     congregationId
 ){

@@ -1,5 +1,5 @@
 import { loadDashboard } from "../services/dashboard.js";
-import { getJobcards } from "../js/api.js";
+import { buildJobcardMenuUrl, getJobcards } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { t } from "../js/i18n.js";
 import { getVisibleJobcards } from "../js/jobcardVisibility.js";
@@ -105,6 +105,16 @@ export async function initJobcards(){
                 <h3>${jobcard.title ?? jobcard.id}</h3>
                 <p>${jobcard.description ?? ""}</p>
                 <small>${t("jobNumber", "Jobbkort")}: ${jobcard.jobcard_number ?? jobcard.id}</small>
+                <div style="margin-top: 0.75rem;">
+                    <a
+                        href="${buildJobcardMenuUrl(jobcard, congregation)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="display: inline-block; padding: 0.55rem 0.9rem; background: #2563eb; color: #fff; border-radius: 0.375rem; text-decoration: none; font-weight: 600;"
+                    >
+                        ${t("openJobcard", "Åbn jobkort")}
+                    </a>
+                </div>
             </div>
         `).join("")}
 

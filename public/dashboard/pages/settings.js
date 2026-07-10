@@ -1,5 +1,5 @@
 import { loadDashboard } from "../services/dashboard.js";
-import { getJobcards } from "../js/api.js";
+import { buildJobcardMenuUrl, getJobcards } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { t } from "../js/i18n.js";
 import {
@@ -133,6 +133,16 @@ export async function initSettings(){
                                         <strong>${jobcard.title ?? jobcard.id}</strong>
 
                                         <div class="dashboard-table-muted">${jobcard.jobcard_number ?? jobcard.id}</div>
+                                        <div style="margin-top: 0.35rem;">
+                                            <a
+                                                href="${buildJobcardMenuUrl(jobcard, congregation)}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style="display: inline-block; padding: 0.35rem 0.6rem; background: #2563eb; color: #fff; border-radius: 0.375rem; text-decoration: none; font-size: 0.875rem;"
+                                            >
+                                                ${t("openJobcard", "Åbn jobkort")}
+                                            </a>
+                                        </div>
 
                                     </td>
 
