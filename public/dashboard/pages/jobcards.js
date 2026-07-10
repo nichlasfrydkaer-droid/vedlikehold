@@ -17,21 +17,30 @@ function sortJobcards(jobcards, sortBy){
     });
 }
 
+function icon(name){
+    const paths = {
+        interval:`<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5M12 7v5l3 2"/>`,
+        completed:`<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14l2 2 4-4"/>`,
+        due:`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>`
+    };
+    return `<span class="jobcard-info-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg></span>`;
+}
+
 function renderCards(container, jobcards, congregation){
     container.querySelector("[data-jobcard-list]").innerHTML = sortJobcards(jobcards, container.querySelector("[data-jobcard-sort]").value)
         .map(jobcard => {
             const url = buildJobcardMenuUrl(jobcard, congregation);
             return `
-                <article class="dashboard-card dashboard-full dashboard-jobcard-card">
-                    <div>
+                <article class="dashboard-jobcard-card">
+                    <div class="dashboard-jobcard-main">
                         <h3>${jobcard.title}</h3>
                         <p class="dashboard-table-muted">${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number}</p>
-                        <p>${jobcard.description || ""}</p>
-                    </div>
-                    <div class="dashboard-jobcard-meta">
-                        <span>${t("jobcardSuggestedInterval", "Foreslått intervall")}: ${jobcard.interval || "-"}</span>
-                        <span>${t("jobcardLastPerformed", "Sist utført")}: ${jobcard.lastPerformedAt ? jobcard.lastPerformedAt.slice(0, 10) : "-"}</span>
-                        <span>${t("jobcardNextExecution", "Neste utførelse")}: ${jobcard.nextExecution || "-"}</span>
+                        ${jobcard.description ? `<p class="dashboard-jobcard-description">${jobcard.description}</p>` : ""}
+                        <div class="dashboard-jobcard-meta">
+                            <span>${icon("interval")}${t("jobcardSuggestedInterval", "Foreslått intervall")}: ${jobcard.interval || "-"}</span>
+                            <span>${icon("completed")}${t("jobcardLastPerformed", "Sist utført")}: ${jobcard.lastPerformedAt ? jobcard.lastPerformedAt.slice(0, 10) : "-"}</span>
+                            <span>${icon("due")}${t("jobcardNextExecution", "Neste utførelse")}: ${jobcard.nextExecution || "-"}</span>
+                        </div>
                     </div>
                     <div class="dashboard-jobcard-actions">
                         <a class="dashboard-button" href="${url}" target="_blank" rel="noopener noreferrer">${t("openJobcard", "Åbn jobkort")}</a>
@@ -69,7 +78,7 @@ export async function initJobcards(){
     container.innerHTML = `
         <section class="dashboard-card dashboard-full dashboard-jobcard-toolbar">
             <div><h2>${t("jobcards", "Jobbkort")}</h2><p>${t("jobcardsDescription", "Her kan du se og administrere jobbkort for denne menigheten.")}</p></div>
-            <label>${t("sortJobcards", "Sorter jobbkort")}
+            <label>${t("sortJobcards", "Sorter:")}
                 <select class="dashboard-input" data-jobcard-sort>
                     <option value="number">${t("sortByNumber", "Nummer")}</option>
                     <option value="lastPerformed">${t("sortByLastPerformed", "Sist utført")}</option>

@@ -124,12 +124,13 @@
 
 }
 
-.dashboard-jobcard-toolbar,
-.dashboard-jobcard-card{display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem}
+.dashboard-jobcard-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;max-width:1100px;margin:0 auto 1.25rem!important}
 .dashboard-jobcard-toolbar label{display:grid;gap:.35rem;min-width:12rem}
-.dashboard-jobcard-list{display:grid;gap:1rem}
-.dashboard-jobcard-card h3,.dashboard-jobcard-card p{margin-top:0}
-.dashboard-jobcard-meta{display:grid;gap:.35rem;color:#4b5563;font-size:.9rem}
+.dashboard-jobcard-list{display:grid;gap:1rem;max-width:1100px;margin:0 auto;padding:0 24px 32px}
+.dashboard-jobcard-card{display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem;padding:1.5rem 1.6rem;border:1px solid #dbe3ef;border-left:5px solid #2563eb;border-radius:1rem;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.06);transition:transform .18s ease,box-shadow .18s ease}
+.dashboard-jobcard-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(15,23,42,.1)}
+.dashboard-jobcard-card h3,.dashboard-jobcard-card p{margin-top:0}.dashboard-jobcard-card h3{margin-bottom:.2rem;font-size:1.35rem}.dashboard-jobcard-description{margin:.8rem 0;color:#475569}
+.dashboard-jobcard-meta{display:flex;flex-wrap:wrap;gap:.65rem 1rem;color:#475569;font-size:.9rem}.dashboard-jobcard-meta span{display:flex;align-items:center}.jobcard-info-icon{display:inline-grid;place-items:center;flex:0 0 1.5rem;width:1.5rem;height:1.5rem;margin-right:.35rem;line-height:0;border-radius:.35rem;background:#dbeafe;color:#2563eb}.jobcard-info-icon svg{display:block;width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .dashboard-jobcard-actions,.dashboard-share-actions{display:flex;flex-wrap:wrap;gap:.6rem}
 .dashboard-button{display:inline-flex;align-items:center;justify-content:center;min-height:2.4rem;padding:.45rem .8rem;border:0;border-radius:.45rem;background:#2563eb;color:#fff;font:inherit;text-decoration:none;cursor:pointer}
 .dashboard-button-secondary{background:#eef2ff;color:#1e40af}
@@ -140,4 +141,4 @@
 .dashboard-share-qr{width:13.75rem;height:13.75rem;justify-self:center}
 .dashboard-share-close{position:absolute;top:.5rem;right:.6rem;border:0;background:transparent;color:#4b5563;font-size:1.7rem;cursor:pointer}
 .dashboard-upcoming-more{display:inline-block;margin-top:.6rem;color:#2563eb;font-weight:600;text-decoration:none}
-@media (max-width:680px){.dashboard-jobcard-toolbar,.dashboard-jobcard-card{flex-direction:column}}
+@media (max-width:680px){.dashboard-jobcard-toolbar,.dashboard-jobcard-card{flex-direction:column}.dashboard-jobcard-list{padding:0 16px 24px}.dashboard-jobcard-actions{width:100%}.dashboard-jobcard-actions>*{flex:1}}
