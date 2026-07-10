@@ -12,7 +12,19 @@ export async function initSettings(){
 
     const me = await loadDashboard();
 
-    if(!me){
+    if(!me || (!me.success && !me.fallback)){
+
+        container.innerHTML = `
+
+            <div class="dashboard-card dashboard-full">
+
+                <h2>${t("settingsLandingTitle", "Indstillinger")}</h2>
+
+                <p>Kunne ikke hente dashboarddata lige nu. Prøv at genindlæse siden.</p>
+
+            </div>
+
+        `;
 
         return;
 

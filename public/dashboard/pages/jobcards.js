@@ -8,7 +8,19 @@ export async function initJobcards(){
 
     const me = await loadDashboard();
 
-    if(!me){
+    if(!me || (!me.success && !me.fallback)){
+
+        container.innerHTML = `
+
+            <div class="dashboard-card">
+
+                <h2>${t("jobcards", "Jobbkort")}</h2>
+
+                <p>Kunne ikke hente dashboarddata lige nu. Prøv at genindlæse siden.</p>
+
+            </div>
+
+        `;
 
         return;
 

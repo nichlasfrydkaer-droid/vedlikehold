@@ -14,39 +14,71 @@ from "../js/i18n.js";
 
 export async function loadDashboard(){
 
-    const me =
-        await getMe();
+    try{
 
-    if(!me.success){
+        const me =
+            await getMe();
 
-        localStorage.removeItem(
-            "dashboard_token"
-        );
+        if(me?.success){
 
-        localStorage.removeItem(
-            "dashboard_congregation"
-        );
+            state.user =
+                me.user;
 
-        location.href =
-            "/dashboard/login.html";
+            state.congregations =
+                me.congregations || [];
 
-        return null;
+            if(
+                state.congregations.length &&
+                !state.congregation
+            ){
+
+                state.congregation =
+                    state.congregations[0];
+
+            }
+
+            loadCongregation();
+
+            await loadTranslations(
+
+                state.congregation?.language ??
+
+                "no"
+
+            );
+
+            return me;
+
+        }
+
+    }catch(error){
+
+        console.error("Dashboard load failed", error);
 
     }
 
-    state.user =
-        me.user;
-
-    state.congregations =
-        me.congregations;
-
     if(
-        me.congregations.length &&
-        !state.congregation
+        state.user ||
+        state.congregations.length ||
+        state.congregation
     ){
 
-        state.congregation =
-            me.congregations[0];
+        loadCongregation();
+
+        await loadTranslations(
+
+            state.congregation?.language ??
+
+            "no"
+
+        );
+
+        return {
+            success:false,
+            fallback:true,
+            user: state.user,
+            congregations: state.congregations
+        };
 
     }
 
@@ -60,6 +92,9 @@ export async function loadDashboard(){
 
     );
 
-    return me;
+    return {
+        success:false,
+        fallback:true
+    };
 
 }
