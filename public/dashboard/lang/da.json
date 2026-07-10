@@ -20,5 +20,7 @@
   "jobcardHidden": "Skjult",
   "jobcardVisibleOnPage": "Synlig på jobkort-siden",
   "jobcardHiddenOnPage": "Skjult på jobkort-siden",
-  "logout": "Log ud"
+  "logout": "Log ud",
+  "unsavedChanges": "Du har ulagrede ændringer.",
+  "leavePageConfirm": "Er du sikker på, at du vil skifte menighed? Alle ulagrede ændringer vil gå tabt."
 }

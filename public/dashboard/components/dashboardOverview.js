@@ -9,7 +9,7 @@ export async function renderDashboardOverview(){
 
         <div class="dashboard-overview-grid">
 
-            <div class="dashboard-overview-box">
+            <button type="button" class="dashboard-overview-box" data-overview-target="jobcards">
 
                 <div class="dashboard-overview-number">-</div>
 
@@ -19,9 +19,9 @@ export async function renderDashboardOverview(){
 
                 </div>
 
-            </div>
+            </button>
 
-            <div class="dashboard-overview-box">
+            <button type="button" class="dashboard-overview-box" data-overview-target="reports">
 
                 <div id="overviewReportsCount" class="dashboard-overview-number">-</div>
 
@@ -31,9 +31,9 @@ export async function renderDashboardOverview(){
 
                 </div>
 
-            </div>
+            </button>
 
-            <div class="dashboard-overview-box">
+            <button type="button" class="dashboard-overview-box" data-overview-target="tasks">
 
                 <div id="overviewTasksCount" class="dashboard-overview-number">-</div>
 
@@ -43,9 +43,9 @@ export async function renderDashboardOverview(){
 
                 </div>
 
-            </div>
+            </button>
 
-            <div class="dashboard-overview-box">
+            <button type="button" class="dashboard-overview-box" data-overview-target="users" disabled>
 
                 <div class="dashboard-overview-number">-</div>
 
@@ -55,7 +55,7 @@ export async function renderDashboardOverview(){
 
                 </div>
 
-            </div>
+            </button>
 
         </div>
 
@@ -110,5 +110,33 @@ export async function renderDashboardOverview(){
         tasksElement.textContent = String(tasksCount);
 
     }
+
+    document.querySelectorAll("[data-overview-target]").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const target = button.dataset.overviewTarget;
+
+            if(target === "jobcards"){
+
+                location.href = "/dashboard/jobcards.html";
+
+            }
+
+            if(target === "reports"){
+
+                location.href = "/dashboard/reports.html";
+
+            }
+
+            if(target === "tasks"){
+
+                location.href = "/dashboard/tasks.html";
+
+            }
+
+        });
+
+    });
 
 }

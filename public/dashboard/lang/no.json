@@ -149,6 +149,7 @@
   "saveQuestion": "Vil du lagre endringene?",
   "deleteQuestion": "Er du sikker på at du vil slette dette?",
   "unsavedChanges": "Du har ulagrede endringer.",
+  "leavePageConfirm": "Er du sikker på at du vil skifte menighet? Alle ulagrede endringer vil gå tapt.",
 
   "noReports": "Ingen rapporter ennå.",
   "noTasks": "Ingen oppdrag ennå.",

@@ -290,9 +290,8 @@ export function initDashboardMenu(){
 
             ()=>{
 
-                alert(
-                    "Innstillinger kommer snart."
-                );
+                location.href =
+                    "/dashboard/settings.html";
 
             }
 
