@@ -224,21 +224,32 @@ export function buildJobcardMenuUrl(jobcard, congregation){
             congregation?.id || ""
         ).trim();
 
-    const congregationSlug = String(
+    const congregationReference = String(
+        congregation?.id ||
         congregation?.slug ||
         congregation?.congregation_slug ||
         congregationName
-    )
+    ).trim();
+
+    const congregationSlug = congregationReference
         .toLowerCase()
         .normalize("NFKD")
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    const finalSlug = congregationSlug || String(congregation?.id || "").trim().toLowerCase() || "menighed";
-    const jobcardId = jobcard?.id ?? jobcard?.jobcard_number ?? jobcard?.number ?? 1;
+    const finalSlug = congregationSlug || "menighed";
+    const jobcardId = String(
+        jobcard?.jobcard_number ??
+        jobcard?.number ??
+        jobcard?.id ??
+        jobcard?.nummer ??
+        jobcard?.raw?.nummer ??
+        jobcard?.raw?.number ??
+        1
+    );
 
-    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(String(jobcardId))}&congregation=${encodeURIComponent(finalSlug)}`;
+    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&congregation=${encodeURIComponent(finalSlug)}`;
 
 }
 

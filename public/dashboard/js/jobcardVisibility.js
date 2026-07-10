@@ -5,22 +5,34 @@ function getStorageKey(congregationId = ""){
 export function getEnabledJobcardIds(congregationId = "", jobcards = []){
   const storageKey = getStorageKey(congregationId);
   const rawValue = localStorage.getItem(storageKey);
+  const allIds = (jobcards || []).map(jobcard => String(jobcard.id));
 
   if(rawValue === null){
-    return (jobcards || []).map(jobcard => String(jobcard.id));
+    return allIds;
   }
 
   try{
     const parsed = JSON.parse(rawValue);
 
     if(Array.isArray(parsed)){
-      return parsed.map(value => String(value));
+      const normalizedIds = parsed
+        .map(value => String(value))
+        .filter(Boolean);
+
+      const congregationName = String(congregationId || "").trim();
+      const isLegacySingleSelection = normalizedIds.length === 1 && normalizedIds[0] === "1" && congregationName !== "Test DK";
+
+      if(isLegacySingleSelection){
+        return allIds;
+      }
+
+      return normalizedIds;
     }
   }catch(error){
     console.error(error);
   }
 
-  return (jobcards || []).map(jobcard => String(jobcard.id));
+  return allIds;
 }
 
 export function setEnabledJobcardIds(congregationId = "", jobcardIds = []){
