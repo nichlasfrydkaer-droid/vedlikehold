@@ -40,7 +40,7 @@ export async function initJobcards(){
 
     }
 
-    const result = await getJobcards(congregation.id);
+    const result = await getJobcards(congregation);
 
     if(!result || (!result.success && !Array.isArray(result) && !result.jobcards)){
 

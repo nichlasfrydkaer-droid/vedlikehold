@@ -83,7 +83,7 @@ export async function renderDashboardOverview(){
 
     const [jobcardsResult, tasksResult, reportsResult] = await Promise.all([
 
-        getJobcards(congregation.id),
+        getJobcards(congregation),
         getTasks(congregation.id),
         getReports(congregation.id)
 

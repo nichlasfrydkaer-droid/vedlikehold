@@ -46,7 +46,7 @@ export async function initSettings(){
 
     }
 
-    const result = await getJobcards(congregation.id);
+    const result = await getJobcards(congregation);
 
     let jobcards = [];
     let loadError = "";

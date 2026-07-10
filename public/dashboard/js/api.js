@@ -214,31 +214,78 @@ export async function getTask(
 
 }
 
-export function buildJobcardMenuUrl(jobcard, congregation){
+function normalizeJobcardLanguage(value = ""){
 
-    const congregationName =
-        String(
-            congregation?.name ||
-            congregation?.title ||
-            congregation?.slug ||
-            congregation?.id || ""
-        ).trim();
+    const normalized = String(value || "").trim().toLowerCase();
 
-    const congregationReference = String(
+    if(!normalized){
+        return "da";
+    }
+
+    if(["no", "nb", "nn", "norsk", "norwegian"].includes(normalized)){
+        return "no";
+    }
+
+    if(["da", "dk", "danish", "dansk"].includes(normalized)){
+        return "da";
+    }
+
+    if(normalized.includes("no") || normalized.includes("nor") || normalized.includes("norsk")){
+        return "no";
+    }
+
+    if(normalized.includes("da") || normalized.includes("dk") || normalized.includes("dan")){
+        return "da";
+    }
+
+    return "da";
+
+}
+
+export function resolveJobcardContext(congregation){
+
+    const name = String(
+        congregation?.name ||
+        congregation?.title ||
+        congregation?.slug ||
+        congregation?.id || ""
+    ).trim();
+
+    const reference = String(
         congregation?.id ||
         congregation?.slug ||
         congregation?.congregation_slug ||
-        congregationName
+        name || ""
     ).trim();
 
-    const congregationSlug = congregationReference
+    const slug = reference
         .toLowerCase()
         .normalize("NFKD")
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    const finalSlug = congregationSlug || "menighed";
+    const language = normalizeJobcardLanguage(
+        congregation?.language ||
+        congregation?.lang ||
+        name ||
+        reference
+    );
+
+    const isTestCongregation = /(^|-)test(-|$)/.test(slug) || /test\s*dk/i.test(name);
+
+    return {
+        language,
+        allowedIds: isTestCongregation ? ["1"] : null,
+        congregationName: name,
+        congregationSlug: slug || "menighed"
+    };
+
+}
+
+export function buildJobcardMenuUrl(jobcard, congregation){
+
+    const context = resolveJobcardContext(congregation);
     const jobcardId = String(
         jobcard?.jobcard_number ??
         jobcard?.number ??
@@ -249,21 +296,16 @@ export function buildJobcardMenuUrl(jobcard, congregation){
         1
     );
 
-    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&congregation=${encodeURIComponent(finalSlug)}`;
+    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&congregation=${encodeURIComponent(context.congregationSlug)}`;
 
 }
 
 export async function getJobcards(
-    congregationId
+    congregation
 ){
 
-    const congregationName =
-        String(congregationId || "").trim();
-
-    const language =
-        congregationName === "Elverum"
-            ? "no"
-            : "da";
+    const context = resolveJobcardContext(congregation);
+    const language = context.language;
 
     const response =
         await fetch(
@@ -294,14 +336,7 @@ export async function getJobcards(
         }))
         : [];
 
-    const allowedIds =
-        congregationName === "Test DK"
-            ? ["1"]
-            : (congregationName === "Elverum"
-                ? null
-                : null);
-
-    if(allowedIds){
+    if(context.allowedIds){
 
         jobcards = jobcards.filter(jobcard => allowedIds.includes(String(jobcard.id)));
 
