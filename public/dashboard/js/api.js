@@ -237,6 +237,30 @@ export async function saveJobcardSettings(settings){
 
 }
 
+export async function getJobcardDocuments(congregationId){
+    return request("/jobcard-documents?congregation=" + encodeURIComponent(congregationId));
+}
+
+export async function uploadJobcardDocument({ congregationId, label, appliesToAll, jobcardIds, file }){
+    const form = new FormData();
+    form.append("label", label);
+    form.append("applies_to_all", String(appliesToAll));
+    form.append("jobcard_ids", JSON.stringify(jobcardIds || []));
+    form.append("file", file);
+    const headers = {};
+    if(state.csrfToken) headers["X-CSRF-Token"] = decodeURIComponent(state.csrfToken);
+    const response = await fetch(config.api + "/jobcard-documents?congregation=" + encodeURIComponent(congregationId), {
+        method:"POST", credentials:"include", headers, body:form
+    });
+    try { return await response.json(); } catch { return { success:false, status:response.status }; }
+}
+
+export async function deleteJobcardDocument(congregationId, id){
+    return request("/jobcard-documents?congregation=" + encodeURIComponent(congregationId), {
+        method:"DELETE", body:JSON.stringify({ id })
+    });
+}
+
 export async function getTask(
     id
 ){
@@ -331,7 +355,7 @@ export function buildJobcardMenuUrl(jobcard, congregation){
         1
     );
 
-    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&congregation=${encodeURIComponent(context.congregationSlug)}`;
+    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&congregation=${encodeURIComponent(context.congregationSlug)}&congregationId=${encodeURIComponent(congregation?.id || "")}`;
 
 }
 

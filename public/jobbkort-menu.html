@@ -87,17 +87,7 @@ button:hover{
       Skriv ut
     </button>
 
-    <button class="docBtn" id="sjaBtn">
-      Sikker jobb analyse
-    </button>
-
-<button class="docBtn" id="sjaGuideBtn">
-  Veiledning: Sikker jobb-analyse (DC-85)
-</button>
-
-    <button class="docBtn" id="safeWorkBtn">
-      Veiledning: Arbeid trygt sammen (DC-82)
-    </button>
+    <div id="documentButtons"></div>
 
   </div>
 
@@ -177,15 +167,6 @@ async function loadTranslations(language){
   document.getElementById("printBtn").innerText =
     translations.print;
 
-  document.getElementById("sjaBtn").innerText =
-    translations.sja;
-
-  document.getElementById("sjaGuideBtn").innerHTML =
-    translations.sjaGuide;
-
-  document.getElementById("safeWorkBtn").innerHTML =
-    translations.safeWork;
-
 }
   
 function resolveLanguage(congregation){
@@ -249,6 +230,9 @@ async function loadMenu(){
   const congregation =
     params.get("congregation");
 
+  const congregationId =
+    params.get("congregationId");
+
   const language =
     resolveLanguage(congregation);
 
@@ -287,32 +271,26 @@ window.open(
 
   };
 
-  document.getElementById("sjaBtn").onclick = () => {
-
-window.open(
-  `/dokumenter/${language}/${job.sjaPdf}`,
-  "_blank"
-);
-
-  };
-
-  document.getElementById("sjaGuideBtn").onclick = () => {
-
-window.open(
-  `/dokumenter/${language}/${job.sjaVeiledningPdf}`,
-  "_blank"
-);
-
-  };
-
-  document.getElementById("safeWorkBtn").onclick = () => {
-
-window.open(
-  `/dokumenter/${language}/${job.arbeidTrygtPdf}`,
-  "_blank"
-);
-
-  };
+  if(congregationId){
+    const documentsResponse = await fetch(
+      `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(congregationId)}&jobcard=${encodeURIComponent(job.nummer)}`
+    );
+    if(documentsResponse.ok){
+      const documentsData = await documentsResponse.json();
+      const target = document.getElementById("documentButtons");
+      (documentsData.documents || []).forEach((documentData) => {
+        const button = document.createElement("button");
+        button.className = "docBtn";
+        button.textContent = documentData.label;
+        button.onclick = () => window.open(
+          `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(congregationId)}&jobcard=${encodeURIComponent(job.nummer)}&document=${encodeURIComponent(documentData.id)}`,
+          "_blank",
+          "noopener"
+        );
+        target.appendChild(button);
+      });
+    }
+  }
 
 }
 
