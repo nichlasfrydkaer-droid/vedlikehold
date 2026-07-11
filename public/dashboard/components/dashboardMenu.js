@@ -8,7 +8,7 @@ function icon(name){
         tasks:`<path d="M5 4h14v17H5z"/><path d="m8 10 2 2 4-4M8 16h8"/>`,
         users:`<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-3.6 3.2-5.5 7-5.5s6.2 1.9 7 5.5"/>`,
         congregations:`<path d="M4 21h16M6 21V8h12v13M9 8V4h6v4M9 12h2M13 12h2M9 16h2M13 16h2"/>`,
-        settings:`<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>`,
+        settings:`<path d="M9.5 2.8h5l.8 2.4 2.4 1.4 2.3-.8 2.5 4.4-1.8 1.6v2.8l1.8 1.6-2.5 4.4-2.3-.8-2.4 1.4-.8 2.4h-5l-.8-2.4-2.4-1.4-2.3.8-2.5-4.4 1.8-1.6v-2.8l-1.8-1.6 2.5-4.4 2.3.8 2.4-1.4z"/><circle cx="12" cy="12" r="3"/>`,
         logout:`<path d="M10 4H5v16h5M14 8l4 4-4 4M8 12h10"/>`
     };
     return `<span class="dashboard-menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg></span>`;
