@@ -1,1 +1,1 @@
-
+export function showToast(message){document.querySelectorAll(".dashboard-toast").forEach(item=>item.remove());const toast=document.createElement("div");toast.className="dashboard-toast";toast.setAttribute("role","status");toast.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>${message}</span>`;document.body.appendChild(toast);setTimeout(()=>toast.remove(),3000);}
