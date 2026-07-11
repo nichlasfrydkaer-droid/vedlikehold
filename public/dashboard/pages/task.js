@@ -47,8 +47,12 @@ export async function initTask(){
     const taskId =
         params.get("id");
 
+    const copyId =
+        params.get("copy");
+
     let report = null;
     let task = null;
+    let seedTask = null;
 
     //
     // Eksisterende oppdrag
@@ -108,6 +112,22 @@ export async function initTask(){
     // Nytt oppdrag
     //
 
+    else if(copyId){
+
+        seedTask = await loadTask(copyId);
+
+        if(!seedTask){
+            container.innerHTML = `<div class="dashboard-card"><h2>Oppdrag ikke funnet</h2></div>`;
+            return;
+        }
+
+        report = {id:seedTask.report_id,job_number:seedTask.report_job_number ?? "-",notes:seedTask.original_comment ?? seedTask.report_notes ?? ""};
+        const result = await getReport(seedTask.report_id);
+        if(result.success){ report = result.report; }
+        seedTask = {...seedTask,deadline:""};
+
+    }
+
     else{
 
         if(!reportId){
@@ -166,7 +186,7 @@ export async function initTask(){
 
             report,
 
-            task,
+            task: task ?? seedTask,
 
             isExisting:
                 !!task
@@ -196,6 +216,10 @@ export async function initTask(){
 
         return;
 
+    }
+
+    if(seedTask){
+        document.getElementById("includeComment").checked = false;
     }
 
     //
@@ -356,7 +380,7 @@ export async function initTask(){
 
                     checklist,
 
-                    photos:[]
+                    photos:seedTask?.photos ?? []
 
                 });
 

@@ -23,7 +23,7 @@ export function renderTaskView({ report, task, isExisting }){
                 ${isExisting ? renderTaskStatus(task) : ""}
             </div>
 
-            ${isExisting && !isEditable ? `<p class="task-locked-notice">${t("taskLocked","Denne oppgaven kan ikke endres etter at den er startet, overskredet, slettet eller utført.")}</p>` : ""}
+            ${isExisting && !isEditable ? `<p class="task-locked-notice">${t("taskLocked","Denne oppgaven kan ikke endres etter at den er startet, overskredet eller utført.")}</p>` : ""}
 
             <section class="create-task-original">
                 <h2>${t("originalComment","Opprinnelig kommentar")}</h2>
