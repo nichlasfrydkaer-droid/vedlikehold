@@ -79,7 +79,7 @@
   width:2.25rem;
   height:1.25rem;
   border-radius:999px;
-  background:#9ca3af;
+  background:var(--dashboard-primary, #2563eb);
   transition:background .15s ease;
 }
 
@@ -95,11 +95,11 @@
   transition:transform .15s ease;
 }
 
-.dashboard-switch input:checked + span{
-  background:var(--dashboard-primary, #2563eb);
+.dashboard-switch input:not(:checked) + span{
+  background:#9ca3af;
 }
 
-.dashboard-switch input:checked + span::after{
+.dashboard-switch input:not(:checked) + span::after{
   transform:translateX(1rem);
 }
 

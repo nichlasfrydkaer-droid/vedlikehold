@@ -253,7 +253,7 @@ export function renderCongregationSelector(){
 
                     <button
 
-                        class="dashboard-congregation-item"
+                        class="dashboard-congregation-item${c.id===current.id ? " is-current" : ""}"
 
                         data-id="${c.id}"
 
