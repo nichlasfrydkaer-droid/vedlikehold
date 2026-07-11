@@ -80,33 +80,26 @@ export async function initTask(){
 
         }
 
+        // An existing task must remain available even if its original report
+        // is no longer accessible. The task endpoint includes the small set of
+        // report fields needed for this safe fallback.
+        report = {
+            id: task.report_id,
+            job_number: task.report_job_number ?? "-",
+            notes: task.original_comment ?? task.report_notes ?? ""
+        };
+
         const result =
             await getReport(
                 task.report_id
             );
 
-        if(!result.success){
+        if(result.success){
 
-            container.innerHTML = `
-
-                <div class="dashboard-card">
-
-                    <h2>
-
-                        Rapport kunne ikke hentes
-
-                    </h2>
-
-                </div>
-
-            `;
-
-            return;
+            report =
+                result.report;
 
         }
-
-        report =
-            result.report;
 
     }
 

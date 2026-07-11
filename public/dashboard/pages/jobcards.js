@@ -86,7 +86,7 @@ export async function initJobcards(){
                 </select>
             </label>
         </section>
-        <section class="dashboard-jobcard-list" data-jobcard-list></section>`;
+        <section class="dashboard-jobcard-list dashboard-full" data-jobcard-list></section>`;
 
     container.querySelector("[data-jobcard-sort]").addEventListener("change", () => renderCards(container, jobcards, congregation));
     renderCards(container, jobcards, congregation);
