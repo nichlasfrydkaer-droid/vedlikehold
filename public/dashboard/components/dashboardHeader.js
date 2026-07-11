@@ -70,16 +70,6 @@ export function renderDashboardHeader(
 
                 <div class="dashboard-actions">
 
-                    <button
-                        id="homeButton"
-                        class="dashboard-action-button"
-                        title="Gå til dashboard"
-                        type="button">
-
-                        🏠
-
-                    </button>
-
                     <div class="dashboard-menu">
 
                         <button
@@ -103,17 +93,5 @@ export function renderDashboardHeader(
     );
 
     initCongregationSelector();
-
-    const homeButton = document.getElementById("homeButton");
-
-    if(homeButton){
-
-        homeButton.addEventListener("click", ()=>{
-
-            window.location.href = "/dashboard/dashboard.html";
-
-        });
-
-    }
 
 }

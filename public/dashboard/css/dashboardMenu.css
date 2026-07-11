@@ -57,6 +57,50 @@
 
 }
 
+.dashboard-menu-icon{
+
+    position:relative;
+
+    display:inline-block;
+
+    flex:0 0 30px;
+
+    width:30px;
+
+    height:30px;
+
+    border-radius:8px;
+
+    background:#dbeafe;
+
+    color:#1565c0;
+
+}
+
+.dashboard-menu-icon svg{
+
+    position:absolute;
+
+    inset:0;
+
+    width:17px;
+
+    height:17px;
+
+    margin:auto;
+
+    fill:none;
+
+    stroke:currentColor;
+
+    stroke-width:1.8;
+
+    stroke-linecap:round;
+
+    stroke-linejoin:round;
+
+}
+
 .dashboard-menu-item:hover{
 
     background:#f4f7fb;
