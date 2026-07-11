@@ -75,14 +75,16 @@ export async function initJobcards(){
     }
 
     const jobcards = mergeJobcardSchedules(cardsResult.jobcards, settingsResult).filter(jobcard => jobcard.visible);
+    const requestedSort = new URLSearchParams(location.search).get("sort");
+    const initialSort = ["number","lastPerformed","dueDate"].includes(requestedSort) ? requestedSort : "number";
     container.innerHTML = `
         <section class="dashboard-card dashboard-full dashboard-jobcard-toolbar">
             <div><h2>${t("jobcards", "Jobbkort")}</h2><p>${t("jobcardsDescription", "Her kan du se og administrere jobbkort for denne menigheten.")}</p></div>
             <label>${t("sortJobcards", "Sorter:")}
                 <select class="dashboard-input" data-jobcard-sort>
-                    <option value="number">${t("sortByNumber", "Nummer")}</option>
-                    <option value="lastPerformed">${t("sortByLastPerformed", "Sist utført")}</option>
-                    <option value="dueDate">${t("sortByDueDate", "Skal utføres")}</option>
+                    <option value="number" ${initialSort === "number" ? "selected" : ""}>${t("sortByNumber", "Nummer")}</option>
+                    <option value="lastPerformed" ${initialSort === "lastPerformed" ? "selected" : ""}>${t("sortByLastPerformed", "Sist utført")}</option>
+                    <option value="dueDate" ${initialSort === "dueDate" ? "selected" : ""}>${t("sortByDueDate", "Skal utføres")}</option>
                 </select>
             </label>
         </section>
