@@ -75,9 +75,20 @@ export function renderDashboardHeader(
                         <button
                             id="menuButton"
                             class="dashboard-user-button"
-                            title="Meny">
+                            title="Meny"
+                            aria-label="Meny">
 
-                            ⠿
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="4" y="4" width="3" height="3" rx=".6"/>
+                                <rect x="10.5" y="4" width="3" height="3" rx=".6"/>
+                                <rect x="17" y="4" width="3" height="3" rx=".6"/>
+                                <rect x="4" y="10.5" width="3" height="3" rx=".6"/>
+                                <rect x="10.5" y="10.5" width="3" height="3" rx=".6"/>
+                                <rect x="17" y="10.5" width="3" height="3" rx=".6"/>
+                                <rect x="4" y="17" width="3" height="3" rx=".6"/>
+                                <rect x="10.5" y="17" width="3" height="3" rx=".6"/>
+                                <rect x="17" y="17" width="3" height="3" rx=".6"/>
+                            </svg>
 
                         </button>
 

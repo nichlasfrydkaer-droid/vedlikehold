@@ -120,6 +120,24 @@
 
 }
 
+.dashboard-user-button{
+
+    display:grid;
+
+    place-items:center;
+
+}
+
+.dashboard-user-button svg{
+
+    width:23px;
+
+    height:23px;
+
+    fill:currentColor;
+
+}
+
 @media(max-width:700px){
 
     .dashboard-header{
