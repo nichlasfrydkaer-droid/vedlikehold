@@ -4,6 +4,7 @@ import { section } from "../ui/section.js";
 import { button } from "../ui/button.js";
 
 import { t } from "../js/i18n.js";
+import { getTaskStatus } from "../js/taskStatus.js";
 
 export function renderTaskView({
 
@@ -14,6 +15,9 @@ export function renderTaskView({
     isExisting
 
 }){
+
+    const isEditable = !isExisting || getTaskStatus(task) === "open";
+    const locked = isEditable ? "" : "disabled";
 
     const checklist =
 
@@ -99,6 +103,8 @@ export function renderTaskView({
 
                         checked
 
+                        ${locked}
+
                     >
 
                     ${t("includeComment")}
@@ -133,6 +139,8 @@ export function renderTaskView({
 
                     }"
 
+                    ${locked}
+
                 >
 
                 `
@@ -153,7 +161,9 @@ export function renderTaskView({
 
                     rows="5"
 
-                    placeholder="${t("comment")}"
+                    placeholder="${t("comment")}" 
+
+                    ${locked}
 
                 >${
 
@@ -188,6 +198,8 @@ export function renderTaskView({
                         ""
 
                     }"
+
+                    ${locked}
 
                 >
 
@@ -227,6 +239,8 @@ export function renderTaskView({
 
                                         }"
 
+                                        ${locked}
+
                                     >
 
                                 </div>
@@ -246,6 +260,8 @@ export function renderTaskView({
                     id="addItem"
 
                     type="button"
+
+                    ${locked}
 
                 >
 
@@ -300,6 +316,8 @@ export function renderTaskView({
                         ? t("save")
 
                         : t("createTask")
+
+                ,disabled: !isEditable
 
             })}
 

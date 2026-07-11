@@ -1,6 +1,7 @@
 import {
     createTask,
-    getTask
+    getTask,
+    updateTask
 }
 from "../js/api.js";
 
@@ -22,6 +23,9 @@ export async function loadTask(
 
     }
 
+    result.task.checklist = JSON.parse(result.task.checklist_json || "[]");
+    result.task.photos = JSON.parse(result.task.photos_json || "[]");
+
     return result.task;
 
 }
@@ -42,4 +46,8 @@ export async function saveTask(
 
     });
 
+}
+
+export async function saveExistingTask(task){
+    return await updateTask(task);
 }

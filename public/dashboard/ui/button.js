@@ -6,7 +6,9 @@ export function button({
 
     className = "button-primary",
 
-    icon = ""
+    icon = "",
+
+    disabled = false
 
 }){
 
@@ -17,6 +19,8 @@ export function button({
             id="${id}"
 
             class="${className}"
+
+            ${disabled ? "disabled" : ""}
 
         >
 

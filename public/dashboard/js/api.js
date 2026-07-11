@@ -250,6 +250,10 @@ export async function getTask(
 
 }
 
+export async function updateTask(data){
+    return await request("/task",{method:"PUT",body:JSON.stringify(data)});
+}
+
 export async function reopenTask(taskId, deadline){
     return await request("/task/reopen", {method:"POST",body:JSON.stringify({task_id:taskId,deadline})});
 }

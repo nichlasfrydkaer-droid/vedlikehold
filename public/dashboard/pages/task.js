@@ -10,7 +10,8 @@ from "../js/api.js";
 
 import {
     loadTask,
-    saveTask
+    saveTask,
+    saveExistingTask
 }
 from "../services/tasks.js";
 
@@ -177,6 +178,21 @@ export async function initTask(){
     //
 
     if(task){
+
+        if(document.getElementById("saveTask")?.disabled){
+            return;
+        }
+
+        document.getElementById("addItem")?.addEventListener("click",()=>{
+            document.getElementById("checklist").insertAdjacentHTML("beforeend",'<div class="checklist-row"><input class="checkItem" type="text"></div>');
+        });
+
+        document.getElementById("saveTask").onclick = async ()=>{
+            const checklist=[...document.querySelectorAll(".checkItem")].map(input=>({id:crypto.randomUUID(),text:input.value.trim()})).filter(item=>item.text);
+            const response=await saveExistingTask({id:task.id,title:document.getElementById("taskTitle").value.trim(),description:document.getElementById("taskComment").value.trim(),deadline:document.getElementById("deadline").value,checklist});
+            if(response.success){ location.reload(); return; }
+            alert(response.message || "Kunne ikke lagre oppdraget.");
+        };
 
         return;
 
