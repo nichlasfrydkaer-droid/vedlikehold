@@ -252,5 +252,6 @@
   "active": "Aktiv",
   "inactive": "Inaktiv",
 
-  "copyright": "© Vedlikeholdssystem"
+  "copyright": "© Vedlikeholdssystem",
+  "archive": "Arkiv", "menu": "Meny", "greeting": "Hei, {name} 👋", "overdueTasks": "Overskredne oppgaver", "openTasks": "Åpne oppgaver", "reportsThisMonth": "Rapporter denne måned", "tasksForMonth": "Oppgaver for {month}", "showAll": "Vis alle", "showLess": "Vis færre", "noPlanned": "Ingen planlagte {items}.", "noUpcomingItems": "Ingen kommende elementer.", "activity": "Aktivitet"
 }

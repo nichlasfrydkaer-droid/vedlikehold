@@ -108,5 +108,6 @@
   "jobcardShareBody": "Du er blevet tildelt {title}.\n\nÅbn jobkortet: {link}\n\nVenlig hilsen\nVedligeholdssystem",
   "logout": "Log ud",
   "unsavedChanges": "Du har ændringer, der ikke er gemt.",
-  "leavePageConfirm": "Er du sikker på, at du vil skifte menighed? Alle ændringer, der ikke er gemt, går tabt."
+  "leavePageConfirm": "Er du sikker på, at du vil skifte menighed? Alle ændringer, der ikke er gemt, går tabt.",
+  "archive": "Arkiv", "menu": "Menu", "greeting": "Hej, {name} 👋", "overdueTasks": "Overskredne opgaver", "openTasks": "Åbne opgaver", "reportsThisMonth": "Rapporter denne måned", "tasksForMonth": "Opgaver for {month}", "showAll": "Vis alle", "showLess": "Vis færre", "noPlanned": "Ingen planlagte {items}.", "noUpcomingItems": "Ingen kommende elementer.", "activity": "Aktivitet"
 }

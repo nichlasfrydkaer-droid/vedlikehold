@@ -108,5 +108,6 @@
   "jobcardShareBody": "You have been assigned {title}.\n\nOpen the job card: {link}\n\nRegards,\nMaintenance System",
   "logout": "Log out",
   "unsavedChanges": "You have unsaved changes.",
-  "leavePageConfirm": "Are you sure you want to switch congregations? Any unsaved changes will be lost."
+  "leavePageConfirm": "Are you sure you want to switch congregations? Any unsaved changes will be lost.",
+  "archive": "Archive", "menu": "Menu", "greeting": "Hi, {name} 👋", "overdueTasks": "Overdue tasks", "openTasks": "Open tasks", "reportsThisMonth": "Reports this month", "tasksForMonth": "Tasks for {month}", "showAll": "Show all", "showLess": "Show fewer", "noPlanned": "No planned {items}.", "noUpcomingItems": "No upcoming items.", "activity": "Activity"
 }
