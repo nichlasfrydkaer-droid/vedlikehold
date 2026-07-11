@@ -96,3 +96,17 @@
     background:#eaf2ff;
 
 }
+
+/* The sidebar's generic button colour is intentionally light. The open
+   congregation menu has a white surface, so its choices must override it. */
+#congregationDropdown .dashboard-congregation-item{
+
+    color:#172b4d;
+
+}
+
+#congregationDropdown .dashboard-congregation-item.is-current{
+
+    color:#0f5fc4;
+
+}
