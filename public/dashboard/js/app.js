@@ -109,6 +109,12 @@ switch(page){
 
         break;
 
+    case "createTask":
+
+        initPage(import("../pages/createTask.js"), "initCreateTask", { dashboardLayout:true });
+
+        break;
+
     case "settings":
 
         initPage(

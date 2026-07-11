@@ -57,18 +57,6 @@ export function renderTaskView({
 
                 <strong>
 
-                    ${t("report")}:
-
-                </strong>
-
-                ${report.id}
-
-            </p>
-
-            <p>
-
-                <strong>
-
                     ${t("jobcard")}:
 
                 </strong>
@@ -314,6 +302,16 @@ export function renderTaskView({
                         : t("createTask")
 
             })}
+
+            ${isExisting ? `
+
+            <p class="task-report-id">
+
+                ${t("reportId")}: ${report.id}
+
+            </p>
+
+            ` : ""}
 
             </div>
 

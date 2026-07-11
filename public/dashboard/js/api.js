@@ -191,6 +191,13 @@ export async function getReport(
 
 }
 
+export async function createTaskFromReport(data){ return await request("/task/from-report",{method:"POST",body:JSON.stringify(data)}); }
+export async function uploadTaskPhotos(files){
+    const form=new FormData();[...files].forEach(file=>form.append("photos",file));
+    const csrf=state.csrfToken;const response=await fetch(config.api+"/task-photos",{method:"POST",credentials:"include",headers:csrf?{"X-CSRF-Token":csrf}:{},body:form});
+    return response.json();
+}
+
 export async function getTasks(
     congregationId
 ){

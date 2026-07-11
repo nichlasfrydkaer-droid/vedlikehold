@@ -70,6 +70,18 @@ export async function initO(){
 
                 </p>
 
+                ${task.original_comment ? `
+
+                <div class="task-original-comment">
+
+                    <strong>Opprinnelig kommentar</strong>
+
+                    <p>${task.original_comment}</p>
+
+                </div>
+
+                ` : ""}
+
                 <br>
 
                 <strong>
