@@ -241,16 +241,32 @@ export async function getJobcardDocuments(congregationId){
     return request("/jobcard-documents?congregation=" + encodeURIComponent(congregationId));
 }
 
-export async function uploadJobcardDocument({ congregationId, label, appliesToAll, jobcardIds, file }){
+export async function uploadJobcardDocument({ congregationId, label, appliesToAll, jobcardIds, file, presetKey = null }){
     const form = new FormData();
     form.append("label", label);
     form.append("applies_to_all", String(appliesToAll));
     form.append("jobcard_ids", JSON.stringify(jobcardIds || []));
+    if(presetKey) form.append("preset_key", presetKey);
     form.append("file", file);
     const headers = {};
     if(state.csrfToken) headers["X-CSRF-Token"] = decodeURIComponent(state.csrfToken);
     const response = await fetch(config.api + "/jobcard-documents?congregation=" + encodeURIComponent(congregationId), {
         method:"POST", credentials:"include", headers, body:form
+    });
+    try { return await response.json(); } catch { return { success:false, status:response.status }; }
+}
+
+export async function updateJobcardDocument({ congregationId, id, label, appliesToAll, jobcardIds, file }){
+    const form = new FormData();
+    form.append("id", id);
+    form.append("label", label);
+    form.append("applies_to_all", String(appliesToAll));
+    form.append("jobcard_ids", JSON.stringify(jobcardIds || []));
+    if(file) form.append("file", file);
+    const headers = {};
+    if(state.csrfToken) headers["X-CSRF-Token"] = decodeURIComponent(state.csrfToken);
+    const response = await fetch(config.api + "/jobcard-documents?congregation=" + encodeURIComponent(congregationId), {
+        method:"PUT", credentials:"include", headers, body:form
     });
     try { return await response.json(); } catch { return { success:false, status:response.status }; }
 }

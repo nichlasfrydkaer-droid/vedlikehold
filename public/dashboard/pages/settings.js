@@ -1,222 +1,97 @@
 import { loadDashboard } from "../services/dashboard.js";
-import {
-    buildJobcardMenuUrl,
-    getJobcards,
-    getJobcardSettings,
-    saveJobcardSettings,
-    getJobcardDocuments,
-    uploadJobcardDocument,
-    deleteJobcardDocument
-} from "../js/api.js";
-import { getCongregation } from "../js/session.js";
+import { buildJobcardMenuUrl, getJobcards, getJobcardSettings, saveJobcardSettings, getJobcardDocuments, uploadJobcardDocument, updateJobcardDocument, deleteJobcardDocument, account } from "../js/api.js";
+import { getCongregation, getUser } from "../js/session.js";
+import { state } from "../js/state.js";
 import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
 import { t } from "../js/i18n.js";
 import { showToast } from "../components/toast.js";
 
-function escapeHtml(value){
-    return String(value ?? "").replace(/[&<>'"]/g, (character) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" })[character]);
+const manualIntervals = [[1,"manualIntervalMonthly","Månedlig"],[2,"manualIntervalEveryTwoMonths","Hver 2. måned"],[3,"manualIntervalQuarterly","Hvert kvartal"],[6,"manualIntervalEverySixMonths","Hver 6. måned"],[12,"manualIntervalYearly","Årlig"],[24,"manualIntervalEveryTwoYears","Hvert 2. år"]];
+const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (character) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[character]);
+const icon = (name) => ({user:"<circle cx='12' cy='8' r='3'/><path d='M5 21c.8-3.6 3.2-5.5 7-5.5s6.2 1.9 7 5.5'/>",document:"<path d='M6 3h9l4 4v14H6z'/><path d='M15 3v5h5'/>",jobcard:"<rect x='4' y='3' width='16' height='18' rx='2'/><path d='M8 7h8M8 11h8M8 15h5'/>",edit:"<path d='m4 20 4.3-1 10.5-10.5a2.1 2.1 0 0 0-3-3L5.3 16 4 20z'/><path d='m13.8 7.5 3 3'/>",plus:"<path d='M12 5v14M5 12h14'/>",remove:"<path d='M5 7h14M10 11v5M14 11v5M9 7l1-3h4l1 3M7 7l1 14h8l1-14'/>",chevron:"<path d='m8 10 4 4 4-4'/>",eye:"<path d='M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z'/><circle cx='12' cy='12' r='2.75'/>",eyeOff:"<path d='M3 3l18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.5 0 10 6 10 6a18.2 18.2 0 0 1-3.1 3.7M6.3 8.1A18.4 18.4 0 0 0 2 12s3.5 6 10 6a10.8 10.8 0 0 0 3.1-.5'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/>"})[name];
+const svg = (name) => `<svg viewBox='0 0 24 24' aria-hidden='true'>${icon(name)}</svg>`;
+
+function section(id, title, description, symbol, content){
+    return `<section class="settings-section" data-settings-section="${id}"><button class="settings-section-toggle" type="button" aria-expanded="false"><span class="settings-section-icon">${svg(symbol)}</span><span><strong>${title}</strong><small>${description}</small></span><span class="settings-section-chevron">${svg("chevron")}</span></button><div class="settings-section-content" hidden>${content}</div></section>`;
 }
 
-function eyeIcon(visible){
-    return visible
-        ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.75"/></svg>`
-        : `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.5 0 10 6 10 6a18.2 18.2 0 0 1-3.1 3.7M6.3 8.1A18.4 18.4 0 0 0 2 12s3.5 6 10 6a10.8 10.8 0 0 0 3.1-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>`;
-}
-
-const manualIntervals = [
-    [1, "manualIntervalMonthly", "Månedlig"],
-    [2, "manualIntervalEveryTwoMonths", "Hver 2. måned"],
-    [3, "manualIntervalQuarterly", "Hvert kvartal"],
-    [6, "manualIntervalEverySixMonths", "Hver 6. måned"],
-    [12, "manualIntervalYearly", "Årlig"],
-    [24, "manualIntervalEveryTwoYears", "Hvert 2. år"]
-];
-
-function renderManualIntervalOptions(selectedMonths){
-    return manualIntervals.map(([months, key, fallback]) => `
-        <option value="${months}" ${months === selectedMonths ? "selected" : ""}>${t(key, fallback)}</option>
-    `).join("");
-}
+function intervalOptions(selected){ return manualIntervals.map(([months, key, fallback]) => `<option value="${months}" ${months === selected ? "selected" : ""}>${t(key, fallback)}</option>`).join(""); }
+function presetRows(){ return [{key:"dc85",label:t("documentDc85","Sikker jobb-analyse (DC-85)")},{key:"dc85i",label:t("documentDc85i","Veiledning til DC-85 (DC-85i)")},{key:"dc82",label:t("documentDc82","Arbeid trygt sammen (DC-82)")}]; }
 
 export async function initSettings(){
     const container = document.getElementById("settings");
-
-    if(!container){
-        return;
-    }
-
+    if(!container) return;
     const me = await loadDashboard();
-
-    if(!me || (!me.success && !me.fallback)){
-        container.innerHTML = `<div class="dashboard-card dashboard-full"><h2>${t("settingsLandingTitle", "Indstillinger")}</h2><p>${t("dashboardLoadFailed", "Kunne ikke hente dashboarddata lige nu.")}</p></div>`;
-        return;
-    }
-
     const congregation = getCongregation();
-
-    if(!congregation){
-        container.innerHTML = `<div class="dashboard-card dashboard-full"><h2>${t("settingsLandingTitle", "Indstillinger")}</h2><p>${t("noCongregationSelected", "Ingen menighed valgt.")}</p></div>`;
+    const user = getUser();
+    if(!me || (!me.success && !me.fallback) || !congregation || !user){
+        container.innerHTML = `<section class="dashboard-card dashboard-full"><h2>${t("settings","Innstillinger")}</h2><p>${t("dashboardLoadFailed","Kunne ikke hente dashboarddata lige nu.")}</p></section>`;
         return;
     }
-
-    const [cardsResult, settingsResult, documentsResult] = await Promise.all([
-        getJobcards(congregation),
-        getJobcardSettings(congregation.id),
-        getJobcardDocuments(congregation.id)
-    ]);
-
+    const [cardsResult, settingsResult, documentsResult] = await Promise.all([getJobcards(congregation),getJobcardSettings(congregation.id),getJobcardDocuments(congregation.id)]);
     if(!cardsResult?.success || !settingsResult?.success || !documentsResult?.success){
-        container.innerHTML = `<div class="dashboard-card dashboard-full"><h2>${t("settingsLandingTitle", "Indstillinger")}</h2><p>${t("jobcardsLoadFailed", "Kunne ikke hente jobkort.")}</p></div>`;
+        container.innerHTML = `<section class="dashboard-card dashboard-full"><h2>${t("settings","Innstillinger")}</h2><p>${t("jobcardsLoadFailed","Kunne ikke hente jobbkort.")}</p></section>`;
         return;
     }
-
     const jobcards = mergeJobcardSchedules(cardsResult.jobcards, settingsResult);
     let documents = documentsResult.documents || [];
 
-    const documentForm = () => `
-        <div class="jobcard-document-create">
-            <div class="jobcard-document-create-heading">
-                <div><h3>${t("jobcardDocumentsTitle", "Vedlæg til jobkort")}</h3><p>${t("jobcardDocumentsDescription", "Upload dokumenter, der kan åbnes fra jobkortets startside.")}</p></div>
-                <button type="button" class="dashboard-button" data-add-document>${t("jobcardDocumentAdd", "Upload eget dokument")}</button>
-            </div>
-            <div class="jobcard-document-presets">
-                <button type="button" class="dashboard-button dashboard-button-secondary" data-add-document="${t("jobcardDocumentSja", "Sikker jobanalyse")}">${t("jobcardDocumentSja", "Sikker jobanalyse")}</button>
-                <button type="button" class="dashboard-button dashboard-button-secondary" data-add-document="${t("jobcardDocumentDc85", "DC-85 Sikker jobanalyse")}">${t("jobcardDocumentDc85", "DC-85 Sikker jobanalyse")}</button>
-                <button type="button" class="dashboard-button dashboard-button-secondary" data-add-document="${t("jobcardDocumentDc82", "DC-82 Arbeid trygt sammen")}">${t("jobcardDocumentDc82", "DC-82 Arbeid trygt sammen")}</button>
-            </div>
-            <div class="jobcard-document-list" data-document-list>${renderDocuments(documents)}</div>
-        </div>`;
-
-    const renderDocuments = (items) => items.length ? items.map((document) => `
-        <div class="jobcard-document-row">
-            <div class="jobcard-document-file"><strong>${escapeHtml(document.label)}</strong><span>${escapeHtml(document.filename)}</span></div>
-            <button type="button" class="jobcard-document-remove" data-remove-document="${escapeHtml(document.id)}" aria-label="${t("remove", "Fjern")}" title="${t("remove", "Fjern")}">× <span>${t("remove", "Fjern")}</span></button>
-        </div>`).join("") : `<p class="dashboard-table-muted">${t("jobcardDocumentsEmpty", "Der er endnu ikke vedlagt dokumenter.")}</p>`;
-
-    const renderModal = (label = "") => `
-        <div class="jobcard-document-modal-backdrop" data-document-modal>
-            <section class="jobcard-document-modal" role="dialog" aria-modal="true" aria-labelledby="documentModalTitle">
-                <button type="button" class="jobcard-document-close" data-close-document-modal aria-label="${t("close", "Luk")}">×</button>
-                <h2 id="documentModalTitle">${t("jobcardDocumentAdd", "Upload eget dokument")}</h2>
-                <form data-document-form>
-                    <label>${t("jobcardDocumentLabel", "Knaptekst")}<input class="dashboard-input" name="label" required maxlength="160" value="${escapeHtml(label)}" placeholder="${t("jobcardDocumentLabelPlaceholder", "For eksempel: Sikker jobanalyse")}"></label>
-                    <label>${t("jobcardDocumentFile", "Fil")}<input class="dashboard-input" name="file" type="file" required></label>
-                    <fieldset class="jobcard-document-scope"><legend>${t("jobcardDocumentVisibility", "Vis dokumentet")}</legend>
-                        <label><input type="radio" name="scope" value="all" checked> ${t("jobcardDocumentAll", "Ved alle jobkort")}</label>
-                        <label><input type="radio" name="scope" value="selected"> ${t("jobcardDocumentSelected", "Ved valgte jobkort")}</label>
-                    </fieldset>
-                    <div class="jobcard-document-jobcards" data-document-jobcards hidden>${jobcards.map((jobcard) => `<label><input type="checkbox" value="${escapeHtml(jobcard.id)}"> ${t("jobcard", "Jobbkort")} ${escapeHtml(jobcard.jobcard_number)} · ${escapeHtml(jobcard.title)}</label>`).join("")}</div>
-                    <div class="jobcard-document-actions"><button type="button" class="dashboard-button dashboard-button-secondary" data-close-document-modal>${t("cancel", "Annuller")}</button><button class="dashboard-button" type="submit">${t("upload", "Upload")}</button></div>
-                </form>
-            </section>
-        </div>`;
-
-    container.innerHTML = `
-        <div class="dashboard-card dashboard-full">
-            <h2>${t("settingsLandingTitle", "Indstillinger")}</h2>
-            <p>${t("settingsLandingDescription", "Administrer indstillinger og jobkort for denne menighed.")}</p>
-        </div>
-        <div class="dashboard-card dashboard-full">
-            <h3>${t("jobcards", "Jobbkort")}</h3>
-            <div class="dashboard-table-wrapper"><table class="dashboard-table">
-                <thead><tr>
-                    <th>${t("title", "Titel")}</th>
-                    <th>${t("jobcardSuggestedInterval", "Foreslået interval")}</th>
-                    <th>${t("jobcardAutoInterval", "Automatisk interval")}</th>
-                    <th>${t("jobcardManualInterval", "Manuelt interval")}</th>
-                    <th>${t("jobcardVisibility", "Synlighed")}</th>
-                </tr></thead>
-                <tbody>${jobcards.map(jobcard => `
-                    <tr data-jobcard-id="${jobcard.id}">
-                        <td><strong>${jobcard.title}</strong>
-                            <div class="dashboard-table-muted">${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number}</div>
-                            <a href="${buildJobcardMenuUrl(jobcard, congregation)}" target="_blank" rel="noopener noreferrer" class="dashboard-jobcard-link">${t("openJobcard", "Åbn jobkort")}</a>
-                        </td>
-                        <td>${jobcard.interval || "-"}</td>
-                        <td><label class="dashboard-switch"><input type="checkbox" data-auto-interval ${jobcard.autoInterval ? "checked" : ""}><span></span><span class="dashboard-switch-label">${jobcard.autoInterval ? t("automatic", "Automatisk") : t("manual", "Manuel")}</span></label></td>
-                        <td><select class="dashboard-input" data-manual-interval ${jobcard.autoInterval ? "disabled" : ""}>${renderManualIntervalOptions(jobcard.manualIntervalMonths || jobcard.intervalMonths || 12)}</select></td>
-                        <td><button type="button" class="dashboard-icon-button" data-visibility aria-pressed="${jobcard.visible}" aria-label="${jobcard.visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult")}" title="${jobcard.visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult")}">${eyeIcon(jobcard.visible)}</button></td>
-                    </tr>
-                `).join("")}</tbody>
-            </table></div>
-        </div>
-        <div class="dashboard-card dashboard-full">${documentForm()}</div>`;
-
-    const refreshDocuments = () => {
-        const list = container.querySelector("[data-document-list]");
-        if(list) list.innerHTML = renderDocuments(documents);
+    const renderDocumentRows = () => {
+        const rows = presetRows().map((preset) => ({ preset, document:documents.find((document) => document.presetKey === preset.key) }));
+        const own = documents.filter((document) => !document.presetKey).map((document) => ({ document }));
+        return [...rows, ...own].map(({preset, document}) => {
+            const title = document?.label || preset.label;
+            const scope = document ? (document.appliesToAll ? t("documentAllJobcards","Alle jobbkort") : t("documentSelectedJobcards","{count} valgte jobbkort").replace("{count}", document.jobcardIds.length)) : t("documentNoFile","Ingen fil valgt");
+            return `<article class="settings-document-row"><span class="settings-document-icon">${svg("document")}</span><div class="settings-document-main"><strong>${escapeHtml(title)}</strong><small>${document ? escapeHtml(document.filename) : scope}</small>${document ? `<em>${scope}</em>` : ""}</div><div class="settings-document-actions"><button class="settings-icon-action" type="button" data-edit-document="${document?.id || ""}" data-edit-preset="${preset?.key || ""}" aria-label="${t("edit","Rediger")}" title="${t("edit","Rediger")}">${svg("edit")}</button>${document ? `<button class="settings-icon-action danger" type="button" data-remove-document="${document.id}" aria-label="${t("remove","Fjern")}" title="${t("remove","Fjern")}">${svg("remove")}</button>` : ""}</div></article>`;
+        }).join("");
     };
 
-    const openDocumentModal = (label) => {
-        document.body.insertAdjacentHTML("beforeend", renderModal(label));
-        const modal = document.querySelector("[data-document-modal]");
-        const close = () => modal?.remove();
-        modal.querySelectorAll("[data-close-document-modal]").forEach((button) => button.addEventListener("click", close));
-        modal.addEventListener("click", (event) => { if(event.target === modal) close(); });
-        modal.querySelectorAll('input[name="scope"]').forEach((input) => input.addEventListener("change", () => {
-            modal.querySelector("[data-document-jobcards]").hidden = modal.querySelector('input[name="scope"]:checked').value !== "selected";
-        }));
-        modal.querySelector("[data-document-form]").addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const form = event.currentTarget;
-            const selectedScope = form.elements.scope.value === "selected";
-            const file = form.elements.file.files[0];
-            const selectedIds = [...modal.querySelectorAll("[data-document-jobcards] input:checked")].map((input) => input.value);
-            const submit = form.querySelector('[type="submit"]');
-            submit.disabled = true;
-            const result = await uploadJobcardDocument({ congregationId:congregation.id, label:form.elements.label.value.trim(), appliesToAll:!selectedScope, jobcardIds:selectedIds, file });
-            submit.disabled = false;
-            if(!result?.success){ showToast(t("jobcardDocumentUploadFailed", "Dokumentet kunne ikke uploades."), "error"); return; }
-            documents = [result.document, ...documents];
-            refreshDocuments(); close(); showToast(t("saved", "Gemt"));
-        });
-    };
+    const documentsContent = () => `<div class="settings-section-intro"><div><h3>${t("jobcardDocumentsTitle","Vedlegg til jobbkort")}</h3><p>${t("jobcardDocumentsDescription","Last opp dokumenter som kan åpnes fra jobbkortets startside.")}</p></div></div><div class="settings-document-table" data-document-table>${renderDocumentRows()}</div><button class="settings-add-document" type="button" data-add-own-document>${svg("plus")}<span>${t("jobcardDocumentAdd","Legg til eget dokument")}</span></button>`;
+    const accountContent = () => `<div class="settings-account-grid"><form data-profile-form><label>${t("name","Navn")}<input class="dashboard-input" name="name" value="${escapeHtml(user.name)}" required maxlength="120"></label><label>${t("email","E-post")}<input class="dashboard-input" value="${escapeHtml(user.email)}" readonly aria-readonly="true"></label><button class="dashboard-button" type="submit">${t("save","Lagre")}</button></form><form data-password-form><h3>${t("changePassword","Endre adgangskode")}</h3><label>${t("currentPassword","Nåværende adgangskode")}<input class="dashboard-input" name="currentPassword" type="password" autocomplete="current-password" required></label><label>${t("newPassword","Ny adgangskode")}<input class="dashboard-input" name="password" type="password" autocomplete="new-password" minlength="10" required></label><button class="dashboard-button" type="submit">${t("saveNewPassword","Lagre ny adgangskode")}</button></form></div>`;
+    const jobcardsContent = () => `<div class="dashboard-table-wrapper"><table class="dashboard-table settings-jobcard-table"><thead><tr><th>${t("title","Tittel")}</th><th>${t("jobcardSuggestedInterval","Foreslått intervall")}</th><th>${t("jobcardAutoInterval","Automatisk intervall")}</th><th>${t("jobcardManualInterval","Manuelt intervall")}</th><th>${t("jobcardVisibility","Synlighet")}</th></tr></thead><tbody>${jobcards.map((jobcard) => `<tr data-jobcard-id="${escapeHtml(jobcard.id)}"><td><strong>${escapeHtml(jobcard.title)}</strong><div class="dashboard-table-muted">${t("jobcard","Jobbkort")} ${escapeHtml(jobcard.jobcard_number)}</div><a href="${buildJobcardMenuUrl(jobcard, congregation)}" target="_blank" rel="noopener noreferrer" class="dashboard-jobcard-link">${t("openJobcard","Åpne jobbkort")}</a></td><td>${escapeHtml(jobcard.interval || "-")}</td><td><label class="dashboard-switch"><input type="checkbox" data-auto-interval ${jobcard.autoInterval ? "checked" : ""}><span></span><span class="dashboard-switch-label">${jobcard.autoInterval ? t("automatic","Automatisk") : t("manual","Manuell")}</span></label></td><td><select class="dashboard-input" data-manual-interval ${jobcard.autoInterval ? "disabled" : ""}>${intervalOptions(jobcard.manualIntervalMonths || jobcard.intervalMonths || 12)}</select></td><td><button type="button" class="dashboard-icon-button" data-visibility aria-pressed="${jobcard.visible}" aria-label="${jobcard.visible ? t("jobcardVisible","Synlig") : t("jobcardHidden","Skjult")}">${svg(jobcard.visible ? "eye" : "eyeOff")}</button></td></tr>`).join("")}</tbody></table></div>`;
 
-    container.querySelectorAll("[data-add-document]").forEach((button) => button.addEventListener("click", () => openDocumentModal(button.dataset.addDocument || "")));
-    container.addEventListener("click", async (event) => {
-        const button = event.target.closest("[data-remove-document]");
-        if(!button) return;
-        if(!confirm(t("jobcardDocumentRemoveConfirm", "Vil du fjerne dette dokument?"))) return;
-        button.disabled = true;
-        const result = await deleteJobcardDocument(congregation.id, button.dataset.removeDocument);
-        if(!result?.success){ button.disabled = false; showToast(t("jobcardDocumentRemoveFailed", "Dokumentet kunne ikke fjernes."), "error"); return; }
-        documents = documents.filter((document) => document.id !== button.dataset.removeDocument);
-        refreshDocuments(); showToast(t("saved", "Gemt"));
+    container.innerHTML = `<div class="settings-page"><header class="settings-page-header"><h1>${t("settings","Innstillinger")}</h1><p>${t("settingsLandingDescription","Administrer innstillinger for konto og jobbkort.")}</p></header>${section("account",t("personalAccount","Personlig konto"),t("personalAccountDescription","Navn og adgangskode."),"user",accountContent())}${section("documents",t("jobcardDocumentsTitle","Vedlegg til jobbkort"),t("jobcardDocumentsShort","Dokumenter og knapper på jobbkort."),"document",documentsContent())}${section("jobcards",t("jobcards","Jobbkort"),t("jobcardsSettingsShort","Intervall og synlighet."),"jobcard",jobcardsContent())}</div>`;
+
+    container.querySelectorAll(".settings-section-toggle").forEach((button) => button.addEventListener("click", () => {
+        const content = button.parentElement.querySelector(".settings-section-content");
+        const open = button.getAttribute("aria-expanded") !== "true";
+        button.setAttribute("aria-expanded", String(open)); content.hidden = !open;
+    }));
+
+    container.querySelector("[data-profile-form]").addEventListener("submit", async (event) => {
+        event.preventDefault(); const name = new FormData(event.currentTarget).get("name").trim();
+        const result = await account("update-profile", {name});
+        if(!result?.success){ showToast(t("saveFailed","Kunne ikke lagre."),"error"); return; }
+        state.user = {...state.user, name:result.user.name}; showToast(t("saved","Lagret")); setTimeout(() => location.reload(), 350);
+    });
+    container.querySelector("[data-password-form]").addEventListener("submit", async (event) => {
+        event.preventDefault(); const form = new FormData(event.currentTarget);
+        const result = await account("change-password", {currentPassword:form.get("currentPassword"),password:form.get("password")});
+        if(!result?.success){ showToast(result?.message || t("saveFailed","Kunne ikke lagre."),"error"); return; }
+        event.currentTarget.reset(); showToast(t("passwordUpdated","Adgangskoden er oppdatert.")); setTimeout(() => { location.href = "/dashboard/login.html"; }, 900);
     });
 
-    for(const row of container.querySelectorAll("[data-jobcard-id]")){
-        const id = row.dataset.jobcardId;
-        const autoInput = row.querySelector("[data-auto-interval]");
-        const manualIntervalInput = row.querySelector("[data-manual-interval]");
-        const visibilityButton = row.querySelector("[data-visibility]");
-
-        const save = async () => {
-            const visible = visibilityButton.getAttribute("aria-pressed") === "true";
-            const result = await saveJobcardSettings({
-                congregation_id: congregation.id,
-                jobcard_id: id,
-                visible,
-                auto_interval: autoInput.checked,
-                manual_interval_months: Number(manualIntervalInput.value)
-            });
-            if(!result?.success){
-                console.error("Could not save jobcard settings", result);
-            }
-        };
-
-        autoInput.addEventListener("change", () => {
-            manualIntervalInput.disabled = autoInput.checked;
-            row.querySelector(".dashboard-switch-label").textContent = autoInput.checked ? t("automatic", "Automatisk") : t("manual", "Manuel");
-            save();
-        });
-        manualIntervalInput.addEventListener("change", save);
-        visibilityButton.addEventListener("click", () => {
-            const visible = visibilityButton.getAttribute("aria-pressed") !== "true";
-            visibilityButton.setAttribute("aria-pressed", String(visible));
-            visibilityButton.setAttribute("aria-label", visible ? t("jobcardVisible", "Synlig") : t("jobcardHidden", "Skjult"));
-            visibilityButton.title = visibilityButton.getAttribute("aria-label");
-            visibilityButton.innerHTML = eyeIcon(visible);
-            save();
-        });
-    }
+    const refreshDocuments = () => { container.querySelector("[data-document-table]").innerHTML = renderDocumentRows(); };
+    const openDocumentModal = ({document = null, preset = null} = {}) => {
+        const defaultLabel = document?.label || presetRows().find((item) => item.key === preset)?.label || "";
+        const selected = new Set(document?.jobcardIds || []); const selectedScope = document ? !document.appliesToAll : false;
+        window.document.body.insertAdjacentHTML("beforeend", `<div class="settings-document-backdrop" data-document-modal><section class="settings-document-dialog" role="dialog" aria-modal="true"><button type="button" class="settings-dialog-close" data-close-document-modal aria-label="${t("close","Lukk")}">×</button><h2>${document ? t("editDocument","Rediger dokument") : t("jobcardDocumentAdd","Legg til dokument")}</h2><form data-document-form><label>${t("jobcardDocumentLabel","Knappetekst")}<input class="dashboard-input" name="label" value="${escapeHtml(defaultLabel)}" required maxlength="160"></label><label>${t("jobcardDocumentFile","Fil")}<input class="dashboard-input" name="file" type="file" ${document ? "" : "required"}>${document ? `<small>${t("currentFile","Nåværende fil")}: ${escapeHtml(document.filename)}</small>` : ""}</label><fieldset class="settings-scope-cards"><legend>${t("jobcardDocumentVisibility","Vis dokumentet")}</legend><label class="${!selectedScope ? "selected" : ""}"><input type="radio" name="scope" value="all" ${!selectedScope ? "checked" : ""}><span>${t("jobcardDocumentAll","Ved alle jobbkort")}</span></label><label class="${selectedScope ? "selected" : ""}"><input type="radio" name="scope" value="selected" ${selectedScope ? "checked" : ""}><span>${t("jobcardDocumentSelected","Ved valgte jobbkort")}</span></label></fieldset><div class="settings-document-jobcards" data-document-jobcards ${selectedScope ? "" : "hidden"}>${jobcards.map((jobcard) => `<label><input type="checkbox" value="${escapeHtml(jobcard.id)}" ${selected.has(String(jobcard.id)) ? "checked" : ""}> ${t("jobcard","Jobbkort")} ${escapeHtml(jobcard.jobcard_number)} · ${escapeHtml(jobcard.title)}</label>`).join("")}</div><div class="settings-dialog-actions"><button type="button" class="dashboard-button dashboard-button-secondary" data-close-document-modal>${t("cancel","Avbryt")}</button><button class="dashboard-button" type="submit">${document ? t("save","Lagre") : t("upload","Last opp")}</button></div></form></section></div>`);
+        const modal = window.document.querySelector("[data-document-modal]"); const close = () => modal.remove();
+        modal.querySelectorAll("[data-close-document-modal]").forEach((button) => button.addEventListener("click",close)); modal.addEventListener("click",(event) => {if(event.target === modal) close();});
+        modal.querySelectorAll('input[name="scope"]').forEach((input) => input.addEventListener("change", () => {const selectedMode = modal.querySelector('input[name="scope"]:checked').value === "selected"; modal.querySelector("[data-document-jobcards]").hidden = !selectedMode; modal.querySelectorAll(".settings-scope-cards label").forEach((card) => card.classList.toggle("selected", card.querySelector("input").checked));}));
+        modal.querySelector("[data-document-form]").addEventListener("submit", async (event) => {event.preventDefault(); const form = event.currentTarget; const scopeSelected = form.elements.scope.value === "selected"; const file = form.elements.file.files[0]; const jobcardIds = [...modal.querySelectorAll("[data-document-jobcards] input:checked")].map((input) => input.value); const submit = form.querySelector('[type="submit"]'); submit.disabled = true; const data = {congregationId:congregation.id,label:form.elements.label.value.trim(),appliesToAll:!scopeSelected,jobcardIds,file}; const result = document ? await updateJobcardDocument({...data,id:document.id}) : await uploadJobcardDocument({...data,presetKey:preset}); submit.disabled = false; if(!result?.success){showToast(t("jobcardDocumentUploadFailed","Dokumentet kunne ikke lastes opp."),"error");return;} documents = document ? documents.map((item) => item.id === document.id ? result.document : item) : [...documents,result.document]; refreshDocuments();close();showToast(t("saved","Lagret"));});
+    };
+    container.addEventListener("click", async (event) => {
+        const edit = event.target.closest("[data-edit-document], [data-edit-preset]");
+        if(edit){ const document = documents.find((item) => item.id === edit.dataset.editDocument) || null; openDocumentModal({document,preset:edit.dataset.editPreset || null}); return; }
+        if(event.target.closest("[data-add-own-document]")){openDocumentModal();return;}
+        const remove = event.target.closest("[data-remove-document]"); if(!remove) return;
+        if(!confirm(t("jobcardDocumentRemoveConfirm","Vil du fjerne dette dokumentet?"))) return;
+        const result = await deleteJobcardDocument(congregation.id,remove.dataset.removeDocument); if(!result?.success){showToast(t("jobcardDocumentRemoveFailed","Dokumentet kunne ikke fjernes."),"error");return;} documents = documents.filter((item) => item.id !== remove.dataset.removeDocument); refreshDocuments();showToast(t("saved","Lagret"));
+    });
+    container.querySelectorAll("[data-jobcard-id]").forEach((row) => {
+        const auto = row.querySelector("[data-auto-interval]"), manual = row.querySelector("[data-manual-interval]"), visibility = row.querySelector("[data-visibility]");
+        const save = async () => {const result = await saveJobcardSettings({congregation_id:congregation.id,jobcard_id:row.dataset.jobcardId,visible:visibility.getAttribute("aria-pressed") === "true",auto_interval:auto.checked,manual_interval_months:Number(manual.value)}); if(!result?.success) showToast(t("saveFailed","Kunne ikke lagre."),"error");};
+        auto.addEventListener("change",()=>{manual.disabled=auto.checked;row.querySelector(".dashboard-switch-label").textContent=auto.checked?t("automatic","Automatisk"):t("manual","Manuell");save();}); manual.addEventListener("change",save); visibility.addEventListener("click",()=>{const visible=visibility.getAttribute("aria-pressed")!=="true";visibility.setAttribute("aria-pressed",String(visible));visibility.innerHTML=svg(visible?"eye":"eyeOff");save();});
+    });
 }
