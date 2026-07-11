@@ -355,7 +355,7 @@ export function buildJobcardMenuUrl(jobcard, congregation){
         1
     );
 
-    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&congregation=${encodeURIComponent(context.congregationSlug)}&congregationId=${encodeURIComponent(congregation?.id || "")}`;
+    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&language=${encodeURIComponent(context.language || "no")}&congregation=${encodeURIComponent(context.congregationSlug)}&congregationId=${encodeURIComponent(congregation?.id || "")}`;
 
 }
 

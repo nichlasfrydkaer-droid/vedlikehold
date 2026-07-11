@@ -2,10 +2,15 @@ async function loadJob() {
 
 const params = new URLSearchParams(window.location.search);
 const jobId = params.get("id");
+const requestedLanguage = String(params.get("language") || "").trim().toLowerCase();
+const storedCongregation = JSON.parse(localStorage.getItem("congregationData") || "null");
+const language = ["no", "da", "en"].includes(requestedLanguage)
+  ? requestedLanguage
+  : storedCongregation?.language || "no";
 
   try {
 
-    const response = await fetch(`/jobdata/${jobId}.json`);
+    const response = await fetch(`/jobdata/${language}/${jobId}.json`);
     const job = await response.json();
 
     document.getElementById("jobTitle").textContent =

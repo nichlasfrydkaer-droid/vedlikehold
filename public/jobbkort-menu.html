@@ -199,6 +199,10 @@ function resolveLanguage(congregation){
     return "da";
   }
 
+  if(value.includes("en") || value.includes("eng")){
+    return "en";
+  }
+
   if(value.includes("elverum") || value.includes("no") || value.includes("nor") || value.includes("norsk")){
     return "no";
   }
@@ -234,7 +238,7 @@ async function loadMenu(){
     params.get("congregationId");
 
   const language =
-    resolveLanguage(congregation);
+    resolveLanguage(params.get("language") || congregation);
 
   await loadTranslations(language);  
   
@@ -258,7 +262,7 @@ document.getElementById("title").innerText =
 document.getElementById("openBtn").onclick = () => {
 
   location.href =
-    `/jobbkort-motor.html?id=${job.nummer}&congregation=${congregation}`;
+    `/jobbkort-motor.html?id=${encodeURIComponent(job.nummer)}&language=${encodeURIComponent(language)}&congregation=${encodeURIComponent(congregation || "")}`;
 
 };
 

@@ -22,8 +22,13 @@ export async function loadJob(){
       localStorage.getItem("congregationData")
     );
 
+  const requestedLanguage =
+    String(params.get("language") || "").trim().toLowerCase();
+
   const language =
-    state.currentCongregation?.language || "no";
+    ["no", "da", "en"].includes(requestedLanguage)
+      ? requestedLanguage
+      : state.currentCongregation?.language || "no";
 
   let response =
     await fetch(`/jobdata/${language}/${id}.json`);
