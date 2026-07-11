@@ -159,6 +159,9 @@ export async function getInbox(){
 
 }
 
+export async function getActivity(congregationId){return await request("/activity?congregation="+encodeURIComponent(congregationId));}
+export async function markActivitySeen(congregationId){return await request("/activity?congregation="+encodeURIComponent(congregationId),{method:"PUT"});}
+
 export async function getReports(
     congregationId
 ){

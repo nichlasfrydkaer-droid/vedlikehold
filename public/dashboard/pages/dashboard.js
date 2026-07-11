@@ -1,96 +1,28 @@
-import {
-    loadDashboard
-}
-from "../services/dashboard.js";
+import { loadDashboard } from "../services/dashboard.js";
+import { renderDashboardHeader } from "../components/dashboardHeader.js";
+import { renderDashboardMenu,initDashboardMenu } from "../components/dashboardMenu.js";
+import { getJobcards,getJobcardSettings,getTasks,getReports,getActivity,markActivitySeen } from "../js/api.js";
+import { getCongregation } from "../js/session.js";
+import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
+import { getTaskStatus,renderTaskStatus } from "../js/taskStatus.js";
 
-import {
-    renderDashboardHeader
-}
-from "../components/dashboardHeader.js";
-
-import {
-    renderDashboardMenu,
-    initDashboardMenu
-}
-from "../components/dashboardMenu.js";
-
-import {
-    renderDashboardNews
-}
-from "../components/dashboardNews.js";
-
-import {
-    renderDashboardOverview
-}
-from "../components/dashboardOverview.js";
-
-import {
-    renderDashboardUpcoming
-}
-from "../components/dashboardUpcoming.js";
-
-import {
-    renderDashboardTasks
-}
-from "../components/dashboardTasks.js";
-
-import {
-    renderDashboardReports
-}
-from "../components/dashboardReports.js";
-
-import {
-    renderDashboardFooter
-}
-from "../components/dashboardFooter.js";
+const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[c]);
+const fmt=v=>v?new Date(`${v}T12:00:00`).toLocaleDateString(undefined,{day:"numeric",month:"short"}):"–";
+const monthName=date=>new Intl.DateTimeFormat(undefined,{month:"long",year:"numeric"}).format(date);
+const urlFor=item=>item.type==="task"?`/dashboard/task.html?id=${encodeURIComponent(item.id)}`:"/dashboard/jobcards.html";
 
 export async function initDashboard(){
-
-    const me =
-        await loadDashboard();
-
-    if(!me){
-
-        return;
-
-    }
-
-    const dashboard =
-        document.getElementById(
-            "dashboard"
-        );
-
-    dashboard.innerHTML = "";
-
-    renderDashboardHeader();
-
-    renderDashboardMenu();
-
-    initDashboardMenu();
-
-    dashboard.insertAdjacentHTML(
-
-        "beforeend",
-
-        `
-        <div
-            id="dashboardGrid"
-            class="dashboard-grid"
-        ></div>
-        `
-
-    );
-
-    await renderDashboardNews();
-
-    await renderDashboardOverview();
-
-    await renderDashboardUpcoming();
-
-    await renderDashboardTasks();
-
-    renderDashboardReports();
-
-    renderDashboardFooter();
-
+ const me=await loadDashboard(),root=document.getElementById("dashboard");if(!me||!root)return;root.innerHTML="";renderDashboardMenu(root);renderDashboardHeader(root);initDashboardMenu();
+ root.insertAdjacentHTML("beforeend",'<div id="dashboardContent"></div>');const congregation=getCongregation();if(!congregation)return;const [cards,settings,tasksResult,reportsResult,activityResult]=await Promise.all([getJobcards(congregation),getJobcardSettings(congregation.id),getTasks(congregation.id),getReports(congregation.id),getActivity(congregation.id)]);
+ const tasks=tasksResult?.tasks||[],reports=reportsResult?.reports||[],jobcards=cards?.success&&settings?.success?mergeJobcardSchedules(cards.jobcards,settings).filter(item=>item.visible):[];
+ let shownMonth=new Date();shownMonth.setDate(1);let expanded=false;
+ const upcomingTasks=tasks.filter(task=>["open","started"].includes(getTaskStatus(task))).sort((a,b)=>String(a.deadline).localeCompare(String(b.deadline)));
+ const upcomingCards=jobcards.filter(item=>item.nextExecution).sort((a,b)=>String(a.nextExecution).localeCompare(String(b.nextExecution)));
+ const activity=activityResult?.items||[];
+ const render=()=>{const key=`${shownMonth.getFullYear()}-${String(shownMonth.getMonth()+1).padStart(2,"0")}`,monthlyTasks=upcomingTasks.filter(item=>String(item.deadline||"").startsWith(key)),monthlyCards=upcomingCards.filter(item=>String(item.nextExecution||"").startsWith(key)),limit=expanded?999:3;const overdue=tasks.filter(item=>getTaskStatus(item)==="overdue").length;
+ root.querySelector("#dashboardContent").innerHTML=`<main class="dashboard-home" id="dashboardContent"><section class="dashboard-stat-grid"><a href="/dashboard/tasks.html" class="dashboard-stat danger"><strong>${overdue}</strong><span>Overskredne oppgaver</span></a><a href="/dashboard/tasks.html" class="dashboard-stat"><strong>${tasks.filter(item=>getTaskStatus(item)==="open").length}</strong><span>Åpne oppgaver</span></a><a href="/dashboard/jobcards.html" class="dashboard-stat"><strong>${upcomingCards.length}</strong><span>Kommende jobbkort</span></a><a href="/dashboard/reports.html" class="dashboard-stat"><strong>${reports.filter(item=>String(item.finished_at||item.created_at||"").startsWith(key)).length}</strong><span>Rapporter denne måned</span></a></section><section class="dashboard-home-card dashboard-month-card"><header><button data-month="-1" aria-label="Forrige måned">‹</button><h2>Oppgaver for ${monthName(shownMonth)}</h2><button data-month="1" aria-label="Neste måned">›</button></header>${monthSection("Oppgaver",monthlyTasks,"task",limit)}${monthSection("Jobbkort",monthlyCards,"jobcard",limit)}${monthlyTasks.length+monthlyCards.length>6?`<button class="dashboard-expand" data-expand>${expanded?"Vis færre":"Vis alle"}</button>`:""}</section><div class="dashboard-two-column">${listCard("Kommende oppgaver",upcomingTasks,"task","/dashboard/tasks.html")}${listCard("Kommende jobbkort",upcomingCards,"jobcard","/dashboard/jobcards.html")}</div><section class="dashboard-home-card dashboard-activity-card"><header><h2>Aktivitet</h2><a href="#" aria-disabled="true">Se all aktivitet</a></header><div class="dashboard-activity-list">${activity.slice(0,5).map(item=>`<a href="${esc(item.target_url||"#")}"><span class="activity-dot"></span><span><strong>${esc(item.title||item.action)}</strong><small>${esc(item.action.replaceAll("_"," "))} · ${fmt(String(item.created_at||"").slice(0,10))}</small></span></a>`).join("")||"<p>Ingen aktivitet ennå.</p>"}</div></section></main>`;
+ root.querySelectorAll("[data-month]").forEach(button=>button.onclick=()=>{shownMonth.setMonth(shownMonth.getMonth()+Number(button.dataset.month));expanded=false;render();});root.querySelector("[data-expand]")?.addEventListener("click",()=>{expanded=!expanded;render();});};
+ const monthSection=(title,items,type,limit)=>`<div class="dashboard-month-section"><h3>${title}</h3>${items.slice(0,limit).map(item=>`<a href="${urlFor({type,id:item.id})}"><time>${fmt(type==="task"?item.deadline:item.nextExecution)}</time><span>${esc(item.title)}</span>${type==="task"?renderTaskStatus(item):`<small>Jobbkort ${esc(item.jobcard_number)}</small>`}</a>`).join("")||"<p>Ingen planlagte ${title.toLowerCase()}.</p>"}</div>`;
+ const listCard=(title,items,type,href)=>`<section class="dashboard-home-card"><header><h2>${title}</h2><a href="${href}">Se alle (${items.length})</a></header><div class="dashboard-simple-list">${items.slice(0,3).map(item=>`<a href="${urlFor({type,id:item.id})}"><span>${esc(item.title)}</span><small>${fmt(type==="task"?item.deadline:item.nextExecution)}</small></a>`).join("")||"<p>Ingen kommende elementer.</p>"}</div></section>`;
+ render();const bell=root.querySelector("#activityBell"),badge=root.querySelector("#activityBadge");if(activityResult?.unseen){badge.hidden=false;badge.textContent=activityResult.unseen>99?"99+":activityResult.unseen;}bell?.addEventListener("click",async()=>{const panel=document.createElement("div");panel.className="dashboard-notification-panel";panel.innerHTML=`<h2>Nytt siden sist</h2>${activity.slice(0,8).map(item=>`<a href="${esc(item.target_url||"#")}">${esc(item.title||item.action)}</a>`).join("")||"<p>Ingen nye aktiviteter.</p>"}`;document.body.appendChild(panel);badge.hidden=true;await markActivitySeen(congregation.id);});
 }
