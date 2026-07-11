@@ -52,6 +52,9 @@ export async function initSettings(){
 
     container.innerHTML = `<div class="settings-page"><header class="settings-page-header"><h1>${t("settings","Innstillinger")}</h1><p>${t("settingsLandingDescription","Administrer innstillinger for konto og jobbkort.")}</p></header>${section("account",t("personalAccount","Personlig konto"),t("personalAccountDescription","Navn og adgangskode."),"user",accountContent())}${section("documents",t("jobcardDocumentsTitle","Vedlegg til jobbkort"),t("jobcardDocumentsShort","Dokumenter og knapper på jobbkort."),"document",documentsContent())}${section("jobcards",t("jobcards","Jobbkort"),t("jobcardsSettingsShort","Intervall og synlighet."),"jobcard",jobcardsContent())}</div>`;
 
+    const jobcardLabels = [t("title","Tittel"),t("jobcardSuggestedInterval","Foreslått intervall"),t("jobcardAutoInterval","Automatisk intervall"),t("jobcardManualInterval","Manuelt intervall"),t("jobcardVisibility","Synlighet")];
+    container.querySelectorAll(".settings-jobcard-table tbody tr").forEach((row) => row.querySelectorAll("td").forEach((cell, index) => { cell.dataset.label = jobcardLabels[index]; }));
+
     container.querySelectorAll(".settings-section-toggle").forEach((button) => button.addEventListener("click", () => {
         const content = button.parentElement.querySelector(".settings-section-content");
         const open = button.getAttribute("aria-expanded") !== "true";
