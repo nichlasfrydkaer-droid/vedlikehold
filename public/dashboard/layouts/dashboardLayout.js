@@ -14,6 +14,7 @@ import {
 const dashboardStyles = [
     "/dashboard/css/dashboardHeader.css",
     "/dashboard/css/dashboardMenu.css",
+    "/dashboard/css/dashboardSidebarFixes.css",
     "/dashboard/css/dashboardCongregationSelector.css"
 ];
 
