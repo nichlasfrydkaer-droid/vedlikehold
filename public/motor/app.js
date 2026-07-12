@@ -1,7 +1,8 @@
 import { loadJob } from "./loadJob.js";
 import { initPhotos, autoResizeNotes, initDraftInputs, renderPreview, resizeNotes } from "./photos.js";
 import { initTitle } from "./title.js";
-import { generatePDF } from "./pdf.js";
+import { buildReport } from "./report.js";
+import { uploadReport } from "./upload.js";
 import { startWork, setWorkState, openFinishConfirmation, closeFinishConfirmation } from "./work.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
@@ -36,7 +37,7 @@ export async function initApp(){
   dom.finishBtn.addEventListener("click",openFinishConfirmation);
   dom.modalCancel.addEventListener("click",closeFinishConfirmation);
   dom.finishModal.addEventListener("click",event=>{if(event.target === dom.finishModal) closeFinishConfirmation();});
-  dom.modalConfirm.addEventListener("click",()=>{void generatePDF();});
+  dom.modalConfirm.addEventListener("click",()=>{void uploadReport(buildReport());});
   dom.backToMenu.addEventListener("click",async event=>{event.preventDefault();await saveDraft();location.href=dom.backToMenu.href;});
   window.addEventListener("pagehide",()=>{ void saveDraft(); });
   try{

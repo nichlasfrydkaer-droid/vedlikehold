@@ -4,7 +4,7 @@ import { dom } from "./dom.js";
 import { clearDraft } from "./draft.js";
 import { showSending, showSendError } from "./work.js";
 
-export async function uploadReport(pdfBlob,report){
+export async function uploadReport(report){
   if(state.selectedPhotos.length > config.maxFiles){
     showSendError(state.translations.alertMaxFiles.replace("{count}",config.maxFiles));
     return false;
@@ -17,7 +17,6 @@ export async function uploadReport(pdfBlob,report){
   const params=new URLSearchParams(location.search);
   const congregation=params.get("congregation");
   const formData=new FormData();
-  formData.append("file",pdfBlob,`Jobbkort-${state.currentJob.nummer}.pdf`);
   formData.append("congregation",congregation || "");
   formData.append("token",config.apiToken);
   formData.append("report",JSON.stringify(report));
