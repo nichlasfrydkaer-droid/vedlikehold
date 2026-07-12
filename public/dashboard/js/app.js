@@ -29,7 +29,26 @@ async function initPage(
 
 }
 
-switch(page){
+async function boot(){
+
+    const isDashboardRoute = location.pathname.startsWith("/dashboard/");
+    const publicDashboardPages = new Set([
+        "login",
+        "activate",
+        "resetPassword",
+        "forgotPassword"
+    ]);
+
+    if(isDashboardRoute && !publicDashboardPages.has(page)){
+        const { getMe } = await import("./api.js");
+        const session = await getMe().catch(() => null);
+        if(!session?.success){
+            location.replace("/dashboard/login.html");
+            return;
+        }
+    }
+
+    switch(page){
 
     case "login":
 
@@ -164,4 +183,7 @@ switch(page){
 
         break;
 
+    }
 }
+
+boot();
