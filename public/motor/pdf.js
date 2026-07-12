@@ -5,6 +5,20 @@ import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { uploadReport } from "./upload.js";
 import { stopTimer, startTimer } from "./timer.js";
+
+// jsPDF's built-in fonts do not support emoji. Remove only emoji-related code
+// points before PDF text is measured or rendered, so the rest of the note is
+// never corrupted by UTF-16 surrogate bytes.
+const emojiCharacters=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2300}-\u{23FF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}]/gu;
+const pdfSafeText=value=>String(value == null ? "" : value).normalize("NFC").replace(emojiCharacters,"");
+
+function makePdfTextSafe(doc){
+  const text=doc.text.bind(doc);
+  const splitTextToSize=doc.splitTextToSize.bind(doc);
+  doc.text=(value,...args)=>text(Array.isArray(value)?value.map(pdfSafeText):pdfSafeText(value),...args);
+  doc.splitTextToSize=(value,...args)=>splitTextToSize(pdfSafeText(value),...args);
+}
+
 export async function generatePDF(){
 
   stopTimer();
@@ -12,6 +26,7 @@ export async function generatePDF(){
   const { jsPDF } = window.jspdf;
 
   const doc = new jsPDF();
+  makePdfTextSafe(doc);
 
   let y = 15;
 

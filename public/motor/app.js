@@ -5,12 +5,13 @@ import { generatePDF } from "./pdf.js";
 import { startWork, setWorkState, openFinishConfirmation, closeFinishConfirmation } from "./work.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
-import { createDraftKey, loadDraft, saveDraft } from "./draft.js";
+import { createDraftKey, clearExpiredDrafts, loadDraft, saveDraft } from "./draft.js";
 import { startTimer, updateTimer } from "./timer.js";
 import { renderProgress } from "./render.js";
 
 async function restoreDraft(){
   state.draftKey=createDraftKey();
+  await clearExpiredDrafts();
   const draft=await loadDraft();
   if(!draft) return;
   state.started=Boolean(draft.started);
