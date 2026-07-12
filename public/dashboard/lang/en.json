@@ -102,6 +102,8 @@
   "copyLink": "Copy link",
   "copied": "Copied",
   "email": "Email",
+  "shareDeadline": "Completion deadline",
+  "confirmDeadline": "Confirm date",
   "qrCode": "QR code",
   "close": "Close",
   "jobcardShareSubject": "New job card assigned: {title}",

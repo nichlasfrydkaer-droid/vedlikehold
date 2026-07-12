@@ -138,6 +138,7 @@
 .dashboard-share-dialog{position:relative;display:grid;gap:1rem;width:min(100%,30rem);padding:1.5rem;border-radius:.75rem;background:#fff;box-shadow:0 25px 50px rgba(15,23,42,.25)}
 .dashboard-share-dialog h2,.dashboard-share-dialog p{margin:0}
 .dashboard-share-url{width:100%}
+.dashboard-share-deadline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.65rem;align-items:end;padding:1rem;border:1px solid #dbe7f5;border-radius:.7rem;background:#f8fbff}.dashboard-share-deadline label{display:grid;gap:.4rem;color:#334155;font-size:.9rem;font-weight:700}.dashboard-share-deadline .dashboard-button{min-height:2.65rem}
 .dashboard-share-qr{width:13.75rem;height:13.75rem;justify-self:center}
 .dashboard-share-close{position:absolute;top:.5rem;right:.6rem;border:0;background:transparent;color:#4b5563;font-size:1.7rem;cursor:pointer}
 .dashboard-upcoming-more{display:inline-block;margin-top:.6rem;color:#2563eb;font-weight:600;text-decoration:none}

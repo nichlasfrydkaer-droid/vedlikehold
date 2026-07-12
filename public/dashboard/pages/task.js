@@ -20,6 +20,17 @@ import {
 }
 from "../components/taskView.js";
 
+function initTaskPhotoViewer(photos = []){
+    const modal=document.querySelector("[data-task-photo-modal]");
+    if(!modal||!photos.length)return;
+    const image=modal.querySelector("[data-task-photo-image]"),caption=modal.querySelector("[data-task-photo-caption]");
+    const open=index=>{image.src=photos[index];image.alt=`Bilde ${index+1}`;caption.textContent=`${index+1} / ${photos.length}`;modal.classList.remove("hidden");};
+    document.querySelectorAll("[data-task-photo]").forEach(button=>button.addEventListener("click",()=>open(Number(button.dataset.taskPhoto))));
+    modal.querySelector("[data-task-photo-close]").addEventListener("click",()=>modal.classList.add("hidden"));
+    modal.addEventListener("click",event=>{if(event.target===modal)modal.classList.add("hidden");});
+    document.addEventListener("keydown",event=>{if(event.key==="Escape")modal.classList.add("hidden");});
+}
+
 export async function initTask(){
 
     const me =
@@ -206,6 +217,8 @@ export async function initTask(){
         document.getElementById("addItem")?.addEventListener("click",()=>{
             document.getElementById("checklist").insertAdjacentHTML("beforeend",'<div class="checklist-row"><input class="checkItem" type="text"></div>');
         });
+
+    initTaskPhotoViewer(task?.photos ?? seedTask?.photos ?? []);
 
         document.getElementById("saveTask").onclick = async ()=>{
             const checklist=[...document.querySelectorAll(".checkItem")].map(input=>({id:crypto.randomUUID(),text:input.value.trim()})).filter(item=>item.text);

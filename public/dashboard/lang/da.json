@@ -102,6 +102,8 @@
   "copyLink": "Kopiér link",
   "copied": "Kopieret",
   "email": "E-mail",
+  "shareDeadline": "Frist for udførelse",
+  "confirmDeadline": "Bekræft dato",
   "qrCode": "QR-kode",
   "close": "Luk",
   "jobcardShareSubject": "Nyt jobkort tildelt: {title}",

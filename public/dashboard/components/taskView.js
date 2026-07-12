@@ -60,7 +60,7 @@ export function renderTaskView({ report, task, isExisting }){
 
             <section class="task-detail-photos">
                 <h2>${t("photos","Bilder")}</h2>
-                ${photos.length ? `<div class="task-detail-photo-grid">${photos.map((url,index) => `<img src="${escapeHtml(url)}" alt="${t("photo","Bilde")} ${index + 1}">`).join("")}</div>` : `<p class="create-task-help">${t("noPhotos","Ingen bilder.")}</p>`}
+                ${photos.length ? `<div class="task-detail-photo-grid">${photos.map((url,index) => `<div class="task-detail-photo-item"><button type="button" class="task-detail-photo-open" data-task-photo="${index}"><img src="${escapeHtml(url)}" alt="${t("photo","Bilde")} ${index + 1}"></button><a class="task-detail-photo-download" href="${escapeHtml(url)}" download title="${t("download","Last ned")}" aria-label="${t("download","Last ned")} ${t("photo","Bilde")} ${index + 1}">↓</a></div>`).join("")}</div><div class="task-photo-modal hidden" data-task-photo-modal><button type="button" data-task-photo-close aria-label="${t("close","Lukk")}">×</button><img data-task-photo-image alt=""><p data-task-photo-caption></p></div>` : `<p class="create-task-help">${t("noPhotos","Ingen bilder.")}</p>`}
             </section>
 
             <button id="saveTask" class="create-task-submit" type="button" ${locked}>${isExisting ? t("save","Lagre endringer") : t("createTask","Opprett oppdrag")}</button>
