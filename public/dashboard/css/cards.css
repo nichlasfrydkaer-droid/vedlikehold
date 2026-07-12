@@ -138,7 +138,7 @@
 .dashboard-share-dialog{position:relative;display:grid;gap:1rem;width:min(100%,30rem);padding:1.5rem;border-radius:.75rem;background:#fff;box-shadow:0 25px 50px rgba(15,23,42,.25)}
 .dashboard-share-dialog h2,.dashboard-share-dialog p{margin:0}
 .dashboard-share-url{width:100%}
-.dashboard-share-deadline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.65rem;align-items:end;padding:1rem;border:1px solid #dbe7f5;border-radius:.7rem;background:#f8fbff}.dashboard-share-deadline label{display:grid;gap:.4rem;color:#334155;font-size:.9rem;font-weight:700}.dashboard-share-deadline .dashboard-button{min-height:2.65rem}
+.dashboard-share-email-flow{display:grid;gap:.7rem;padding:.7rem;border:1px solid #bfdbfe;border-radius:.75rem;background:#dbeafe}.dashboard-share-email-flow>[data-email]{justify-self:start;background:#2563eb;color:#fff}.dashboard-share-email-flow>[data-email]:hover{background:#1d4ed8}.dashboard-share-email-flow.is-open>[data-email]{background:#1d4ed8}.dashboard-share-deadline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.65rem;align-items:end;padding:.8rem;border-radius:.55rem;background:#eff6ff}.dashboard-share-deadline label{display:grid;gap:.4rem;color:#1e3a6a;font-size:.9rem;font-weight:700}.dashboard-share-deadline .dashboard-button{min-height:2.65rem}@media(max-width:500px){.dashboard-share-deadline{grid-template-columns:1fr}.dashboard-share-deadline .dashboard-button{width:100%}}
 .dashboard-share-qr{width:13.75rem;height:13.75rem;justify-self:center}
 .dashboard-share-close{position:absolute;top:.5rem;right:.6rem;border:0;background:transparent;color:#4b5563;font-size:1.7rem;cursor:pointer}
 .dashboard-upcoming-more{display:inline-block;margin-top:.6rem;color:#2563eb;font-weight:600;text-decoration:none}
