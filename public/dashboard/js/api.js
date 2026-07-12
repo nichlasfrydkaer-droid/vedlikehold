@@ -218,6 +218,10 @@ export async function getTasks(
 
 }
 
+export async function getTaskReport(id){
+    return await request("/task-report?id=" + encodeURIComponent(id));
+}
+
 export async function getJobcardSettings(congregationId){
 
     return await request(

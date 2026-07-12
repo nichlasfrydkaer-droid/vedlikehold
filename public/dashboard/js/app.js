@@ -78,6 +78,26 @@ async function boot(){
 
         break;
 
+    case "archive":
+
+        initPage(
+            import("../pages/archive.js"),
+            "initArchive",
+            { dashboardLayout:true }
+        );
+
+        break;
+
+    case "taskReport":
+
+        initPage(
+            import("../pages/taskReport.js"),
+            "initTaskReport",
+            { dashboardLayout:true }
+        );
+
+        break;
+
     case "jobcards":
 
         initPage(
