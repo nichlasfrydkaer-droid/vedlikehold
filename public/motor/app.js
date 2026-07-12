@@ -10,6 +10,20 @@ import { createDraftKey, clearExpiredDrafts, loadDraft, saveDraft } from "./draf
 import { startTimer, updateTimer } from "./timer.js";
 import { renderProgress } from "./render.js";
 
+function initStickyProgress(){
+  const card=document.querySelector(".work-progress-card");
+  const update=()=>{
+    const pastCard=card.getBoundingClientRect().bottom <= 58;
+    const visible=state.started && pastCard;
+    dom.stickyProgress.classList.toggle("is-visible",visible);
+    dom.stickyProgress.setAttribute("aria-hidden",String(!visible));
+  };
+  window.addEventListener("scroll",update,{passive:true});
+  window.addEventListener("resize",update);
+  window.addEventListener("workstatechange",update);
+  update();
+}
+
 async function restoreDraft(){
   state.draftKey=createDraftKey();
   await clearExpiredDrafts();
@@ -33,6 +47,7 @@ export async function initApp(){
   initTitle();
   initPhotos();
   initDraftInputs();
+  initStickyProgress();
   autoResizeNotes();
   dom.startBtn.addEventListener("click",startWork);
   dom.finishBtn.addEventListener("click",openFinishConfirmation);

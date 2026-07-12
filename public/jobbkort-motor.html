@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jobbkort</title>
   <link rel="stylesheet" href="/motor/motor.css">
+  <link rel="stylesheet" href="/motor/stickyProgress.css">
   <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta id="appleAppTitle" name="apple-mobile-web-app-title" content="Jobbkort">
@@ -31,6 +32,11 @@
       <div class="work-progress-side"><strong id="progressPercent">0 %</strong><span class="work-progress-time"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><span id="timeLabel">Tid brukt</span><output id="timeInput">Ikke startet</output></span></div>
       <div class="work-progress-track"><span id="progressBar"></span></div>
     </section>
+
+    <aside id="stickyProgress" class="work-progress-sticky" aria-hidden="true">
+      <strong id="stickyProgressText">0 av 0 punkter</strong>
+      <div class="work-progress-track"><span id="stickyProgressBar"></span></div>
+    </aside>
 
     <section id="startHint" class="work-start-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><div><strong id="startHintTitle">Klar til å starte</strong><p id="startHintText">Trykk START nederst for å fylle ut kontrollisten og rapporten.</p></div></section>
 

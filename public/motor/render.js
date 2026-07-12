@@ -58,4 +58,6 @@ export function renderProgress(){
   dom.progressText.textContent=(state.translations?.progressCount || "{done} av {total} punkter").replace("{done}",done).replace("{total}",total);
   dom.progressPercent.textContent=`${percent} %`;
   dom.progressBar.style.width=`${percent}%`;
+  dom.stickyProgressText.textContent=(state.translations?.progressCount || "{done} av {total} punkter").replace("{done}",done).replace("{total}",total);
+  dom.stickyProgressBar.style.width=`${percent}%`;
 }
