@@ -28,7 +28,11 @@ export function initPhotos(){
 }
 
 export function initDraftInputs(){
-  [dom.nameInput,dom.notes].forEach(input=>input.addEventListener("input",scheduleDraftSave));
+  dom.nameInput.addEventListener("input",()=>{
+    dom.nameInput.classList.toggle("is-invalid",!dom.nameInput.value.trim());
+    scheduleDraftSave();
+  });
+  dom.notes.addEventListener("input",scheduleDraftSave);
 }
 
 export function resizeNotes(){ dom.notes.style.height="auto";dom.notes.style.height=`${Math.max(112,dom.notes.scrollHeight)}px`; }

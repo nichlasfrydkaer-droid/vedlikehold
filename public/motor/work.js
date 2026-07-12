@@ -14,6 +14,7 @@ export function setWorkState(){
   if(settings.allowPhotos){ dom.photos.disabled=!active; dom.addPhotoLabel.classList.toggle("is-disabled",!active); }
   dom.startBtn.hidden=active;
   dom.finishBtn.hidden=!active;
+  dom.nameInput.classList.toggle("is-invalid",active && !dom.nameInput.value.trim());
 }
 
 export function startWork(){
@@ -30,7 +31,8 @@ function summaryIcon(name){
 
 export function openFinishConfirmation(){
   const name=dom.nameInput.value.trim();
-  if(!name){ dom.status.textContent=t("alertNameRequired","Vennligst fyll ut navn."); dom.nameInput.focus(); return; }
+  if(!name){ dom.nameInput.classList.add("is-invalid"); dom.nameInput.focus(); return; }
+  dom.nameInput.classList.remove("is-invalid");
   const tasks=[...document.querySelectorAll(".task")],complete=tasks.filter(task=>task.checked).length,missing=tasks.length-complete;
   dom.finishModal.hidden=false;
   dom.modalSummary.hidden=false;
