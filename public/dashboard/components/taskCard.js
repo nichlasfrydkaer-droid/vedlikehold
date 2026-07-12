@@ -27,6 +27,7 @@ export function renderTaskCard(task){
         </div>
         <div class="task-card-actions">
             <a class="dashboard-button" href="${status === "completed" ? `/dashboard/task-report.html?id=${encodeURIComponent(task.id)}` : `/dashboard/task.html?id=${encodeURIComponent(task.id)}`}">${status === "completed" ? t("openReport", "Åpne rapport") : t("openTask", "Åpne oppgave")}</a>
+            ${status === "completed" && task.archive_pdf_url ? `<a class="dashboard-button dashboard-button-secondary" href="${task.archive_pdf_url}" target="_blank" rel="noopener noreferrer" download>${t("downloadPdf", "Last ned PDF")}</a>` : ""}
             ${status === "overdue" ? `<button class="dashboard-button dashboard-button-secondary" data-reopen="${task.id}">${t("reopenTask", "Genåbn")}</button>` : status !== "completed" ? `<button class="dashboard-button dashboard-button-secondary" data-share="${task.link_code}">${t("shareTask", "Del oppgave")}</button>` : ""}
         </div>
     </article>`;
