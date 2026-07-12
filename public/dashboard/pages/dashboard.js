@@ -7,7 +7,7 @@ import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
 import { getTaskStatus,renderTaskStatus } from "../js/taskStatus.js";
 import { t } from "../js/i18n.js";
 
-const esc=value=>String(value??"").replace(/[&<'"]/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[character]);
+const esc=value=>String(value == null ? "" : value).replace(/[&<'"]/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[character]);
 const fmt=value=>value?new Date(`${value}T12:00:00`).toLocaleDateString(undefined,{day:"numeric",month:"short"}):"–";
 const monthName=date=>new Intl.DateTimeFormat(undefined,{month:"long",year:"numeric"}).format(date);
 const urlFor=item=>item.type==="task"?`/dashboard/task.html?id=${encodeURIComponent(item.id)}`:"/dashboard/jobcards.html";
@@ -36,12 +36,12 @@ export async function initDashboard(){
   const congregation=getCongregation();
   if(!congregation)return;
   const [cards,settings,tasksResult,reportsResult,activityResult]=await Promise.all([getJobcards(congregation),getJobcardSettings(congregation.id),getTasks(congregation.id),getReports(congregation.id),getActivity(congregation.id)]);
-  const tasks=tasksResult?.tasks||[];
-  const reports=reportsResult?.reports||[];
-  const jobcards=cards?.success&&settings?.success?mergeJobcardSchedules(cards.jobcards,settings).filter(item=>item.visible):[];
+  const tasks=tasksResult && tasksResult.tasks || [];
+  const reports=reportsResult && reportsResult.reports || [];
+  const jobcards=cards && cards.success && settings && settings.success ? mergeJobcardSchedules(cards.jobcards,settings).filter(item=>item.visible):[];
   const upcomingTasks=tasks.filter(task=>["open","started"].includes(getTaskStatus(task))).sort((left,right)=>String(left.deadline).localeCompare(String(right.deadline)));
   const upcomingCards=jobcards.filter(item=>item.nextExecution).sort((left,right)=>String(left.nextExecution).localeCompare(String(right.nextExecution)));
-  const activity=activityResult?.items||[];
+  const activity=activityResult && activityResult.items || [];
   let shownMonth=new Date();shownMonth.setDate(1);let expanded=false;
 
   const monthSection=(title,items,type,limit)=>`<div class="dashboard-month-section"><h3>${title}</h3>${items.slice(0,limit).map(item=>`<a href="${urlFor({type,id:item.id})}"><time>${fmt(type==="task"?item.deadline:item.nextExecution)}</time><span>${esc(item.title)}</span>${type==="task"?renderTaskStatus(item):`<small>Jobbkort ${esc(item.jobcard_number)}</small>`}</a>`).join("")||`<p>Ingen planlagte ${title.toLowerCase()}.</p>`}</div>`;
@@ -63,7 +63,8 @@ export async function initDashboard(){
     root.querySelectorAll(".dashboard-simple-list p").forEach(element=>element.textContent=t("noUpcomingItems","Ingen kommende elementer."));
     root.querySelectorAll(".dashboard-month-section p").forEach((element,index)=>element.textContent=t("noPlanned","Ingen planlagte {items}.").replace("{items}",index?t("jobcards","jobbkort"):t("tasks","oppgaver")));
     root.querySelectorAll("[data-month]").forEach(button=>button.onclick=()=>{shownMonth.setMonth(shownMonth.getMonth()+Number(button.dataset.month));expanded=false;render();});
-    root.querySelector("[data-expand]")?.addEventListener("click",()=>{expanded=!expanded;render();});
+    const expandButton=root.querySelector("[data-expand]");
+    if(expandButton) expandButton.addEventListener("click",()=>{expanded=!expanded;render();});
   };
   render();
 }
