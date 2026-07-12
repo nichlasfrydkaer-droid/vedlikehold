@@ -22,7 +22,7 @@ function openShareDialog({item,url,type}){
         dialog.querySelector("[data-task-email]").addEventListener("click",()=>{const mailBody=`${body}\n\n${t("shareDeadline","Completion deadline")}: ${formatDeadline(item.deadline || "–")}`;location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody)}`;});
     }else{
         const deadline=dialog.querySelector("[data-deadline]"),input=dialog.querySelector("[data-deadline-input]"),confirm=dialog.querySelector("[data-deadline-confirm]");
-        dialog.querySelector("[data-email]").addEventListener("click",()=>{deadline.hidden=false;dialog.querySelector("[data-email-flow]").classList.add("is-open");input.focus();});
+        dialog.querySelector("[data-email]").addEventListener("click",()=>{deadline.hidden=false;dialog.querySelector("[data-email-flow]").classList.add("is-open");});
         input.addEventListener("input",()=>{confirm.disabled=!input.value;});
         confirm.addEventListener("click",()=>{const mailBody=`${body}\n\n${t("shareDeadline","Completion deadline")}: ${formatDeadline(input.value)}`;location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody)}`;});
     }
