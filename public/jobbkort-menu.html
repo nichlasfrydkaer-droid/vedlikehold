@@ -4,306 +4,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jobbkort</title>
-
 <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta
-  id="appleAppTitle"
-  name="apple-mobile-web-app-title"
-  content="Jobbkort">
+<meta id="appleAppTitle" name="apple-mobile-web-app-title" content="Jobbkort">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
 <style>
-
-body{
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  margin:0;
-}
-
-.container{
-  max-width:800px;
-  margin:auto;
-  padding:20px;
-}
-
-.card{
-  background:white;
-  padding:25px;
-  border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-}
-
-#title{
-  text-align:center;
-  margin-bottom:25px;
-  overflow-wrap:break-word;
-  word-break:normal;
-  text-wrap:balance;
-  line-height:1.15;
-}
-
-button{
-  width:100%;
-  padding:16px;
-  margin:10px 0;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  white-space:nowrap;
-}
-
-.openBtn{
-  background:#28a745;
-  color:white;
-}
-
-.docBtn{
-  background:#007bff;
-  color:white;
-}
-
-button:hover{
-  opacity:.95;
-}
-
+:root{--ink:#0b245e;--muted:#61708e;--line:#dfe7f4;--blue:#0876f5;--green:#1ca54e;--document:#edf4ff}*{box-sizing:border-box}body{min-height:100vh;margin:0;padding:30px 18px;background:linear-gradient(135deg,#f8fbff,#eef3fb);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}.jobcard-shell{width:min(100%,1200px);margin:0 auto;padding:70px 72px 40px;border:1px solid rgba(219,228,240,.8);border-radius:18px;background:rgba(255,255,255,.92);box-shadow:0 18px 45px rgba(15,36,76,.1)}.jobcard-heading{text-align:center}.jobcard-number{margin:0;color:#344269;font-size:1.25rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase}.jobcard-heading h1{max-width:900px;margin:20px auto 45px;color:#061b4c;font-size:clamp(2.15rem,5vw,4.6rem);line-height:1.06;overflow-wrap:break-word}.jobcard-divider{height:1px;margin-bottom:52px;background:var(--line)}.jobcard-actions{display:grid;gap:24px}.jobcard-action,.jobcard-document{display:grid;grid-template-columns:64px 1fr 42px;align-items:center;gap:20px;width:100%;border:0;border-radius:12px;padding:24px 36px;color:#fff;font:800 clamp(1.15rem,2.2vw,1.8rem) Arial,Helvetica,sans-serif;text-align:left;cursor:pointer;transition:transform .16s ease,filter .16s ease}.jobcard-action:hover,.jobcard-document:hover{transform:translateY(-1px);filter:brightness(1.02)}.jobcard-action:focus-visible,.jobcard-document:focus-visible{outline:3px solid #80baff;outline-offset:3px}.jobcard-action svg,.jobcard-document svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.jobcard-action-arrow,.jobcard-document-arrow{justify-self:end;font-size:3rem;font-weight:400;line-height:.7}.jobcard-open{background:linear-gradient(120deg,#1a9a44,#20b154)}.jobcard-print{background:linear-gradient(120deg,#0570ee,#087dfb)}.jobcard-documents{margin-top:34px}.jobcard-documents[hidden]{display:none}.jobcard-documents-title{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:28px;margin:30px 0;color:#657291;font-size:1.15rem;font-weight:800;text-align:center}.jobcard-documents-title::before,.jobcard-documents-title::after{height:1px;background:var(--line);content:""}.jobcard-document-list{display:grid;gap:12px}.jobcard-document{grid-template-columns:64px 1fr 42px;padding:19px 36px;border:1px solid #e4ebf7;background:linear-gradient(105deg,#eff5ff,#e8f0fc);color:#102c6b;font-size:clamp(1rem,2vw,1.45rem)}.jobcard-document svg{width:40px;height:40px}.jobcard-document-arrow{font-size:2.6rem}@media(max-width:650px){body{padding:12px}.jobcard-shell{padding:38px 20px 24px;border-radius:15px}.jobcard-heading h1{margin:14px auto 30px}.jobcard-number{font-size:1rem}.jobcard-divider{margin-bottom:30px}.jobcard-actions{gap:14px}.jobcard-action,.jobcard-document{grid-template-columns:38px minmax(0,1fr) 20px;gap:12px;padding:18px;white-space:nowrap}.jobcard-action svg,.jobcard-document svg{width:30px;height:30px}.jobcard-action-arrow,.jobcard-document-arrow{font-size:2rem}.jobcard-documents-title{gap:12px;margin:25px 0 18px;font-size:.95rem}.jobcard-document{font-size:clamp(.88rem,4vw,1.1rem);overflow:hidden;text-overflow:ellipsis}}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-  <div class="card">
-
-    <h1 id="title">Laster...</h1>
-
-    <button class="openBtn" id="openBtn">
-      Åpne jobbkort
-    </button>
-
-    <button class="docBtn" id="printBtn">
-      Skriv ut
-    </button>
-
-    <div id="documentButtons"></div>
-
-  </div>
-
-</div>
-
+<main class="jobcard-shell">
+  <header class="jobcard-heading">
+    <p id="jobcardNumber" class="jobcard-number">JOBBKORT</p>
+    <h1 id="title">Laster…</h1>
+  </header>
+  <div class="jobcard-divider"></div>
+  <section class="jobcard-actions" aria-label="Jobbkort handlinger">
+    <button class="jobcard-action jobcard-open" id="openBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M8 9h8M8 14h8"/></svg><span>Åpne jobbkort</span><span class="jobcard-action-arrow" aria-hidden="true">›</span></button>
+    <button class="jobcard-action jobcard-print" id="printBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg><span>Skriv ut</span><span class="jobcard-action-arrow" aria-hidden="true">›</span></button>
+  </section>
+  <section id="documentsSection" class="jobcard-documents" hidden>
+    <div id="documentsTitle" class="jobcard-documents-title">Vedlagte dokumenter</div>
+    <div id="documentButtons" class="jobcard-document-list"></div>
+  </section>
+</main>
 <script>
+let translations = null;
 
-let translations = null;  
-  
-function fitJobTitle(){
-
-  const title =
-    document.getElementById("title");
-
-  title.style.fontSize = "";
-
-  let size =
-    parseFloat(
-      getComputedStyle(title).fontSize
-    );
-
-  const lineHeight =
-    parseFloat(
-      getComputedStyle(title).lineHeight
-    );
-
-  const maxHeight =
-    (lineHeight * 2) + 2;
-
-  while(
-    title.scrollHeight > maxHeight &&
-    size > 18
-  ){
-
-    size--;
-
-    title.style.fontSize =
-      size + "px";
-
-  }
-
-}
-
-window.addEventListener(
-  "resize",
-  fitJobTitle
-);
+const documentIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14h6M9 18h5"/></svg>`;
 
 async function loadTranslations(language){
-
-  let response =
-    await fetch(`/lang/${language}.json`);
-
-  if(!response.ok){
-
-    response =
-      await fetch("/lang/no.json");
-
-  }
-
-  translations =
-    await response.json();
-
-  document.title =
-    translations.jobCard;
-
-  document
-    .getElementById("appleAppTitle")
-    .setAttribute(
-      "content",
-      translations.jobCard
-    );
-
-  document.getElementById("openBtn").innerText =
-    translations.openJob;
-
-  document.getElementById("printBtn").innerText =
-    translations.print;
-
+  let response = await fetch(`/lang/${language}.json`);
+  if(!response.ok) response = await fetch("/lang/no.json");
+  translations = await response.json();
+  document.title = translations.jobCard;
+  document.getElementById("appleAppTitle").setAttribute("content",translations.jobCard);
+  document.querySelector("#openBtn span").textContent = translations.openJob;
+  document.querySelector("#printBtn span").textContent = translations.print;
+  document.getElementById("documentsTitle").textContent = translations.documents || "Vedlagte dokumenter";
 }
-  
-function resolveLanguage(congregation){
 
-  const value =
-    String(congregation || "")
-      .trim()
-      .toLowerCase();
-
-  if(!value){
-
-    try{
-
-      const currentCongregation =
-        JSON.parse(
-          localStorage.getItem("congregationData") || "null"
-        );
-
-      return currentCongregation?.language || "no";
-
-    }catch(error){
-
-      return "no";
-
-    }
-
-  }
-
-  if(value.includes("dk") || value.includes("da") || value.includes("dan")){
-    return "da";
-  }
-
-  if(value.includes("en") || value.includes("eng")){
-    return "en";
-  }
-
-  if(value.includes("elverum") || value.includes("no") || value.includes("nor") || value.includes("norsk")){
-    return "no";
-  }
-
-  try{
-
-    const currentCongregation =
-      JSON.parse(
-        localStorage.getItem("congregationData") || "null"
-      );
-
-    return currentCongregation?.language || "no";
-
-  }catch(error){
-
-    return "no";
-  }
-
+function resolveLanguage(value){
+  const language = String(value || "").trim().toLowerCase();
+  if(["da","dk","danish","dansk"].some(item => language.includes(item))) return "da";
+  if(["en","eng","english","engelsk"].some(item => language.includes(item))) return "en";
+  if(["no","nb","nn","norwegian","norsk"].some(item => language.includes(item))) return "no";
+  try{return JSON.parse(localStorage.getItem("congregationData") || "null")?.language || "no";}catch{return "no";}
 }
 
 async function loadMenu(){
-
-  const params =
-    new URLSearchParams(window.location.search);
-
-  const jobId =
-    params.get("id") || "41";
-
-  const congregation =
-    params.get("congregation");
-
-  const congregationId =
-    params.get("congregationId");
-
-  const language =
-    resolveLanguage(params.get("language") || congregation);
-
-  await loadTranslations(language);  
-  
-let response =
-  await fetch(`/jobdata/${language}/${jobId}.json`);
-
-if(!response.ok){
-
-  throw new Error("Jobbkort ikke funnet.");
-
-}
-
-const job =
-  await response.json();
-
-document.getElementById("title").innerText =
-  `${translations.jobCard} ${job.nummer} - ${job.titel.toUpperCase()}`;
-
-  requestAnimationFrame(fitJobTitle);
-  
-document.getElementById("openBtn").onclick = () => {
-
-  location.href =
-    `/jobbkort-motor.html?id=${encodeURIComponent(job.nummer)}&language=${encodeURIComponent(language)}&congregation=${encodeURIComponent(congregation || "")}`;
-
-};
-
-  document.getElementById("printBtn").onclick = () => {
-
-window.open(
-  `/pdf/${language}/${job.jobbkortPdf}`,
-  "_blank"
-);
-
-  };
+  const params = new URLSearchParams(location.search);
+  const jobId = params.get("id") || "41";
+  const congregation = params.get("congregation");
+  const congregationId = params.get("congregationId");
+  const language = resolveLanguage(params.get("language") || congregation);
+  await loadTranslations(language);
+  const response = await fetch(`/jobdata/${language}/${jobId}.json`);
+  if(!response.ok) throw new Error("Jobbkort ikke funnet.");
+  const job = await response.json();
+  document.getElementById("jobcardNumber").textContent = `${translations.jobCard} ${job.nummer}`;
+  document.getElementById("title").textContent = job.titel;
+  document.getElementById("openBtn").onclick = () => { location.href = `/jobbkort-motor.html?id=${encodeURIComponent(job.nummer)}&language=${encodeURIComponent(language)}&congregation=${encodeURIComponent(congregation || "")}`; };
+  document.getElementById("printBtn").onclick = () => window.open(`/pdf/${language}/${job.jobbkortPdf}`,"_blank","noopener");
 
   const documentCongregation = congregationId || congregation;
-
-  if(documentCongregation){
-    const documentsResponse = await fetch(
-      `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}`
-    );
-    if(documentsResponse.ok){
-      const documentsData = await documentsResponse.json();
-      const target = document.getElementById("documentButtons");
-      (documentsData.documents || []).forEach((documentData) => {
-        const button = document.createElement("button");
-        button.className = "docBtn";
-        button.textContent = documentData.label;
-        button.onclick = () => window.open(
-          `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}&document=${encodeURIComponent(documentData.id)}`,
-          "_blank",
-          "noopener"
-        );
-        target.appendChild(button);
-      });
-    }
-  }
-
+  if(!documentCongregation) return;
+  const documentsResponse = await fetch(`https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}`);
+  if(!documentsResponse.ok) return;
+  const documents = (await documentsResponse.json()).documents || [];
+  if(!documents.length) return;
+  const target = document.getElementById("documentButtons");
+  documents.forEach((item) => {
+    const button = document.createElement("button");
+    button.className = "jobcard-document";
+    button.type = "button";
+    button.innerHTML = `${documentIcon}<span></span><span class="jobcard-document-arrow" aria-hidden="true">›</span>`;
+    button.querySelector("span").textContent = item.label;
+    button.addEventListener("click", () => window.open(`https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}&document=${encodeURIComponent(item.id)}`,"_blank","noopener"));
+    target.appendChild(button);
+  });
+  document.getElementById("documentsSection").hidden = false;
 }
 
-loadMenu();
-
+loadMenu().catch(() => { document.getElementById("title").textContent = "Jobbkort ikke funnet"; });
 </script>
-
 </body>
 </html>
