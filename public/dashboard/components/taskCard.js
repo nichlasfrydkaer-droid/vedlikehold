@@ -5,7 +5,8 @@ function icon(name){
     const paths = {
         calendar:`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>`,
         created:`<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 13h6M9 17h4"/>`,
-        started:`<path d="M8 5v14l11-7z"/>`
+        started:`<path d="M8 5v14l11-7z"/>`,
+        person:`<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-3.6 3.2-5.5 7-5.5s6.2 1.9 7 5.5"/>`
     };
     return `<span class="task-info-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg></span>`;
 }
@@ -21,10 +22,11 @@ export function renderTaskCard(task){
                 <span>${icon("calendar")}${t("deadline", "Frist")}: ${task.deadline || "-"}</span>
                 <span>${icon("created")}${t("created", "Opprettet")}: ${(task.created_at || "").slice(0,10)}</span>
                 ${task.started_at ? `<span>${icon("started")}${t("taskStarted", "Startet")}: ${task.started_at.slice(0,10)}</span>` : ""}
+                ${status === "completed" ? `<span>${icon("person")}${t("completedBy", "Utført av")}: ${task.completed_name || "–"}</span><span>${icon("calendar")}${t("finished", "Utført")}: ${(task.completed_at || "").slice(0,10) || "–"}</span>` : ""}
             </div>
         </div>
         <div class="task-card-actions">
-            <a class="dashboard-button" href="/dashboard/task.html?id=${encodeURIComponent(task.id)}">${t("openTask", "Åpne oppgave")}</a>
+            <a class="dashboard-button" href="${status === "completed" ? `/dashboard/task-report.html?id=${encodeURIComponent(task.id)}` : `/dashboard/task.html?id=${encodeURIComponent(task.id)}`}">${status === "completed" ? t("openReport", "Åpne rapport") : t("openTask", "Åpne oppgave")}</a>
             ${status === "overdue" ? `<button class="dashboard-button dashboard-button-secondary" data-reopen="${task.id}">${t("reopenTask", "Genåbn")}</button>` : status !== "completed" ? `<button class="dashboard-button dashboard-button-secondary" data-share="${task.link_code}">${t("shareTask", "Del oppgave")}</button>` : ""}
         </div>
     </article>`;
