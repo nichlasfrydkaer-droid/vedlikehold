@@ -43,6 +43,7 @@ export const dom = {
   noticeSection: qs("noticeSection"),
   noticeLabel: qs("noticeLabel"),
   addPhotoLabel: qs("addPhotoLabel"),
+  addPhotoText: qs("addPhotoText"),
   checklistCount: qs("checklistCount"),
   progressLabel: qs("progressLabel"),
   progressText: qs("progressText"),
