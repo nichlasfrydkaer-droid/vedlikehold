@@ -21,6 +21,7 @@ export async function uploadReport(report){
   formData.append("token",config.apiToken);
   formData.append("report",JSON.stringify(report));
   state.selectedPhotos.forEach(photo=>formData.append("photos",photo,photo.name));
+  state.pdfPhotos.forEach(photo=>formData.append("pdfPhotos",photo,photo.name));
 
   showSending();
   dom.finishBtn.disabled=true;

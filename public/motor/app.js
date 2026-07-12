@@ -1,5 +1,5 @@
 import { loadJob } from "./loadJob.js";
-import { initPhotos, autoResizeNotes, initDraftInputs, renderPreview, resizeNotes } from "./photos.js";
+import { initPhotos, autoResizeNotes, initDraftInputs, renderPreview, resizeNotes, createPdfImage } from "./photos.js";
 import { initTitle } from "./title.js";
 import { buildReport } from "./report.js";
 import { uploadReport } from "./upload.js";
@@ -21,6 +21,7 @@ async function restoreDraft(){
   dom.notes.value=draft.notes || "";
   [...document.querySelectorAll(".task")].forEach((task,index)=>{task.checked=Boolean(draft.checked?.[index]);task.closest(".work-check-row")?.classList.toggle("is-complete",task.checked);});
   state.selectedPhotos=(draft.photos || []).map(photo=>new File([photo.blob],photo.name || "bilde.jpg",{type:photo.type || photo.blob?.type || "image/jpeg",lastModified:photo.lastModified || Date.now()}));
+  state.pdfPhotos=await Promise.all(state.selectedPhotos.map(createPdfImage));
   renderPreview();
   setWorkState();
   renderProgress();

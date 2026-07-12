@@ -9,6 +9,7 @@ export const state = {
   started: false,
 
   selectedPhotos: [],
+  pdfPhotos: [],
 
   draftKey: null,
 
