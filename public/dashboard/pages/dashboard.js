@@ -3,7 +3,7 @@ import { renderDashboardHeader } from "../components/dashboardHeader.js";
 import { renderDashboardMenu,initDashboardMenu } from "../components/dashboardMenu.js";
 import { getJobcards,getJobcardSettings,getTasks,getReports,getActivity } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
-import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
+import { mergeJobcardSchedules, isUpcoming } from "../js/jobcardSchedule.js";
 import { getTaskStatus,renderTaskStatus } from "../js/taskStatus.js";
 import { t } from "../js/i18n.js";
 
@@ -40,7 +40,7 @@ export async function initDashboard(){
   const reports=reportsResult && reportsResult.reports || [];
   const jobcards=cards && cards.success && settings && settings.success ? mergeJobcardSchedules(cards.jobcards,settings).filter(item=>item.visible):[];
   const upcomingTasks=tasks.filter(task=>["open","started"].includes(getTaskStatus(task))).sort((left,right)=>String(left.deadline).localeCompare(String(right.deadline)));
-  const upcomingCards=jobcards.filter(item=>item.nextExecution).sort((left,right)=>String(left.nextExecution).localeCompare(String(right.nextExecution)));
+  const upcomingCards=jobcards.filter(isUpcoming).sort((left,right)=>String(left.nextExecution).localeCompare(String(right.nextExecution)));
   const activity=activityResult && activityResult.items || [];
   let shownMonth=new Date();shownMonth.setDate(1);let expanded=false;
 

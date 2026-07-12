@@ -69,11 +69,6 @@ export function isUpcoming(jobcard, today = new Date()){
         return false;
     }
 
-    if(jobcard.autoInterval){
-        // New jobcards have no completion date and are intentionally shown.
-        return true;
-    }
-
     const next = toDateOnly(jobcard.nextExecution);
 
     if(!next){
