@@ -276,9 +276,11 @@ window.open(
 
   };
 
-  if(congregationId){
+  const documentCongregation = congregationId || congregation;
+
+  if(documentCongregation){
     const documentsResponse = await fetch(
-      `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(congregationId)}&jobcard=${encodeURIComponent(job.nummer)}`
+      `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}`
     );
     if(documentsResponse.ok){
       const documentsData = await documentsResponse.json();
@@ -288,7 +290,7 @@ window.open(
         button.className = "docBtn";
         button.textContent = documentData.label;
         button.onclick = () => window.open(
-          `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(congregationId)}&jobcard=${encodeURIComponent(job.nummer)}&document=${encodeURIComponent(documentData.id)}`,
+          `https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}&document=${encodeURIComponent(documentData.id)}`,
           "_blank",
           "noopener"
         );
