@@ -12,6 +12,7 @@ import { renderProgress } from "./render.js";
 
 function initStickyProgress(){
   const card=document.querySelector(".work-progress-card");
+  if(!card||!dom.stickyProgress) return;
   const update=()=>{
     const pastCard=card.getBoundingClientRect().bottom <= 58;
     const visible=state.started && pastCard;
