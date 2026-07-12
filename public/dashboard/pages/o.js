@@ -1,69 +1,28 @@
 import { getPublicTask, completePublicTask, startPublicTask, uploadPublicTaskPhotos } from "../js/api.js";
 
-const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (character) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[character]);
+const escapeHtml=value=>String(value??"").replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
+const icon=name=>{const paths={calendar:`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>`,person:`<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-3.6 3.2-5.5 7-5.5s6.2 1.9 7 5.5"/>`,photo:`<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.2"/><path d="m3 17 5-5 3.5 3.5 2.5-2.5 4 4"/>`,check:`<rect x="4" y="4" width="16" height="16" rx="2"/><path d="m8 12 2.5 2.5L16 9"/>`};return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg>`;};
+const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleString("nb-NO",{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):"–";};
 
 export async function initO(){
-    const root = document.getElementById("taskPage");
-    const code = new URLSearchParams(location.search).get("code");
-    const result = await getPublicTask(code);
-    if(!result.success){
-        root.innerHTML = '<main class="public-task-shell"><section class="public-task-card"><h1>Oppdraget finnes ikke</h1></section></main>';
-        return;
-    }
-
-    const task = result.task;
-    const checklist = JSON.parse(task.checklist_json || "[]");
-    const sourcePhotos = JSON.parse(task.photos_json || "[]");
-    const uploaded = [];
-    let started = task.status !== "open";
-
-    const render = () => {
-        root.innerHTML = `<main class="public-task-shell"><header class="public-task-brand">Vedlikeholdsystem</header><section class="public-task-card"><div class="public-task-status ${task.status}">${task.status === "open" ? "Åpen" : task.status === "started" ? "Startet" : "Overskredet"}</div><h1>${escapeHtml(task.title)}</h1><p class="public-task-deadline">Frist: <strong>${escapeHtml(task.deadline || "–")}</strong></p><section class="public-task-section"><h2>Oppgaven</h2><p>${escapeHtml(task.description || "–")}</p>${task.original_comment ? `<div class="public-original"><strong>Opprinnelig kommentar</strong><p>${escapeHtml(task.original_comment)}</p></div>` : ""}${sourcePhotos.length ? `<h3>Bilder til oppgaven</h3><div class="public-source-photos">${sourcePhotos.map((url) => `<img src="${escapeHtml(url)}" alt="Bilde til oppgaven">`).join("")}</div>` : ""}<h3>Sjekkpunkter</h3><div>${checklist.map((item, index) => `<label class="public-check"><input class="taskCheckbox" data-index="${index}" type="checkbox">${escapeHtml(item.text)}</label>`).join("") || "<p>Ingen sjekkpunkter.</p>"}</div>${!started ? '<button id="startButton" class="public-start">Start</button>' : ""}</section><section class="public-completion ${started ? "" : "locked"}"><h2>Din utførelse</h2>${!started ? "<p>Trykk Start for å begynne.</p>" : ""}<label class="public-required-name">Fyll inn navn <span aria-hidden="true">*</span><input id="completedName" required autocomplete="name" placeholder="Navnet ditt" ${started ? "" : "disabled"}></label><label>Kommentar<textarea id="comment" ${started ? "" : "disabled"}></textarea></label><h3>Bilder fra utførelsen</h3><div id="newPhotos" class="public-new-photos"></div><label class="public-upload ${started ? "" : "disabled"}">+ Tilføy bilde<input id="photoInput" type="file" accept="image/*" multiple ${started ? "" : "disabled"} hidden></label><button id="finishButton" class="public-finish" ${started ? "" : "disabled"}>Ferdigmeld oppdrag</button><p id="status" role="status"></p></section></section></main>`;
-
-        const finishButton = root.querySelector("#finishButton");
-        const validate = () => { if(finishButton) finishButton.disabled = !started; };
-
-        root.querySelector("#completedName")?.addEventListener("input", event => {
-            event.currentTarget.classList.toggle("is-valid", Boolean(event.currentTarget.value.trim()));
-        });
-
-        root.querySelector("#startButton")?.addEventListener("click", async () => {
-            const response = await startPublicTask(code);
-            if(response.success){ started = true; task.status = "started"; render(); }
-        });
-
-        root.querySelector("#photoInput")?.addEventListener("change", async (event) => {
-            const response = await uploadPublicTaskPhotos(code, event.target.files);
-            if(response.success){
-                uploaded.push(...response.photos);
-                root.querySelector("#newPhotos").innerHTML = uploaded.map((photo, index) => `<div><img src="${escapeHtml(photo.url)}" alt="Bilde"><button type="button" data-remove="${index}" aria-label="Fjern bilde">×</button></div>`).join("");
-                root.querySelectorAll("[data-remove]").forEach((button) => button.addEventListener("click", () => { uploaded.splice(Number(button.dataset.remove), 1); render(); }));
-                validate();
-            }
-        });
-
-        finishButton?.addEventListener("click", async () => {
-            const name = root.querySelector("#completedName");
-            const status = root.querySelector("#status");
-            if(!name.value.trim()){
-                status.textContent = "Skriv inn navnet ditt før du ferdigmelder oppdraget.";
-                name.focus();
-                return;
-            }
-            if(task.require_completion_photos && !uploaded.length){
-                status.textContent = "Denne oppgaven krever minst ett bilde før den kan ferdigmeldes.";
-                return;
-            }
-            finishButton.disabled = true;
-            const completedChecklist = checklist.map((item, index) => ({ text:item.text, checked:root.querySelector(`.taskCheckbox[data-index="${index}"]`)?.checked || false }));
-            const response = await completePublicTask({ link_code:code, completed_name:name.value.trim(), completed_comment:root.querySelector("#comment").value.trim(), checklist:completedChecklist, completed_photos:uploaded });
-            if(response.success){
-                root.innerHTML = '<main class="public-task-shell"><section class="public-task-card"><h1>Oppdraget er ferdigmeldt</h1><p>Takk for innsatsen.</p></section></main>';
-                return;
-            }
-            status.textContent = response.message || "Kunne ikke ferdigmelde oppdraget.";
-            finishButton.disabled = false;
-        });
-    };
-    render();
+  const root=document.getElementById("taskPage"),code=new URLSearchParams(location.search).get("code"),result=await getPublicTask(code);
+  if(!result.success){root.innerHTML='<main class="public-task-shell"><section class="public-task-card"><h1>Oppdraget finnes ikke</h1></section></main>';return;}
+  const task=result.task,report=result.report||{},checklist=JSON.parse(task.checklist_json||"[]"),sourcePhotos=JSON.parse(task.photos_json||"[]"),uploaded=[];
+  const form={name:"",comment:"",checked:checklist.map(()=>false)};
+  let started=task.status!=="open";
+  const snapshot=()=>{form.name=root.querySelector("#completedName")?.value||form.name;form.comment=root.querySelector("#comment")?.value||form.comment;form.checked=checklist.map((_,index)=>root.querySelector(`.taskCheckbox[data-index="${index}"]`)?.checked??form.checked[index]);};
+  const render=()=>{
+    const disabled=started?"":"disabled",statusLabel=task.status==="open"?"Åpen":task.status==="started"?"Startet":"Overskredet";
+    root.innerHTML=`<main class="public-task-shell"><header class="public-task-brand">Vedlikeholdsystem</header><section class="public-task-card"><header class="public-task-hero"><div class="public-task-status ${task.status}">${statusLabel}</div><h1>${escapeHtml(task.title)}</h1><p class="public-task-deadline">${icon("calendar")}<span>Frist <strong>${escapeHtml(task.deadline||"–")}</strong></span></p></header><section class="public-task-section public-task-brief"><h2>Oppgaven</h2><p>${escapeHtml(task.description||"–")}</p>${task.original_comment?`<aside class="public-report-note"><div class="public-report-note-heading"><span>${icon("check")}</span><div><h2>Notat fra vedlikeholdsrapport</h2><div class="public-report-meta"><span>${icon("calendar")}Vedlikeholdsrapport utført ${formatDate(report.finished_at)}</span><span>${icon("person")}${escapeHtml(report.performed_by||"–")}</span></div></div></div><p>${escapeHtml(task.original_comment)}</p></aside>`:""}${sourcePhotos.length?`<section class="public-source-section"><h2>${icon("photo")}Bilder til oppgaven</h2><div class="public-source-photos">${sourcePhotos.map((url,index)=>`<button type="button" data-source-photo="${index}"><img src="${escapeHtml(url)}" alt="Bilde til oppgaven ${index+1}"><span>Se større</span></button>`).join("")}</div></section>`:""}${!started?'<button id="startButton" class="public-start">Start arbeid</button>':""}</section><section class="public-completion ${started?"":"locked"}"><header><h2>Utførelse</h2>${!started?"<p>Trykk Start arbeid for å fylle ut oppgaven.</p>":""}</header><label class="public-required-name">Fyll inn navn <span aria-hidden="true">*</span><input id="completedName" required autocomplete="name" placeholder="Navnet ditt" value="${escapeHtml(form.name)}" ${disabled}></label><section class="public-checklist"><h2>${icon("check")}Sjekkpunkter <small>${checklist.length} punkter</small></h2><div>${checklist.map((item,index)=>`<label class="public-check ${form.checked[index]?"is-complete":""}"><input class="taskCheckbox" data-index="${index}" type="checkbox" ${form.checked[index]?"checked":""} ${disabled}><span>${escapeHtml(item.text||item)}</span></label>`).join("")||"<p>Ingen sjekkpunkter.</p>"}</div></section><label>Kommentar<textarea id="comment" ${disabled}>${escapeHtml(form.comment)}</textarea></label><section class="public-completion-photos"><h2>${icon("photo")}Bilder fra utførelsen</h2><div id="newPhotos" class="public-new-photos">${uploaded.map((photo,index)=>`<div><img src="${escapeHtml(photo.url)}" alt="Bilde"><button type="button" data-remove="${index}" aria-label="Fjern bilde">×</button></div>`).join("")}</div><label class="public-upload ${started?"":"disabled"}">+ Tilføy bilde<input id="photoInput" type="file" accept="image/*" multiple ${disabled} hidden></label></section><button id="finishButton" class="public-finish" ${disabled}>Ferdigmeld oppdrag</button><p id="status" role="status"></p></section></section><div class="public-photo-modal hidden" data-photo-modal><button type="button" data-close-photo aria-label="Lukk">×</button><img data-modal-image alt=""><p data-modal-caption></p></div></main>`;
+    root.querySelector("#completedName")?.addEventListener("input",event=>event.currentTarget.classList.toggle("is-valid",Boolean(event.currentTarget.value.trim())));
+    root.querySelectorAll(".taskCheckbox").forEach(input=>input.addEventListener("change",event=>event.currentTarget.closest(".public-check")?.classList.toggle("is-complete",event.currentTarget.checked)));
+    root.querySelector("#startButton")?.addEventListener("click",async()=>{const response=await startPublicTask(code);if(response.success){snapshot();started=true;task.status="started";render();}});
+    root.querySelector("#photoInput")?.addEventListener("change",async event=>{snapshot();const response=await uploadPublicTaskPhotos(code,event.target.files);if(response.success){uploaded.push(...response.photos);render();}});
+    root.querySelectorAll("[data-remove]").forEach(button=>button.addEventListener("click",()=>{snapshot();uploaded.splice(Number(button.dataset.remove),1);render();}));
+    const modal=root.querySelector("[data-photo-modal]"),openPhoto=index=>{modal.querySelector("[data-modal-image]").src=sourcePhotos[index];modal.querySelector("[data-modal-caption]").textContent=`Bilde ${index+1} av ${sourcePhotos.length}`;modal.classList.remove("hidden");};
+    root.querySelectorAll("[data-source-photo]").forEach(button=>button.addEventListener("click",()=>openPhoto(Number(button.dataset.sourcePhoto))));
+    root.querySelector("[data-close-photo]")?.addEventListener("click",()=>modal.classList.add("hidden"));modal?.addEventListener("click",event=>{if(event.target===modal)modal.classList.add("hidden");});
+    root.querySelector("#finishButton")?.addEventListener("click",async()=>{snapshot();const status=root.querySelector("#status");if(!form.name.trim()){status.textContent="Skriv inn navnet ditt før du ferdigmelder oppdraget.";root.querySelector("#completedName").focus();return;}if(task.require_completion_photos&&!uploaded.length){status.textContent="Denne oppgaven krever minst ett bilde før den kan ferdigmeldes.";return;}const button=root.querySelector("#finishButton");button.disabled=true;const completedChecklist=checklist.map((item,index)=>({text:item.text||item,checked:Boolean(form.checked[index])}));const response=await completePublicTask({link_code:code,completed_name:form.name.trim(),completed_comment:form.comment.trim(),checklist:completedChecklist,completed_photos:uploaded});if(response.success){root.innerHTML='<main class="public-task-shell"><section class="public-task-card public-task-done"><h1>Oppdraget er ferdigmeldt</h1><p>Takk for innsatsen.</p></section></main>';return;}status.textContent=response.message||"Kunne ikke ferdigmelde oppdraget.";button.disabled=false;});
+  };
+  render();
 }
