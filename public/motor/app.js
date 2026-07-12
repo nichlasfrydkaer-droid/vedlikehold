@@ -38,7 +38,6 @@ export async function initApp(){
   dom.modalConfirm.addEventListener("click",()=>{void generatePDF();});
   dom.backToMenu.addEventListener("click",async event=>{event.preventDefault();await saveDraft();location.href=dom.backToMenu.href;});
   window.addEventListener("pagehide",()=>{ void saveDraft(); });
-  window.addEventListener("beforeunload",event=>{ if(state.sending){ event.preventDefault(); event.returnValue=""; } });
   try{
     await loadJob();
     await restoreDraft();
