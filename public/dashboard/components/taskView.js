@@ -3,6 +3,13 @@ import { getTaskStatus, renderTaskStatus } from "../js/taskStatus.js";
 
 const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[character]);
 
+const formatDuration = value => {
+    const seconds = Number(value);
+    if(!Number.isFinite(seconds)) return "–";
+    const total = Math.max(0, Math.round(seconds));
+    return total < 60 ? `${total} sek` : `${Math.floor(total / 60)} min ${total % 60} sek`;
+};
+
 export function renderTaskView({ report, task, isExisting }){
     const isEditable = !isExisting || getTaskStatus(task) === "open";
     const locked = isEditable ? "" : "disabled";
@@ -24,6 +31,8 @@ export function renderTaskView({ report, task, isExisting }){
             </div>
 
             ${isExisting && !isEditable ? `<p class="task-locked-notice">${t("taskLocked","Denne oppgaven kan ikke endres etter at den er startet, overskredet eller utført.")}</p>` : ""}
+
+            ${isExisting && Number.isFinite(Number(task?.duration_seconds)) ? `<p class="task-locked-notice">${t("duration","Tidsbruk")}: ${formatDuration(task.duration_seconds)}</p>` : ""}
 
             <section class="create-task-original">
                 <h2>${t("originalComment","Opprinnelig kommentar")}</h2>
