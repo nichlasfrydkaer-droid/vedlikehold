@@ -27,7 +27,7 @@ async function withStore(mode, callback){
   });
 }
 
-function draftData(){
+function draftData(includePhotos=true){
   return {
     key: state.draftKey,
     savedAt: Date.now(),
@@ -37,7 +37,10 @@ function draftData(){
     name: dom.nameInput.value,
     notes: dom.notes.value,
     checked: [...document.querySelectorAll(".task")].map(task=>task.checked),
-    photos: state.selectedPhotos.map(file=>({blob:file,name:file.name,type:file.type,lastModified:file.lastModified}))
+    // Safari can reject certain camera File/Blob objects in IndexedDB. The
+    // work itself must still be saved; photos stay attached for the current
+    // session and can be added again after a browser restart if needed.
+    photos: includePhotos ? state.selectedPhotos.map(file=>({blob:file,name:file.name,type:file.type,lastModified:file.lastModified})) : []
   };
 }
 
@@ -54,7 +57,14 @@ export function createDraftKey(){
 
 export async function saveDraft(){
   if(!state.draftKey || state.sending) return;
-  try{ await withStore("readwrite",store=>store.put(draftData())); }catch(error){ console.warn("Could not save work draft",error); }
+  try{
+    await withStore("readwrite",store=>store.put(draftData()));
+  }catch(error){
+    // Keep text, checklist and timer even when Safari cannot serialize a
+    // camera image. A fresh transaction is required after the first abort.
+    try{ await withStore("readwrite",store=>store.put(draftData(false))); }
+    catch(fallbackError){ console.warn("Could not save work draft",fallbackError); }
+  }
 }
 
 export function scheduleDraftSave(){
