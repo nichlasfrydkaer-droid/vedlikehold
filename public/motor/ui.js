@@ -3,12 +3,17 @@ import { dom } from "./dom.js";
 import { appendFormattedText } from "./utils.js";
 
 const t=(key,fallback)=>state.translations?.[key] || fallback;
+const setMobileLabel=(button,label)=>{
+  const text=String(label||"");
+  button.dataset.mobileLabel=text;
+  button.style.setProperty("--mobile-label-size",text.length>10?".46rem":text.length>8?".53rem":text.length>6?".59rem":".65rem");
+};
 
 export function updateTexts(){
   dom.startBtn.querySelector("span").textContent=t("startWork","Start arbeidet");
   dom.finishBtn.querySelector("span").textContent=t("finish","Ferdigmeld");
-  dom.startBtn.dataset.mobileLabel=t("mobileStart","START");
-  dom.finishBtn.dataset.mobileLabel=t("mobileFinish","FULLFØR");
+  setMobileLabel(dom.startBtn,t("mobileStart","START"));
+  setMobileLabel(dom.finishBtn,t("mobileFinish","FULLFØR"));
   dom.frequency.textContent="";
   dom.timeLabel.textContent=t("timeUsed","Tid brukt");
   dom.nameLabel.textContent=t("name","Navn");
