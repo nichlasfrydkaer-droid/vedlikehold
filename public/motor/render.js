@@ -1,8 +1,7 @@
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { scheduleDraftSave } from "./draft.js";
-
-function textOnly(value=""){ return String(value).replace(/<[^>]*>/g,"").trim(); }
+import { appendFormattedText } from "./utils.js";
 
 export function renderTasks(){
   const container = dom.taskContainer;
@@ -23,7 +22,7 @@ function renderTask(container,task){
 }
 
 function renderGroup(container,task){
-  if(task.overskrift){ const heading=document.createElement("h3"); heading.className="taskHeading"; heading.textContent=task.overskrift; container.appendChild(heading); }
+  if(task.overskrift){ const heading=document.createElement("h3"); heading.className="taskHeading"; appendFormattedText(heading,task.overskrift); container.appendChild(heading); }
   task.innhold?.forEach(item=>item.type === "punkt" ? renderCheckbox(container,item.tekst) : item.type === "tekst" ? renderText(container,item.tekst) : null);
   if(task.tekst) renderText(container,task.tekst);
   task.punkter?.forEach(item=>renderCheckbox(container,item));
@@ -32,14 +31,20 @@ function renderGroup(container,task){
 function renderText(container,text){
   const element=document.createElement("p");
   element.className="taskText";
-  element.textContent=textOnly(text);
+  appendFormattedText(element,text);
   container.appendChild(element);
 }
 
 function renderCheckbox(container,text){
   const label=document.createElement("label");
   label.className="work-check-row";
-  label.innerHTML=`<input type="checkbox" class="task" disabled><span>${textOnly(text)}</span>`;
+  const input=document.createElement("input");
+  input.type="checkbox";
+  input.className="task";
+  input.disabled=true;
+  const copy=document.createElement("span");
+  appendFormattedText(copy,text);
+  label.append(input,copy);
   container.appendChild(label);
 }
 

@@ -15,6 +15,9 @@ export function setWorkState(){
   dom.startBtn.hidden=active;
   dom.finishBtn.hidden=!active;
   dom.nameInput.classList.toggle("is-invalid",active && !dom.nameInput.value.trim());
+  dom.startHint.classList.toggle("is-started",active);
+  dom.startHintTitle.textContent=t(active ? "workStarted" : "readyToStart",active ? "Arbeidet er startet" : "Klar til å starte");
+  dom.startHintText.textContent=t(active ? "workStartedHelp" : "readyToStartHelp",active ? "Du kan nå fylle ut kontrollisten og rapporten." : "Trykk START nederst for å fylle ut kontrollisten og rapporten.");
 }
 
 export function startWork(){

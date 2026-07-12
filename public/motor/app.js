@@ -42,6 +42,7 @@ export async function initApp(){
     await loadJob();
     await restoreDraft();
     setWorkState();
+    updateTimer();
   }catch(error){
     console.error("Could not load job card",error);
     dom.title.textContent="Kunne ikke laste jobbkortet.";

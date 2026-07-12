@@ -1,11 +1,14 @@
 import { state } from "./state.js";
 import { dom } from "./dom.js";
+import { appendFormattedText } from "./utils.js";
 
 const t=(key,fallback)=>state.translations?.[key] || fallback;
 
 export function updateTexts(){
   dom.startBtn.querySelector("span").textContent=t("startWork","Start arbeidet");
   dom.finishBtn.querySelector("span").textContent=t("finish","Ferdigmeld");
+  dom.startBtn.dataset.mobileLabel=t("mobileStart","START");
+  dom.finishBtn.dataset.mobileLabel=t("mobileFinish","FULLFØR");
   dom.frequency.textContent="";
   dom.timeLabel.textContent=t("timeUsed","Tid brukt");
   dom.nameLabel.textContent=t("name","Navn");
@@ -32,8 +35,8 @@ export function renderHeader(){
 }
 
 export function renderNotes(){
-  if(state.currentJob.merk){ dom.noticeSection.hidden=false; dom.merkText.textContent=state.currentJob.merk; }
+  if(state.currentJob.merk){ dom.noticeSection.hidden=false; appendFormattedText(dom.merkText,state.currentJob.merk); }
   else dom.noticeSection.hidden=true;
-  dom.notatInfo.textContent=state.currentJob.notatInfo || "";
+  appendFormattedText(dom.notatInfo,state.currentJob.notatInfo || "");
   dom.notatInfo.hidden=!state.currentJob.notatInfo;
 }

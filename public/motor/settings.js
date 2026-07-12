@@ -32,9 +32,9 @@ export function applySettings(){
 
   if(!settings.showTime){
 
-    document.getElementById(
-      "timeSection"
-    ).style.display = "none";
+    document.querySelector(
+      ".work-progress-time"
+    )?.style.setProperty("display","none");
 
   }
 
