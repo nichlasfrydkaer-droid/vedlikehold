@@ -40,7 +40,7 @@ export async function initDashboard(){
   const reports=reportsResult && reportsResult.reports || [];
   const jobcards=cards && cards.success && settings && settings.success ? mergeJobcardSchedules(cards.jobcards,settings).filter(item=>item.visible):[];
   const upcomingTasks=tasks.filter(task=>["open","started"].includes(getTaskStatus(task))).sort((left,right)=>String(left.deadline).localeCompare(String(right.deadline)));
-  const upcomingCards=jobcards.filter(isUpcoming).sort((left,right)=>String(left.nextExecution).localeCompare(String(right.nextExecution)));
+  const upcomingCards=jobcards.filter(item=>isUpcoming(item)).sort((left,right)=>String(left.nextExecution).localeCompare(String(right.nextExecution)));
   const activity=activityResult && activityResult.items || [];
   const today=new Date();
   const currentMonthKey=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
