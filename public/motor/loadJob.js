@@ -15,11 +15,11 @@ export async function loadJob(){
     new URLSearchParams(window.location.search);
 
   const id =
-    params.get("id") || "41";
+    params.get("id") || "1";
 
   state.currentCongregation =
     JSON.parse(
-      localStorage.getItem("congregationData")
+      localStorage.getItem("congregationData") || "null"
     );
 
   const requestedLanguage =

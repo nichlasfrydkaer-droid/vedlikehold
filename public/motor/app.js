@@ -39,7 +39,14 @@ export async function initApp(){
   dom.backToMenu.addEventListener("click",async event=>{event.preventDefault();await saveDraft();location.href=dom.backToMenu.href;});
   window.addEventListener("pagehide",()=>{ void saveDraft(); });
   window.addEventListener("beforeunload",event=>{ if(state.sending){ event.preventDefault(); event.returnValue=""; } });
-  await loadJob();
-  await restoreDraft();
-  setWorkState();
+  try{
+    await loadJob();
+    await restoreDraft();
+    setWorkState();
+  }catch(error){
+    console.error("Could not load job card",error);
+    dom.title.textContent="Kunne ikke laste jobbkortet.";
+    dom.status.textContent="Kontroller at lenken inneholder et gyldig jobbkortnummer.";
+    dom.startBtn.hidden=true;
+  }
 }

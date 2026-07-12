@@ -7,10 +7,11 @@ const t=(key,fallback)=>state.translations?.[key] || fallback;
 
 export function setWorkState(){
   const active=state.started;
+  const settings={allowPhotos:true,allowComments:true,showName:true,...(state.currentCongregation?.settings || {})};
   document.querySelectorAll(".task").forEach(task=>task.disabled=!active);
-  if(!state.currentCongregation || state.currentCongregation.settings.showName) dom.nameInput.disabled=!active;
-  if(!state.currentCongregation || state.currentCongregation.settings.allowComments) dom.notes.disabled=!active;
-  if(!state.currentCongregation || state.currentCongregation.settings.allowPhotos){ dom.photos.disabled=!active; dom.addPhotoLabel.classList.toggle("is-disabled",!active); }
+  if(settings.showName) dom.nameInput.disabled=!active;
+  if(settings.allowComments) dom.notes.disabled=!active;
+  if(settings.allowPhotos){ dom.photos.disabled=!active; dom.addPhotoLabel.classList.toggle("is-disabled",!active); }
   dom.startBtn.hidden=active;
   dom.finishBtn.hidden=!active;
 }

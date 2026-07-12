@@ -6,8 +6,13 @@ export function applySettings(){
     return;
   }
 
-  const settings =
-    state.currentCongregation.settings;
+  const settings = {
+    allowPhotos:true,
+    allowComments:true,
+    showTime:true,
+    showName:true,
+    ...(state.currentCongregation.settings || {})
+  };
 
   if(!settings.allowPhotos){
 
