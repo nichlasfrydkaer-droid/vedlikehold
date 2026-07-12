@@ -5,8 +5,8 @@
   "checklist": "Checklist",
   "notes": "Notes",
   "photos": "Photos",
-  "startWork": "▶ Start work",
-  "finish": "✓ Finish",
+  "startWork": "Start work",
+  "finish": "Finish",
   "congregation": "Congregation",
   "loading": "Loading...",
   "notice": "NOTE",
@@ -37,4 +37,5 @@
   "reportSent": "Report sent!",
   "reportSentText": "The report has been sent to the Maintenance System.",
   "closePage": "You can now close this page."
+  ,"addPhoto":"Add photo", "progress":"Progress", "important":"Important", "points":"items", "progressCount":"{done} of {total} items", "finishConfirmTitle":"Ready to send?", "finishConfirmIntro":"Review the details before the report is sent.", "completedPoints":"{count} items completed", "missingPoints":"{count} items missing", "photoCount":"{count} photos", "confirm":"Confirm", "cancel":"Cancel", "retry":"Try again", "doNotLeave":"Do not leave this page."
 }

@@ -1,102 +1,56 @@
 import { state } from "./state.js";
+import { dom } from "./dom.js";
+import { scheduleDraftSave } from "./draft.js";
 
-export function renderTasks() {
-  const container = document.getElementById("taskContainer");
+function textOnly(value=""){ return String(value).replace(/<[^>]*>/g,"").trim(); }
+
+export function renderTasks(){
+  const container = dom.taskContainer;
   container.innerHTML = "";
-
-  state.currentJob.oppgaver.forEach(task => {
-    renderTask(container, task);
-  });
+  state.currentJob.oppgaver.forEach(task=>renderTask(container,task));
+  document.querySelectorAll(".task").forEach(task=>task.addEventListener("change",()=>{
+    task.closest(".work-check-row")?.classList.toggle("is-complete",task.checked);
+    renderProgress();
+    scheduleDraftSave();
+  }));
+  renderProgress();
 }
 
-function renderTask(container, task) {
-
-  // Gruppe med overskrift
-  if (
-    typeof task === "object" &&
-    (task.punkter || task.innhold)
-  ) {
-
-    renderGroup(container, task);
-    return;
-  }
-
-  // Ren tekst
-  if (
-    typeof task === "object" &&
-    task.tekst
-  ) {
-
-    renderText(container, task.tekst);
-    return;
-  }
-
-  // Almindelig checkbox
-  renderCheckbox(container, task);
-
+function renderTask(container,task){
+  if(typeof task === "object" && (task.punkter || task.innhold)) return renderGroup(container,task);
+  if(typeof task === "object" && task.tekst) return renderText(container,task.tekst);
+  renderCheckbox(container,task);
 }
 
-function renderGroup(container, task) {
-
-  const heading = document.createElement("h3");
-  heading.className = "taskHeading";
-  heading.innerText = task.overskrift;
-  container.appendChild(heading);
-
-  if (task.innhold) {
-
-    task.innhold.forEach(item => {
-
-      if (item.type === "tekst") {
-        renderText(container, item.tekst);
-      }
-
-      if (item.type === "punkt") {
-        renderCheckbox(container, item.tekst);
-      }
-
-    });
-
-  }
-
-  if (task.tekst) {
-    renderText(container, task.tekst, true);
-  }
-
-  if (task.punkter) {
-
-    task.punkter.forEach(punkt => {
-      renderCheckbox(container, punkt);
-    });
-
-  }
-
+function renderGroup(container,task){
+  if(task.overskrift){ const heading=document.createElement("h3"); heading.className="taskHeading"; heading.textContent=task.overskrift; container.appendChild(heading); }
+  task.innhold?.forEach(item=>item.type === "punkt" ? renderCheckbox(container,item.tekst) : item.type === "tekst" ? renderText(container,item.tekst) : null);
+  if(task.tekst) renderText(container,task.tekst);
+  task.punkter?.forEach(item=>renderCheckbox(container,item));
 }
 
-function renderText(container, text, bottomOnly = false) {
-
-  const div = document.createElement("div");
-
-  if (bottomOnly) {
-    div.style.marginBottom = "10px";
-  } else {
-    div.style.margin = "10px 0";
-  }
-
-  div.style.lineHeight = "1.5";
-  div.innerHTML = text;
-
-  container.appendChild(div);
-
+function renderText(container,text){
+  const element=document.createElement("p");
+  element.className="taskText";
+  element.textContent=textOnly(text);
+  container.appendChild(element);
 }
 
-function renderCheckbox(container, text) {
-
-  const label = document.createElement("label");
-
-  label.innerHTML =
-    `<input type="checkbox" class="task" disabled> ${text}`;
-
+function renderCheckbox(container,text){
+  const label=document.createElement("label");
+  label.className="work-check-row";
+  label.innerHTML=`<input type="checkbox" class="task" disabled><span>${textOnly(text)}</span>`;
   container.appendChild(label);
+}
 
+export function renderProgress(){
+  const tasks=[...document.querySelectorAll(".task")];
+  const done=tasks.filter(task=>task.checked).length;
+  const total=tasks.length;
+  const percent=total ? Math.round((done/total)*100) : 0;
+  const noun=state.translations?.points || "punkter";
+  dom.checklistCount.textContent=`${total} ${noun}`;
+  dom.progressText.textContent=(state.translations?.progressCount || "{done} av {total} punkter").replace("{done}",done).replace("{total}",total);
+  dom.progressPercent.textContent=`${percent} %`;
+  dom.progressBar.style.width=`${percent}%`;
 }

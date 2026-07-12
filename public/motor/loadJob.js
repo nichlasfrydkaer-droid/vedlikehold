@@ -71,6 +71,9 @@ export async function loadJob(){
 
 applySettings();
 
+  // All work inputs remain locked until the person explicitly starts work.
+  // app.js applies the restored/new work state after loading a local draft.
+
 requestAnimationFrame(fitJobTitle);
   
 }

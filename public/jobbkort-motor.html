@@ -1,92 +1,75 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jobbkort</title>
-<link rel="stylesheet" href="/style.css">  
-<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta
-  id="appleAppTitle"
-  name="apple-mobile-web-app-title"
-  content="Jobbkort">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobbkort</title>
+  <link rel="stylesheet" href="/motor/motor.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta id="appleAppTitle" name="apple-mobile-web-app-title" content="Jobbkort">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+  <header class="work-topbar">
+    <a id="backToMenu" class="work-back" href="/jobbkort-menu.html" aria-label="Tilbake til jobbkortmeny">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7M7 12h12"/></svg>
+    </a>
+    <strong id="topJobNumber">Jobbkort</strong>
+  </header>
 
-<div class="container">
-<h1 id="jobTitle">Laster...</h1>
-  
-<div id="jobSubtitle"></div>
-  
-<div class="section">
-<strong id="frequencyLabel">Frekvens:</strong>
-  <span id="frequency"></span>
-</div>
-<div class="section" id="timeSection">
-  <strong id="timeLabel">Tid brukt</strong>
-  <input type="text" id="timeInput" disabled>
-</div>
-<div class="section" id="nameSection">
-  <strong id="nameLabel">Navn</strong>
-  <input type="text" id="nameInput" disabled>
-</div>
-<div class="section">
-  <div class="notesInfo" id="merkText"></div>
+  <main class="work-shell">
+    <section class="work-heading">
+      <p id="jobNumber" class="work-kicker"></p>
+      <h1 id="jobTitle">Laster…</h1>
+      <p id="jobSubtitle" class="work-subtitle"></p>
+      <span class="work-frequency"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span id="frequency"></span></span>
+    </section>
 
-<strong id="checklistLabel">Kontrolliste</strong>
+    <section class="work-progress-card" aria-live="polite">
+      <div><span id="progressLabel">Fremdrift</span><strong id="progressText">0 av 0 punkter</strong></div>
+      <strong id="progressPercent">0 %</strong>
+      <div class="work-progress-track"><span id="progressBar"></span></div>
+    </section>
 
-  <div id="taskContainer"></div>
-</div>
-<div class="section" id="commentsSection">
+    <section class="work-info-grid">
+      <label id="nameSection" class="work-info-card"><span class="work-card-label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.25"/><path d="M5 21c.7-3.6 3.1-5.5 7-5.5s6.3 1.9 7 5.5"/></svg><span id="nameLabel">Navn</span></span><input type="text" id="nameInput" autocomplete="name" disabled></label>
+      <section id="timeSection" class="work-info-card"><span class="work-card-label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><span id="timeLabel">Tid brukt</span></span><output id="timeInput">00:00:00</output></section>
+    </section>
 
-<strong id="notesLabel">Notater</strong>
+    <section id="noticeSection" class="work-notice" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <div><strong id="noticeLabel">Viktig</strong><p id="merkText"></p></div>
+    </section>
 
-  <div class="notesInfo" id="notatInfo"></div>
-  <textarea id="notes" disabled></textarea>
-</div>
-<div class="section" id="photosSection">
+    <section class="work-card work-checklist-card">
+      <header><div><h2 id="checklistLabel">Kontrolliste</h2><span id="checklistCount" class="work-count">0 punkter</span></div></header>
+      <div id="taskContainer" class="work-checklist"></div>
+    </section>
 
-  <strong id="photosLabel">Bilder</strong>
+    <section id="commentsSection" class="work-card">
+      <header><h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.2-1 9.4-9.4a2.2 2.2 0 0 0-3.1-3.1L5.1 15.9 4 20Z"/><path d="m13 7 3 3"/></svg><span id="notesLabel">Notater</span></h2></header>
+      <p id="notatInfo" class="work-help"></p>
+      <textarea id="notes" rows="4" disabled></textarea>
+    </section>
 
-  <input
-    type="file"
-    id="photos"
+    <section id="photosSection" class="work-card">
+      <header><h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="3.5"/></svg><span id="photosLabel">Bilder</span></h2><label id="addPhotoLabel" class="work-add-photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span id="addPhotoText">Legg til bilde</span><input type="file" id="photos" multiple accept="image/*" disabled hidden></label></header>
+      <div id="preview" class="work-photo-grid"></div>
+    </section>
+    <p id="status" class="work-status" role="status" aria-live="polite"></p>
+  </main>
 
-    multiple
+  <div class="work-action-bar"><button id="startBtn" class="work-primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg><span>Start arbeidet</span></button><button id="finishBtn" class="work-primary" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>Ferdigmeld</span></button></div>
 
-    accept="image/*"
+  <div id="finishModal" class="work-modal" hidden role="dialog" aria-modal="true" aria-labelledby="finishModalTitle">
+    <div class="work-modal-card">
+      <section id="modalSummary"><span class="work-modal-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg></span><h2 id="finishModalTitle">Klar til å sende?</h2><p id="finishModalIntro"></p><div id="finishSummary" class="work-summary"></div><div class="work-modal-actions"><button id="modalCancel" type="button" class="work-secondary">Angre</button><button id="modalConfirm" type="button" class="work-primary">Bekreft</button></div></section>
+      <section id="modalSending" hidden><span class="work-sending-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10M7 21h10M8 3v5a4 4 0 0 0 8 0V3M16 21v-5a4 4 0 0 0-8 0v5"/></svg></span><h2 id="sendingTitle">Sender rapport…</h2><p id="sendingText">Ikke forlat siden.</p></section>
+    </div>
+  </div>
 
-    disabled
-
-  >
-
-  <div id="preview"></div>
-
-</div>
-<div id="status"></div>
-</div>
-
-<div class="actionBar">
-
-  <button id="startBtn" class="pulse">
-    ▶ Start arbeidet
-  </button>
-
-  <button id="finishBtn">
-    ✓ Ferdigmeld
-  </button>
-
-</div>
-
-<script type="module">
-import { initApp } from "/motor/app.js";
-
-initApp();
-</script>
+  <script type="module">import { initApp } from "/motor/app.js"; initApp();</script>
 </body>
 </html>

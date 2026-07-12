@@ -3,6 +3,9 @@ import { qs } from "./utils.js";
 export const dom = {
 
   title: qs("jobTitle"),
+  jobNumber: qs("jobNumber"),
+  topJobNumber: qs("topJobNumber"),
+  backToMenu: qs("backToMenu"),
   subtitle: qs("jobSubtitle"),
 
   frequency: qs("frequency"),
@@ -36,6 +39,24 @@ export const dom = {
   photosSection: qs("photosSection"),
   commentsSection: qs("commentsSection"),
   timeSection: qs("timeSection"),
-  nameSection: qs("nameSection")
+  nameSection: qs("nameSection"),
+  noticeSection: qs("noticeSection"),
+  noticeLabel: qs("noticeLabel"),
+  addPhotoLabel: qs("addPhotoLabel"),
+  checklistCount: qs("checklistCount"),
+  progressLabel: qs("progressLabel"),
+  progressText: qs("progressText"),
+  progressPercent: qs("progressPercent"),
+  progressBar: qs("progressBar"),
+  finishModal: qs("finishModal"),
+  modalSummary: qs("modalSummary"),
+  modalSending: qs("modalSending"),
+  finishModalTitle: qs("finishModalTitle"),
+  finishModalIntro: qs("finishModalIntro"),
+  finishSummary: qs("finishSummary"),
+  modalConfirm: qs("modalConfirm"),
+  modalCancel: qs("modalCancel"),
+  sendingTitle: qs("sendingTitle"),
+  sendingText: qs("sendingText")
 
 };

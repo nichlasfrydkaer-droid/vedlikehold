@@ -1,6 +1,6 @@
 {
-  "startWork": "▶ Start arbejdet",
-  "finish": "✓ Færdigmeld",
+  "startWork": "Start arbejdet",
+  "finish": "Færdigmeld",
   "frequency": "Frekvens",
   "timeUsed": "Tid brugt",
   "name": "Navn",
@@ -36,4 +36,5 @@
   "reportSent": "Rapport sendt!",
   "reportSentText": "Rapporten er sendt til Vedligeholdelsessystemet.",
   "closePage": "Du kan nu lukke siden."
+  ,"addPhoto":"Tilføj billede", "progress":"Fremdrift", "important":"Vigtigt", "points":"punkter", "progressCount":"{done} af {total} punkter", "finishConfirmTitle":"Klar til at sende?", "finishConfirmIntro":"Se oplysningerne igennem, før rapporten sendes.", "completedPoints":"{count} punkter udført", "missingPoints":"{count} punkter mangler", "photoCount":"{count} billeder", "confirm":"Bekræft", "cancel":"Fortryd", "retry":"Prøv igen", "doNotLeave":"Forlad ikke siden."
 }

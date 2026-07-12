@@ -1,46 +1,23 @@
 import { state } from "./state.js";
 import { dom } from "./dom.js";
+import { scheduleDraftSave } from "./draft.js";
+
+export function updateTimer(){
+  const seconds=Math.max(0,Math.floor((Date.now()-(state.startTime || Date.now()))/1000));
+  const h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;
+  dom.timeInput.textContent=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
 
 export function startTimer(){
-
-  state.startTime = Date.now();
-
-  const updateTimer = ()=>{
-
-    const diff = Date.now() - state.startTime;
-
-    const h =
-      Math.floor(diff / 3600000);
-
-    const m =
-      Math.floor((diff % 3600000) / 60000);
-
-    const s =
-      Math.floor((diff % 60000) / 1000);
-
-    dom.timeInput.value =
-      String(h).padStart(2,"0") + ":" +
-      String(m).padStart(2,"0") + ":" +
-      String(s).padStart(2,"0");
-
-  };
-
+  if(!state.startTime) state.startTime=Date.now();
+  clearInterval(state.timerInterval);
   updateTimer();
-
-  state.timerInterval = setInterval(updateTimer,1000);
-
+  state.timerInterval=setInterval(updateTimer,1000);
+  scheduleDraftSave();
 }
 
 export function stopTimer(){
-
   clearInterval(state.timerInterval);
-
-  if(state.startTime){
-    const diff = Date.now() - state.startTime;
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    dom.timeInput.value = `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-  }
-
+  state.timerInterval=null;
+  updateTimer();
 }

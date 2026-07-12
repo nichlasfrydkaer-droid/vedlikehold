@@ -4,7 +4,7 @@ import { drawTasks } from "./pdfTasks.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { uploadReport } from "./upload.js";
-import { stopTimer } from "./timer.js";
+import { stopTimer, startTimer } from "./timer.js";
 export async function generatePDF(){
 
   stopTimer();
@@ -54,7 +54,7 @@ y += 5;
     dom.nameInput.value;
 
   const tid =
-    dom.timeInput.value;
+  dom.timeInput.textContent;
 
 const datoObj = new Date();
 
@@ -125,12 +125,16 @@ const report =
 const pdfBlob =
     doc.output("blob");
 
-await uploadReport(
+const sent = await uploadReport(
 
     pdfBlob,
 
     report
 
 );
+
+if(!sent && state.started){
+  startTimer();
+}
 
 }

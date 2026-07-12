@@ -6,8 +6,11 @@ export const state = {
 
   startTime: null,
   timerInterval: null,
+  started: false,
 
   selectedPhotos: [],
+
+  draftKey: null,
 
   sending: false
 

@@ -1,37 +1,45 @@
 import { loadJob } from "./loadJob.js";
-import { initPhotos, autoResizeNotes } from "./photos.js";
+import { initPhotos, autoResizeNotes, initDraftInputs, renderPreview, resizeNotes } from "./photos.js";
 import { initTitle } from "./title.js";
 import { generatePDF } from "./pdf.js";
-import { startWork } from "./work.js";
+import { startWork, setWorkState, openFinishConfirmation, closeFinishConfirmation } from "./work.js";
 import { state } from "./state.js";
 import { dom } from "./dom.js";
+import { createDraftKey, loadDraft, saveDraft } from "./draft.js";
+import { startTimer, updateTimer } from "./timer.js";
+import { renderProgress } from "./render.js";
 
-export async function initApp() {
+async function restoreDraft(){
+  state.draftKey=createDraftKey();
+  const draft=await loadDraft();
+  if(!draft) return;
+  state.started=Boolean(draft.started);
+  state.startTime=draft.startTime || null;
+  dom.nameInput.value=draft.name || "";
+  dom.notes.value=draft.notes || "";
+  [...document.querySelectorAll(".task")].forEach((task,index)=>{task.checked=Boolean(draft.checked?.[index]);task.closest(".work-check-row")?.classList.toggle("is-complete",task.checked);});
+  state.selectedPhotos=(draft.photos || []).map(photo=>new File([photo.blob],photo.name || "bilde.jpg",{type:photo.type || photo.blob?.type || "image/jpeg",lastModified:photo.lastModified || Date.now()}));
+  renderPreview();
+  setWorkState();
+  renderProgress();
+  if(state.started && state.startTime) startTimer(); else updateTimer();
+  resizeNotes();
+}
 
-    initTitle();
-
-    initPhotos();
-
-    autoResizeNotes();
-
-    dom.startBtn.addEventListener("click", startWork);
-
-    dom.finishBtn.addEventListener("click", () => {
-
-        const navn = dom.nameInput.value.trim();
-
-        if (!navn) {
-
-            alert(state.translations.alertNameRequired);
-            dom.nameInput.focus();
-            return;
-
-        }
-
-        generatePDF();
-
-    });
-
-    await loadJob();
-
+export async function initApp(){
+  initTitle();
+  initPhotos();
+  initDraftInputs();
+  autoResizeNotes();
+  dom.startBtn.addEventListener("click",startWork);
+  dom.finishBtn.addEventListener("click",openFinishConfirmation);
+  dom.modalCancel.addEventListener("click",closeFinishConfirmation);
+  dom.finishModal.addEventListener("click",event=>{if(event.target === dom.finishModal) closeFinishConfirmation();});
+  dom.modalConfirm.addEventListener("click",()=>{void generatePDF();});
+  dom.backToMenu.addEventListener("click",async event=>{event.preventDefault();await saveDraft();location.href=dom.backToMenu.href;});
+  window.addEventListener("pagehide",()=>{ void saveDraft(); });
+  window.addEventListener("beforeunload",event=>{ if(state.sending){ event.preventDefault(); event.returnValue=""; } });
+  await loadJob();
+  await restoreDraft();
+  setWorkState();
 }
