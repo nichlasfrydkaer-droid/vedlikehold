@@ -5,22 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vedlikeholdsystem</title>
   <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Vedlikeholdsystem">
-  <style>
-    body{min-height:100vh;margin:0;display:grid;place-items:center;background:#f3f7fc;color:#172b4d;font-family:Arial,Helvetica,sans-serif}
-    main{text-align:center;padding:32px}
-    h1{margin:0 0 22px;color:#1767c5;font-size:clamp(2rem,7vw,3.2rem)}
-    a{display:inline-block;border-radius:10px;background:#1767c5;padding:13px 24px;color:#fff;font-weight:700;text-decoration:none}
-  </style>
+  <link rel="stylesheet" href="/assets/landing.css">
 </head>
 <body>
+  <header class="site-header"><a class="brand" href="/"><img src="/logonobackground.png" alt="Vedlikeholdsystem"></a><nav class="language-switch" aria-label="Language"><button data-lang="no">NO</button><button data-lang="da">DA</button><button data-lang="en">EN</button></nav></header>
   <main>
-    <h1>Vedlikeholdsystem</h1>
-    <a href="/dashboard/login.html">Logg inn</a>
+    <section class="hero">
+      <div class="hero-copy"><img class="hero-mark" src="/icon.png" alt=""><h1>Vedlikehold<span>system</span></h1><p data-i18n="intro">En enklere måte å administrere vedlikehold og service på.</p><div class="hero-actions"><a class="primary-action" href="/dashboard/login.html" data-i18n="login">Logg inn</a><a class="secondary-action" href="/request-access.html" data-i18n="requestAccess">Anmod om tilgang</a></div></div>
+      <div class="dashboard-preview"><img src="/assets/dashboard-example.png" alt="Eksempel på Vedlikeholdsystem-dashboard" data-i18n-alt="previewAlt"></div>
+    </section>
+    <section class="benefits" aria-label="Fordeler">
+      <article><i>☷</i><h2 data-i18n="benefit1Title">Opprett og fordel oppdrag</h2><p data-i18n="benefit1Text">Lag vedlikeholdsoppgaver og tildel dem til riktig person.</p></article>
+      <article><i>⌁</i><h2 data-i18n="benefit2Title">Utfør jobben på mobil</h2><p data-i18n="benefit2Text">Brukervennlig utførelse direkte på mobil eller nettbrett.</p></article>
+      <article><i>▱</i><h2 data-i18n="benefit3Title">Automatisk dokumentasjon</h2><p data-i18n="benefit3Text">Rapporten genereres automatisk som PDF og sendes på e-post.</p></article>
+      <article><i>▧</i><h2 data-i18n="benefit4Title">Bilder, historikk og arkiv</h2><p data-i18n="benefit4Text">Samle bilder og historikk trygt og tilgjengelig over tid.</p></article>
+      <article><i>▥</i><h2 data-i18n="benefit5Title">Full oversikt</h2><p data-i18n="benefit5Text">Se status, fremdrift og historikk på ett sted.</p></article>
+    </section>
+    <section class="bottom-actions"><a class="primary-action" href="/dashboard/login.html" data-i18n="login">Logg inn</a><a class="secondary-action" href="/request-access.html" data-i18n="requestAccess">Anmod om tilgang</a></section>
   </main>
-  <script>
-    window.setTimeout(() => { window.location.replace("/dashboard/login.html"); }, 900);
-  </script>
+  <script src="/assets/landing.js" defer></script>
 </body>
 </html>
