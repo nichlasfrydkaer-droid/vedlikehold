@@ -137,6 +137,7 @@ export async function rotateSession(){ const result=await request("/session/rota
 export async function getMembers(congregationId){ return request("/members?congregation=" + encodeURIComponent(congregationId)); }
 export async function inviteMember(congregationId, member){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"POST",body:JSON.stringify(member)}); }
 export async function updateMember(congregationId, member){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"PUT",body:JSON.stringify(member)}); }
+export async function updateMemberReportRecipient(congregationId, userId, receivesReports){ return updateMember(congregationId, {action:"report_recipient",user_id:userId,receives_reports:receivesReports}); }
 export async function removeMember(congregationId, userId){ return request("/members?congregation=" + encodeURIComponent(congregationId), {method:"DELETE",body:JSON.stringify({user_id:userId})}); }
 export async function getCongregationManagement(){ return request("/congregations"); }
 export async function createCongregation(data){ return request("/congregations",{method:"POST",body:JSON.stringify(data)}); }
