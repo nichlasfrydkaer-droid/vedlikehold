@@ -1,0 +1,14 @@
+.report-checklist-heading{
+    margin-top:.7rem;
+    padding:.7rem .85rem!important;
+    border-left:3px solid #2563eb;
+    border-radius:0 .5rem .5rem 0;
+    background:#f7fbff;
+    color:#172b4d!important;
+    font-size:.95rem;
+    font-weight:700;
+}
+
+.report-checklist-heading:first-child{
+    margin-top:0;
+}

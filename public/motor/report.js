@@ -27,6 +27,13 @@ export function buildReport(){
             && item.punkter
         ){
 
+            if(item.overskrift){
+                tasks.push({
+                    type:"heading",
+                    text:item.overskrift
+                });
+            }
+
             item.punkter.forEach(text=>{
 
                 const checkbox =
@@ -51,6 +58,13 @@ export function buildReport(){
             typeof item === "object"
             && item.innhold
         ){
+
+            if(item.overskrift){
+                tasks.push({
+                    type:"heading",
+                    text:item.overskrift
+                });
+            }
 
             item.innhold.forEach(del=>{
 
