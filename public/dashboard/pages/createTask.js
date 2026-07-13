@@ -1,5 +1,6 @@
 import { loadDashboard } from "../services/dashboard.js";
-import { getReport, createTaskFromReport, uploadTaskPhotos } from "../js/api.js";
+import { getReport, createTaskFromReport, uploadTaskPhotos, getJobcardDocuments } from "../js/api.js";
+import { t } from "../js/i18n.js";
 
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (character) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[character]);
 
@@ -14,6 +15,8 @@ export async function initCreateTask(){
     const report = result.report;
     const suggestedTitle = String(report.title || `Jobbkort ${report.job_number || ""}`).trim();
     const sourcePhotos = JSON.parse(report.photo_urls_json || "[]");
+    const documentsResult = await getJobcardDocuments(report.congregation_id);
+    const hasSjaGuide = Boolean(documentsResult?.documents?.some((document) => document.presetKey === "dc85i"));
     const selected = new Set();
 
     const renderPhotos = () => {
@@ -25,7 +28,8 @@ export async function initCreateTask(){
         }));
     };
 
-    root.innerHTML = `<a class="create-task-back" href="/dashboard/report.html?id=${encodeURIComponent(report.id)}">← Tilbake til rapport</a><section class="create-task-card"><p class="create-task-context">Jobbkort ${escapeHtml(report.job_number)} · ${escapeHtml(report.congregation_id)}</p><h1>Opprett oppdrag</h1><label>Tittel<input id="title" value="${escapeHtml(suggestedTitle)}"></label><label>Ny kommentar<textarea id="description" rows="4"></textarea></label><section class="create-task-original"><label><input id="includeOriginal" type="checkbox"> Medtag original kommentar</label><p>${escapeHtml(report.notes || "–")}</p></section><section><h2>Sjekkpunkter</h2><div id="checklist"><input class="check-item" placeholder="Skriv et sjekkpunkt"></div><button type="button" id="addCheck" class="task-add">+ Legg til punkt</button></section><section><h2>Bilder</h2><p class="create-task-help">Trykk på bildene du vil ta med i oppdraget.</p><div class="task-source-photo-grid" data-photos></div><label class="task-upload">+ Tilføy bilde<input id="newPhotos" type="file" accept="image/*" multiple hidden></label></section><label class="task-require-photos"><input id="requireCompletionPhotos" type="checkbox"> Krev bildedokumentasjon ved fullføring</label><label class="task-require-photos"><input id="requireSja" type="checkbox"> Krev utfylling av SJA (Sikker jobb-analyse) før arbeidet utføres</label><label>Frist<input id="deadline" type="date" required></label><button id="createTaskButton" class="create-task-submit" type="button">Opprett oppdrag</button><p id="status"></p></section>`;
+    root.innerHTML = `<a class="create-task-back" href="/dashboard/report.html?id=${encodeURIComponent(report.id)}">← Tilbake til rapport</a><section class="create-task-card"><p class="create-task-context">Jobbkort ${escapeHtml(report.job_number)} · ${escapeHtml(report.congregation_id)}</p><h1>Opprett oppdrag</h1><label>Tittel<input id="title" value="${escapeHtml(suggestedTitle)}"></label><label>Ny kommentar<textarea id="description" rows="4"></textarea></label><section class="create-task-original"><label><input id="includeOriginal" type="checkbox"> Medtag original kommentar</label><p>${escapeHtml(report.notes || "–")}</p></section><section><h2>Sjekkpunkter</h2><div id="checklist"><input class="check-item" placeholder="Skriv et sjekkpunkt"></div><button type="button" id="addCheck" class="task-add">+ Legg til punkt</button></section><section><h2>Bilder</h2><p class="create-task-help">Trykk på bildene du vil ta med i oppdraget.</p><div class="task-source-photo-grid" data-photos></div><label class="task-upload">+ Tilføy bilde<input id="newPhotos" type="file" accept="image/*" multiple hidden></label></section><label class="task-require-photos"><input id="requireCompletionPhotos" type="checkbox"> Krev bildedokumentasjon ved fullføring</label><label class="task-require-photos"><input id="requireSja" type="checkbox"> ${t("requireSjaTask","Krev utfylling av SJA (Sikker jobb-analyse) før arbeidet utføres")}</label><p id="sjaGuideWarning" class="create-task-help" hidden></p><label>Frist<input id="deadline" type="date" required></label><button id="createTaskButton" class="create-task-submit" type="button">Opprett oppdrag</button><p id="status"></p></section>`;
+    root.querySelector("#requireSja").addEventListener("change",(event)=>{if(!event.currentTarget.checked || hasSjaGuide)return;event.currentTarget.checked=false;const warning=root.querySelector("#sjaGuideWarning");warning.hidden=false;warning.innerHTML=`${t("sjaGuideRequired","Denne funksjonen krever at Veiledning til Sikker jobb-analyse (DC-85i) er lastet opp.")} <a href="/dashboard/settings.html">${t("openSettings","Åpne innstillinger")}</a>`;});
     renderPhotos();
     root.querySelector("#addCheck").addEventListener("click", () => root.querySelector("#checklist").insertAdjacentHTML("beforeend", '<input class="check-item" placeholder="Skriv et sjekkpunkt">'));
     root.querySelector("#newPhotos").addEventListener("change", async (event) => {
