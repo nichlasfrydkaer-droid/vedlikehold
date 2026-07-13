@@ -14,7 +14,7 @@ export async function initO(){
   const form={name:"",comment:"",checked:checklist.map(()=>false)};
   let started=task.status!=="open";
   const snapshot=()=>{form.name=root.querySelector("#completedName")?.value||form.name;form.comment=root.querySelector("#comment")?.value||form.comment;form.checked=checklist.map((_,index)=>root.querySelector(`.taskCheckbox[data-index="${index}"]`)?.checked??form.checked[index]);};
-  const sjaStep=(item={},removable=false)=>`<div class="public-sja-step">${removable?'<button type="button" class="public-sja-remove" aria-label="Fjern arbeidssteg">×</button>':""}<label>Arbeidssteg ${sjaInfo("Beskriv arbeidsoppgaven i den rekkefølgen den skal utføres.")}<input name="step" required value="${escapeHtml(item.step)}"></label><label>Risiko ${sjaInfo("Skriv hva som kan gå galt eller føre til skade.")}<input name="risk" required value="${escapeHtml(item.risk)}"></label><label>Kontrolltiltak ${sjaInfo("Skriv hva dere gjør for å redusere risikoen.")}<input name="measure" required value="${escapeHtml(item.measure)}"></label></div>`;
+  const sjaStep=(item={},removable=false)=>`<div class="public-sja-step">${removable?'<button type="button" class="public-sja-remove" aria-label="Fjern arbeidssteg">×</button>':""}<label>Arbeidssteg ${sjaInfo("Beskriv arbeidsoppgaven i den rekkefølgen den skal utføres.")}<textarea name="step" rows="1" required>${escapeHtml(item.step)}</textarea></label><label>Risiko ${sjaInfo("Skriv hva som kan gå galt eller føre til skade.")}<textarea name="risk" rows="1" required>${escapeHtml(item.risk)}</textarea></label><label>Kontrolltiltak ${sjaInfo("Skriv hva dere gjør for å redusere risikoen.")}<textarea name="measure" rows="1" required>${escapeHtml(item.measure)}</textarea></label></div>`;
   const sjaMarkup=()=>{
     if(!task.require_sja)return "";
     if(sja&&!editingSja)return `<section class="public-sja public-sja-complete"><div><strong>Sikker jobb-analyse er utfylt</strong><p>${escapeHtml(sja.work_description)}</p></div><div><button type="button" data-sja-edit>Åpne</button><a href="${escapeHtml(sja.pdf_url)}" target="_blank" rel="noopener">Last ned SJA (DC-85)</a></div></section>`;
@@ -27,10 +27,16 @@ export async function initO(){
     bind();
   };
   const bindSja=()=>{
+    const resizeStepFields=(scope=root)=>scope.querySelectorAll(".public-sja-step textarea").forEach(field=>{
+      const resize=()=>{field.style.height="auto";field.style.height=`${field.scrollHeight}px`;};
+      if(!field.dataset.autoResize){field.addEventListener("input",resize);field.dataset.autoResize="true";}
+      resize();
+    });
+    resizeStepFields();
     root.querySelector("[data-sja-edit]")?.addEventListener("click",()=>{snapshot();editingSja=true;render();});
     root.querySelectorAll(".public-sja-remove").forEach(button=>button.addEventListener("click",()=>button.closest(".public-sja-step").remove()));
-    root.querySelector("[data-sja-add]")?.addEventListener("click",()=>root.querySelector("[data-sja-steps]").insertAdjacentHTML("beforeend",sjaStep({},true)));
-    root.querySelector("[data-sja-save]")?.addEventListener("click",async()=>{const section=root.querySelector("#publicSja"),status=section.querySelector(".public-sja-status"),inputs=[...section.querySelectorAll("input")];if(inputs.filter(input=>input.required).some(input=>!input.value.trim())){status.textContent="Fyll ut alle påkrevde felt.";return;}const steps=[...section.querySelectorAll(".public-sja-step")].map(block=>Object.fromEntries([...block.querySelectorAll("input")].map(input=>[input.name,input.value.trim()])));const value=name=>section.querySelector(`[name="${name}"]`)?.value.trim()||"";const response=await savePublicTaskSja({id:sja?.id,target_type:"task",task_code:code,work_description:value("work_description"),location:value("location"),planned_start_date:value("planned_start_date"),emergency_numbers:value("emergency_numbers"),prepared_by:value("prepared_by"),reviewed_by:value("reviewed_by"),steps});if(!response.success){status.textContent=response.message||"Kunne ikke lagre analysen.";return;}snapshot();sja=response.sja;editingSja=false;render();});
+    root.querySelector("[data-sja-add]")?.addEventListener("click",()=>{const steps=root.querySelector("[data-sja-steps]");steps.insertAdjacentHTML("beforeend",sjaStep({},true));resizeStepFields(steps);});
+    root.querySelector("[data-sja-save]")?.addEventListener("click",async()=>{const section=root.querySelector("#publicSja"),status=section.querySelector(".public-sja-status"),inputs=[...section.querySelectorAll("input,textarea")];if(inputs.filter(input=>input.required).some(input=>!input.value.trim())){status.textContent="Fyll ut alle påkrevde felt.";return;}const steps=[...section.querySelectorAll(".public-sja-step")].map(block=>Object.fromEntries([...block.querySelectorAll("textarea")].map(input=>[input.name,input.value.trim()])));const value=name=>section.querySelector(`[name="${name}"]`)?.value.trim()||"";const response=await savePublicTaskSja({id:sja?.id,target_type:"task",task_code:code,work_description:value("work_description"),location:value("location"),planned_start_date:value("planned_start_date"),emergency_numbers:value("emergency_numbers"),prepared_by:value("prepared_by"),reviewed_by:value("reviewed_by"),steps});if(!response.success){status.textContent=response.message||"Kunne ikke lagre analysen.";return;}snapshot();sja=response.sja;editingSja=false;render();});
   };
   const bind=()=>{
     bindSja();
