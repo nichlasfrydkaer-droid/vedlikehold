@@ -528,4 +528,12 @@ export async function startPublicTask(linkCode){
 
 }
 
+export async function getPublicTaskSja(linkCode){
+    return await request(`/sja?task_code=${encodeURIComponent(linkCode)}`);
+}
+
+export async function savePublicTaskSja(data){
+    return await request("/sja",{method:"POST",body:JSON.stringify(data)});
+}
+
 export async function uploadPublicTaskPhotos(linkCode,files){const form=new FormData();form.append("link_code",linkCode);[...files].forEach(file=>form.append("photos",file));const response=await fetch(config.api+"/o/photos",{method:"POST",body:form});return response.json();}
