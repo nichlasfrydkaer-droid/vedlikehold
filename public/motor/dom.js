@@ -65,5 +65,6 @@ export const dom = {
   modalCancel: qs("modalCancel"),
   sendingTitle: qs("sendingTitle"),
   sendingText: qs("sendingText")
+  ,sjaSection: qs("sjaSection")
 
 };

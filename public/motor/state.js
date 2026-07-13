@@ -13,6 +13,10 @@ export const state = {
 
   draftKey: null,
 
+  sja: null,
+  sjaRequired: false,
+  workKey: null,
+
   sending: false
 
 };

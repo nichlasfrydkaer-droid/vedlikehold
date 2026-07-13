@@ -59,6 +59,7 @@ export function mergeJobcardSchedules(jobcards, response){
             autoInterval,
             lastPerformedAt,
             manualIntervalMonths,
+            requireSja: setting.require_sja === 1,
             nextExecution
         };
     });

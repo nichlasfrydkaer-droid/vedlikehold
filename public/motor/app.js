@@ -9,6 +9,7 @@ import { dom } from "./dom.js";
 import { createDraftKey, clearExpiredDrafts, loadDraft, saveDraft } from "./draft.js";
 import { startTimer, updateTimer } from "./timer.js";
 import { renderProgress } from "./render.js";
+import { initSja } from "./sja.js";
 
 function initStickyProgress(){
   const card=document.querySelector(".work-progress-card");
@@ -59,7 +60,9 @@ export async function initApp(){
   window.addEventListener("pagehide",()=>{ void saveDraft(); });
   try{
     await loadJob();
+    await initSja();
     await restoreDraft();
+    window.addEventListener("sjachange",setWorkState);
     setWorkState();
     updateTimer();
   }catch(error){

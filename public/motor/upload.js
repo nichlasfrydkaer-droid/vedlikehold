@@ -20,6 +20,7 @@ export async function uploadReport(report){
   formData.append("congregation",congregation || "");
   formData.append("token",config.apiToken);
   formData.append("report",JSON.stringify(report));
+  if(state.sja?.id) formData.append("sja_id",state.sja.id);
   state.selectedPhotos.forEach(photo=>formData.append("photos",photo,photo.name));
   state.pdfPhotos.forEach(photo=>formData.append("pdfPhotos",photo,photo.name));
 
