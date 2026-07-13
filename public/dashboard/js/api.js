@@ -105,6 +105,28 @@ async function request(
 
 }
 
+const pause = milliseconds => new Promise(resolve => setTimeout(resolve,milliseconds));
+
+async function getWithRetry(endpoint){
+    let result;
+
+    for(let attempt=0;attempt<2;attempt+=1){
+        try{
+            result = await request(endpoint);
+        }catch(error){
+            result = {success:false,error:error?.message || "Network request failed"};
+        }
+
+        if(result?.success || attempt === 1 || [400,401,403,404].includes(result?.status)){
+            return result;
+        }
+
+        await pause(300);
+    }
+
+    return result;
+}
+
 export async function login(
     email,
     password
@@ -183,7 +205,7 @@ export async function getReport(
     id
 ){
 
-    return await request(
+    return await getWithRetry(
 
         "/report?id=" +
 
