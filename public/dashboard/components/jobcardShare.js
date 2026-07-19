@@ -28,6 +28,8 @@ function openShareDialog({ item, url, type }){
     const isTask = type === "task";
     const congregation = getCongregation();
     const canManageFixedAssignment = congregation && ["owner", "admin"].includes(congregation.role);
+    const existingFixedAssignment = !isTask ? item.fixedAssignment : null;
+    const assignedNames = [existingFixedAssignment?.responsibleName, existingFixedAssignment?.helperName].filter(Boolean).join(" & ");
     const subject = interpolate(isTask ? "taskShareSubject" : "jobcardShareSubject", isTask ? "New task assigned: {title}" : "New job card assigned: {title}", {title:item.title});
     const body = interpolate(isTask ? "taskShareBody" : "jobcardShareBody", isTask ? "You have been assigned {title}.\n\nOpen the task: {link}\n\nRegards,\nMaintenance System" : "You have been assigned {title}.\n\nOpen the job card: {link}\n\nRegards,\nMaintenance System", {title:item.title,link:url});
     const linkLabel = t(isTask ? "taskLink" : "jobcardLink", isTask ? "Task link" : "Job card link");
@@ -40,7 +42,10 @@ function openShareDialog({ item, url, type }){
                 <label>${escapeHtml(t("shareDeadline","Frist for utførelse"))}<input class="dashboard-input" type="date" data-deadline-input></label>
                 <button type="button" class="dashboard-button" data-deadline-confirm disabled>${escapeHtml(t("confirmDeadline","Bekreft dato"))}</button>
             </section>
-            ${canManageFixedAssignment ? `<section class="dashboard-fixed-assignment" data-fixed-assignment hidden>
+            ${existingFixedAssignment ? `<section class="dashboard-fixed-assigned-notice" data-fixed-assignment>
+                <strong>${escapeHtml(interpolate("fixedAssignmentAlreadyAssigned","Dette jobbkortet er fast tildelt til {names}.",{names:assignedNames}))}</strong>
+                <p>${escapeHtml(t("manageFixedAssignmentsPrefix","Gå til"))} <a href="/dashboard/settings?section=assignments">${escapeHtml(t("settings","Innstillinger"))}</a> ${escapeHtml(t("manageFixedAssignmentsSuffix","for å administrere faste tildelinger."))}</p>
+            </section>` : canManageFixedAssignment ? `<section class="dashboard-fixed-assignment" data-fixed-assignment hidden>
                 <label class="dashboard-check-row"><input type="checkbox" data-fixed-enabled> <span>${escapeHtml(t("assignJobcardPermanently","Tildel jobbkortet fast til personer"))}</span></label>
                 <div class="dashboard-fixed-fields" data-fixed-fields hidden>
                     <h3>${escapeHtml(t("fixedAssignment","Fast tildeling"))}</h3>

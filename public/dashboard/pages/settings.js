@@ -70,6 +70,14 @@ export async function initSettings(){
         const open = button.getAttribute("aria-expanded") !== "true";
         button.setAttribute("aria-expanded", String(open)); content.hidden = !open;
     }));
+    const requestedSection = new URLSearchParams(location.search).get("section");
+    const requestedSettingsSection = [...container.querySelectorAll("[data-settings-section]")].find((section) => section.dataset.settingsSection === requestedSection);
+    if(requestedSettingsSection){
+        const button = requestedSettingsSection.querySelector(".settings-section-toggle");
+        const content = requestedSettingsSection.querySelector(".settings-section-content");
+        button.setAttribute("aria-expanded","true"); content.hidden=false;
+        requestAnimationFrame(() => requestedSettingsSection.scrollIntoView({block:"start",behavior:"smooth"}));
+    }
 
     container.querySelector("[data-profile-form]").addEventListener("submit", async (event) => {
         event.preventDefault(); const name = new FormData(event.currentTarget).get("name").trim();
