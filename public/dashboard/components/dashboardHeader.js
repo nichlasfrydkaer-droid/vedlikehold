@@ -57,7 +57,7 @@ function renderActivityPanel(items){
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-label", t("newSinceLastLogin", "Nytt siden sist"));
     panel.innerHTML = `<h2>${t("newSinceLastLogin", "Nytt siden sist")}</h2><div class="activity-news-list">${items.length
-        ? items.slice(0, 8).map(renderActivityCard).join("")
+        ? items.slice(0, 20).map(renderActivityCard).join("")
         : `<p>${t("noNewActivity", "Ingen nye aktiviteter.")}</p>`}</div>`;
     panel.addEventListener("click", (event) => event.stopPropagation());
     document.body.appendChild(panel);
