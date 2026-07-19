@@ -80,3 +80,19 @@ export function isUpcoming(jobcard, today = new Date()){
     limit.setUTCDate(limit.getUTCDate() + 30);
     return next <= limit;
 }
+
+export function isOverdue(jobcard, today = new Date()){
+    if(!jobcard.visible){
+        return false;
+    }
+
+    const next = toDateOnly(jobcard.nextExecution);
+
+    if(!next){
+        return false;
+    }
+
+    const currentMonth = toDateOnly(today);
+    currentMonth.setUTCDate(1);
+    return next < currentMonth;
+}
