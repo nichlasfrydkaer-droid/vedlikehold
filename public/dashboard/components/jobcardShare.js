@@ -15,12 +15,15 @@ function intervalOptions(selected){
 function executionMonthOptions(initialMonth){
     const locale = document.documentElement.lang || "no";
     const formatter = new Intl.DateTimeFormat(locale,{ month:"long", year:"numeric" });
-    const first = new Date(`${initialMonth}-01T12:00:00`);
-    return Array.from({ length:25 },(_,index) => {
+    const selected = new Date(`${initialMonth}-01T12:00:00`);
+    const today = new Date();
+    const current = new Date(today.getFullYear(),today.getMonth(),1,12);
+    const first = Number.isNaN(selected.getTime()) || selected > current ? current : selected;
+    return Array.from({ length:121 },(_,index) => {
         const date = new Date(first.getFullYear(),first.getMonth() + index,1,12);
         const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2,"0")}`;
         const label = formatter.format(date).replace(/^./,letter => letter.toUpperCase());
-        return `<option value="${value}">${escapeHtml(label)}</option>`;
+        return `<option value="${value}" ${value === initialMonth ? "selected" : ""}>${escapeHtml(label)}</option>`;
     }).join("");
 }
 
