@@ -12,6 +12,18 @@ function intervalOptions(selected){
     return manualIntervals.map(([months,key,fallback]) => `<option value="${months}" ${Number(selected) === months ? "selected" : ""}>${escapeHtml(t(key,fallback))}</option>`).join("");
 }
 
+function executionMonthOptions(initialMonth){
+    const locale = document.documentElement.lang || "no";
+    const formatter = new Intl.DateTimeFormat(locale,{ month:"long", year:"numeric" });
+    const first = new Date(`${initialMonth}-01T12:00:00`);
+    return Array.from({ length:25 },(_,index) => {
+        const date = new Date(first.getFullYear(),first.getMonth() + index,1,12);
+        const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2,"0")}`;
+        const label = formatter.format(date).replace(/^./,letter => letter.toUpperCase());
+        return `<option value="${value}">${escapeHtml(label)}</option>`;
+    }).join("");
+}
+
 function openShareDialog({ item, url, type }){
     const isTask = type === "task";
     const congregation = getCongregation();
@@ -33,18 +45,18 @@ function openShareDialog({ item, url, type }){
                 <div class="dashboard-fixed-fields" data-fixed-fields hidden>
                     <h3>${escapeHtml(t("fixedAssignment","Fast tildeling"))}</h3>
                     <div class="dashboard-fixed-person-grid">
-                        <label>${escapeHtml(t("responsible","Ansvarlig"))}<input class="dashboard-input" data-responsible-name maxlength="120" autocomplete="name"></label>
-                        <label>${escapeHtml(t("email","E-post"))}<input class="dashboard-input" data-responsible-email type="email" maxlength="320" autocomplete="email"></label>
+                        <label>${escapeHtml(t("responsible","Ansvarlig"))}<input class="dashboard-input" data-responsible-name maxlength="120" autocomplete="name" placeholder="${escapeHtml(t("name","Navn"))}"></label>
+                        <label>${escapeHtml(t("email","E-post"))}<input class="dashboard-input" data-responsible-email type="email" maxlength="320" autocomplete="email" placeholder="example@example.com"></label>
                     </div>
-                    <button type="button" class="dashboard-text-button" data-add-helper>${escapeHtml(t("addHelper","Legg til medhjelper"))}</button>
+                    <button type="button" class="dashboard-button dashboard-button-secondary dashboard-add-helper" data-add-helper><span aria-hidden="true">+</span> ${escapeHtml(t("addHelper","Legg til medhjelper"))}</button>
                     <div class="dashboard-fixed-person-grid" data-helper-fields hidden>
-                        <label>${escapeHtml(t("helper","Medhjelper"))}<input class="dashboard-input" data-helper-name maxlength="120" autocomplete="name"></label>
-                        <label>${escapeHtml(t("email","E-post"))}<input class="dashboard-input" data-helper-email type="email" maxlength="320" autocomplete="email"></label>
+                        <label>${escapeHtml(t("helper","Medhjelper"))}<input class="dashboard-input" data-helper-name maxlength="120" autocomplete="name" placeholder="${escapeHtml(t("name","Navn"))}"></label>
+                        <label>${escapeHtml(t("email","E-post"))}<input class="dashboard-input" data-helper-email type="email" maxlength="320" autocomplete="email" placeholder="example@example.com"></label>
                     </div>
                     <div class="dashboard-fixed-schedule-grid">
                         <label class="dashboard-switch"><input type="checkbox" data-assignment-auto checked><span></span><span class="dashboard-switch-label">${escapeHtml(t("automatic","Automatisk"))}</span></label>
                         <label>${escapeHtml(t("assignmentInterval","Intervall"))}<select class="dashboard-input" data-assignment-interval disabled>${intervalOptions(item.intervalMonths || 12)}</select></label>
-                        <label>${escapeHtml(t("firstExecutionDeadline","Frist for første utførelse"))}<input class="dashboard-input" data-first-execution type="month" value="${initialMonth}" required></label>
+                        <label class="dashboard-first-execution">${escapeHtml(t("firstExecutionDeadline","Frist for første utførelse"))}<select class="dashboard-input" data-first-execution required>${executionMonthOptions(initialMonth)}</select></label>
                     </div>
                     <label class="dashboard-check-row"><input type="checkbox" data-reminder-enabled> <span>${escapeHtml(t("sendAssignmentReminder","Send én påminnelse på e-post 30 dager før"))}</span></label>
                     <button type="button" class="dashboard-button dashboard-assignment-submit" data-assignment-submit>${escapeHtml(t("assignJobcard","Tildel jobbkort"))}</button>
