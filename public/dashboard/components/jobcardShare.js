@@ -85,8 +85,8 @@ function openShareDialog({ item, url, type }){
         confirm.addEventListener("click",()=>{ const mailBody=`${body}\n\n${t("shareDeadline","Completion deadline")}: ${formatDeadline(input.value)}`; location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody)}`; });
         if(!fixedEnabled){ document.body.append(dialog); return; }
         fixedEnabled.addEventListener("change",()=>{ fixedFields.hidden=!fixedEnabled.checked; deadline.hidden=fixedEnabled.checked; });
-        const auto = dialog.querySelector("[data-assignment-auto]"), interval = dialog.querySelector("[data-assignment-interval]");
-        auto.addEventListener("change",()=>{ interval.disabled=auto.checked; });
+        const auto = dialog.querySelector("[data-assignment-auto]"), interval = dialog.querySelector("[data-assignment-interval]"), autoLabel = dialog.querySelector("[data-assignment-auto]").closest(".dashboard-switch").querySelector(".dashboard-switch-label");
+        auto.addEventListener("change",()=>{ interval.disabled=auto.checked; autoLabel.textContent=auto.checked ? t("automatic","Automatisk") : t("manual","Manuell"); });
         dialog.querySelector("[data-add-helper]").addEventListener("click",event=>{ event.currentTarget.hidden=true; dialog.querySelector("[data-helper-fields]").hidden=false; });
         dialog.querySelector("[data-assignment-submit]").addEventListener("click",async event=>{
             const responsibleName=dialog.querySelector("[data-responsible-name]").value.trim();
