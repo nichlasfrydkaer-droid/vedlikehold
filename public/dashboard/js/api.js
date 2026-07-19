@@ -264,6 +264,24 @@ export async function saveJobcardSettings(settings){
 
 }
 
+export async function getJobcardAssignments(congregationId){
+    return request("/jobcard-assignments?congregation=" + encodeURIComponent(congregationId));
+}
+
+export async function saveJobcardAssignment(assignment){
+    return request("/jobcard-assignments", {
+        method:assignment.id ? "PUT" : "POST",
+        body:JSON.stringify(assignment)
+    });
+}
+
+export async function deleteJobcardAssignment(congregationId, id){
+    return request("/jobcard-assignments", {
+        method:"DELETE",
+        body:JSON.stringify({ congregation_id:congregationId, id })
+    });
+}
+
 export async function getJobcardDocuments(congregationId){
     return request("/jobcard-documents?congregation=" + encodeURIComponent(congregationId));
 }

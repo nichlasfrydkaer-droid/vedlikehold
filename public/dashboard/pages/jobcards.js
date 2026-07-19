@@ -21,7 +21,8 @@ function icon(name){
     const paths = {
         interval:`<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5M12 7v5l3 2"/>`,
         completed:`<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14l2 2 4-4"/>`,
-        due:`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>`
+        due:`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>`,
+        person:`<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-3.6 3.2-5.5 7-5.5s6.2 1.9 7 5.5"/>`
     };
     return `<span class="jobcard-info-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg></span>`;
 }
@@ -40,6 +41,8 @@ function renderCards(container, jobcards, congregation){
                             <span>${icon("interval")}${t("jobcardSuggestedInterval", "Foreslått intervall")}: ${jobcard.interval || "-"}</span>
                             <span>${icon("completed")}${t("jobcardLastPerformed", "Sist utført")}: ${jobcard.lastPerformedAt ? jobcard.lastPerformedAt.slice(0, 10) : "-"}</span>
                             <span>${icon("due")}${t("jobcardNextExecution", "Neste utførelse")}: ${jobcard.nextExecution || "-"}</span>
+                            ${jobcard.fixedAssignment?.responsibleName ? `<span>${icon("person")}${t("fixedAssigned", "Fast tildelt")}: ${jobcard.fixedAssignment.responsibleName}</span>` : ""}
+                            ${jobcard.fixedAssignment?.helperName ? `<span>${icon("person")}${t("helper", "Medhjelper")}: ${jobcard.fixedAssignment.helperName}</span>` : ""}
                         </div>
                     </div>
                     <div class="dashboard-jobcard-actions">

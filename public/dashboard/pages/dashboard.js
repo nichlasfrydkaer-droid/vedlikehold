@@ -18,10 +18,13 @@ const activityVisuals={
   task_created:{icon:"plus",tone:"created",label:"activityTaskCreated",fallback:"Oppgave opprettet"},
   task_started:{icon:"play",tone:"started",label:"activityTaskStarted",fallback:"Oppgave startet"},
   task_reopened:{icon:"reopen",tone:"reopened",label:"activityTaskReopened",fallback:"Oppgave gjenåpnet"},
-  task_updated:{icon:"edit",tone:"updated",label:"activityTaskUpdated",fallback:"Oppgave oppdatert"}
+  task_updated:{icon:"edit",tone:"updated",label:"activityTaskUpdated",fallback:"Oppgave oppdatert"},
+  jobcard_reminder_sent:{icon:"bell",tone:"reminder",label:"activityJobcardReminderSent",fallback:"Påminnelse sendt"},
+  jobcard_assignment_created:{icon:"user",tone:"created",label:"activityJobcardAssigned",fallback:"Jobbkort fast tildelt"},
+  jobcard_assignment_updated:{icon:"user",tone:"updated",label:"activityJobcardAssigned",fallback:"Jobbkort fast tildelt"}
 };
 const activityIcon=name=>{
-  const icons={report:`<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14h6M9 18h5"/>`,check:`<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>`,plus:`<path d="M12 5v14M5 12h14"/>`,play:`<path d="m9 6 9 6-9 6z"/>`,reopen:`<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 5v5h5"/>`,edit:`<path d="m4 20 4-1 10.5-10.5a2.1 2.1 0 0 0-3-3L5 16z"/><path d="m13.5 7.5 3 3"/>`};
+  const icons={report:`<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14h6M9 18h5"/>`,check:`<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>`,plus:`<path d="M12 5v14M5 12h14"/>`,play:`<path d="m9 6 9 6-9 6z"/>`,reopen:`<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 5v5h5"/>`,edit:`<path d="m4 20 4-1 10.5-10.5a2.1 2.1 0 0 0-3-3L5 16z"/><path d="m13.5 7.5 3 3"/>`,bell:`<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>`,user:`<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-3.6 3.2-5.5 7-5.5s6.2 1.9 7 5.5"/>`};
   return `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name]||icons.report}</svg>`;
 };
 
