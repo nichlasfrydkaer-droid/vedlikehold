@@ -26,13 +26,24 @@ function addMonths(date, months){
     return result;
 }
 
+function jobcardKeys(value){
+    const key = String(value ?? "").trim();
+    const numericKey = key.match(/^0*(\d+)([A-Za-z]?)$/);
+    const normalized = numericKey
+        ? `${Number(numericKey[1])}${numericKey[2].toUpperCase()}`
+        : key.toUpperCase();
+
+    return [...new Set([key, normalized])].filter(Boolean);
+}
+
 export function mergeJobcardSchedules(jobcards, response){
     const settings = new Map(
         (response?.settings || []).map(setting => [String(setting.jobcard_id), setting])
     );
-    const completed = new Map(
-        (response?.completed || []).map(item => [String(item.jobcard_id), item.last_performed_at])
-    );
+    const completed = new Map();
+    (response?.completed || []).forEach(item => {
+        jobcardKeys(item.jobcard_id).forEach(key => completed.set(key, item.last_performed_at));
+    });
     const intervals = new Map(
         (response?.intervals || []).map(interval => [String(interval.jobcard_id), interval])
     );
@@ -41,7 +52,9 @@ export function mergeJobcardSchedules(jobcards, response){
         const setting = settings.get(String(jobcard.id)) || {};
         const definition = intervals.get(String(jobcard.id)) || {};
         const autoInterval = setting.auto_interval !== 0;
-        const lastPerformedAt = completed.get(String(jobcard.id)) || null;
+        const lastPerformedAt = jobcardKeys(jobcard.id)
+            .map(key => completed.get(key))
+            .find(Boolean) || null;
         const intervalMonths = Number(definition.interval_months) || null;
         const manualIntervalMonths = Number(setting.manual_interval_months) || null;
         const effectiveIntervalMonths = autoInterval
