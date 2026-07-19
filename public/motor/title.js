@@ -1,48 +1,24 @@
 export function fitJobTitle(){
+  const title = document.getElementById("jobTitle");
+  if (!title) return;
 
-  const title =
-    document.getElementById("jobTitle");
-
-  if(!title){
-    return;
-  }
-
+  // Long, single-word titles must scale down instead of being split in half.
   title.style.fontSize = "";
+  title.style.whiteSpace = "nowrap";
 
-  let size =
-    parseFloat(
-      getComputedStyle(title).fontSize
-    );
+  let size = parseFloat(getComputedStyle(title).fontSize);
+  const minimumSize = 15;
+  const availableWidth = title.clientWidth;
 
-  const style =
-    getComputedStyle(title);
-
-  const lineHeight =
-    parseFloat(style.lineHeight) ||
-    parseFloat(style.fontSize) * 1.2;
-
-  const maxHeight =
-    (lineHeight * 2) + 2;
-
-  while(
-    title.scrollHeight > maxHeight &&
-    size > 18
-  ){
-
-    size--;
-
-    title.style.fontSize =
-      size + "px";
-
+  while (title.scrollWidth > availableWidth && size > minimumSize) {
+    size -= 1;
+    title.style.fontSize = `${size}px`;
   }
 
+  // Restore normal word-to-word wrapping after the longest word fits.
+  title.style.whiteSpace = "";
 }
 
 export function initTitle(){
-
-  window.addEventListener(
-    "resize",
-    fitJobTitle
-  );
-
+  window.addEventListener("resize", fitJobTitle);
 }
