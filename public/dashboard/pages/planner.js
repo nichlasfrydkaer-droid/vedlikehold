@@ -64,8 +64,31 @@ function renderMonth(month, cards){
         <div class="planner-month-list">${cards.length ? cards.map((card, index) => `<div class="planner-jobcard ${card.completed ? "is-completed" : ""} ${index >= visibleLimit ? "is-extra" : ""}" title="${esc(card.title)}">
             <span class="planner-status" aria-label="${card.completed ? t("completed", "Utført") : t("planned", "Planlagt")}">${card.completed ? "✓" : ""}</span>
             <span class="planner-jobcard-copy"><strong><em>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</em>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
-        </div>`).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}${extraCount ? `<p class="planner-more">${t("plannerMoreItems", "+ {count} flere").replace("{count}", extraCount)}</p>` : ""}</div>
+        </div>`).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}${extraCount ? `<button class="planner-more" type="button" data-open-month="${month.getMonth()}">${t("plannerMoreItems", "+ {count} flere").replace("{count}", extraCount)}</button>` : ""}</div>
     </article>`;
+}
+
+function openMonthDialog(root, month, cards){
+    const complete = cards.filter(card => card.completed).length;
+    const overlay = document.createElement("div");
+    overlay.className = "planner-month-overlay";
+    overlay.innerHTML = `<section class="planner-month-dialog" role="dialog" aria-modal="true" aria-label="${monthLabel(month)}">
+        <header><div><h2>${monthLabel(month)}</h2><p>${complete}/${cards.length}</p></div><button type="button" data-close-month aria-label="${t("close", "Lukk")}">×</button></header>
+        <div class="planner-month-dialog-list">${cards.map(card => `<div class="planner-jobcard ${card.completed ? "is-completed" : ""}">
+            <span class="planner-status" aria-label="${card.completed ? t("completed", "Utført") : t("planned", "Planlagt")}">${card.completed ? "✓" : ""}</span>
+            <span class="planner-jobcard-copy"><strong><em>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</em>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
+        </div>`).join("")}</div>
+    </section>`;
+    const close = () => {
+        document.removeEventListener("keydown", onKeydown);
+        overlay.remove();
+    };
+    const onKeydown = event => { if(event.key === "Escape") close(); };
+    overlay.addEventListener("click", event => { if(event.target === overlay) close(); });
+    overlay.querySelector("[data-close-month]").addEventListener("click", close);
+    document.addEventListener("keydown", onKeydown);
+    root.append(overlay);
+    overlay.querySelector("[data-close-month]").focus();
 }
 
 export async function initPlanner(){
@@ -98,6 +121,10 @@ export async function initPlanner(){
         root.innerHTML = `<section class="planner-heading dashboard-full"><div><p class="page-eyebrow">${esc(congregation.name)}</p><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerDescription", "Årsoversikt over planlagte jobbkort.")}</p></div><div class="planner-year-nav" aria-label="${t("selectYear", "Velg år")}"><button type="button" data-year="-1" aria-label="${t("previousYear", "Forrige år")}">‹</button><strong>${year}</strong><button type="button" data-year="1" aria-label="${t("nextYear", "Neste år")}">›</button></div></section><section class="planner-mobile-nav dashboard-full" aria-label="${t("selectMonth", "Velg måned")}"><button type="button" data-month="-1" aria-label="${t("previousMonth", "Forrige måned")}">‹</button><strong>${monthLabel(new Date(year, activeMonth, 1, 12))}</strong><button type="button" data-month="1" aria-label="${t("nextMonth", "Neste måned")}">›</button></section><section class="planner-grid dashboard-full" data-planner-grid data-active-month="${activeMonth}">${planned.map((cards, index) => renderMonth(new Date(year, index, 1, 12), cards)).join("")}</section>`;
         root.querySelectorAll("[data-year]").forEach(button => button.addEventListener("click", () => { year += Number(button.dataset.year); render(); }));
         root.querySelectorAll("[data-month]").forEach(button => button.addEventListener("click", () => { changeMonth(Number(button.dataset.month)); render(); }));
+        root.querySelectorAll("[data-open-month]").forEach(button => button.addEventListener("click", () => {
+            const index = Number(button.dataset.openMonth);
+            openMonthDialog(root, new Date(year, index, 1, 12), planned[index]);
+        }));
         const grid = root.querySelector("[data-planner-grid]");
         let startX = null;
         grid.addEventListener("pointerdown", event => { startX = event.clientX; });
