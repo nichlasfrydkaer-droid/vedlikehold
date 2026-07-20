@@ -104,7 +104,7 @@ export function mergeJobcardSchedules(jobcards, response){
             visible: setting.visible !== 0,
             autoInterval:assignmentAutoInterval,
             lastPerformedAt,
-            manualIntervalMonths,
+            manualIntervalMonths:fixedAssignment ? Number(fixedAssignment.manual_interval_months) || null : manualIntervalMonths,
             requireSja: setting.require_sja === 1,
             fixedAssignment: fixedAssignment ? {
                 responsibleName:fixedAssignment.responsible_name,

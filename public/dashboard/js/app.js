@@ -88,6 +88,16 @@ async function boot(){
 
         break;
 
+    case "planner":
+
+        initPage(
+            import("../pages/planner.js"),
+            "initPlanner",
+            { dashboardLayout:true }
+        );
+
+        break;
+
     case "taskReport":
 
         initPage(
