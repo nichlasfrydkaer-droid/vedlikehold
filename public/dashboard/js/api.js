@@ -252,6 +252,18 @@ export async function getJobcardSettings(congregationId){
 
 }
 
+export async function getPlanner(congregationId, year){
+    return await request(`/planner?congregation=${encodeURIComponent(congregationId)}&year=${encodeURIComponent(year)}`);
+}
+
+export async function savePlanner(data){
+    return await request("/planner", { method:"PUT", body:JSON.stringify(data) });
+}
+
+export async function markPlannerCompletion(data){
+    return await request("/planner", { method:"POST", body:JSON.stringify({ ...data, action:"manual_complete" }) });
+}
+
 export async function saveJobcardSettings(settings){
 
     return await request(

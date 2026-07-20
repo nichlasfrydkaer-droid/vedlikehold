@@ -79,6 +79,16 @@ export function mergeJobcardSchedules(jobcards, response){
     (response?.assignments || []).forEach(assignment => {
         jobcardKeys(assignment.jobcard_id).forEach(key => assignments.set(key, assignment));
     });
+    const plannerEntries = new Map();
+    (response?.planner_entries || []).forEach(entry => {
+        const months = (Array.isArray(entry.planned_months) ? entry.planned_months : [])
+            .filter(value => /^\d{4}-\d{2}$/.test(String(value || "")))
+            .sort();
+        jobcardKeys(entry.jobcard_id).forEach(key => {
+            const previous = plannerEntries.get(key) || [];
+            plannerEntries.set(key, [...previous, ...months]);
+        });
+    });
 
     return jobcards.map(jobcard => {
         const setting = settings.get(String(jobcard.id)) || {};
@@ -96,7 +106,13 @@ export function mergeJobcardSchedules(jobcards, response){
         const effectiveIntervalMonths = assignmentAutoInterval
             ? intervalMonths
             : (fixedAssignment ? Number(fixedAssignment.manual_interval_months) || null : manualIntervalMonths);
-        const scheduled = fixedAssignment
+        const plannedMonths = jobcardKeys(jobcard.id)
+            .flatMap(key => plannerEntries.get(key) || [])
+            .filter(value => value >= formatDateInput(monthStart(new Date())))
+            .sort();
+        const scheduled = plannedMonths.length
+            ? monthStartFromValue(plannedMonths[0])
+            : fixedAssignment
             ? scheduledMonth(fixedAssignment.first_execution_month, lastPerformedAt, effectiveIntervalMonths)
             : effectiveIntervalMonths
                 ? monthStart(addMonths(monthStart(toDateOnly(lastPerformedAt) || new Date()), effectiveIntervalMonths))

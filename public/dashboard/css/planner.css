@@ -127,6 +127,24 @@
     font-weight:800;
 }
 .planner-jobcard-copy small { display:none; }
+.planner-card-actions {
+    display:grid;
+    place-items:center;
+    flex:0 0 1.55rem;
+    width:1.55rem;
+    height:1.55rem;
+    margin-left:auto;
+    border:0;
+    border-radius:.42rem;
+    background:transparent;
+    color:#526887;
+    font-size:1.15rem;
+    font-weight:900;
+    line-height:1;
+    cursor:pointer;
+}
+.planner-card-actions:hover,
+.planner-card-actions:focus-visible { background:#e8f0ff; color:#1d4ed8; }
 .planner-empty { margin:.2rem; padding:.45rem; color:#64748b; font-size:.79rem; }
 .planner-more {
     width:max-content;
@@ -194,6 +212,81 @@
 .planner-month-dialog-list .planner-jobcard-copy strong em { font-size:.78rem; }
 .planner-month-dialog-list .planner-jobcard-copy small { display:none; }
 
+.planner-confirm-dialog,
+.planner-choice-dialog,
+.planner-editor-dialog {
+    position:relative;
+    width:min(100%, 48rem);
+    max-height:min(88dvh, 56rem);
+    overflow:auto;
+    border:1px solid #dbe5f1;
+    border-radius:1rem;
+    background:#fff;
+    box-shadow:0 24px 70px rgba(15,23,42,.3);
+}
+.planner-confirm-dialog,
+.planner-choice-dialog { padding:1.35rem; }
+.planner-confirm-dialog h2,
+.planner-choice-dialog h2,
+.planner-editor-dialog h2 { margin:0; color:#172b4d; font-size:1.45rem; }
+.planner-close,
+.planner-editor-dialog > header > button {
+    position:absolute;
+    top:.75rem;
+    right:.75rem;
+    display:grid;
+    place-items:center;
+    width:2.35rem;
+    height:2.35rem;
+    border:0;
+    border-radius:.55rem;
+    background:#f1f5f9;
+    color:#475569;
+    font-size:1.85rem;
+    line-height:1;
+    cursor:pointer;
+}
+.planner-confirm-dialog > p { color:#334155; }
+.planner-confirm-dialog label { display:grid; gap:.4rem; color:#243b65; font-weight:800; }
+.planner-confirm-dialog select,
+.planner-edit-row select { min-height:2.6rem; border:1px solid #cbd9eb; border-radius:.55rem; background:#fff; color:#172b4d; font:inherit; padding:.4rem .55rem; }
+.planner-dialog-note { margin:1rem 0 0; padding:.75rem; border-left:4px solid #2563eb; border-radius:.35rem; background:#f5f9ff; color:#526887; }
+.planner-confirm-dialog footer,
+.planner-editor-dialog footer { display:flex; justify-content:flex-end; gap:.7rem; margin-top:1.25rem; }
+.planner-confirm-dialog footer button,
+.planner-editor-dialog footer button { border:0; border-radius:.6rem; padding:.65rem 1rem; font:inherit; font-weight:800; cursor:pointer; }
+.button-secondary { background:#edf2ff; color:#1d4ed8; }
+.button-primary { background:#2563eb; color:#fff; }
+
+.planner-choice-dialog { display:grid; gap:.85rem; }
+.planner-choice-dialog > p { margin:.1rem 0 .35rem; color:#64748b; }
+.planner-choice-dialog > button:not(.planner-close) { display:grid; gap:.3rem; padding:1rem; border:1px solid #cbdcf1; border-radius:.75rem; background:#f8fbff; color:#172b4d; text-align:left; cursor:pointer; }
+.planner-choice-dialog > button:not(.planner-close):hover { border-color:#2563eb; background:#eff6ff; }
+.planner-choice-dialog span { color:#64748b; font-size:.9rem; }
+
+.planner-editor-dialog > header { position:sticky; z-index:2; top:0; padding:1.1rem 3.75rem 1rem 1.2rem; border-bottom:1px solid #e7edf5; background:#fff; }
+.planner-editor-dialog > header p:last-child { margin:.3rem 0 0; color:#64748b; }
+.planner-plan-mode { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; padding:1rem 1.2rem .45rem; }
+.planner-plan-mode button { padding:.7rem; border:1px solid #cbdcf1; border-radius:.6rem; background:#fff; color:#526887; font:inherit; font-weight:800; cursor:pointer; }
+.planner-plan-mode button.is-selected { border-color:#2563eb; background:#eff6ff; color:#1d4ed8; }
+.planner-edit-list { display:grid; gap:.65rem; padding:.75rem 1.2rem; }
+.planner-edit-row { display:grid; grid-template-columns:minmax(12rem, 1.25fr) minmax(0, 2fr); gap:1rem; align-items:center; padding:.8rem; border:1px solid #e1e9f4; border-radius:.7rem; background:#f8fafc; }
+.planner-edit-row.is-selected { border-color:#bcd5ff; background:#f7fbff; }
+.planner-edit-enabled { display:flex; align-items:flex-start; gap:.55rem; color:#1e3762; font-weight:800; }
+.planner-edit-enabled input { width:1.15rem; height:1.15rem; margin:.1rem 0 0; accent-color:#2563eb; }
+.planner-edit-controls { display:grid; grid-template-columns:minmax(8rem, 1fr) auto minmax(7rem, .8fr); gap:.55rem; align-items:end; }
+.planner-edit-controls label { display:grid; gap:.3rem; color:#526887; font-size:.79rem; font-weight:800; }
+.planner-edit-switch { min-width:6.3rem; }
+.planner-edit-switch input { appearance:none; width:2.6rem; height:1.45rem; margin:0; border:0; border-radius:999px; background:#a5b1c3; cursor:pointer; }
+.planner-edit-switch input::after { content:""; display:block; width:1.1rem; height:1.1rem; margin:.175rem; border-radius:50%; background:#fff; transition:transform .18s ease; }
+.planner-edit-switch input:checked { background:#2563eb; }
+.planner-edit-switch input:checked::after { transform:translateX(1.15rem); }
+.planner-edit-switch input:disabled { opacity:.5; cursor:default; }
+.planner-missing-info { display:grid; gap:.35rem; margin:.25rem 1.2rem .5rem; padding:.8rem .9rem; border:1px solid #d8e1ed; border-radius:.7rem; background:#f8fafc; color:#526887; }
+.planner-missing-info strong { color:#334155; }
+.planner-missing-info span { font-size:.9rem; line-height:1.35; }
+.planner-editor-dialog footer { position:sticky; bottom:0; padding:1rem 1.2rem; border-top:1px solid #e7edf5; background:#fff; }
+
 @media (max-width:1300px) {
     .planner-grid { grid-template-columns:repeat(3, minmax(0, 1fr)); }
 }
@@ -231,4 +324,13 @@
     .planner-more { display:none; }
     .planner-month-overlay { padding:.75rem; }
     .planner-month-dialog { max-height:86dvh; }
+    .planner-card-actions { width:2rem; height:2rem; font-size:1.35rem; }
+    .planner-confirm-dialog,
+    .planner-choice-dialog,
+    .planner-editor-dialog { max-height:90dvh; }
+    .planner-plan-mode { grid-template-columns:1fr; }
+    .planner-edit-row { grid-template-columns:1fr; gap:.65rem; }
+    .planner-edit-controls { grid-template-columns:1fr 1fr; }
+    .planner-edit-controls label:last-child { grid-column:1 / -1; }
+    .planner-editor-dialog footer { padding:.85rem 1rem; }
 }
