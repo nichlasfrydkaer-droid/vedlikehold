@@ -63,7 +63,7 @@ function renderMonth(month, cards){
         <header><h2>${monthLabel(month)}</h2><span>${complete}/${cards.length}</span></header>
         <div class="planner-month-list">${cards.length ? cards.map((card, index) => `<div class="planner-jobcard ${card.completed ? "is-completed" : ""} ${index >= visibleLimit ? "is-extra" : ""}" title="${esc(card.title)}">
             <span class="planner-status" aria-label="${card.completed ? t("completed", "Utført") : t("planned", "Planlagt")}">${card.completed ? "✓" : ""}</span>
-            <span class="planner-jobcard-copy"><strong><em>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</em>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
+            <span class="planner-jobcard-copy"><strong><em>${esc(card.jobcard_number)}</em>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
         </div>`).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}${extraCount ? `<button class="planner-more" type="button" data-open-month="${month.getMonth()}">${t("plannerMoreItems", "+ {count} flere").replace("{count}", extraCount)}</button>` : ""}</div>
     </article>`;
 }
@@ -76,7 +76,7 @@ function openMonthDialog(root, month, cards){
         <header><div><h2>${monthLabel(month)}</h2><p>${complete}/${cards.length}</p></div><button type="button" data-close-month aria-label="${t("close", "Lukk")}">×</button></header>
         <div class="planner-month-dialog-list">${cards.map(card => `<div class="planner-jobcard ${card.completed ? "is-completed" : ""}">
             <span class="planner-status" aria-label="${card.completed ? t("completed", "Utført") : t("planned", "Planlagt")}">${card.completed ? "✓" : ""}</span>
-            <span class="planner-jobcard-copy"><strong><em>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</em>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
+            <span class="planner-jobcard-copy"><strong><em>${esc(card.jobcard_number)}</em>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
         </div>`).join("")}</div>
     </section>`;
     const close = () => {

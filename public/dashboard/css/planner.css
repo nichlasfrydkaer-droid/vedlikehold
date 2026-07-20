@@ -178,7 +178,7 @@
 .planner-month-dialog-list .planner-jobcard { padding:.7rem; }
 .planner-month-dialog-list .planner-jobcard-copy strong { overflow:visible; font-size:1rem; text-overflow:clip; white-space:normal; overflow-wrap:anywhere; }
 .planner-month-dialog-list .planner-jobcard-copy strong em { font-size:.78rem; }
-.planner-month-dialog-list .planner-jobcard-copy small { display:block; color:#64748b; font-size:.78rem; }
+.planner-month-dialog-list .planner-jobcard-copy small { display:none; }
 
 @media (max-width:1300px) {
     .planner-grid { grid-template-columns:repeat(3, minmax(0, 1fr)); }
@@ -211,8 +211,8 @@
     .planner-jobcard.is-extra { display:flex; }
     .planner-jobcard-copy { display:grid; gap:.15rem; }
     .planner-jobcard-copy strong { overflow:visible; font-size:1rem; text-overflow:clip; white-space:normal; overflow-wrap:anywhere; }
-    .planner-jobcard-copy strong em { display:none; }
-    .planner-jobcard-copy small { display:block; color:#64748b; font-size:.78rem; }
+    .planner-jobcard-copy strong em { display:inline; font-size:.78rem; }
+    .planner-jobcard-copy small { display:none; }
     .planner-more { display:none; }
     .planner-month-overlay { padding:.75rem; }
     .planner-month-dialog { max-height:86dvh; }
