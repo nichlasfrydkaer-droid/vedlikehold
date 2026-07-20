@@ -105,6 +105,13 @@
     text-overflow:ellipsis;
     white-space:nowrap;
 }
+.planner-jobcard-copy strong em {
+    margin-right:.32rem;
+    color:#2563eb;
+    font-size:.72rem;
+    font-style:normal;
+    font-weight:800;
+}
 .planner-jobcard-copy small { display:none; }
 .planner-empty { margin:.2rem; padding:.45rem; color:#64748b; font-size:.79rem; }
 .planner-more { margin:-.05rem .78rem .55rem; color:#64748b; font-size:.75rem; font-weight:700; }
@@ -140,6 +147,7 @@
     .planner-jobcard.is-extra { display:flex; }
     .planner-jobcard-copy { display:grid; gap:.15rem; }
     .planner-jobcard-copy strong { overflow:visible; font-size:1rem; text-overflow:clip; white-space:normal; overflow-wrap:anywhere; }
+    .planner-jobcard-copy strong em { display:none; }
     .planner-jobcard-copy small { display:block; color:#64748b; font-size:.78rem; }
     .planner-more { display:none; }
 }
