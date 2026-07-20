@@ -1,7 +1,7 @@
 import { loadDashboard } from "../services/dashboard.js";
 import { buildJobcardMenuUrl, getJobcards, getJobcardSettings } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
-import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
+import { formatExecutionMonth, mergeJobcardSchedules } from "../js/jobcardSchedule.js";
 import { t } from "../js/i18n.js";
 import { openJobcardShareDialog } from "../components/jobcardShare.js";
 
@@ -40,7 +40,7 @@ function renderCards(container, jobcards, congregation){
                         <div class="dashboard-jobcard-meta">
                             <span>${icon("interval")}${t("jobcardSuggestedInterval", "Foreslått intervall")}: ${jobcard.interval || "-"}</span>
                             <span>${icon("completed")}${t("jobcardLastPerformed", "Sist utført")}: ${jobcard.lastPerformedAt ? jobcard.lastPerformedAt.slice(0, 10) : "-"}</span>
-                            <span>${icon("due")}${t("jobcardNextExecution", "Neste utførelse")}: ${jobcard.nextExecution || "-"}</span>
+                            <span>${icon("due")}${t("jobcardNextExecution", "Neste utførelse")}: ${formatExecutionMonth(jobcard.nextExecution)}</span>
                             ${jobcard.fixedAssignment?.responsibleName ? `<span>${icon("person")}${t("fixedAssigned", "Fast tildelt")}: ${jobcard.fixedAssignment.responsibleName}</span>` : ""}
                             ${jobcard.fixedAssignment?.helperName ? `<span>${icon("person")}${t("helper", "Medhjelper")}: ${jobcard.fixedAssignment.helperName}</span>` : ""}
                         </div>

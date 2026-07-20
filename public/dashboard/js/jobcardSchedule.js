@@ -20,6 +20,14 @@ function formatDateInput(date){
     return date ? date.toISOString().slice(0, 10) : "";
 }
 
+export function formatExecutionMonth(value, locale = (typeof document !== "undefined" ? document.documentElement.lang : undefined)){
+    const match = String(value || "").match(/^(\d{4})-(\d{2})/);
+    if(!match){ return "-"; }
+    const month = new Date(Number(match[1]), Number(match[2]) - 1, 1, 12);
+    const label = new Intl.DateTimeFormat(locale, { month:"long", year:"numeric" }).format(month);
+    return label.replace(/^./, letter => letter.toUpperCase());
+}
+
 function addMonths(date, months){
     const result = new Date(date);
     result.setUTCMonth(result.getUTCMonth() + months);

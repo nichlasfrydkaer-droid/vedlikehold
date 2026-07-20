@@ -2,7 +2,7 @@ import { createCard } from "./card.js";
 import { addDashboardWidget } from "./dashboardWidget.js";
 import { getCongregation } from "../js/session.js";
 import { getJobcards, getJobcardSettings } from "../js/api.js";
-import { isUpcoming, mergeJobcardSchedules } from "../js/jobcardSchedule.js";
+import { formatExecutionMonth, isUpcoming, mergeJobcardSchedules } from "../js/jobcardSchedule.js";
 import { t } from "../js/i18n.js";
 
 export async function renderDashboardUpcoming(){
@@ -34,8 +34,8 @@ export async function renderDashboardUpcoming(){
                     <div class="dashboard-upcoming-title">${jobcard.title}</div>
                     <div class="dashboard-upcoming-subtitle">
                         ${jobcard.autoInterval
-                            ? `${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number} · ${t("dueBy", "Skal utføres innen")}: ${jobcard.nextExecution || "-"}`
-                            : `${t("jobcardNextExecution", "Neste utførelse")}: ${jobcard.nextExecution}`}
+                            ? `${t("jobcard", "Jobbkort")} ${jobcard.jobcard_number} · ${t("jobcardNextExecution", "Neste utførelse")}: ${formatExecutionMonth(jobcard.nextExecution)}`
+                            : `${t("jobcardNextExecution", "Neste utførelse")}: ${formatExecutionMonth(jobcard.nextExecution)}`}
                     </div>
                 </div>
             `).join("")}

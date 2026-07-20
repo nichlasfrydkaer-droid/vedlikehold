@@ -3,7 +3,7 @@ import { renderDashboardHeader } from "../components/dashboardHeader.js";
 import { renderDashboardMenu,initDashboardMenu } from "../components/dashboardMenu.js";
 import { getJobcards,getJobcardSettings,getTasks,getReports,getActivity } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
-import { mergeJobcardSchedules, isUpcoming, isOverdue } from "../js/jobcardSchedule.js";
+import { formatExecutionMonth, mergeJobcardSchedules, isUpcoming, isOverdue } from "../js/jobcardSchedule.js";
 import { getTaskStatus,renderTaskStatus } from "../js/taskStatus.js";
 import { t } from "../js/i18n.js";
 
@@ -50,8 +50,8 @@ export async function initDashboard(){
   const currentMonthKey=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
   let shownMonth=new Date();shownMonth.setDate(1);let expanded=false;
 
-  const monthSection=(title,items,type,limit)=>`<div class="dashboard-month-section"><h3>${title}</h3>${items.slice(0,limit).map(item=>`<a href="${urlFor({type,id:item.id})}"><time>${fmt(type==="task"?item.deadline:item.nextExecution)}</time><span>${esc(item.title)}</span>${type==="task"?renderTaskStatus(item):`<small>Jobbkort ${esc(item.jobcard_number)}</small>`}</a>`).join("")||`<p>Ingen planlagte ${title.toLowerCase()}.</p>`}</div>`;
-  const listCard=(title,items,type,href)=>{const filteredHref=type==="task"?`${href}?filter=open`:`${href}?sort=dueDate`;return `<section class="dashboard-home-card"><header><h2>${title}</h2><a href="${filteredHref}">Se alle (${items.length})</a></header><div class="dashboard-simple-list">${items.slice(0,3).map(item=>`<a href="${urlFor({type,id:item.id})}"><span>${esc(item.title)}</span><small>${fmt(type==="task"?item.deadline:item.nextExecution)}</small></a>`).join("")||"<p>Ingen kommende elementer.</p>"}</div></section>`;};
+  const monthSection=(title,items,type,limit)=>`<div class="dashboard-month-section"><h3>${title}</h3>${items.slice(0,limit).map(item=>`<a href="${urlFor({type,id:item.id})}"><time>${type==="task"?fmt(item.deadline):formatExecutionMonth(item.nextExecution)}</time><span>${esc(item.title)}</span>${type==="task"?renderTaskStatus(item):`<small>Jobbkort ${esc(item.jobcard_number)}</small>`}</a>`).join("")||`<p>Ingen planlagte ${title.toLowerCase()}.</p>`}</div>`;
+  const listCard=(title,items,type,href)=>{const filteredHref=type==="task"?`${href}?filter=open`:`${href}?sort=dueDate`;return `<section class="dashboard-home-card"><header><h2>${title}</h2><a href="${filteredHref}">Se alle (${items.length})</a></header><div class="dashboard-simple-list">${items.slice(0,3).map(item=>`<a href="${urlFor({type,id:item.id})}"><span>${esc(item.title)}</span><small>${type==="task"?fmt(item.deadline):formatExecutionMonth(item.nextExecution)}</small></a>`).join("")||"<p>Ingen kommende elementer.</p>"}</div></section>`;};
   const activityRows=()=>activity.slice(0,10).map(item=>{const visual=activityVisuals[item.action]||{icon:"report",tone:"updated",label:"activityUpdated",fallback:"Oppdatert"};return `<a class="dashboard-activity-${visual.tone}" href="${esc(item.target_url||"#")}"><span class="dashboard-activity-icon">${activityIcon(visual.icon)}</span><span><strong>${esc(item.title||item.action)}</strong><small>${t(visual.label,visual.fallback)} · ${fmt(String(item.created_at||"").slice(0,10))}</small></span></a>`;}).join("")||"<p>Ingen aktivitet ennå.</p>";
   const render=()=>{
     const key=`${shownMonth.getFullYear()}-${String(shownMonth.getMonth()+1).padStart(2,"0")}`;
