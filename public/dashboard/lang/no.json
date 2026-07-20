@@ -17,6 +17,7 @@
   "statistics": "Statistikk",
   "dashboardLoadFailed": "Kunne ikke hente dashboarddata akkurat nå.",
   "planner": "Planlegger",
+  "planYear": "Planlegg året",
   "plannerMoreItems": "+ {count} flere",
   "plannerDescription": "Årsoversikt over planlagte jobbkort.",
   "plannerLoadFailed": "Kunne ikke hente årsoversikten.",

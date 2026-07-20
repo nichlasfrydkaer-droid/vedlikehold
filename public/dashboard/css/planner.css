@@ -1,7 +1,7 @@
 .planner-heading {
-    display:flex;
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto minmax(0, 1fr);
     align-items:flex-end;
-    justify-content:space-between;
     gap:1rem;
     margin:0 0 .5rem;
 }
@@ -27,6 +27,18 @@
 .planner-year-nav button:disabled,
 .planner-mobile-nav button:disabled { cursor:default; opacity:.38; }
 .planner-year-nav strong { min-width:4rem; text-align:center; font-size:1.2rem; }
+.planner-year-action {
+    justify-self:end;
+    padding:.7rem 1rem;
+    border:0;
+    border-radius:.65rem;
+    background:#2563eb;
+    color:#fff;
+    font:inherit;
+    font-weight:800;
+    cursor:pointer;
+}
+.planner-year-action:hover { background:#1d4ed8; }
 .planner-mobile-nav { display:none; justify-content:center; margin:0 0 .5rem; }
 .planner-mobile-nav strong { min-width:12rem; text-align:center; font-size:1.2rem; }
 
@@ -189,9 +201,10 @@
     .planner-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width:680px) {
-    .planner-heading { align-items:flex-start; }
+    .planner-heading { display:flex; flex-direction:column; align-items:stretch; }
     .planner-heading h1 { font-size:1.7rem; }
     .planner-year-nav { display:none; }
+    .planner-year-action { width:100%; justify-self:auto; }
     .planner-mobile-nav { display:flex; }
     .planner-grid { display:block; }
     .planner-month-card { display:none; min-height:0; }

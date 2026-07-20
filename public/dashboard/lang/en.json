@@ -92,6 +92,7 @@
   "downloadPdf": "Download PDF",
   "dashboardLoadFailed": "Could not load dashboard data right now.",
   "planner": "Planner",
+  "planYear": "Plan the year",
   "plannerMoreItems": "+ {count} more",
   "plannerDescription": "Yearly overview of scheduled job cards.",
   "plannerLoadFailed": "Could not load the yearly overview.",

@@ -92,6 +92,7 @@
   "downloadPdf": "Download PDF",
   "dashboardLoadFailed": "Kunne ikke hente dashboarddata lige nu.",
   "planner": "Planlægger",
+  "planYear": "Planlæg året",
   "plannerMoreItems": "+ {count} flere",
   "plannerDescription": "Årsoversigt over planlagte jobkort.",
   "plannerLoadFailed": "Kunne ikke hente årsoversigten.",
