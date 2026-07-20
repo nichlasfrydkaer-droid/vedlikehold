@@ -57,12 +57,14 @@ function monthLabel(date){
 
 function renderMonth(month, cards){
     const complete = cards.filter(card => card.completed).length;
+    const visibleLimit = 5;
+    const extraCount = Math.max(0, cards.length - visibleLimit);
     return `<article class="planner-month-card" data-planner-month="${month.getMonth()}">
         <header><h2>${monthLabel(month)}</h2><span>${complete}/${cards.length}</span></header>
-        <div class="planner-month-list">${cards.length ? cards.map(card => `<div class="planner-jobcard ${card.completed ? "is-completed" : ""}">
+        <div class="planner-month-list">${cards.length ? cards.map((card, index) => `<div class="planner-jobcard ${card.completed ? "is-completed" : ""} ${index >= visibleLimit ? "is-extra" : ""}" title="${esc(card.title)}">
             <span class="planner-status" aria-label="${card.completed ? t("completed", "Utført") : t("planned", "Planlagt")}">${card.completed ? "✓" : ""}</span>
             <span class="planner-jobcard-copy"><strong>${esc(card.title)}</strong><small>${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</small></span>
-        </div>`).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}</div>
+        </div>`).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}${extraCount ? `<p class="planner-more">${t("plannerMoreItems", "+ {count} flere").replace("{count}", extraCount)}</p>` : ""}</div>
     </article>`;
 }
 
