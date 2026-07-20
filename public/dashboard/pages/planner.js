@@ -5,6 +5,7 @@ import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
 import { t } from "../js/i18n.js";
 
 const MONTHS_IN_YEAR = 12;
+const MIN_PLANNER_YEAR = 2026;
 
 function dateFromMonth(value){
     const match = String(value || "").match(/^(\d{4})-(\d{2})/);
@@ -112,14 +113,23 @@ export async function initPlanner(){
 
     const changeMonth = difference => {
         const next = activeMonth + difference;
-        if(next < 0){ activeMonth = 11; year -= 1; }
+        if(next < 0){
+            if(year <= MIN_PLANNER_YEAR) return;
+            activeMonth = 11;
+            year -= 1;
+        }
         else if(next > 11){ activeMonth = 0; year += 1; }
         else activeMonth = next;
     };
     const render = () => {
         const planned = scheduledForYear(jobcards, year, completed);
-        root.innerHTML = `<section class="planner-heading dashboard-full"><div><p class="page-eyebrow">${esc(congregation.name)}</p><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerDescription", "Årsoversikt over planlagte jobbkort.")}</p></div><div class="planner-year-nav" aria-label="${t("selectYear", "Velg år")}"><button type="button" data-year="-1" aria-label="${t("previousYear", "Forrige år")}">‹</button><strong>${year}</strong><button type="button" data-year="1" aria-label="${t("nextYear", "Neste år")}">›</button></div></section><section class="planner-mobile-nav dashboard-full" aria-label="${t("selectMonth", "Velg måned")}"><button type="button" data-month="-1" aria-label="${t("previousMonth", "Forrige måned")}">‹</button><strong>${monthLabel(new Date(year, activeMonth, 1, 12))}</strong><button type="button" data-month="1" aria-label="${t("nextMonth", "Neste måned")}">›</button></section><section class="planner-grid dashboard-full" data-planner-grid data-active-month="${activeMonth}">${planned.map((cards, index) => renderMonth(new Date(year, index, 1, 12), cards)).join("")}</section>`;
-        root.querySelectorAll("[data-year]").forEach(button => button.addEventListener("click", () => { year += Number(button.dataset.year); render(); }));
+        root.innerHTML = `<section class="planner-heading dashboard-full"><div><p class="page-eyebrow">${esc(congregation.name)}</p><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerDescription", "Årsoversikt over planlagte jobbkort.")}</p></div><div class="planner-year-nav" aria-label="${t("selectYear", "Velg år")}"><button type="button" data-year="-1" aria-label="${t("previousYear", "Forrige år")}" ${year <= MIN_PLANNER_YEAR ? "disabled" : ""}>‹</button><strong>${year}</strong><button type="button" data-year="1" aria-label="${t("nextYear", "Neste år")}">›</button></div></section><section class="planner-mobile-nav dashboard-full" aria-label="${t("selectMonth", "Velg måned")}"><button type="button" data-month="-1" aria-label="${t("previousMonth", "Forrige måned")}" ${year <= MIN_PLANNER_YEAR && activeMonth === 0 ? "disabled" : ""}>‹</button><strong>${monthLabel(new Date(year, activeMonth, 1, 12))}</strong><button type="button" data-month="1" aria-label="${t("nextMonth", "Neste måned")}">›</button></section><section class="planner-grid dashboard-full" data-planner-grid data-active-month="${activeMonth}">${planned.map((cards, index) => renderMonth(new Date(year, index, 1, 12), cards)).join("")}</section>`;
+        root.querySelectorAll("[data-year]").forEach(button => button.addEventListener("click", () => {
+            const nextYear = year + Number(button.dataset.year);
+            if(nextYear < MIN_PLANNER_YEAR) return;
+            year = nextYear;
+            render();
+        }));
         root.querySelectorAll("[data-month]").forEach(button => button.addEventListener("click", () => { changeMonth(Number(button.dataset.month)); render(); }));
         root.querySelectorAll("[data-open-month]").forEach(button => button.addEventListener("click", () => {
             const index = Number(button.dataset.openMonth);

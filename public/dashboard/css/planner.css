@@ -24,6 +24,8 @@
     line-height:1;
     cursor:pointer;
 }
+.planner-year-nav button:disabled,
+.planner-mobile-nav button:disabled { cursor:default; opacity:.38; }
 .planner-year-nav strong { min-width:4rem; text-align:center; font-size:1.2rem; }
 .planner-mobile-nav { display:none; justify-content:center; margin:0 0 .5rem; }
 .planner-mobile-nav strong { min-width:12rem; text-align:center; font-size:1.2rem; }
