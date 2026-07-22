@@ -257,6 +257,7 @@
 .planner-confirm-dialog label { display:grid; gap:.4rem; color:#243b65; font-weight:800; }
 .planner-confirm-dialog select,
 .planner-edit-row select { min-height:2.6rem; border:1px solid #cbd9eb; border-radius:.55rem; background:#fff; color:#172b4d; font:inherit; padding:.4rem .55rem; }
+.planner-edit-row select:disabled { border-color:#dbe3ee; background:#eef2f7; color:#94a3b8; cursor:not-allowed; opacity:1; }
 .planner-confirm-dialog footer,
 .planner-editor-dialog footer { display:flex; justify-content:flex-end; gap:.7rem; margin-top:1.25rem; }
 .planner-confirm-dialog footer { margin-top:2.2rem; padding-top:1.25rem; border-top:1px solid #e7edf5; }
