@@ -1,1 +1,37 @@
 .dashboard-activity-card header a{display:none}
+
+.dashboard-month-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.dashboard-month-section-heading h3 { margin: 0; }
+.dashboard-month-section-heading > span { color: #64748b; font-size: .82rem; font-weight: 700; }
+
+.dashboard-planner-jobcard .dashboard-planner-status {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    border: 2px solid #f59e0b;
+    border-radius: 50%;
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 900;
+}
+
+.dashboard-planner-jobcard > span:nth-child(2) { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.dashboard-planner-jobcard > span:nth-child(2) strong { min-width: 24px; color: #172b4d; }
+.dashboard-planner-jobcard.is-completed .dashboard-planner-status { border-color: #16a34a; background: #16a34a; }
+.dashboard-planner-jobcard.is-completed > span:nth-child(2) { color: #52705d; }
+.dashboard-planner-jobcard.is-completed small { color: #15803d; font-weight: 700; }
+.dashboard-planner-jobcard.is-pending small { color: #b45309; font-weight: 700; }
+
+@media (max-width: 500px) {
+    .dashboard-planner-jobcard > span:nth-child(2) { align-items: flex-start; flex-direction: column; gap: 2px; }
+    .dashboard-planner-jobcard small { display: none; }
+}

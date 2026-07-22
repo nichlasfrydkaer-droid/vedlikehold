@@ -30,7 +30,7 @@ function intervalLabel(months, fallback = ""){
     const labels = { 1:t("monthly", "Månedlig"), 2:t("everySecondMonth", "Hver 2. måned"), 3:t("quarterly", "Kvartalsvis"), 6:t("everySixMonths", "Hver 6. måned"), 12:t("annual", "Årlig"), 24:t("everySecondYear", "Hvert 2. år") };
     return labels[Number(months)] || fallback || "–";
 }
-function reportCompletionIndex(reports){
+export function reportCompletionIndex(reports){
     const completed = new Map();
     (reports || []).forEach(report => {
         const date = new Date(report.finished_at || report.created_at || "");
@@ -52,7 +52,7 @@ function entriesByJobcard(entries){
     (entries || []).forEach(entry => jobcardKeys(entry.jobcard_id).forEach(key => map.set(key, entry)));
     return map;
 }
-function scheduledForYear(jobcards, year, reportCompletions, entries, manualCompletions = new Set()){
+export function scheduledForYear(jobcards, year, reportCompletions, entries, manualCompletions = new Set()){
     const months = Array.from({ length:MONTHS_IN_YEAR }, () => []);
     const planEntries = entriesByJobcard(entries);
     // Only the current (or a past) year may fall back to legacy next-execution
