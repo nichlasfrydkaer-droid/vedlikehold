@@ -8,6 +8,11 @@ const MONTHS_IN_YEAR = 12;
 const MIN_PLANNER_YEAR = 2026;
 const INTERVALS = [1, 2, 3, 6, 12, 24];
 
+function planningIsAvailable(year){
+    const now = new Date();
+    return year <= now.getFullYear() || now >= new Date(year - 1, 11, 1);
+}
+
 function dateFromMonth(value){ const match = String(value || "").match(/^(\d{4})-(\d{2})/); return match ? new Date(Number(match[1]), Number(match[2]) - 1, 1, 12) : null; }
 function addMonths(date, amount){ return new Date(date.getFullYear(), date.getMonth() + amount, 1, 12); }
 function monthKey(date){ return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`; }
@@ -152,14 +157,21 @@ export async function initPlanner(){
     if(!cardsResult?.success || !settingsResult?.success){ root.innerHTML = `<section class="dashboard-card dashboard-full"><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerLoadFailed", "Kunne ikke hente årsoversikten.")}</p></section>`; return; }
     const jobcards = mergeJobcardSchedules(cardsResult.jobcards || [], settingsResult).filter(card => card.visible);
     const completed = reportCompletionIndex(reportsResult?.reports);
-    let year = new Date().getFullYear(); let activeMonth = new Date().getMonth(); let planData = null;
+    const requestedYear = Number(new URLSearchParams(location.search).get("year"));
+    const currentYear = new Date().getFullYear();
+    const latestRequestedYear = currentYear + 1;
+    let year = Number.isInteger(requestedYear) && requestedYear >= MIN_PLANNER_YEAR && requestedYear <= latestRequestedYear ? requestedYear : currentYear;
+    let activeMonth = new Date().getMonth(); let planData = null;
     const refreshPlan = async () => { const result = await getPlanner(congregation.id, year); planData = result?.success ? { ...result, congregation_id:congregation.id } : { congregation_id:congregation.id, plan:null, entries:[], manualCompletions:[] }; (planData.manualCompletions || []).forEach(item => jobcardKeys(item.jobcard_id).forEach(key => completed.add(`${key}:${item.execution_month}`))); };
     const render = async () => {
         await refreshPlan(); const planned = scheduledForYear(jobcards, year, completed, planData.entries);
-        root.innerHTML = `<section class="planner-heading dashboard-full"><div class="planner-title"><p class="page-eyebrow">${esc(congregation.name)}</p><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerDescription", "Årsoversikt over planlagte jobbkort.")}</p></div><div class="planner-year-nav" aria-label="${t("selectYear", "Velg år")}"><button type="button" data-year="-1" aria-label="${t("previousYear", "Forrige år")}" ${year <= MIN_PLANNER_YEAR ? "disabled" : ""}>‹</button><strong>${year}</strong><button type="button" data-year="1" aria-label="${t("nextYear", "Neste år")}">›</button></div><button class="planner-year-action" type="button" data-plan-year>${t("planYear", "Planlegg året")}</button></section><section class="planner-mobile-nav dashboard-full" aria-label="${t("selectMonth", "Velg måned")}"><button type="button" data-month="-1" aria-label="${t("previousMonth", "Forrige måned")}" ${year <= MIN_PLANNER_YEAR && activeMonth === 0 ? "disabled" : ""}>‹</button><strong>${monthLabel(new Date(year, activeMonth, 1, 12))}</strong><button type="button" data-month="1" aria-label="${t("nextMonth", "Neste måned")}">›</button></section><section class="planner-grid dashboard-full" data-planner-grid data-active-month="${activeMonth}">${planned.map((cards, index) => renderMonth(new Date(year, index, 1, 12), cards)).join("")}</section>`;
-        root.querySelectorAll("[data-year]").forEach(button => button.addEventListener("click", async () => { const nextYear = year + Number(button.dataset.year); if(nextYear < MIN_PLANNER_YEAR) return; year = nextYear; await render(); }));
+        const available = planningIsAvailable(year);
+        const latestVisibleYear = new Date().getFullYear() + 1;
+        const lockedText = t("plannerLockedUntil", "Planlegging av {year} kan utføres fra 1. desember {previousYear}.").replace("{year}", year).replace("{previousYear}", year - 1);
+        root.innerHTML = `<section class="planner-heading dashboard-full"><div class="planner-title"><p class="page-eyebrow">${esc(congregation.name)}</p><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerDescription", "Årsoversikt over planlagte jobbkort.")}</p></div><div class="planner-year-nav" aria-label="${t("selectYear", "Velg år")}"><button type="button" data-year="-1" aria-label="${t("previousYear", "Forrige år")}" ${year <= MIN_PLANNER_YEAR ? "disabled" : ""}>‹</button><strong>${year}</strong><button type="button" data-year="1" aria-label="${t("nextYear", "Neste år")}" ${year >= latestVisibleYear ? "disabled" : ""}>›</button></div><div class="planner-action-wrap"><button class="planner-year-action" type="button" data-plan-year ${available ? "" : "disabled"}>${t("planYear", "Planlegg året")}</button>${available ? "" : `<p class="planner-year-locked">${esc(lockedText)}</p>`}</div></section><section class="planner-mobile-nav dashboard-full" aria-label="${t("selectMonth", "Velg måned")}" data-year="${year}"><button type="button" data-month="-1" aria-label="${t("previousMonth", "Forrige måned")}" ${year <= MIN_PLANNER_YEAR && activeMonth === 0 ? "disabled" : ""}>‹</button><strong>${monthLabel(new Date(year, activeMonth, 1, 12))}</strong><button type="button" data-month="1" aria-label="${t("nextMonth", "Neste måned")}">›</button></section><section class="planner-grid dashboard-full" data-planner-grid data-active-month="${activeMonth}">${planned.map((cards, index) => renderMonth(new Date(year, index, 1, 12), cards)).join("")}</section>`;
+        root.querySelectorAll("[data-year]").forEach(button => button.addEventListener("click", async () => { const nextYear = year + Number(button.dataset.year); if(nextYear < MIN_PLANNER_YEAR || nextYear > latestVisibleYear) return; year = nextYear; await render(); }));
         root.querySelectorAll("[data-month]").forEach(button => button.addEventListener("click", async () => { activeMonth = Math.max(0, Math.min(11, activeMonth + Number(button.dataset.month))); await render(); }));
-        root.querySelector("[data-plan-year]").addEventListener("click", () => openPlanEditor(root, { year, jobcards, existing:planData, onSaved:render }));
+        root.querySelector("[data-plan-year]")?.addEventListener("click", () => { location.href = `/dashboard/planner-edit.html?year=${encodeURIComponent(year)}`; });
         const complete = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openManualCompleteDialog(root, card, executionMonth, async selectedMonth => { const result = await markPlannerCompletion({ congregation_id:congregation.id, year, jobcard_id:String(id), execution_month:selectedMonth }); if(result?.success){ jobcardKeys(id).forEach(key => completed.add(`${key}:${selectedMonth}`)); await render(); } else window.alert(t("plannerCompletionFailed", "Kunne ikke markere jobbkortet som utført.")); }); };
         const openActions = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openPlannerActionsMenu(root, card, executionMonth, selectedMonth => complete(id, selectedMonth)); };
         root.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => openActions(button.dataset.manualComplete, button.dataset.executionMonth)));

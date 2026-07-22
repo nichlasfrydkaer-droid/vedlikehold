@@ -306,6 +306,31 @@
 .planner-missing-info strong { color:#334155; }
 .planner-missing-info span { font-size:.9rem; line-height:1.35; }
 .planner-editor-dialog footer { position:sticky; bottom:0; padding:1rem 1.2rem; border-top:1px solid #e7edf5; background:#fff; }
+.planner-action-wrap { display:grid; justify-items:end; gap:.35rem; }
+.planner-year-action:disabled { background:#94a3b8; box-shadow:none; cursor:not-allowed; }
+.planner-year-locked { max-width:19rem; margin:0; color:#64748b; font-size:.78rem; line-height:1.35; text-align:right; }
+.planner-edit-page { display:grid; gap:1rem; max-width:1100px; margin:0 auto; padding-bottom:2rem; }
+.planner-back-link { width:max-content; color:#2563eb; font-weight:800; text-decoration:none; }
+.planner-edit-page-header { padding:1.35rem 1.45rem; border:1px solid #dbe5f1; border-radius:1rem; background:#fff; }
+.planner-edit-page-header h1 { margin:.2rem 0; color:#172b4d; font-size:2rem; }
+.planner-edit-page-header p:last-child { margin:0; color:#64748b; }
+.planner-edit-page-list { display:grid; gap:.7rem; }
+.planner-edit-page .planner-edit-row { grid-template-columns:minmax(14rem, 1.05fr) minmax(0, 2fr); padding:1rem; }
+.planner-edit-title { display:grid; gap:.7rem; min-width:0; }
+.planner-edit-title strong { color:#1e3762; overflow-wrap:anywhere; }
+.planner-edit-title em { margin-right:.4rem; color:#2563eb; font-size:.86em; font-style:normal; }
+.planner-visibility-button { display:inline-flex; align-items:center; gap:.35rem; width:max-content; padding:.45rem .6rem; border:0; border-radius:.55rem; background:#eaf2ff; color:#1d4ed8; font:inherit; font-size:.84rem; font-weight:800; cursor:pointer; }
+.planner-edit-row.is-hidden { border-color:#e2e8f0; background:#f8fafc; opacity:.7; }
+.planner-edit-row.is-hidden .planner-edit-title strong { text-decoration:line-through; }
+.planner-edit-page-footer { display:flex; justify-content:flex-end; gap:.7rem; padding-top:.75rem; }
+.planner-edit-page-footer button { border:0; border-radius:.65rem; padding:.7rem 1rem; font:inherit; font-weight:800; cursor:pointer; }
+.planner-edit-page-footer .button-primary { background:#2563eb; color:#fff; }
+.planner-locked-card, .planner-edit-choice { padding:1.25rem; border:1px solid #dbe5f1; border-radius:1rem; background:#fff; }
+.planner-locked-card h1 { margin:0 0 .5rem; color:#172b4d; }
+.planner-locked-card p { margin:0; color:#64748b; }
+.planner-edit-choice { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:.85rem; }
+.planner-edit-choice h2 { grid-column:1 / -1; margin:0; color:#172b4d; }
+.planner-edit-choice button { padding:1rem; border:1px solid #bfd6fa; border-radius:.75rem; background:#f8fbff; color:#1d4ed8; font:inherit; font-weight:800; cursor:pointer; }
 
 @media (max-width:1300px) {
     .planner-grid { grid-template-columns:repeat(3, minmax(0, 1fr)); }
@@ -355,4 +380,10 @@
     .planner-edit-controls { grid-template-columns:1fr 1fr; }
     .planner-edit-controls label:last-child { grid-column:1 / -1; }
     .planner-editor-dialog footer { padding:.85rem 1rem; }
+    .planner-action-wrap { width:100%; justify-items:stretch; }
+    .planner-year-locked { max-width:none; text-align:left; }
+    .planner-edit-page-header h1 { font-size:1.65rem; }
+    .planner-edit-page .planner-edit-row { grid-template-columns:1fr; gap:.65rem; }
+    .planner-edit-choice { grid-template-columns:1fr; }
+    .planner-edit-page-footer button { flex:1; }
 }
