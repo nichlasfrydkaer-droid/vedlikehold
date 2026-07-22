@@ -1,5 +1,7 @@
 {
   "appName": "Maintenance System",
+  "manualApproval": "Manual approval",
+  "manualApprovalDescription": "Register the job card as completed without a report.",
   "dashboard": "Dashboard",
   "home": "Home",
   "jobcards": "Job cards",

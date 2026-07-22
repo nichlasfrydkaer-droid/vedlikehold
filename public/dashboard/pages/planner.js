@@ -71,17 +71,26 @@ function renderMonth(month, cards){
     return `<article class="planner-month-card" data-planner-month="${month.getMonth()}"><header><h2>${monthLabel(month)}</h2><span>${complete}/${cards.length}</span></header><div class="planner-month-list">${cards.length ? cards.map((card, index) => cardMarkup(card, index, visibleLimit)).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}${extraCount ? `<button class="planner-more" type="button" data-open-month="${month.getMonth()}">${t("plannerMoreItems", "+ {count} flere").replace("{count}", extraCount)}</button>` : ""}</div></article>`;
 }
 function closeOverlay(overlay){ overlay.remove(); }
-function openMonthDialog(root, month, cards, onComplete){
+function openMonthDialog(root, month, cards, onAction){
     const complete = cards.filter(card => card.completed).length;
     const overlay = document.createElement("div"); overlay.className = "planner-month-overlay";
     overlay.innerHTML = `<section class="planner-month-dialog" role="dialog" aria-modal="true"><header><div><h2>${monthLabel(month)}</h2><p>${complete}/${cards.length}</p></div><button type="button" data-close aria-label="${t("close", "Lukk")}">×</button></header><div class="planner-month-dialog-list">${cards.map(card => cardMarkup(card, -1, Infinity)).join("")}</div></section>`;
     const close = () => closeOverlay(overlay); overlay.addEventListener("click", event => { if(event.target === overlay) close(); }); overlay.querySelector("[data-close]").addEventListener("click", close);
-    overlay.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => { close(); onComplete(button.dataset.manualComplete, button.dataset.executionMonth); })); root.append(overlay);
+    overlay.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => { close(); onAction(button.dataset.manualComplete, button.dataset.executionMonth); })); root.append(overlay);
+}
+function openPlannerActionsMenu(root, card, executionMonth, onManualComplete){
+    const overlay = document.createElement("div"); overlay.className = "planner-month-overlay planner-actions-overlay";
+    overlay.innerHTML = `<section class="planner-actions-menu" role="dialog" aria-modal="true" aria-label="${t("plannerActions", "Flere valg")}"><button class="planner-close" type="button" data-close aria-label="${t("close", "Lukk")}">×</button><header><p class="page-eyebrow">${esc(card.jobcard_number)}</p><h2>${esc(card.title)}</h2></header><div class="planner-actions-list"><button type="button" data-manual-complete><span class="planner-actions-icon" aria-hidden="true">✓</span><span><strong>${t("manualApproval", "Manuell godkjenning")}</strong><small>${t("manualApprovalDescription", "Registrer jobbkortet som utført uten rapport.")}</small></span><span class="planner-actions-arrow" aria-hidden="true">›</span></button></div></section>`;
+    const close = () => closeOverlay(overlay);
+    overlay.addEventListener("click", event => { if(event.target === overlay) close(); });
+    overlay.querySelector("[data-close]").addEventListener("click", close);
+    overlay.querySelector("[data-manual-complete]").addEventListener("click", () => { close(); onManualComplete(executionMonth); });
+    root.append(overlay);
 }
 function openManualCompleteDialog(root, card, executionMonth, onConfirm){
     const overlay = document.createElement("div"); overlay.className = "planner-month-overlay";
     const month = dateFromMonth(executionMonth);
-    overlay.innerHTML = `<section class="planner-confirm-dialog" role="dialog" aria-modal="true"><button class="planner-close" type="button" data-close aria-label="${t("close", "Lukk")}">×</button><h2>${t("markJobcardCompleted", "Marker jobbkort som utført")}</h2><p><strong>${esc(card.jobcard_number)} ${esc(card.title)}</strong></p><label>${t("executionMonth", "Utført måned")}<select data-month>${Array.from({length:12}, (_, index) => `<option value="${index}" ${index === month.getMonth() ? "selected" : ""}>${monthLabel(new Date(month.getFullYear(), index, 1, 12))}</option>`).join("")}</select></label><p class="planner-dialog-note">${t("manualCompletionNote", "Dette registreres som en manuell bekreftelse uten rapport, bilder eller SJA.")}</p><footer><button type="button" class="button-secondary" data-close>${t("cancel", "Avbryt")}</button><button type="button" class="button-primary" data-confirm>${t("confirm", "Bekreft")}</button></footer></section>`;
+    overlay.innerHTML = `<section class="planner-confirm-dialog" role="dialog" aria-modal="true"><button class="planner-close" type="button" data-close aria-label="${t("close", "Lukk")}">×</button><header><p class="page-eyebrow">${t("manualApproval", "Manuell godkjenning")}</p><h2>${t("markJobcardCompleted", "Marker jobbkort som utført")}</h2><p class="planner-confirm-jobcard"><strong>${esc(card.jobcard_number)}</strong><span>${esc(card.title)}</span></p></header><label>${t("executionMonth", "Utført måned")}<select data-month>${Array.from({length:12}, (_, index) => `<option value="${index}" ${index === month.getMonth() ? "selected" : ""}>${monthLabel(new Date(month.getFullYear(), index, 1, 12))}</option>`).join("")}</select></label><footer><button type="button" class="button-secondary" data-close>${t("cancel", "Avbryt")}</button><button type="button" class="button-primary" data-confirm>${t("confirm", "Bekreft")}</button></footer></section>`;
     const close = () => closeOverlay(overlay); overlay.addEventListener("click", event => { if(event.target === overlay) close(); }); overlay.querySelectorAll("[data-close]").forEach(button => button.addEventListener("click", close)); overlay.querySelector("[data-confirm]").addEventListener("click", () => { const selected = Number(overlay.querySelector("[data-month]").value); close(); onConfirm(`${month.getFullYear()}-${String(selected + 1).padStart(2, "0")}`); }); root.append(overlay);
 }
 function freshEntries(jobcards, year){
@@ -152,8 +161,9 @@ export async function initPlanner(){
         root.querySelectorAll("[data-month]").forEach(button => button.addEventListener("click", async () => { activeMonth = Math.max(0, Math.min(11, activeMonth + Number(button.dataset.month))); await render(); }));
         root.querySelector("[data-plan-year]").addEventListener("click", () => openPlanEditor(root, { year, jobcards, existing:planData, onSaved:render }));
         const complete = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openManualCompleteDialog(root, card, executionMonth, async selectedMonth => { const result = await markPlannerCompletion({ congregation_id:congregation.id, year, jobcard_id:String(id), execution_month:selectedMonth }); if(result?.success){ jobcardKeys(id).forEach(key => completed.add(`${key}:${selectedMonth}`)); await render(); } else window.alert(t("plannerCompletionFailed", "Kunne ikke markere jobbkortet som utført.")); }); };
-        root.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => complete(button.dataset.manualComplete, button.dataset.executionMonth)));
-        root.querySelectorAll("[data-open-month]").forEach(button => button.addEventListener("click", () => { const index = Number(button.dataset.openMonth); openMonthDialog(root, new Date(year, index, 1, 12), planned[index], complete); }));
+        const openActions = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openPlannerActionsMenu(root, card, executionMonth, selectedMonth => complete(id, selectedMonth)); };
+        root.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => openActions(button.dataset.manualComplete, button.dataset.executionMonth)));
+        root.querySelectorAll("[data-open-month]").forEach(button => button.addEventListener("click", () => { const index = Number(button.dataset.openMonth); openMonthDialog(root, new Date(year, index, 1, 12), planned[index], openActions); }));
     };
     await render();
 }

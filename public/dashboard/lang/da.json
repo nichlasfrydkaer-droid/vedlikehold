@@ -1,5 +1,7 @@
 {
   "appName": "Vedligeholdssystem",
+  "manualApproval": "Manuel godkendelse",
+  "manualApprovalDescription": "Registrér jobkortet som udført uden rapport.",
   "dashboard": "Dashboard",
   "home": "Hjem",
   "jobcards": "Jobkort",

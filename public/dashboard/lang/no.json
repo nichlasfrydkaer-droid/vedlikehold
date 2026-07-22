@@ -1,5 +1,7 @@
 {
   "appName": "Vedlikeholdssystem",
+  "manualApproval": "Manuell godkjenning",
+  "manualApprovalDescription": "Registrer jobbkortet som utført uten rapport.",
 
   "login": "Logg inn",
   "logout": "Logg ut",
