@@ -10,6 +10,7 @@ export const state = {
 
   selectedPhotos: [],
   pdfPhotos: [],
+  previewPhotos: [],
 
   draftKey: null,
 

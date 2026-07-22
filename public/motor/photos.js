@@ -4,25 +4,32 @@ import { scheduleDraftSave } from "./draft.js";
 
 let objectUrls=[];
 
-export async function createPdfImage(file){
+async function createResizedImage(file,maxSize,quality){
   if(!file.type.startsWith("image/") || file.type.includes("svg")) return file;
   try{
     const image=await new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),element=new Image();element.onload=()=>{URL.revokeObjectURL(url);resolve(element);};element.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("Image could not be read"));};element.src=url;});
-    const scale=Math.min(1,1600/Math.max(image.naturalWidth,image.naturalHeight));
+    const scale=Math.min(1,maxSize/Math.max(image.naturalWidth,image.naturalHeight));
     const canvas=document.createElement("canvas");
-    canvas.width=Math.round(image.naturalWidth*scale);canvas.height=Math.round(image.naturalHeight*scale);
+    canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
     canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);
-    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",.8));
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",quality));
     return blob ? new File([blob],file.name.replace(/\.[^.]+$/,"")+".jpg",{type:"image/jpeg",lastModified:file.lastModified}) : file;
   }catch{return file;}
 }
 
+export async function createPdfImage(file){
+  return createResizedImage(file,1600,.8);
+}
+
+export async function createPreviewImage(file){ return createResizedImage(file,960,.72); }
+
 export function initPhotos(){
   dom.photos.addEventListener("change",async event=>{
     const originals=[...event.target.files];
-    const pdfCopies=await Promise.all(originals.map(createPdfImage));
+    const [pdfCopies,previewCopies]=await Promise.all([Promise.all(originals.map(createPdfImage)),Promise.all(originals.map(createPreviewImage))]);
     state.selectedPhotos.push(...originals);
     state.pdfPhotos.push(...pdfCopies);
+    state.previewPhotos.push(...previewCopies);
     event.target.value="";
     renderPreview();
     scheduleDraftSave();
@@ -53,4 +60,4 @@ export function renderPreview(){
   dom.preview.querySelectorAll(".work-photo-remove").forEach(button=>button.addEventListener("click",()=>removePhoto(Number(button.dataset.index))));
 }
 
-export function removePhoto(index){ state.selectedPhotos.splice(index,1); state.pdfPhotos.splice(index,1); renderPreview(); scheduleDraftSave(); }
+export function removePhoto(index){ state.selectedPhotos.splice(index,1); state.pdfPhotos.splice(index,1); state.previewPhotos.splice(index,1); renderPreview(); scheduleDraftSave(); }
