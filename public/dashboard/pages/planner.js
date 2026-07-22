@@ -31,16 +31,28 @@ function intervalLabel(months, fallback = ""){
     return labels[Number(months)] || fallback || "–";
 }
 function reportCompletionIndex(reports){
-    const completed = new Set();
-    (reports || []).forEach(report => { const date = new Date(report.finished_at || report.created_at || ""); if(!Number.isNaN(date.getTime())) jobcardKeys(report.job_number || report.jobcard_id).forEach(key => completed.add(`${key}:${monthKey(date)}`)); });
+    const completed = new Map();
+    (reports || []).forEach(report => {
+        const date = new Date(report.finished_at || report.created_at || "");
+        if(Number.isNaN(date.getTime())) return;
+        jobcardKeys(report.job_number || report.jobcard_id).forEach(key => {
+            const months = completed.get(key) || [];
+            months.push(monthKey(date));
+            completed.set(key, months);
+        });
+    });
     return completed;
+}
+function monthsBetween(fromMonth, toMonth){
+    const from = dateFromMonth(fromMonth); const to = dateFromMonth(toMonth);
+    return !from || !to ? Number.POSITIVE_INFINITY : ((to.getFullYear() - from.getFullYear()) * 12) + to.getMonth() - from.getMonth();
 }
 function entriesByJobcard(entries){
     const map = new Map();
     (entries || []).forEach(entry => jobcardKeys(entry.jobcard_id).forEach(key => map.set(key, entry)));
     return map;
 }
-function scheduledForYear(jobcards, year, completed, entries){
+function scheduledForYear(jobcards, year, reportCompletions, entries, manualCompletions = new Set()){
     const months = Array.from({ length:MONTHS_IN_YEAR }, () => []);
     const planEntries = entriesByJobcard(entries);
     jobcards.forEach(jobcard => {
@@ -53,10 +65,23 @@ function scheduledForYear(jobcards, year, completed, entries){
             for(let offset = -24; offset <= 24; offset += 1){ const occurrence = addMonths(anchor, offset * interval); if(occurrence.getFullYear() === year) result.push(monthKey(occurrence)); }
             return [...new Set(result)];
         })();
+        const reportCompletedOccurrences = new Set();
+        const completionMonths = new Set(jobcardKeys(jobcard.id).flatMap(key => reportCompletions.get(key) || []));
+        completionMonths.forEach(completionMonth => {
+            const completionDate = dateFromMonth(completionMonth);
+            if(!completionDate || completionDate.getFullYear() !== year) return;
+            const latestOccurrence = [...occurrences]
+                .filter(value => value <= completionMonth)
+                .sort()
+                .at(-1);
+            // A late execution may close its latest due occurrence, but never more
+            // than one configured interval back and never several missed occurrences.
+            if(latestOccurrence && monthsBetween(latestOccurrence, completionMonth) <= interval) reportCompletedOccurrences.add(latestOccurrence);
+        });
         occurrences.forEach(value => {
             const date = dateFromMonth(value); if(!date || date.getFullYear() !== year) return;
             const index = date.getMonth(); if(months[index].some(item => String(item.id) === String(jobcard.id))) return;
-            const complete = jobcardKeys(jobcard.id).some(key => completed.has(`${key}:${value}`));
+            const complete = reportCompletedOccurrences.has(value) || jobcardKeys(jobcard.id).some(key => manualCompletions.has(`${key}:${value}`));
             months[index].push({ ...jobcard, completed:complete, executionMonth:value });
         });
     });
@@ -103,7 +128,7 @@ function freshEntries(jobcards, year){
 }
 function continuedEntries(jobcards, year, current){
     const currentById = entriesByJobcard(current?.entries);
-    const planned = scheduledForYear(jobcards, year, new Set(), current?.entries || []);
+    const planned = scheduledForYear(jobcards, year, new Map(), current?.entries || []);
     const byId = new Map(); planned.flat().forEach(card => { const item = byId.get(String(card.id)) || []; item.push(card.executionMonth); byId.set(String(card.id), item); });
     return jobcards.map(card => { const stored = jobcardKeys(card.id).map(key => currentById.get(key)).find(Boolean); const months = byId.get(String(card.id)) || []; return { jobcard_id:String(card.id), planned_months:months, auto_interval:stored ? Number(stored.auto_interval) !== 0 : card.autoInterval !== false, manual_interval_months:stored?.manual_interval_months || card.manualIntervalMonths || card.intervalMonths || 12, selected:months.length > 0, first_month:months[0] ? dateFromMonth(months[0]).getMonth() : 0 }; });
 }
@@ -156,15 +181,21 @@ export async function initPlanner(){
     const [cardsResult, settingsResult, reportsResult] = await Promise.all([getJobcards(congregation), getJobcardSettings(congregation.id), getReports(congregation.id)]);
     if(!cardsResult?.success || !settingsResult?.success){ root.innerHTML = `<section class="dashboard-card dashboard-full"><h1>${t("planner", "Planlegger")}</h1><p>${t("plannerLoadFailed", "Kunne ikke hente årsoversikten.")}</p></section>`; return; }
     const jobcards = mergeJobcardSchedules(cardsResult.jobcards || [], settingsResult).filter(card => card.visible);
-    const completed = reportCompletionIndex(reportsResult?.reports);
+    const reportCompletions = reportCompletionIndex(reportsResult?.reports);
+    const manualCompletions = new Set();
     const requestedYear = Number(new URLSearchParams(location.search).get("year"));
     const currentYear = new Date().getFullYear();
     const latestRequestedYear = currentYear + 1;
     let year = Number.isInteger(requestedYear) && requestedYear >= MIN_PLANNER_YEAR && requestedYear <= latestRequestedYear ? requestedYear : currentYear;
     let activeMonth = new Date().getMonth(); let planData = null;
-    const refreshPlan = async () => { const result = await getPlanner(congregation.id, year); planData = result?.success ? { ...result, congregation_id:congregation.id } : { congregation_id:congregation.id, plan:null, entries:[], manualCompletions:[] }; (planData.manualCompletions || []).forEach(item => jobcardKeys(item.jobcard_id).forEach(key => completed.add(`${key}:${item.execution_month}`))); };
+    const refreshPlan = async () => {
+        const result = await getPlanner(congregation.id, year);
+        planData = result?.success ? { ...result, congregation_id:congregation.id } : { congregation_id:congregation.id, plan:null, entries:[], manualCompletions:[] };
+        manualCompletions.clear();
+        (planData.manualCompletions || []).forEach(item => jobcardKeys(item.jobcard_id).forEach(key => manualCompletions.add(`${key}:${item.execution_month}`)));
+    };
     const render = async () => {
-        await refreshPlan(); const planned = scheduledForYear(jobcards, year, completed, planData.entries);
+        await refreshPlan(); const planned = scheduledForYear(jobcards, year, reportCompletions, planData.entries, manualCompletions);
         const available = planningIsAvailable(year);
         const latestVisibleYear = new Date().getFullYear() + 1;
         const lockedText = t("plannerLockedUntil", "Planlegging av {year} kan utføres fra 1. desember {previousYear}.").replace("{year}", year).replace("{previousYear}", year - 1);
@@ -172,7 +203,7 @@ export async function initPlanner(){
         root.querySelectorAll("[data-year]").forEach(button => button.addEventListener("click", async () => { const nextYear = year + Number(button.dataset.year); if(nextYear < MIN_PLANNER_YEAR || nextYear > latestVisibleYear) return; year = nextYear; await render(); }));
         root.querySelectorAll("[data-month]").forEach(button => button.addEventListener("click", async () => { activeMonth = Math.max(0, Math.min(11, activeMonth + Number(button.dataset.month))); await render(); }));
         root.querySelector("[data-plan-year]")?.addEventListener("click", () => { location.href = `/dashboard/planner-edit.html?year=${encodeURIComponent(year)}`; });
-        const complete = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openManualCompleteDialog(root, card, executionMonth, async selectedMonth => { const result = await markPlannerCompletion({ congregation_id:congregation.id, year, jobcard_id:String(id), execution_month:selectedMonth }); if(result?.success){ jobcardKeys(id).forEach(key => completed.add(`${key}:${selectedMonth}`)); await render(); } else window.alert(t("plannerCompletionFailed", "Kunne ikke markere jobbkortet som utført.")); }); };
+        const complete = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openManualCompleteDialog(root, card, executionMonth, async selectedMonth => { const result = await markPlannerCompletion({ congregation_id:congregation.id, year, jobcard_id:String(id), execution_month:selectedMonth }); if(result?.success){ jobcardKeys(id).forEach(key => manualCompletions.add(`${key}:${selectedMonth}`)); await render(); } else window.alert(t("plannerCompletionFailed", "Kunne ikke markere jobbkortet som utført.")); }); };
         const openActions = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openPlannerActionsMenu(root, card, executionMonth, selectedMonth => complete(id, selectedMonth)); };
         root.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => openActions(button.dataset.manualComplete, button.dataset.executionMonth)));
         root.querySelectorAll("[data-open-month]").forEach(button => button.addEventListener("click", () => { const index = Number(button.dataset.openMonth); openMonthDialog(root, new Date(year, index, 1, 12), planned[index], openActions); }));
