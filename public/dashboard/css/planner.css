@@ -66,15 +66,16 @@
     justify-content:space-between;
     gap:.6rem;
     padding:.7rem .8rem .6rem;
-    border-bottom:1px solid #e7edf5;
+    border-bottom:1px solid #0d3475;
+    background:#123b7a;
 }
-.planner-month-card h2 { margin:0; color:#172b4d; font-size:.98rem; }
+.planner-month-card h2 { margin:0; color:#fff; font-size:.98rem; }
 .planner-month-card header span {
     min-width:2.1rem;
     padding:.16rem .38rem;
     border-radius:999px;
-    background:#eff6ff;
-    color:#2563eb;
+    background:#fff;
+    color:#123b7a;
     text-align:center;
     font-size:.74rem;
     font-weight:800;
