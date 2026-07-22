@@ -82,6 +82,6 @@
   "downloadSja": "Download risikoanalyse (DC-85)",
   "plannerLockedUntil": "Planlægning af {year} kan udføres fra 1. december {previousYear}.",
   "backToPlanner": "Tilbage til årsoversigten",
-  "hideJobcard": "Skjul jobkort",
-  "showJobcard": "Vis jobkort"
+  "hideJobcardYear": "Skjul jobkort i {year}",
+  "showJobcardYear": "Vis jobkort i {year}"
 }

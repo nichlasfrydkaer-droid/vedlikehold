@@ -83,6 +83,6 @@
   "downloadSja": "Download job safety analysis (DC-85)",
   "plannerLockedUntil": "Planning for {year} can be completed from 1 December {previousYear}.",
   "backToPlanner": "Back to yearly overview",
-  "hideJobcard": "Hide job card",
-  "showJobcard": "Show job card"
+  "hideJobcardYear": "Hide job card in {year}",
+  "showJobcardYear": "Show job card in {year}"
 }

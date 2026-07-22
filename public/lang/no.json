@@ -82,6 +82,6 @@
   "downloadSja": "Last ned SJA (DC-85)",
   "plannerLockedUntil": "Planlegging av {year} kan utføres fra 1. desember {previousYear}.",
   "backToPlanner": "Tilbake til årsoversikt",
-  "hideJobcard": "Skjul jobbkort",
-  "showJobcard": "Vis jobbkort"
+  "hideJobcardYear": "Skjul jobbkort i {year}",
+  "showJobcardYear": "Vis jobbkort i {year}"
 }
