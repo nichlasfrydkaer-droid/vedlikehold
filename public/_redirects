@@ -1,6 +1,5 @@
-/dashboard/planner.html       /dashboard/annual-overview    301
-/dashboard/planner-edit       /dashboard/planner            301
-/dashboard/planner-edit.html  /dashboard/planner            301
-/dashboard/annual-overview    /dashboard/annual-overview.html  200
-/dashboard/planner            /dashboard/planner-edit.html     200
+/dashboard/planner.html         /dashboard/annual-overview/  301
+/dashboard/planner-edit         /dashboard/planner/          301
+/dashboard/planner-edit.html    /dashboard/planner/          301
+/dashboard/annual-overview.html /dashboard/annual-overview/  301
 /o/*                          /o.html                           200
