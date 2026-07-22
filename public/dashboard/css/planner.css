@@ -110,6 +110,7 @@
     font-weight:900;
 }
 .planner-jobcard.is-completed .planner-status { border-color:#16a34a; background:#16a34a; }
+.planner-jobcard.is-overdue .planner-status { border-color:#f5b700; background:#f5b700; color:#713f12; }
 .planner-jobcard-copy { display:block; min-width:0; }
 .planner-jobcard-copy strong {
     display:block;

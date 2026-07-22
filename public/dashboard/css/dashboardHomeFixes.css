@@ -27,9 +27,11 @@
 .dashboard-planner-jobcard > span:nth-child(2) { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
 .dashboard-planner-jobcard > span:nth-child(2) strong { min-width: 24px; color: #172b4d; }
 .dashboard-planner-jobcard.is-completed .dashboard-planner-status { border-color: #16a34a; background: #16a34a; }
+.dashboard-planner-jobcard.is-overdue .dashboard-planner-status { border-color: #f5b700; background: #f5b700; color: #713f12; }
 .dashboard-planner-jobcard.is-completed > span:nth-child(2) { color: #52705d; }
 .dashboard-planner-jobcard.is-completed small { color: #15803d; font-weight: 700; }
 .dashboard-planner-jobcard.is-pending small { color: #b45309; font-weight: 700; }
+.dashboard-planner-jobcard.is-overdue small { color: #a16207; font-weight: 700; }
 
 @media (max-width: 500px) {
     .dashboard-planner-jobcard > span:nth-child(2) { align-items: flex-start; flex-direction: column; gap: 2px; }

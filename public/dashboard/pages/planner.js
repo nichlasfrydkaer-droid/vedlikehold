@@ -90,9 +90,15 @@ export function scheduledForYear(jobcards, year, reportCompletions, entries, man
     });
     return months.map(items => items.sort((left, right) => String(left.jobcard_number).localeCompare(String(right.jobcard_number), undefined, { numeric:true })));
 }
+function isOverdueExecution(executionMonth, now = new Date()){
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    return /^\d{4}-\d{2}$/.test(String(executionMonth || "")) && executionMonth < currentMonth;
+}
 function cardMarkup(card, index, moreLimit){
-    return `<div class="planner-jobcard ${card.completed ? "is-completed" : ""} ${index >= moreLimit ? "is-extra" : ""}" title="${esc(card.title)}">
-        <span class="planner-status" aria-label="${card.completed ? t("completed", "Utført") : t("planned", "Planlagt")}">${card.completed ? "✓" : ""}</span>
+    const overdue = !card.completed && isOverdueExecution(card.executionMonth);
+    const statusLabel = card.completed ? t("completed", "Utført") : overdue ? t("overdueJobcards", "Overskredne jobbkort") : t("planned", "Planlagt");
+    return `<div class="planner-jobcard ${card.completed ? "is-completed" : overdue ? "is-overdue" : ""} ${index >= moreLimit ? "is-extra" : ""}" title="${esc(card.title)}">
+        <span class="planner-status" aria-label="${statusLabel}">${card.completed ? "✓" : overdue ? "!" : ""}</span>
         <span class="planner-jobcard-copy"><strong><em>${esc(card.jobcard_number)}</em>${esc(card.title)}</strong></span>
         ${card.completed ? "" : `<button class="planner-card-actions" type="button" data-manual-complete="${esc(card.id)}" data-execution-month="${card.executionMonth}" aria-label="${t("plannerActions", "Flere valg")}">…</button>`}
     </div>`;

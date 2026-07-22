@@ -54,6 +54,7 @@ function renderActivityCard(item){
 function renderActivityPanel(items){
     const panel = document.createElement("section");
     panel.className = "dashboard-notification-panel";
+    panel.style.cssText += "max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overflow-y:auto;scrollbar-gutter:stable;";
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-label", t("newSinceLastLogin", "Nytt siden sist"));
     panel.innerHTML = `<h2>${t("newSinceLastLogin", "Nytt siden sist")}</h2><div class="activity-news-list">${items.length
