@@ -16,6 +16,7 @@ export function setWorkState(){
   dom.startBtn.hidden=active;
   dom.startBtn.disabled=sjaBlocked;
   dom.finishBtn.hidden=!active;
+  dom.finishBtn.disabled=sjaBlocked;
   dom.nameInput.classList.toggle("is-invalid",active && !dom.nameInput.value.trim());
   dom.startHint.classList.toggle("is-started",active);
   dom.startHintTitle.textContent=t(active ? "workStarted" : "readyToStart",active ? "Arbeidet er startet" : "Klar til å starte");

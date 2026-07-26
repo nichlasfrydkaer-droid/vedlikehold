@@ -1,5 +1,6 @@
 import { state } from "./state.js";
 import { config } from "./config.js";
+import { saveDraft } from "./draft.js";
 
 const escape=value=>String(value??"").replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
 const t=(key,fallback)=>state.translations?.[key]||fallback;
@@ -43,7 +44,9 @@ function form(guideUrl){
     const params=new URLSearchParams(location.search);
     const response=await request("/sja",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:state.sja?.id,target_type:"jobcard",congregation_id:params.get("congregation"),jobcard_id:String(state.currentJob.nummer).replace(/^0+/,"")||"0",target_key:`${params.get("congregation")}:${String(state.currentJob.nummer).replace(/^0+/,"")||"0"}:${key()}`,work_description:formData.get("work_description"),location:formData.get("location"),planned_start_date:formData.get("planned_start_date"),emergency_numbers:formData.get("emergency_numbers"),prepared_by:formData.get("prepared_by"),reviewed_by:formData.get("reviewed_by"),steps})});
     if(!response.success){status.textContent=response.message||"Kunne ikke lagre SJA.";return;}
-    state.sja=response.sja;window.dispatchEvent(new Event("sjachange"));render(guideUrl);
+    state.sja=response.sja;
+    await saveDraft();
+    window.dispatchEvent(new Event("sjachange"));render(guideUrl);
   });
 }
 

@@ -33,6 +33,7 @@ async function restoreDraft(){
   if(!draft) return;
   state.started=Boolean(draft.started);
   state.startTime=draft.startTime || null;
+  state.workKey=typeof draft.workKey==="string" && draft.workKey ? draft.workKey : null;
   dom.nameInput.value=draft.name || "";
   dom.notes.value=draft.notes || "";
   [...document.querySelectorAll(".task")].forEach((task,index)=>{task.checked=Boolean(draft.checked?.[index]);task.closest(".work-check-row")?.classList.toggle("is-complete",task.checked);});
@@ -40,7 +41,6 @@ async function restoreDraft(){
   state.pdfPhotos=await Promise.all(state.selectedPhotos.map(createPdfImage));
   state.previewPhotos=await Promise.all(state.selectedPhotos.map(createPreviewImage));
   renderPreview();
-  setWorkState();
   renderProgress();
   if(state.started && state.startTime) startTimer(); else updateTimer();
   resizeNotes();
@@ -61,8 +61,8 @@ export async function initApp(){
   window.addEventListener("pagehide",()=>{ void saveDraft(); });
   try{
     await loadJob();
-    await initSja();
     await restoreDraft();
+    await initSja();
     window.addEventListener("sjachange",setWorkState);
     setWorkState();
     updateTimer();

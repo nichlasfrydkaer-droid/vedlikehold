@@ -33,6 +33,7 @@ function draftData(includePhotos=true){
     savedAt: Date.now(),
     started: state.started,
     startTime: state.startTime,
+    workKey: state.workKey,
     expiresAt: state.started && state.startTime ? Number(state.startTime) + DRAFT_TIMEOUT_MS : null,
     name: dom.nameInput.value,
     notes: dom.notes.value,
