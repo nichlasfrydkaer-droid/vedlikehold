@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Mediesøk | Vedlikeholdsystem</title>
+  <link rel="icon" href="/icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+  <link rel="stylesheet" href="/assets/search.css?v=1">
+</head>
+<body>
+  <header class="search-header">
+    <a class="brand" href="/" aria-label="Vedlikeholdsystem forside">
+      <img src="/icon.png" alt="">
+      <span>Vedlikehold<strong>system</strong></span>
+    </a>
+    <a class="back-link" href="/">Til forsiden</a>
+  </header>
+
+  <main class="search-main">
+    <section class="search-intro" aria-labelledby="search-title">
+      <p class="eyebrow">Mediesøk</p>
+      <h1 id="search-title">Finn bilder og video</h1>
+      <p>Søk i det åpne PeerTube-nettverket uten å forlate Vedlikeholdsystem.</p>
+    </section>
+
+    <section class="search-panel" aria-label="Søk etter bilder og video">
+      <form class="search-form" data-search-form role="search">
+        <label class="visually-hidden" for="search-query">Søk etter bilder og video</label>
+        <input id="search-query" name="q" type="search" autocomplete="off" minlength="2" maxlength="160" placeholder="Hva leter du etter?" required>
+        <button type="submit">Søk</button>
+      </form>
+
+      <div class="media-filters" role="group" aria-label="Visning">
+        <button type="button" data-media-filter="all" aria-pressed="true">Alle</button>
+        <button type="button" data-media-filter="images" aria-pressed="false">Bilder</button>
+        <button type="button" data-media-filter="video" aria-pressed="false">Video</button>
+      </div>
+
+      <p class="search-status" data-search-status aria-live="polite">Skriv inn det du vil finne.</p>
+      <div class="search-results" data-search-results></div>
+      <p class="search-provider">Resultater hentes fra PeerTube. Bilder er forhåndsvisninger fra videoene. Kontroller rettigheter før gjenbruk.</p>
+    </section>
+  </main>
+
+  <dialog class="media-dialog" data-media-dialog aria-labelledby="media-dialog-title">
+    <div class="media-dialog-header">
+      <div>
+        <p class="eyebrow" data-media-dialog-type>PeerTube-video</p>
+        <h2 id="media-dialog-title" data-media-dialog-title>Media</h2>
+      </div>
+      <button type="button" class="dialog-close" data-dialog-close aria-label="Lukk media">×</button>
+    </div>
+    <div class="media-frame" data-media-frame></div>
+    <p class="media-error" data-media-error hidden>Mediet kunne ikke vises. Prøv igjen senere.</p>
+  </dialog>
+
+  <script src="/assets/search.js?v=1" type="module"></script>
+</body>
+</html>

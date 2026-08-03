@@ -2,4 +2,5 @@
 /dashboard/planner-edit         /dashboard/planner/          301
 /dashboard/planner-edit.html    /dashboard/planner/          301
 /dashboard/annual-overview.html /dashboard/annual-overview/  301
+/search                       /search/?v=peertube-v1           302
 /o/*                          /o.html                           200
