@@ -87,7 +87,7 @@ async function search(query) {
 
   const url = new URL(OPENVERSE_ENDPOINT);
   url.searchParams.set("q", query);
-  url.searchParams.set("page_size", "30");
+  url.searchParams.set("page_size", "20");
   url.searchParams.set("mature", "false");
 
   try {
