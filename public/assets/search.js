@@ -222,7 +222,7 @@ function archiveRequest(query, signal) {
       ? "mediatype:image"
       : "mediatype:(movies OR image)";
   const url = new URL(INTERNET_ARCHIVE_ENDPOINT);
-  url.searchParams.set("q", `${mediaQuery} AND (${query})`);
+  url.searchParams.set("q", `${mediaQuery} AND NOT access-restricted-item:true AND (${query})`);
   ["identifier", "title", "creator", "year", "date", "mediatype", "licenseurl"].forEach((field) => {
     url.searchParams.append("fl[]", field);
   });
