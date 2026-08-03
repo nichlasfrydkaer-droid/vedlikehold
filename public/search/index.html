@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow">
+  <title>Mediesøk | Vedlikeholdsystem</title>
+  <link rel="icon" href="/icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
+  <link rel="stylesheet" href="/assets/search.css?v=3">
+</head>
+<body>
+  <header class="search-header">
+    <a class="brand" href="/" aria-label="Vedlikeholdsystem forside">
+      <img src="/icon.png" alt="">
+      <span>Vedlikehold<strong>system</strong></span>
+    </a>
+    <a class="back-link" href="/">Til forsiden</a>
+  </header>
+
+  <main class="search-main">
+    <section class="search-intro" aria-labelledby="search-title">
+      <p class="eyebrow">Mediesøk</p>
+      <h1 id="search-title">Finn bilder og video</h1>
+      <p>Søk i åpne mediesamlinger uten å forlate Vedlikeholdsystem.</p>
+    </section>
+
+    <section class="search-panel" aria-label="Søk etter bilder og video">
+      <form class="search-form" data-search-form role="search">
+        <label class="visually-hidden" for="search-query">Søk etter bilder og video</label>
+        <input id="search-query" name="q" type="search" autocomplete="off" maxlength="400" placeholder="Hva leter du etter?" required>
+        <button type="submit">Søk</button>
+      </form>
+
+      <div class="media-filters" role="group" aria-label="Medietype">
+        <button type="button" data-media-filter="all" aria-pressed="true">Alle</button>
+        <button type="button" data-media-filter="images" aria-pressed="false">Bilder</button>
+        <button type="button" data-media-filter="video" aria-pressed="false">Video</button>
+      </div>
+
+      <p class="search-status" data-search-status aria-live="polite">Skriv inn det du vil finne.</p>
+      <div class="search-results media-results" data-search-results></div>
+      <p class="search-provider">Medier leveres av Openverse og Internet Archive. Kontroller lisens og bruksrett før bruk.</p>
+    </section>
+  </main>
+
+  <dialog class="media-dialog" data-media-dialog aria-labelledby="media-dialog-title">
+    <div class="media-dialog-header">
+      <div>
+        <p class="eyebrow">Internet Archive</p>
+        <h2 id="media-dialog-title" data-media-dialog-title>Video</h2>
+      </div>
+      <button type="button" class="dialog-close" data-dialog-close aria-label="Lukk video">×</button>
+    </div>
+    <div class="video-frame" data-video-frame></div>
+    <p class="media-dialog-note">Videoen strømmes fra Internet Archive.</p>
+  </dialog>
+
+  <script src="/assets/search.js?v=3" type="module"></script>
+</body>
+</html>
