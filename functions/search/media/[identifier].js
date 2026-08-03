@@ -132,6 +132,30 @@ export function createClientMediaHeaders(upstreamHeaders) {
   return headers;
 }
 
+export function isAllowedArchiveMediaUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:"
+      && (url.hostname === "archive.org" || url.hostname.endsWith(".archive.org"));
+  } catch {
+    return false;
+  }
+}
+
+export async function fetchArchiveMedia(url, init, fetchImplementation = fetch) {
+  let currentUrl = url;
+  for (let redirectCount = 0; redirectCount <= 3; redirectCount += 1) {
+    if (!isAllowedArchiveMediaUrl(currentUrl)) throw new Error("archive-redirect-host-not-allowed");
+    const response = await fetchImplementation(currentUrl, { ...init, redirect: "manual" });
+    if (![301, 302, 303, 307, 308].includes(response.status)) return response;
+
+    const location = response.headers.get("location");
+    if (!location) throw new Error("archive-redirect-location-missing");
+    currentUrl = new URL(location, currentUrl).href;
+  }
+  throw new Error("archive-redirect-limit-exceeded");
+}
+
 export async function onRequest(context) {
   const { request, params } = context;
   if (request.method !== "GET" && request.method !== "HEAD") {
@@ -156,12 +180,11 @@ export async function onRequest(context) {
     const encodedFilePath = encodeArchiveFilePath(file?.name);
     if (!file || !encodedFilePath) return errorResponse("Ingen spillbar videofil ble funnet.", 404);
 
-    const upstreamResponse = await fetch(
+    const upstreamResponse = await fetchArchiveMedia(
       `${ARCHIVE_DOWNLOAD_BASE}${encodeURIComponent(identifier)}/${encodedFilePath}`,
       {
         method: request.method,
-        headers: createArchiveRequestHeaders(request.headers),
-        redirect: "follow"
+        headers: createArchiveRequestHeaders(request.headers)
       }
     );
 
