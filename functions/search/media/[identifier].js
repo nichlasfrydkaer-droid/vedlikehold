@@ -118,12 +118,13 @@ export function createArchiveRequestHeaders(requestHeaders) {
   return headers;
 }
 
-export function createClientMediaHeaders(upstreamHeaders) {
+export function createClientMediaHeaders(upstreamHeaders, upstreamStatus) {
   const headers = new Headers();
   for (const name of FORWARDED_RESPONSE_HEADERS) {
     const value = upstreamHeaders.get(name);
     if (value) headers.set(name, value);
   }
+  if (upstreamStatus === 206 && !headers.has("accept-ranges")) headers.set("accept-ranges", "bytes");
   if (!headers.has("cache-control")) headers.set("cache-control", "public, max-age=3600");
   headers.set("content-disposition", "inline");
   headers.set("cross-origin-resource-policy", "same-origin");
@@ -194,7 +195,7 @@ export async function onRequest(context) {
 
     return new Response(request.method === "HEAD" ? null : upstreamResponse.body, {
       status: upstreamResponse.status,
-      headers: createClientMediaHeaders(upstreamResponse.headers)
+      headers: createClientMediaHeaders(upstreamResponse.headers, upstreamResponse.status)
     });
   } catch (error) {
     console.error(JSON.stringify({

@@ -55,12 +55,17 @@ test("preserves byte-range response headers without upstream cookies or redirect
     location: "https://archive.org/redirect",
     "set-cookie": "unsafe=true"
   });
-  const headers = createClientMediaHeaders(source);
+  const headers = createClientMediaHeaders(source, 206);
   assert.equal(headers.get("content-range"), "bytes 0-1023/4096");
   assert.equal(headers.get("content-type"), "video/mp4");
   assert.equal(headers.get("content-disposition"), "inline");
   assert.equal(headers.has("location"), false);
   assert.equal(headers.has("set-cookie"), false);
+});
+
+test("advertises byte ranges on partial responses when the origin omits the header", () => {
+  const headers = createClientMediaHeaders(new Headers({ "content-type": "video/mp4" }), 206);
+  assert.equal(headers.get("accept-ranges"), "bytes");
 });
 
 test("reapplies range headers across an allowed Archive redirect", async () => {
