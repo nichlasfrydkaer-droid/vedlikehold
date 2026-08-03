@@ -1,9 +1,7 @@
 import {
-  isPublicHttpsUrl,
-  openMediaReference,
-  readJsonWithLimit,
-  selectPeerTubeWebVideoFile
-} from "../../../src/search/peertube.js";
+  isAllowedWikimediaMediaUrl,
+  openMediaReference
+} from "../../../src/search/wikimedia.js";
 
 const FORWARDED_REQUEST_HEADERS = ["accept", "if-modified-since", "if-none-match", "if-range", "range"];
 const FORWARDED_RESPONSE_HEADERS = [
@@ -28,7 +26,7 @@ function errorResponse(message, status) {
 }
 
 export function createProxyRequestHeaders(requestHeaders) {
-  const headers = new Headers();
+  const headers = new Headers({ "user-agent": "Vedlikeholdsystem-MediaProxy/2.0 (https://vedlikeholdsystem.no/search)" });
   for (const name of FORWARDED_REQUEST_HEADERS) {
     const value = requestHeaders.get(name);
     if (value) headers.set(name, value);
@@ -53,7 +51,7 @@ export function createProxyResponseHeaders(upstreamHeaders, status, purpose) {
 export async function fetchAllowedMedia(url, init, fetchImplementation = fetch) {
   let currentUrl = url;
   for (let redirects = 0; redirects <= 3; redirects += 1) {
-    if (!isPublicHttpsUrl(currentUrl)) throw new Error("media-host-not-allowed");
+    if (!isAllowedWikimediaMediaUrl(currentUrl)) throw new Error("media-host-not-allowed");
     const response = await fetchImplementation(currentUrl, { ...init, redirect: "manual" });
     if (![301, 302, 303, 307, 308].includes(response.status)) return response;
     const location = response.headers.get("location");
@@ -63,18 +61,6 @@ export async function fetchAllowedMedia(url, init, fetchImplementation = fetch) 
   throw new Error("media-redirect-limit-exceeded");
 }
 
-async function resolveVideoUrl(reference, fetchImplementation) {
-  const detailsUrl = `${reference.origin}/api/v1/videos/${encodeURIComponent(reference.uuid)}`;
-  const detailsResponse = await fetchAllowedMedia(detailsUrl, {
-    method: "GET",
-    headers: new Headers({ accept: "application/json" })
-  }, fetchImplementation);
-  if (detailsResponse.status === 404) return null;
-  if (!detailsResponse.ok) throw new Error("video-details-unavailable");
-  const video = await readJsonWithLimit(detailsResponse);
-  return selectPeerTubeWebVideoFile(video)?.fileUrl || null;
-}
-
 export async function handleMediaRequest(context, fetchImplementation = fetch) {
   const { request, params, env } = context;
   if (request.method !== "GET" && request.method !== "HEAD") {
@@ -82,13 +68,8 @@ export async function handleMediaRequest(context, fetchImplementation = fetch) {
   }
 
   try {
-    const reference = await openMediaReference(String(params?.token || ""), env?.PEERTUBE_PROXY_SECRET);
-    const mediaUrl = reference.purpose === "video"
-      ? await resolveVideoUrl(reference, fetchImplementation)
-      : reference.url;
-    if (!mediaUrl) return errorResponse("Videoen finnes ikke.", 404);
-
-    const upstream = await fetchAllowedMedia(mediaUrl, {
+    const reference = await openMediaReference(String(params?.token || ""), env?.MEDIA_PROXY_SECRET);
+    const upstream = await fetchAllowedMedia(reference.url, {
       method: request.method,
       headers: createProxyRequestHeaders(request.headers)
     }, fetchImplementation);
@@ -96,9 +77,9 @@ export async function handleMediaRequest(context, fetchImplementation = fetch) {
       return errorResponse("Mediekilden er midlertidig utilgjengelig.", 502);
     }
     const contentType = upstream.headers.get("content-type") || "";
-    const expectedType = reference.purpose === "thumbnail"
+    const expectedType = reference.purpose === "thumbnail" || reference.mediaType === "image"
       ? /^image\//iu
-      : /^(?:video\/|application\/octet-stream$)/iu;
+      : /^(?:video\/(?:webm|mp4)|application\/(?:ogg|octet-stream))(?:;|$)/iu;
     if (upstream.status !== 304 && !expectedType.test(contentType)) {
       return errorResponse("Mediekilden returnerte et ugyldig format.", 502);
     }
@@ -110,7 +91,7 @@ export async function handleMediaRequest(context, fetchImplementation = fetch) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown-error";
     const clientStatus = /invalid|expired/u.test(message) ? 404 : 502;
-    console.error(JSON.stringify({ event: "peertube-media-proxy-failed", error: message }));
+    console.error(JSON.stringify({ event: "wikimedia-media-proxy-failed", error: message }));
     return errorResponse(clientStatus === 404 ? "Mediet finnes ikke." : "Mediekilden er midlertidig utilgjengelig.", clientStatus);
   }
 }

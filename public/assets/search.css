@@ -83,7 +83,7 @@ body {
 .media-result-details strong, .media-result-details > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .media-result-details strong { font-size: .9rem; font-weight: 800; }
 .media-result-details > span { color: var(--muted); font-size: .82rem; }
-.media-result-meta { display: flex; margin-top: 3px; }
+.media-result-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 3px; }
 .source-badge { display: inline-flex; min-height: 24px; align-items: center; padding: 0 9px; border-radius: 999px; color: var(--navy); background: #e5eefc; font-size: .72rem; font-weight: 800; }
 
 .media-dialog { width: min(900px, calc(100% - 30px)); max-height: calc(100vh - 30px); padding: 0; overflow: hidden auto; border: 0; border-radius: 18px; color: var(--ink); box-shadow: 0 24px 70px rgba(8, 43, 107, .28); }

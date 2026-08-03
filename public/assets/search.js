@@ -25,13 +25,6 @@ function setBusy(busy) {
   submitButton.textContent = busy ? "Søker …" : "Søk";
 }
 
-function formatDuration(seconds) {
-  if (!Number.isFinite(seconds)) return "Video";
-  const minutes = Math.floor(seconds / 60);
-  const remaining = Math.floor(seconds % 60);
-  return `${minutes}:${String(remaining).padStart(2, "0")}`;
-}
-
 function closeMedia() {
   if (dialog.open) dialog.close();
   mediaFrame.replaceChildren();
@@ -39,15 +32,15 @@ function closeMedia() {
   lastTrigger?.focus();
 }
 
-function openMedia(item, trigger, imageOnly) {
+function openMedia(item, trigger) {
   lastTrigger = trigger;
   dialogTitle.textContent = item.title;
-  dialogType.textContent = imageOnly ? "Forhåndsvisning" : "PeerTube-video";
+  dialogType.textContent = item.mediaType === "image" ? "Wikimedia-bilde" : "Wikimedia-video";
   mediaError.hidden = true;
 
-  const media = document.createElement(imageOnly ? "img" : "video");
-  media.src = imageOnly ? item.thumbnailUrl : item.videoUrl;
-  if (imageOnly) {
+  const media = document.createElement(item.mediaType === "image" ? "img" : "video");
+  media.src = item.mediaUrl;
+  if (item.mediaType === "image") {
     media.alt = item.title;
   } else {
     media.controls = true;
@@ -62,7 +55,6 @@ function openMedia(item, trigger, imageOnly) {
 
 function renderItems() {
   results.replaceChildren();
-  const imageOnly = activeFilter === "images";
   for (const item of currentItems) {
     const article = document.createElement("article");
     article.className = "media-result";
@@ -70,8 +62,8 @@ function renderItems() {
     const preview = document.createElement("button");
     preview.type = "button";
     preview.className = "media-result-preview";
-    preview.setAttribute("aria-label", imageOnly ? `Vis bilde fra ${item.title}` : `Spill av ${item.title}`);
-    preview.addEventListener("click", () => openMedia(item, preview, imageOnly));
+    preview.setAttribute("aria-label", item.mediaType === "image" ? `Vis ${item.title}` : `Spill av ${item.title}`);
+    preview.addEventListener("click", () => openMedia(item, preview));
 
     const image = document.createElement("img");
     image.src = item.thumbnailUrl;
@@ -80,7 +72,7 @@ function renderItems() {
     image.decoding = "async";
     preview.append(image);
 
-    if (!imageOnly) {
+    if (item.mediaType === "video") {
       const play = document.createElement("span");
       play.className = "play-icon";
       play.textContent = "▶";
@@ -98,8 +90,11 @@ function renderItems() {
     meta.className = "media-result-meta";
     const type = document.createElement("span");
     type.className = "source-badge";
-    type.textContent = imageOnly ? "Bilde" : formatDuration(item.durationSeconds);
-    meta.append(type);
+    type.textContent = item.mediaType === "image" ? "Bilde" : "Video";
+    const license = document.createElement("span");
+    license.className = "source-badge";
+    license.textContent = item.license;
+    meta.append(type, license);
     details.append(title, creator, meta);
     article.append(preview, details);
     results.append(article);
@@ -119,6 +114,7 @@ async function search(query) {
   try {
     const url = new URL(SEARCH_ENDPOINT, window.location.origin);
     url.searchParams.set("q", query);
+    url.searchParams.set("type", activeFilter);
     const response = await fetch(url, { signal: controller.signal, headers: { accept: "application/json" } });
     if (!response.ok) throw new Error("search-failed");
     const payload = await response.json();
@@ -150,7 +146,8 @@ filters.forEach((filter) => {
   filter.addEventListener("click", () => {
     activeFilter = filter.dataset.mediaFilter;
     filters.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === filter)));
-    renderItems();
+    const query = input.value.trim();
+    if (query.length >= 2) search(query);
   });
 });
 

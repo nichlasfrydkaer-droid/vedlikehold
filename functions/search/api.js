@@ -1,14 +1,10 @@
-import {
-  isPeerTubeUuid,
-  readJsonWithLimit,
-  safePeerTubeOrigin,
-  safePeerTubeThumbnailUrl,
-  sealMediaReference
-} from "../../src/search/peertube.js";
+import { cleanWikimediaText, isAllowedWikimediaMediaUrl, readJsonWithLimit, sealMediaReference } from "../../src/search/wikimedia.js";
 
-const PEERTUBE_SEARCH_ENDPOINT = "https://sepiasearch.org/api/v1/search/videos";
+const WIKIMEDIA_API_ENDPOINT = "https://commons.wikimedia.org/w/api.php";
 const MAX_QUERY_LENGTH = 160;
 const RESULT_COUNT = 24;
+const SEARCH_TYPES = new Set(["all", "images", "video"]);
+const VIDEO_MIME_TYPES = new Set(["video/webm", "video/mp4"]);
 
 function jsonResponse(payload, status = 200) {
   return Response.json(payload, {
@@ -21,37 +17,53 @@ function jsonResponse(payload, status = 200) {
   });
 }
 
-function cleanText(value, maximumLength) {
-  if (typeof value !== "string") return "";
-  return value.replace(/[\u0000-\u001f\u007f]/gu, " ").replace(/\s+/gu, " ").trim().slice(0, maximumLength);
-}
+export async function mapWikimediaResult(page, secret, now = Date.now()) {
+  const info = page?.imageinfo?.[0];
+  const mime = typeof info?.mime === "string" ? info.mime.toLowerCase() : "";
+  const mediaType = mime.startsWith("image/") ? "image" : VIDEO_MIME_TYPES.has(mime) ? "video" : null;
+  const thumbnailSource = info?.thumburl || (mediaType === "image" ? info?.url : null);
+  if (!mediaType || !isAllowedWikimediaMediaUrl(info?.url) || !isAllowedWikimediaMediaUrl(thumbnailSource)) return null;
 
-function numberOrNull(value) {
-  const number = Number(value);
-  return Number.isFinite(number) && number >= 0 ? number : null;
-}
-
-export async function mapPeerTubeResult(item, secret, now = Date.now()) {
-  const origin = safePeerTubeOrigin(item);
-  const uuid = isPeerTubeUuid(item?.uuid) ? item.uuid : null;
-  const thumbnailSource = origin ? safePeerTubeThumbnailUrl(item, origin) : null;
-  if (!origin || !uuid || !thumbnailSource) return null;
-
-  const [thumbnailToken, videoToken] = await Promise.all([
+  const [thumbnailToken, mediaToken] = await Promise.all([
     sealMediaReference({ purpose: "thumbnail", url: thumbnailSource }, secret, now),
-    sealMediaReference({ purpose: "video", origin, uuid }, secret, now)
+    sealMediaReference({ purpose: "media", url: info.url, mediaType, mime }, secret, now)
   ]);
 
+  const metadata = info.extmetadata || {};
+  const rawTitle = String(page?.title || "").replace(/^File:/iu, "");
+
   return {
-    id: uuid,
-    title: cleanText(item.name, 180) || "Uten tittel",
-    creator: cleanText(item?.channel?.displayName || item?.account?.displayName || item?.channel?.name, 100) || "Ukjent kanal",
-    durationSeconds: numberOrNull(item.duration),
-    publishedAt: typeof item.publishedAt === "string" ? item.publishedAt : null,
+    id: String(page?.pageid || rawTitle),
+    title: cleanWikimediaText(rawTitle, 180) || "Uten tittel",
+    creator: cleanWikimediaText(metadata?.Artist?.value || info?.user, 120) || "Ukjent opphavsperson",
+    license: cleanWikimediaText(metadata?.LicenseShortName?.value, 80) || "Kontroller lisens",
     thumbnailUrl: `/search/media/${thumbnailToken}`,
-    videoUrl: `/search/media/${videoToken}`,
-    mediaType: "video"
+    mediaUrl: `/search/media/${mediaToken}`,
+    mediaType
   };
+}
+
+function buildSearchUrl(query, type) {
+  const url = new URL(WIKIMEDIA_API_ENDPOINT);
+  const search = type === "video" ? `${query} filetype:video` : query;
+  const limit = type === "video" ? 40 : RESULT_COUNT;
+  Object.entries({
+    action: "query", generator: "search", gsrnamespace: "6", gsrlimit: String(limit), gsrsearch: search,
+    prop: "imageinfo", iiprop: "url|mime|mediatype|user|extmetadata", iiurlwidth: "640",
+    format: "json", formatversion: "2"
+  }).forEach(([name, value]) => url.searchParams.set(name, value));
+  return url;
+}
+
+async function searchWikimedia(query, type, secret, fetchImplementation) {
+  const upstream = await fetchImplementation(buildSearchUrl(query, type), {
+    headers: { accept: "application/json", "user-agent": "Vedlikeholdsystem-MediaSearch/2.0 (https://vedlikeholdsystem.no/search)" }
+  });
+  if (!upstream.ok) throw new Error("search-unavailable");
+  const payload = await readJsonWithLimit(upstream);
+  const pages = Array.isArray(payload?.query?.pages) ? payload.query.pages : [];
+  const mapped = await Promise.all(pages.map((page) => mapWikimediaResult(page, secret)));
+  return mapped.filter((item) => item && (type !== "images" || item.mediaType === "image") && (type !== "video" || item.mediaType === "video"));
 }
 
 export async function handleSearchRequest(context, fetchImplementation = fetch) {
@@ -61,30 +73,23 @@ export async function handleSearchRequest(context, fetchImplementation = fetch) 
   }
 
   const query = new URL(request.url).searchParams.get("q")?.trim() || "";
+  const type = new URL(request.url).searchParams.get("type") || "all";
   if (query.length < 2 || query.length > MAX_QUERY_LENGTH) {
     return jsonResponse({ error: "invalid-query" }, 422);
   }
-
-  const upstreamUrl = new URL(PEERTUBE_SEARCH_ENDPOINT);
-  upstreamUrl.searchParams.set("search", query);
-  upstreamUrl.searchParams.set("count", String(RESULT_COUNT));
-  upstreamUrl.searchParams.set("start", "0");
-  upstreamUrl.searchParams.set("nsfw", "false");
-  upstreamUrl.searchParams.set("hasWebVideoFiles", "true");
+  if (!SEARCH_TYPES.has(type)) return jsonResponse({ error: "invalid-type" }, 422);
 
   try {
-    const upstream = await fetchImplementation(upstreamUrl, {
-      headers: { accept: "application/json", "user-agent": "Vedlikeholdsystem-MediaSearch/1.0" }
-    });
-    if (!upstream.ok) return jsonResponse({ error: "search-unavailable" }, 502);
-    const payload = await readJsonWithLimit(upstream);
-    const mapped = await Promise.all((Array.isArray(payload?.data) ? payload.data : [])
-      .slice(0, RESULT_COUNT)
-      .map((item) => mapPeerTubeResult(item, env?.PEERTUBE_PROXY_SECRET)));
-    return jsonResponse({ results: mapped.filter(Boolean), resultType: "peertube-video" });
+    const lists = type === "all"
+      ? await Promise.all([searchWikimedia(query, "images", env?.MEDIA_PROXY_SECRET, fetchImplementation), searchWikimedia(query, "video", env?.MEDIA_PROXY_SECRET, fetchImplementation)])
+      : [await searchWikimedia(query, type, env?.MEDIA_PROXY_SECRET, fetchImplementation)];
+    const results = type === "all"
+      ? [...lists[0].slice(0, RESULT_COUNT / 2), ...lists[1].slice(0, RESULT_COUNT / 2)]
+      : lists[0].slice(0, RESULT_COUNT);
+    return jsonResponse({ results, resultType: "wikimedia-commons-media" });
   } catch (error) {
     console.error(JSON.stringify({
-      event: "peertube-search-failed",
+      event: "wikimedia-search-failed",
       error: error instanceof Error ? error.message : "unknown-error"
     }));
     return jsonResponse({ error: "search-unavailable" }, 502);

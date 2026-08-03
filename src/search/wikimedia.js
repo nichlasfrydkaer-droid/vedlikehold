@@ -1,8 +1,8 @@
 const TOKEN_VERSION = 1;
 const TOKEN_LIFETIME_MS = 12 * 60 * 60 * 1000;
 const MINIMUM_SECRET_LENGTH = 32;
-const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const TOKEN_PATTERN = /^[A-Za-z0-9_-]{40,4096}$/;
+const WIKIMEDIA_MEDIA_HOST = "upload.wikimedia.org";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -28,36 +28,22 @@ async function importEncryptionKey(secret) {
   return crypto.subtle.importKey("raw", digest, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
 }
 
-export function isPublicHttpsUrl(value) {
+export function isAllowedWikimediaMediaUrl(value) {
   try {
     const url = new URL(value);
-    const hostname = url.hostname.toLowerCase();
-    if (url.protocol !== "https:" || url.username || url.password) return false;
-    if (hostname === "localhost" || hostname.endsWith(".localhost") || hostname.endsWith(".local")) return false;
-    if (/^\d{1,3}(?:\.\d{1,3}){3}$/u.test(hostname)) return false;
-    if (hostname === "[::1]" || hostname.startsWith("[fc") || hostname.startsWith("[fd") || hostname.startsWith("[fe80:")) return false;
-    return hostname.includes(".");
+    return url.protocol === "https:" && !url.username && !url.password && url.hostname.toLowerCase() === WIKIMEDIA_MEDIA_HOST;
   } catch {
     return false;
   }
 }
 
-export function isPeerTubeUuid(value) {
-  return typeof value === "string" && UUID_PATTERN.test(value);
-}
-
 export async function sealMediaReference(reference, secret, now = Date.now()) {
-  const payload = {
-    version: TOKEN_VERSION,
-    expiresAt: now + TOKEN_LIFETIME_MS,
-    ...reference
-  };
+  if (!isAllowedWikimediaMediaUrl(reference?.url)) throw new Error("invalid-media-reference");
+  const payload = { version: TOKEN_VERSION, expiresAt: now + TOKEN_LIFETIME_MS, ...reference };
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await importEncryptionKey(secret);
   const encrypted = new Uint8Array(await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    key,
-    encoder.encode(JSON.stringify(payload))
+    { name: "AES-GCM", iv }, key, encoder.encode(JSON.stringify(payload))
   ));
   const token = new Uint8Array(iv.length + encrypted.length);
   token.set(iv);
@@ -69,11 +55,10 @@ export async function openMediaReference(token, secret, now = Date.now()) {
   const bytes = base64UrlToBytes(token);
   if (bytes.length <= 28) throw new Error("invalid-media-token");
   const iv = bytes.slice(0, 12);
-  const ciphertext = bytes.slice(12);
   const key = await importEncryptionKey(secret);
   let payload;
   try {
-    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ciphertext);
+    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, bytes.slice(12));
     payload = JSON.parse(decoder.decode(decrypted));
   } catch {
     throw new Error("invalid-media-token");
@@ -81,36 +66,33 @@ export async function openMediaReference(token, secret, now = Date.now()) {
   if (payload?.version !== TOKEN_VERSION || !Number.isFinite(payload?.expiresAt) || payload.expiresAt < now) {
     throw new Error("expired-media-token");
   }
-  if (payload.purpose === "thumbnail") {
-    if (!isPublicHttpsUrl(payload.url)) throw new Error("invalid-media-reference");
-    return payload;
+  if (!["thumbnail", "media"].includes(payload?.purpose) || !isAllowedWikimediaMediaUrl(payload?.url)) {
+    throw new Error("invalid-media-reference");
   }
-  if (payload.purpose === "video") {
-    if (!isPublicHttpsUrl(payload.origin) || !isPeerTubeUuid(payload.uuid)) {
-      throw new Error("invalid-media-reference");
-    }
-    return payload;
+  if (payload.purpose === "media" && !["image", "video"].includes(payload.mediaType)) {
+    throw new Error("invalid-media-reference");
   }
-  throw new Error("invalid-media-reference");
+  return payload;
 }
 
-export function selectPeerTubeWebVideoFile(video) {
-  const files = Array.isArray(video?.files) ? video.files : [];
-  return files
-    .filter((file) => isPublicHttpsUrl(file?.fileUrl) && /^video\//iu.test(file?.metadata?.mimeType || "video/mp4"))
-    .map((file) => ({
-      ...file,
-      resolutionId: Number(file?.resolution?.id),
-      sizeValue: Number(file?.size)
-    }))
-    .filter((file) => Number.isFinite(file.resolutionId) && file.resolutionId > 0)
-    .sort((left, right) => {
-      const leftDistance = Math.abs(left.resolutionId - 480);
-      const rightDistance = Math.abs(right.resolutionId - 480);
-      if (leftDistance !== rightDistance) return leftDistance - rightDistance;
-      if (left.resolutionId !== right.resolutionId) return right.resolutionId - left.resolutionId;
-      return (left.sizeValue || Number.POSITIVE_INFINITY) - (right.sizeValue || Number.POSITIVE_INFINITY);
-    })[0] || null;
+export function cleanWikimediaText(value, maximumLength = 180) {
+  if (typeof value !== "string") return "";
+  const entities = { amp: "&", quot: "\"", apos: "'", lt: "<", gt: ">", nbsp: " " };
+  return value
+    .replace(/<[^>]*>/gu, " ")
+    .replace(/&(#x[0-9a-f]+|#\d+|amp|quot|apos|lt|gt|nbsp);/giu, (_, entity) => {
+      if (entity[0] === "#") {
+        const radix = entity[1]?.toLowerCase() === "x" ? 16 : 10;
+        const raw = radix === 16 ? entity.slice(2) : entity.slice(1);
+        const codePoint = Number.parseInt(raw, radix);
+        return Number.isFinite(codePoint) ? String.fromCodePoint(codePoint) : " ";
+      }
+      return entities[entity.toLowerCase()] || " ";
+    })
+    .replace(/[\u0000-\u001f\u007f]/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim()
+    .slice(0, maximumLength);
 }
 
 export async function readJsonWithLimit(response, limit = 2_000_000) {
@@ -137,16 +119,4 @@ export async function readJsonWithLimit(response, limit = 2_000_000) {
     offset += chunk.byteLength;
   }
   return JSON.parse(decoder.decode(bytes));
-}
-
-export function safePeerTubeOrigin(item) {
-  if (!isPublicHttpsUrl(item?.url)) return null;
-  const url = new URL(item.url);
-  return url.origin;
-}
-
-export function safePeerTubeThumbnailUrl(item, origin) {
-  if (typeof item?.thumbnailPath !== "string" || !item.thumbnailPath.startsWith("/lazy-static/")) return null;
-  const url = new URL(item.thumbnailPath, origin);
-  return url.origin === origin && isPublicHttpsUrl(url.href) ? url.href : null;
 }
