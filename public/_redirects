@@ -3,3 +3,7 @@
 /dashboard/planner-edit.html    /dashboard/planner/          301
 /dashboard/annual-overview.html /dashboard/annual-overview/  301
 /o/*                          /o.html                           200
+/search                       /                                301
+/search/*                     /                                301
+/assets/search.js             /                                301
+/assets/search.css            /                                301
