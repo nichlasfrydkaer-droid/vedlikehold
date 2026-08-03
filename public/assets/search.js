@@ -1,7 +1,7 @@
 const OPENVERSE_ENDPOINT = "https://api.openverse.org/v1/images/";
 const INTERNET_ARCHIVE_ENDPOINT = "https://archive.org/advancedsearch.php";
-const INTERNET_ARCHIVE_EMBED_BASE = "https://archive.org/embed/";
 const INTERNET_ARCHIVE_THUMB_BASE = "https://archive.org/services/img/";
+const LOCAL_ARCHIVE_MEDIA_BASE = "/search/media/";
 
 const form = document.querySelector("[data-search-form]");
 const input = form.querySelector("input[name='q']");
@@ -12,6 +12,7 @@ const filters = [...document.querySelectorAll("[data-media-filter]")];
 const dialog = document.querySelector("[data-media-dialog]");
 const dialogTitle = document.querySelector("[data-media-dialog-title]");
 const videoFrame = document.querySelector("[data-video-frame]");
+const videoError = document.querySelector("[data-video-error]");
 const dialogClose = document.querySelector("[data-dialog-close]");
 
 let activeRequest;
@@ -124,20 +125,25 @@ function openArchiveVideo(item, trigger) {
 
   lastTrigger = trigger;
   dialogTitle.textContent = textValue(item.title) || "Video";
+  videoError.hidden = true;
 
-  const iframe = document.createElement("iframe");
-  iframe.src = `${INTERNET_ARCHIVE_EMBED_BASE}${encodeURIComponent(identifier)}`;
-  iframe.title = dialogTitle.textContent;
-  iframe.allow = "fullscreen; autoplay";
-  iframe.allowFullscreen = true;
-  iframe.loading = "eager";
-  videoFrame.replaceChildren(iframe);
+  const video = document.createElement("video");
+  video.src = `${LOCAL_ARCHIVE_MEDIA_BASE}${encodeURIComponent(identifier)}`;
+  video.controls = true;
+  video.preload = "metadata";
+  video.playsInline = true;
+  video.setAttribute("aria-label", dialogTitle.textContent);
+  video.addEventListener("error", () => {
+    videoError.hidden = false;
+  });
+  videoFrame.replaceChildren(video);
   dialog.showModal();
 }
 
 function closeVideo() {
   if (dialog.open) dialog.close();
   videoFrame.replaceChildren();
+  videoError.hidden = true;
   lastTrigger?.focus();
 }
 

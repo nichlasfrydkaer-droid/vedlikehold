@@ -350,11 +350,24 @@ body {
   background: #07162f;
 }
 
-.video-frame iframe {
+.video-frame iframe,
+.video-frame video {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.video-frame video {
+  object-fit: contain;
+}
+
+.video-error {
+  margin: 0;
+  padding: 12px 20px 0;
+  color: #9f2f28;
+  font-size: 0.86rem;
+  font-weight: 700;
 }
 
 .media-dialog-note {
