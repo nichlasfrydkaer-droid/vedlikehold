@@ -3,3 +3,5 @@
 /dashboard/planner-edit.html    /dashboard/planner/          301
 /dashboard/annual-overview.html /dashboard/annual-overview/  301
 /o/*                          /o.html                           200
+/search                       /sesrch/                         301
+/search/*                     /sesrch/:splat                   301
