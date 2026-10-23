@@ -6,4 +6,5 @@
 /search                       /                                301
 /search/*                     /                                301
 /assets/search.js             /                                301
+/orden/*                     /orden/index.html                 200
 /assets/search.css            /                                301

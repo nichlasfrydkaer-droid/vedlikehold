@@ -1,0 +1,7 @@
+/orden/*
+  Content-Security-Policy: default-src 'self'; connect-src https://orden-api.vedlikeholdsystem.no; img-src 'self' data:; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Cache-Control: no-cache
