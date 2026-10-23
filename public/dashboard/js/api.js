@@ -465,7 +465,7 @@ export async function getJobcards(
             series: jobcard.series || "hall",
             seriesLabel: jobcard.series === "apartment"
                 ? (language === "da" ? "Lejlighed" : language === "no" ? "Leilighet" : "Apartment")
-                : (language === "da" ? "Fællesareal" : language === "no" ? "Fellesareal" : "Shared area"),
+                : (language === "da" ? "Rigssal" : language === "no" ? "Fellesareal" : "Shared area"),
             hasExplicitSeries: Boolean(jobcard.series),
             title: jobcard.titel || jobcard.nummer,
             description: jobcard.undertittel || "",
