@@ -198,8 +198,8 @@ function bindEvents() {
   document.querySelector(".close-menu")?.addEventListener("click", closeMenu);
   document.querySelector(".menu-backdrop")?.addEventListener("click", closeMenu);
   document.querySelector("#login-form")?.addEventListener("submit", async (event) => {
-    event.preventDefault(); const form = event.currentTarget; setFormBusy(form, true);
-    try { const data = new FormData(form); const result = await endpoints.login(data.get("email"), data.get("password")); state.user = result.user; if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); } navigate("/orden"); }
+    event.preventDefault(); const form = event.currentTarget; const data = new FormData(form); setFormBusy(form, true);
+    try { const result = await endpoints.login(data.get("email"), data.get("password")); state.user = result.user; if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); } navigate("/orden"); }
     catch (error) { showFormError(form, error); setFormBusy(form, false); }
   });
   document.querySelector("#setup-password-form")?.addEventListener("submit", async (event) => {
@@ -218,18 +218,18 @@ function bindEvents() {
   const hideCreate = () => { if (createPanel) createPanel.hidden = true; };
   document.querySelector("#hide-create-user")?.addEventListener("click", hideCreate);
   document.querySelector("#cancel-create-user")?.addEventListener("click", hideCreate);
-  document.querySelector("#create-user-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; setFormBusy(form, true); try { await endpoints.createUser(formPayload(form)); await loadUsers(); toast(t("users.created")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
+  document.querySelector("#create-user-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const payload = formPayload(form); setFormBusy(form, true); try { await endpoints.createUser(payload); await loadUsers(); toast(t("users.created")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
   document.querySelectorAll(".edit-user").forEach((button) => button.addEventListener("click", () => { const user = state.users.find((item) => item.id === button.dataset.id); const panel = document.querySelector("#edit-user-panel"); panel.innerHTML = editUserPanel(user); panel.hidden = false; panel.scrollIntoView({ behavior: "smooth", block: "start" }); bindEditForm(panel); }));
-  document.querySelectorAll(".base-create").forEach((form) => form.addEventListener("submit", async (event) => { event.preventDefault(); const currentForm = event.currentTarget; setFormBusy(currentForm, true); const data = Object.fromEntries(new FormData(currentForm)); try { await endpoints.createBaseItem(currentForm.dataset.entity, data); await loadBaseData(); toast(t("base.created")); } catch (error) { showFormError(currentForm, error); setFormBusy(currentForm, false); } }));
+  document.querySelectorAll(".base-create").forEach((form) => form.addEventListener("submit", async (event) => { event.preventDefault(); const currentForm = event.currentTarget; const data = Object.fromEntries(new FormData(currentForm)); setFormBusy(currentForm, true); try { await endpoints.createBaseItem(currentForm.dataset.entity, data); await loadBaseData(); toast(t("base.created")); } catch (error) { showFormError(currentForm, error); setFormBusy(currentForm, false); } }));
   document.querySelectorAll(".base-toggle").forEach((button) => button.addEventListener("click", async () => { button.disabled = true; try { await endpoints.updateBaseItem(button.dataset.entity, button.dataset.id, { active: button.dataset.active !== "true" }); await loadBaseData(); toast(t("base.updated")); } catch (error) { button.disabled = false; toast(errorText(error), "error"); } }));
-  document.querySelector("#base-settings-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; setFormBusy(form, true); const data = Object.fromEntries(new FormData(form)); data.shiftCount = Number(data.shiftCount); try { await endpoints.updateBaseSettings(data); await loadBaseData(); toast(t("base.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
+  document.querySelector("#base-settings-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); data.shiftCount = Number(data.shiftCount); setFormBusy(form, true); try { await endpoints.updateBaseSettings(data); await loadBaseData(); toast(t("base.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
 }
 
 function bindEditForm(panel) {
   const hide = () => { panel.hidden = true; panel.innerHTML = ""; };
   panel.querySelector("#hide-edit-user")?.addEventListener("click", hide);
   panel.querySelector("#cancel-edit-user")?.addEventListener("click", hide);
-  panel.querySelector("#edit-user-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; setFormBusy(form, true); try { await endpoints.updateUser(form.dataset.id, formPayload(form, true)); await loadUsers(); toast(t("common.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
+  panel.querySelector("#edit-user-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const payload = formPayload(form, true); setFormBusy(form, true); try { await endpoints.updateUser(form.dataset.id, payload); await loadUsers(); toast(t("common.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
 }
 
 async function loadUsers() {
