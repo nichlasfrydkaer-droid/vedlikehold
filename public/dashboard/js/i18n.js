@@ -84,6 +84,8 @@ export async function loadTranslations(language){
     state.language =
         normalizeLanguage(language);
 
+    localStorage.setItem("dashboard_language",state.language);
+
     try{
 
         translations =

@@ -54,7 +54,7 @@ export function renderPreview(){
   state.selectedPhotos.forEach((file,index)=>{
     const url=URL.createObjectURL(file);objectUrls.push(url);
     const item=document.createElement("div");item.className="work-photo-item";
-    item.innerHTML=`<img src="${url}" alt="Bilde ${index+1}"><button type="button" class="work-photo-remove" data-index="${index}" aria-label="Fjern bilde">×</button>`;
+    item.innerHTML=`<img src="${url}" alt="${state.translations?.image || "Bilde"} ${index+1}"><button type="button" class="work-photo-remove" data-index="${index}" aria-label="${state.translations?.removePhoto || "Fjern bilde"}">×</button>`;
     dom.preview.appendChild(item);
   });
   dom.preview.querySelectorAll(".work-photo-remove").forEach(button=>button.addEventListener("click",()=>removePhoto(Number(button.dataset.index))));

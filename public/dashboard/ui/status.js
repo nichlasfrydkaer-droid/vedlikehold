@@ -1,3 +1,5 @@
+import { t } from "../js/i18n.js";
+
 export function status(status){
 
     let icon = "⚪";
@@ -8,21 +10,21 @@ export function status(status){
         case "completed":
 
             icon = "🟢";
-            text = "Fullført";
+            text = t("taskCompleted","Fullført");
 
             break;
 
         case "open":
 
             icon = "🟠";
-            text = "Åpent";
+            text = t("taskOpen","Åpent");
 
             break;
 
         case "created":
 
             icon = "🟡";
-            text = "Opprettet";
+            text = t("created","Opprettet");
 
             break;
 

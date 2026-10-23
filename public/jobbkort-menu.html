@@ -89,7 +89,7 @@ async function loadMenu(){
   document.getElementById("documentsSection").hidden = false;
 }
 
-loadMenu().catch(() => { document.getElementById("title").textContent = "Jobbkort ikke funnet"; });
+loadMenu().catch(() => { document.getElementById("title").textContent = translations?.jobNotFound || "Jobbkort ikke funnet"; });
 </script>
 </body>
 </html>

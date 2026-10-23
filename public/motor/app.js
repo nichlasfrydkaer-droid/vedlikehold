@@ -68,8 +68,8 @@ export async function initApp(){
     updateTimer();
   }catch(error){
     console.error("Could not load job card",error);
-    dom.title.textContent="Kunne ikke laste jobbkortet.";
-    dom.status.textContent="Kontroller at lenken inneholder et gyldig jobbkortnummer.";
+    dom.title.textContent=state.translations?.jobLoadFailed || "Kunne ikke laste jobbkortet.";
+    dom.status.textContent=state.translations?.invalidJobLink || "Kontroller at lenken inneholder et gyldig jobbkortnummer.";
     dom.startBtn.hidden=true;
   }
 }

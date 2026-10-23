@@ -1,3 +1,5 @@
+import { t } from "../js/i18n.js";
+
 export function renderMenu(){
 
     return `
@@ -10,35 +12,35 @@ export function renderMenu(){
             <button>
 
                 📋
-                Jobbkort
+                ${t("jobcards","Jobbkort")}
 
             </button>
 
             <button>
 
                 📄
-                Rapporter
+                ${t("reports","Rapporter")}
 
             </button>
 
             <button>
 
                 🔧
-                Oppdrag
+                ${t("tasks","Oppdrag")}
 
             </button>
 
             <button>
 
                 👥
-                Brukere
+                ${t("users","Brukere")}
 
             </button>
 
             <button>
 
                 ⚙️
-                Innstillinger
+                ${t("settings","Innstillinger")}
 
             </button>
 
@@ -47,7 +49,7 @@ export function renderMenu(){
             <button>
 
                 🚪
-                Logg ut
+                ${t("logout","Logg ut")}
 
             </button>
 

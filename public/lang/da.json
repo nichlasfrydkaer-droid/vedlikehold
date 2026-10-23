@@ -83,5 +83,11 @@
   "plannerLockedUntil": "Planlægning af {year} kan udføres fra 1. december {previousYear}.",
   "backToPlanner": "Tilbage til årsoversigten",
   "hideJobcardYear": "Skjul jobkort i {year}",
-  "showJobcardYear": "Vis jobkort i {year}"
+  "showJobcardYear": "Vis jobkort i {year}",
+  "documents": "Vedlagte dokumenter",
+  "image": "Billede",
+  "removePhoto": "Fjern billede",
+  "jobNotFound": "Arbejdskortet blev ikke fundet",
+  "jobLoadFailed": "Arbejdskortet kunne ikke indlæses.",
+  "invalidJobLink": "Kontrollér, at linket indeholder et gyldigt arbejdskortnummer."
 }
