@@ -47,3 +47,9 @@ test("month names follow the selected dashboard language",()=>{
   assert.equal(formatExecutionMonth("2026-05",localeForLanguage("no")),"Mai 2026");
   assert.equal(formatExecutionMonth("2026-05",localeForLanguage("en")),"May 2026");
 });
+
+test("annual overview uses the standard share icon for job cards",()=>{
+  const source=readFileSync(join(root,"public/dashboard/pages/planner.js"),"utf8");
+  assert.match(source,/const shareIcon = `<svg[^`]+M12 3v12M8 7l4-4 4 4/);
+  assert.match(source,/data-share-jobcard>[\s\S]*?\$\{shareIcon\}/);
+});

@@ -288,6 +288,7 @@
 .planner-actions-list strong { font-size:1.02rem; }
 .planner-actions-list small { color:#64748b; font-size:.86rem; line-height:1.35; }
 .planner-actions-icon { display:grid; place-items:center; width:2.45rem; height:2.45rem; border-radius:.7rem; background:#eaf3ff; color:#1d4ed8; font-size:1.2rem; font-weight:900; }
+.planner-actions-icon svg { width:1.25rem; height:1.25rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .planner-actions-arrow { color:#2563eb; font-size:1.6rem; line-height:1; }
 @media(max-width:480px){.planner-actions-info{grid-template-columns:1fr}.planner-actions-menu{padding:1.25rem}.planner-actions-list button,.planner-actions-list a{grid-template-columns:2.4rem minmax(0,1fr) auto;padding:.78rem}.planner-actions-icon{width:2.2rem;height:2.2rem}}
 
