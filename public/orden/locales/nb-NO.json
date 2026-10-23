@@ -33,6 +33,18 @@
   "auth.visualKicker": "Rolig koordinering",
   "auth.visualTitle": "Alt det viktige samlet på ett sted.",
   "auth.visualBody": "Planlegg bemanning, følg oppmøte og behold oversikten gjennom hele stevnet.",
+  "accountSetup.eyebrow": "Sikker kontoaktivering",
+  "accountSetup.title": "Opprett passordet ditt",
+  "accountSetup.intro": "Velg et sterkt passord for systemadministratorkontoen din.",
+  "accountSetup.missingToken": "Lenken mangler en aktiveringskode. Åpne hele lenken fra e-posten på nytt.",
+  "accountSetup.password": "Nytt passord",
+  "accountSetup.confirmPassword": "Gjenta passord",
+  "accountSetup.passwordMismatch": "Passordene er ikke like.",
+  "accountSetup.submit": "Opprett passord",
+  "accountSetup.completeEyebrow": "Kontoen er klar",
+  "accountSetup.completeTitle": "Passordet er opprettet",
+  "accountSetup.completeBody": "Du kan nå logge inn som systemadministrator.",
+  "accountSetup.goToLogin": "Gå til innlogging",
   "setup.phaseReady": "Fase 1 er installert",
   "setup.adminMissing": "Første administrator mangler",
   "setup.adminMissingBody": "Systemet er sikkert stengt for offentlig registrering. Den første administratorkontoen opprettes direkte i den separate databasen.",
@@ -172,5 +184,8 @@
   "errors.duplicate_post_code": "Det finnes allerede en post med dette nummeret.",
   "errors.invalid_category": "Kontaktkategorien må være mellom 2 og 80 tegn.",
   "errors.invalid_time": "Skriv inn gyldige klokkeslett og kontroller at sluttiden er etter starttiden.",
-  "errors.internal_error": "Det oppstod en uventet feil."
+  "errors.internal_error": "Det oppstod en uventet feil.",
+  "errors.invalid_setup_token": "Lenken er ugyldig, utløpt eller allerede brukt.",
+  "errors.email_delivery_failed": "Kontoen kunne ikke opprettes fordi e-posten ikke kunne sendes.",
+  "errors.already_configured": "Systemadministratoren er allerede opprettet."
 }

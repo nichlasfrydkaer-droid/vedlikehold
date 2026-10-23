@@ -33,6 +33,18 @@
   "auth.visualKicker": "Calm coordination",
   "auth.visualTitle": "Everything important in one place.",
   "auth.visualBody": "Plan staffing, track attendance, and stay in control throughout the event.",
+  "accountSetup.eyebrow": "Secure account activation",
+  "accountSetup.title": "Create your password",
+  "accountSetup.intro": "Choose a strong password for your system administrator account.",
+  "accountSetup.missingToken": "The activation code is missing. Open the complete link from the email again.",
+  "accountSetup.password": "New password",
+  "accountSetup.confirmPassword": "Confirm password",
+  "accountSetup.passwordMismatch": "The passwords do not match.",
+  "accountSetup.submit": "Create password",
+  "accountSetup.completeEyebrow": "Your account is ready",
+  "accountSetup.completeTitle": "Password created",
+  "accountSetup.completeBody": "You can now sign in as system administrator.",
+  "accountSetup.goToLogin": "Go to sign in",
   "setup.phaseReady": "Phase 1 is installed",
   "setup.adminMissing": "The first administrator is missing",
   "setup.adminMissingBody": "Public registration is securely disabled. The first administrator account is created directly in the separate database.",
@@ -172,5 +184,8 @@
   "errors.duplicate_post_code": "A post with this number already exists.",
   "errors.invalid_category": "The contact category must be between 2 and 80 characters.",
   "errors.invalid_time": "Enter valid times and make sure the end time is after the start time.",
-  "errors.internal_error": "An unexpected error occurred."
+  "errors.internal_error": "An unexpected error occurred.",
+  "errors.invalid_setup_token": "The link is invalid, expired, or has already been used.",
+  "errors.email_delivery_failed": "The account could not be created because the email could not be sent.",
+  "errors.already_configured": "The system administrator has already been created."
 }

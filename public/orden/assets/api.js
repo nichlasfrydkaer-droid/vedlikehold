@@ -43,6 +43,7 @@ export async function api(path, options = {}) {
 
 export const endpoints = {
   setupStatus: () => api("/v1/setup/status"),
+  completeSetup: (token, password) => api("/v1/auth/complete-setup", { method: "POST", body: JSON.stringify({ token, password }) }),
   login: (email, password) => api("/v1/auth/login", { method: "POST", body: JSON.stringify({ email, password }) }),
   me: () => api("/v1/auth/me"),
   logout: () => api("/v1/auth/logout", { method: "POST" }),

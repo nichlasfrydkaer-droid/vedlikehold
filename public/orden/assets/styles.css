@@ -70,6 +70,7 @@ label small { display: block; margin-top: 6px; color: var(--muted); font-weight:
 .button--secondary { border-color: #cdd9e6; color: #38516f; background: white; }
 .button--secondary:hover { border-color: #9eb4cb; background: #f8fafc; }
 .button--muted { color: #718197; background: #edf1f5; }
+.button-link { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
 
 .app-shell { min-height: 100vh; }
 .sidebar { position: fixed; inset: 0 auto 0 0; z-index: 20; width: 276px; display: flex; flex-direction: column; padding: 26px 18px 18px; color: white; background: linear-gradient(180deg, var(--navy), var(--navy-deep)); }

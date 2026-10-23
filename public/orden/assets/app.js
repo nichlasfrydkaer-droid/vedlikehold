@@ -2,7 +2,7 @@ import { ApiError, endpoints, setApiLocale, setCsrfToken } from "./api.js";
 import { getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
 
 const app = document.querySelector("#app");
-const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, configured: true, mobileMenu: false };
+const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, configured: true, mobileMenu: false, setupComplete: false };
 
 const icons = {
   home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
@@ -27,6 +27,7 @@ function route() {
   const path = location.pathname.replace(/\/+$/, "") || "/orden";
   if (!path.startsWith("/orden")) return "home";
   if (path === "/orden/login") return "login";
+  if (path === "/orden/opprett-passord") return "setup-password";
   if (path === "/orden/brukere" || path === "/orden/brugere") return "users";
   if (path === "/orden/innstillinger") return "settings";
   if (path === "/orden/grunnoppsett") return "base";
@@ -66,6 +67,15 @@ function loginView() {
     return `<main class="login-shell"><section class="login-card setup-card">${brand()}${languageSelect}<div class="login-heading"><span class="eyebrow">${escapeHtml(t("setup.phaseReady"))}</span><h1>${escapeHtml(t("setup.adminMissing"))}</h1><p>${escapeHtml(t("setup.adminMissingBody"))}</p></div><div class="notice notice--info"><strong>${escapeHtml(t("setup.nextStep"))}</strong><span>${escapeHtml(t("setup.nextStepBody"))}</span></div></section></main>`;
   }
   return `<main class="login-shell"><section class="login-card">${brand()}${languageSelect}<div class="login-heading"><span class="eyebrow">${escapeHtml(t("auth.secureAdministration"))}</span><h1>${escapeHtml(t("auth.welcomeBack"))}</h1><p>${escapeHtml(t("auth.loginIntro"))}</p></div><form id="login-form" class="form-stack"><label>${escapeHtml(t("auth.email"))}<input name="email" type="email" autocomplete="username" inputmode="email" required autofocus></label><label>${escapeHtml(t("auth.password"))}<input name="password" type="password" autocomplete="current-password" required></label><p class="form-error" hidden></p><button class="button button--primary button--large" type="submit">${escapeHtml(t("auth.login"))}</button></form><p class="privacy-note">${escapeHtml(t("auth.privacy"))}</p></section><aside class="login-visual"><div><span class="visual-kicker">${escapeHtml(t("auth.visualKicker"))}</span><h2>${escapeHtml(t("auth.visualTitle"))}</h2><p>${escapeHtml(t("auth.visualBody"))}</p></div></aside></main>`;
+}
+
+function setupPasswordView() {
+  const token = new URLSearchParams(location.search).get("token") || "";
+  const languageSelect = `<label class="public-language"><span>${escapeHtml(t("common.language"))}</span><select id="public-locale-select">${localeOptions()}</select></label>`;
+  if (state.setupComplete) {
+    return `<main class="login-shell"><section class="login-card setup-card">${brand()}${languageSelect}<div class="login-heading"><span class="eyebrow">${escapeHtml(t("accountSetup.completeEyebrow"))}</span><h1>${escapeHtml(t("accountSetup.completeTitle"))}</h1><p>${escapeHtml(t("accountSetup.completeBody"))}</p></div><a class="button button--primary button--large button-link" href="/orden/login" data-link>${escapeHtml(t("accountSetup.goToLogin"))}</a></section><aside class="login-visual"><div><span class="visual-kicker">${escapeHtml(t("auth.visualKicker"))}</span><h2>${escapeHtml(t("auth.visualTitle"))}</h2><p>${escapeHtml(t("auth.visualBody"))}</p></div></aside></main>`;
+  }
+  return `<main class="login-shell"><section class="login-card setup-card">${brand()}${languageSelect}<div class="login-heading"><span class="eyebrow">${escapeHtml(t("accountSetup.eyebrow"))}</span><h1>${escapeHtml(t("accountSetup.title"))}</h1><p>${escapeHtml(t(token ? "accountSetup.intro" : "accountSetup.missingToken"))}</p></div>${token ? `<form id="setup-password-form" class="form-stack"><label>${escapeHtml(t("accountSetup.password"))}<input name="password" type="password" autocomplete="new-password" minlength="12" required autofocus><small>${escapeHtml(t("users.passwordHint"))}</small></label><label>${escapeHtml(t("accountSetup.confirmPassword"))}<input name="passwordConfirm" type="password" autocomplete="new-password" minlength="12" required></label><p class="form-error" hidden></p><button class="button button--primary button--large" type="submit">${escapeHtml(t("accountSetup.submit"))}</button></form>` : `<a class="button button--secondary button--large button-link" href="/orden/login" data-link>${escapeHtml(t("accountSetup.goToLogin"))}</a>`}</section><aside class="login-visual"><div><span class="visual-kicker">${escapeHtml(t("auth.visualKicker"))}</span><h2>${escapeHtml(t("auth.visualTitle"))}</h2><p>${escapeHtml(t("auth.visualBody"))}</p></div></aside></main>`;
 }
 
 function eventTypeLabel(value) {
@@ -136,7 +146,8 @@ function baseView() {
 
 function render() {
   const current = route();
-  if (!state.user) app.innerHTML = loginView();
+  if (current === "setup-password") app.innerHTML = setupPasswordView();
+  else if (!state.user) app.innerHTML = loginView();
   else if (current === "users" && state.user.role === "system_admin") app.innerHTML = usersView();
   else if (current === "settings") app.innerHTML = settingsView();
   else if (current === "base") app.innerHTML = baseView();
@@ -191,6 +202,15 @@ function bindEvents() {
     try { const data = new FormData(form); const result = await endpoints.login(data.get("email"), data.get("password")); state.user = result.user; if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); } navigate("/orden"); }
     catch (error) { showFormError(form, error); setFormBusy(form, false); }
   });
+  document.querySelector("#setup-password-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault(); const form = event.currentTarget; const data = new FormData(form);
+    const password = String(data.get("password") || ""); const confirmation = String(data.get("passwordConfirm") || "");
+    const errorElement = form.querySelector(".form-error");
+    if (password !== confirmation) { errorElement.textContent = t("accountSetup.passwordMismatch"); errorElement.hidden = false; return; }
+    setFormBusy(form, true);
+    try { const token = new URLSearchParams(location.search).get("token") || ""; await endpoints.completeSetup(token, password); state.setupComplete = true; history.replaceState({}, "", "/orden/opprett-passord"); render(); }
+    catch (error) { showFormError(form, error); setFormBusy(form, false); }
+  });
   document.querySelector("#logout-button")?.addEventListener("click", async () => { try { await endpoints.logout(); } catch (error) { if (error.status !== 401) toast(errorText(error), "error"); } setCsrfToken(""); state.user = null; history.replaceState({}, "", "/orden/login"); render(); });
   document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; if (route() === "base") await loadBaseData(); else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
   const createPanel = document.querySelector("#create-user-panel");
@@ -236,7 +256,7 @@ async function init() {
   } catch (error) {
     if (!(error instanceof ApiError) || ![401, 403].includes(error.status)) console.warn(error);
     try { const status = await endpoints.setupStatus(); state.configured = status.configured; } catch { state.configured = true; }
-    state.user = null; if (route() !== "login") history.replaceState({}, "", "/orden/login"); render();
+    state.user = null; if (!["login", "setup-password"].includes(route())) history.replaceState({}, "", "/orden/login"); render();
   }
 }
 
