@@ -2,7 +2,7 @@ import { loadDashboard } from "../services/dashboard.js";
 import { buildJobcardMenuUrl, getJobcards, getJobcardSettings, getPlanner, getReports, markPlannerCompletion, savePlanner } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 import { openJobcardShareDialog } from "../components/jobcardShare.js";
 
 const MONTHS_IN_YEAR = 12;
@@ -27,7 +27,7 @@ function monthsFor(year, firstMonth, interval){
 function jobcardKeys(value){ const key = String(value ?? "").trim(); const numeric = key.match(/^0*(\d+)([A-Za-z]?)$/); const normalized = numeric ? `${Number(numeric[1])}${numeric[2].toUpperCase()}` : key.toUpperCase(); return [...new Set([key, normalized])].filter(Boolean); }
 function esc(value){ const element = document.createElement("span"); element.textContent = String(value ?? ""); return element.innerHTML; }
 function cardName(card){ return `${card.jobcard_number} ${card.title}${card.hasExplicitSeries ? ` · ${card.seriesLabel}` : ""}`; }
-function monthLabel(date){ const label = new Intl.DateTimeFormat(document.documentElement.lang || "no", { month:"long", year:"numeric" }).format(date); return label.replace(/^./, letter => letter.toUpperCase()); }
+function monthLabel(date){ const label = new Intl.DateTimeFormat(getDashboardLocale(), { month:"long", year:"numeric" }).format(date); return label.replace(/^./, letter => letter.toUpperCase()); }
 function intervalLabel(months, fallback = ""){
     const labels = { 1:t("monthly", "Månedlig"), 2:t("everySecondMonth", "Hver 2. måned"), 3:t("quarterly", "Kvartalsvis"), 6:t("everySixMonths", "Hver 6. måned"), 12:t("annual", "Årlig"), 24:t("everySecondYear", "Hvert 2. år"), 48:t("manualIntervalEveryFourYears", "Hvert 4. år"), 60:t("manualIntervalEveryFiveYears", "Hvert 5. år") };
     return labels[Number(months)] || fallback || "–";

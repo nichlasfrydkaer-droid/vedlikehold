@@ -1,9 +1,9 @@
 import { loadDashboard } from "../services/dashboard.js";
 import { getReport } from "../js/api.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 
 const escapeHtml=value=>String(value??"").replace(/[&<>'"]/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[character]);
-const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleString(undefined,{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):"–";};
+const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleString(getDashboardLocale(),{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):"–";};
 const formatDuration=value=>{const seconds=Number(value);if(!Number.isFinite(seconds))return "–";const total=Math.max(0,Math.round(seconds));return total<60?`${total} sek`:`${Math.floor(total/60)} min ${total%60} sek`;};
 const parseJson=value=>{try{return JSON.parse(value||"[]");}catch{return [];}};
 

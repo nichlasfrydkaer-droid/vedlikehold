@@ -1,10 +1,10 @@
 import { loadDashboard } from "../services/dashboard.js";
 import { getCongregation } from "../js/session.js";
 import { getReports, getTasks } from "../js/api.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 
 const escapeHtml=value=>String(value??"").replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
-const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}):"–";};
+const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleDateString(getDashboardLocale(),{year:"numeric",month:"short",day:"numeric"}):"–";};
 const formatDuration=value=>{const seconds=Number(value);if(!Number.isFinite(seconds))return "–";return seconds<60?`${Math.round(seconds)} sek`:`${Math.floor(seconds/60)} min ${Math.round(seconds%60)} sek`;};
 const icon=type=>type==="task"?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v17H5z"/><path d="m8 10 2 2 4-4M8 16h8"/></svg>`:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14h6M9 17h6"/></svg>`;
 function normalize(reports,tasks){return [

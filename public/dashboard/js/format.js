@@ -1,4 +1,4 @@
-import { state } from "./state.js";
+import { getDashboardLocale } from "./i18n.js";
 
 export function formatDate(date){
 
@@ -10,7 +10,7 @@ export function formatDate(date){
 
     return new Date(date).toLocaleString(
 
-        state.language,
+        getDashboardLocale(),
 
         {
 
@@ -34,7 +34,7 @@ export function formatShortDate(date){
 
     return new Date(date).toLocaleDateString(
 
-        state.language
+        getDashboardLocale()
 
     );
 

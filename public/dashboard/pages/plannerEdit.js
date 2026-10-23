@@ -2,13 +2,13 @@ import { loadDashboard } from "../services/dashboard.js";
 import { getJobcards, getJobcardSettings, getPlanner, savePlanner } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 
 const INTERVALS = [1, 2, 3, 6, 12, 24, 48, 60];
 
 function esc(value){ const node = document.createElement("span"); node.textContent = String(value ?? ""); return node.innerHTML; }
 function cardName(card){ return `${card.jobcard_number} ${card.title}${card.hasExplicitSeries ? ` · ${card.seriesLabel}` : ""}`; }
-function monthLabel(year, month){ const label = new Intl.DateTimeFormat(document.documentElement.lang || "no", { month:"long", year:"numeric" }).format(new Date(year, month, 1, 12)); return label.replace(/^./, value => value.toUpperCase()); }
+function monthLabel(year, month){ const label = new Intl.DateTimeFormat(getDashboardLocale(), { month:"long", year:"numeric" }).format(new Date(year, month, 1, 12)); return label.replace(/^./, value => value.toUpperCase()); }
 function intervalLabel(value){ return ({ 1:t("monthly", "Månedlig"), 2:t("everySecondMonth", "Hver 2. måned"), 3:t("quarterly", "Kvartalsvis"), 6:t("everySixMonths", "Hver 6. måned"), 12:t("annual", "Årlig"), 24:t("everySecondYear", "Hvert 2. år"), 48:t("manualIntervalEveryFourYears", "Hvert 4. år"), 60:t("manualIntervalEveryFiveYears", "Hvert 5. år") })[Number(value)] || "–"; }
 function dateFromMonth(value){ const match = String(value || "").match(/^(\d{4})-(\d{2})/); return match ? new Date(Number(match[1]), Number(match[2]) - 1, 1, 12) : null; }
 function monthKey(year, month){ return `${year}-${String(month + 1).padStart(2, "0")}`; }

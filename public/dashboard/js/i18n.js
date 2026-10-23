@@ -46,6 +46,40 @@ function normalizeLanguage(language = ""){
 
 }
 
+export function localeForLanguage(language = ""){
+
+    return ({
+        da:"da-DK",
+        en:"en-GB",
+        no:"nb-NO"
+    })[normalizeLanguage(language)] || "nb-NO";
+
+}
+
+export function getDashboardLocale(){
+
+    return localeForLanguage(
+        state.language ||
+        (typeof document !== "undefined" ? document.documentElement.lang : "") ||
+        "no"
+    );
+
+}
+
+function applyLanguage(language){
+
+    state.language = normalizeLanguage(language);
+
+    if(typeof document !== "undefined"){
+
+        document.documentElement.lang = state.language;
+
+    }
+
+    localStorage.setItem("dashboard_language",state.language);
+
+}
+
 async function loadLanguageFile(language){
 
     const normalizedLanguage =
@@ -81,10 +115,7 @@ async function loadLanguageFile(language){
 
 export async function loadTranslations(language){
 
-    state.language =
-        normalizeLanguage(language);
-
-    localStorage.setItem("dashboard_language",state.language);
+    applyLanguage(language);
 
     try{
 
@@ -102,6 +133,8 @@ export async function loadTranslations(language){
     }
 
     try{
+
+        applyLanguage("no");
 
         translations =
             await loadLanguageFile("no");

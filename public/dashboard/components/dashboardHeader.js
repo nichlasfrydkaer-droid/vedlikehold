@@ -1,7 +1,7 @@
 import { getCongregation } from "../js/session.js";
 import { getActivity, markActivitySeen } from "../js/api.js";
 import { renderCongregationSelector, initCongregationSelector } from "./dashboardCongregationSelector.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 
 function escapeHtml(value){
     return String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[character]);
@@ -41,7 +41,7 @@ function formatActivityDate(value){
     if(!value) return "";
     const date = new Date(`${String(value).replace(" ", "T")}Z`);
     if(Number.isNaN(date.getTime())) return String(value);
-    return new Intl.DateTimeFormat(undefined, { day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }).format(date);
+    return new Intl.DateTimeFormat(getDashboardLocale(), { day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }).format(date);
 }
 
 function renderActivityCard(item){

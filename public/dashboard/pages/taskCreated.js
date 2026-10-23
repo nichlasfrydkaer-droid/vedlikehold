@@ -1,10 +1,10 @@
 import { loadDashboard } from "../services/dashboard.js";
 import { getTask } from "../js/api.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 import { getCongregation } from "../js/session.js";
 
 const escapeHtml=value=>String(value??"").replace(/[&<>'"]/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[character]);
-const formatDate=value=>value?new Date(`${value}T12:00:00`).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}):"–";
+const formatDate=value=>value?new Date(`${value}T12:00:00`).toLocaleDateString(getDashboardLocale(),{year:"numeric",month:"long",day:"numeric"}):"–";
 const successIcon=`<span class="task-created-success-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/></svg></span>`;
 
 export async function initTaskCreated(){

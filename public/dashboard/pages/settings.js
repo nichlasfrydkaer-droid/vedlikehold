@@ -3,7 +3,7 @@ import { buildJobcardMenuUrl, getJobcards, getJobcardSettings, saveJobcardSettin
 import { getCongregation, getUser } from "../js/session.js";
 import { state } from "../js/state.js";
 import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 import { showToast } from "../components/toast.js";
 
 const manualIntervals = [[1,"manualIntervalMonthly","Månedlig"],[2,"manualIntervalEveryTwoMonths","Hver 2. måned"],[3,"manualIntervalQuarterly","Hvert kvartal"],[6,"manualIntervalEverySixMonths","Hver 6. måned"],[12,"manualIntervalYearly","Årlig"],[24,"manualIntervalEveryTwoYears","Hvert 2. år"],[48,"manualIntervalEveryFourYears","Hvert 4. år"],[60,"manualIntervalEveryFiveYears","Hvert 5. år"]];
@@ -17,7 +17,7 @@ function section(id, title, description, symbol, content){
 
 function intervalOptions(selected){ return manualIntervals.map(([months, key, fallback]) => `<option value="${months}" ${months === selected ? "selected" : ""}>${t(key, fallback)}</option>`).join(""); }
 function executionMonthOptions(selectedMonth){
-    const locale = document.documentElement.lang || "no";
+    const locale = getDashboardLocale();
     const formatter = new Intl.DateTimeFormat(locale,{month:"long",year:"numeric"});
     const selected = new Date(`${selectedMonth}-01T12:00:00`);
     const today = new Date();

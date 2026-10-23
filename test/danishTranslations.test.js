@@ -2,6 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { localeForLanguage } from "../public/dashboard/js/i18n.js";
+import { formatExecutionMonth } from "../public/dashboard/js/jobcardSchedule.js";
 
 const root=new URL("../",import.meta.url).pathname;
 const translations=JSON.parse(readFileSync(join(root,"public/dashboard/lang/da.json"),"utf8"));
@@ -35,4 +37,13 @@ test("annual overview job card dialog is translated in every supported language"
     const values=JSON.parse(readFileSync(join(root,`public/dashboard/lang/${language}.json`),"utf8"));
     assert.deepEqual(keys.filter(key=>!values[key]),[],`${language} is missing planner dialog translations`);
   }
+});
+
+test("month names follow the selected dashboard language",()=>{
+  assert.equal(localeForLanguage("da"),"da-DK");
+  assert.equal(localeForLanguage("no"),"nb-NO");
+  assert.equal(localeForLanguage("en"),"en-GB");
+  assert.equal(formatExecutionMonth("2026-05",localeForLanguage("da")),"Maj 2026");
+  assert.equal(formatExecutionMonth("2026-05",localeForLanguage("no")),"Mai 2026");
+  assert.equal(formatExecutionMonth("2026-05",localeForLanguage("en")),"May 2026");
 });

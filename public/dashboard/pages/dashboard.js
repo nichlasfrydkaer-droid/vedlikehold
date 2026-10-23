@@ -5,12 +5,12 @@ import { getJobcards,getJobcardSettings,getTasks,getReports,getActivity,getPlann
 import { getCongregation } from "../js/session.js";
 import { formatExecutionMonth, mergeJobcardSchedules, isUpcoming } from "../js/jobcardSchedule.js";
 import { getTaskStatus,renderTaskStatus } from "../js/taskStatus.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 import { reportCompletionIndex,scheduledForYear } from "./planner.js";
 
 const esc=value=>String(value == null ? "" : value).replace(/[&<'"]/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"})[character]);
-const fmt=value=>value?new Date(`${value}T12:00:00`).toLocaleDateString(undefined,{day:"numeric",month:"short"}):"–";
-const monthName=date=>new Intl.DateTimeFormat(undefined,{month:"long",year:"numeric"}).format(date);
+const fmt=value=>value?new Date(`${value}T12:00:00`).toLocaleDateString(getDashboardLocale(),{day:"numeric",month:"short"}):"–";
+const monthName=date=>new Intl.DateTimeFormat(getDashboardLocale(),{month:"long",year:"numeric"}).format(date);
 const urlFor=item=>item.type==="task"?`/dashboard/task.html?id=${encodeURIComponent(item.id)}`:"/dashboard/jobcards.html";
 
 const activityVisuals={

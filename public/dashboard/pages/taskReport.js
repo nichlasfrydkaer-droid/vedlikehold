@@ -1,9 +1,9 @@
 import { loadDashboard } from "../services/dashboard.js";
 import { getTaskReport } from "../js/api.js";
-import { t } from "../js/i18n.js";
+import { getDashboardLocale, t } from "../js/i18n.js";
 
 const escapeHtml=value=>String(value??"").replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
-const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleString(undefined,{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):"–";};
+const formatDate=value=>{const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleString(getDashboardLocale(),{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):"–";};
 const duration=value=>{const seconds=Number(value);return !Number.isFinite(seconds)?"–":seconds<60?`${Math.round(seconds)} sek`:`${Math.floor(seconds/60)} min ${Math.round(seconds%60)} sek`;};
 const parse=value=>{try{return JSON.parse(value||"[]");}catch{return [];}};
 const statusIcon=completed=>`<span class="task-report-check-icon ${completed?"is-complete":"is-missing"}"><svg viewBox="0 0 24 24" aria-hidden="true">${completed?'<path d="m5 12 4.5 4.5L19 7"/>':'<path d="m7 7 10 10M17 7 7 17"/>'}</svg></span>`;

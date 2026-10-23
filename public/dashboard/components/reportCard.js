@@ -1,3 +1,5 @@
+import { getDashboardLocale } from "../js/i18n.js";
+
 export function renderReportCard(report){
 
     return `
@@ -37,7 +39,7 @@ export function renderReportCard(report){
 
                 📅 ${new Date(
                     report.finished_at
-                ).toLocaleString("no-NO")}
+                ).toLocaleString(getDashboardLocale())}
 
             </p>
 
