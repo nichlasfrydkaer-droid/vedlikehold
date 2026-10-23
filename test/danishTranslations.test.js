@@ -28,3 +28,11 @@ test("Danish translations do not contain common Norwegian UI wording",()=>{
   const matches=Object.entries(translations).filter(([,value])=>typeof value==="string"&&norwegian.test(value));
   assert.deepEqual(matches,[]);
 });
+
+test("annual overview job card dialog is translated in every supported language",()=>{
+  const keys=["plannerJobcardInfo","plannerScheduledMonth","plannerStatus","plannerOverdueStatus","openJobcardDescription","shareJobcardDescription","manualApprovalCompleted"];
+  for(const language of ["da","no","en"]){
+    const values=JSON.parse(readFileSync(join(root,`public/dashboard/lang/${language}.json`),"utf8"));
+    assert.deepEqual(keys.filter(key=>!values[key]),[],`${language} is missing planner dialog translations`);
+  }
+});

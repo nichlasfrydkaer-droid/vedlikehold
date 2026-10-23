@@ -1,8 +1,9 @@
 import { loadDashboard } from "../services/dashboard.js";
-import { getJobcards, getJobcardSettings, getPlanner, getReports, markPlannerCompletion, savePlanner } from "../js/api.js";
+import { buildJobcardMenuUrl, getJobcards, getJobcardSettings, getPlanner, getReports, markPlannerCompletion, savePlanner } from "../js/api.js";
 import { getCongregation } from "../js/session.js";
 import { mergeJobcardSchedules } from "../js/jobcardSchedule.js";
 import { t } from "../js/i18n.js";
+import { openJobcardShareDialog } from "../components/jobcardShare.js";
 
 const MONTHS_IN_YEAR = 12;
 const MIN_PLANNER_YEAR = 2026;
@@ -98,10 +99,10 @@ function isOverdueExecution(executionMonth, now = new Date()){
 function cardMarkup(card, index, moreLimit){
     const overdue = !card.completed && isOverdueExecution(card.executionMonth);
     const statusLabel = card.completed ? t("completed", "Utført") : overdue ? t("overdueJobcards", "Overskredne jobbkort") : t("planned", "Planlagt");
-    return `<div class="planner-jobcard ${card.completed ? "is-completed" : overdue ? "is-overdue" : ""} ${index >= moreLimit ? "is-extra" : ""}" title="${esc(card.title)}">
+    return `<div class="planner-jobcard ${card.completed ? "is-completed" : overdue ? "is-overdue" : ""} ${index >= moreLimit ? "is-extra" : ""}" title="${esc(card.title)}" role="button" tabindex="0" data-open-jobcard="${esc(card.id)}" data-execution-month="${card.executionMonth}">
         <span class="planner-status" aria-label="${statusLabel}">${card.completed ? "✓" : overdue ? "!" : ""}</span>
         <span class="planner-jobcard-copy"><strong><em>${esc(card.jobcard_number)}</em>${esc(card.title)}</strong>${card.hasExplicitSeries ? `<small>${esc(card.seriesLabel)}</small>` : ""}</span>
-        ${card.completed ? "" : `<button class="planner-card-actions" type="button" data-manual-complete="${esc(card.id)}" data-execution-month="${card.executionMonth}" aria-label="${t("plannerActions", "Flere valg")}">…</button>`}
+        <button class="planner-card-actions" type="button" data-open-jobcard="${esc(card.id)}" data-execution-month="${card.executionMonth}" aria-label="${t("plannerActions", "Flere valg")}">…</button>
     </div>`;
 }
 function renderMonth(month, cards){
@@ -111,20 +112,25 @@ function renderMonth(month, cards){
     return `<article class="planner-month-card" data-planner-month="${month.getMonth()}"><header><h2>${monthLabel(month)}</h2><span>${complete}/${cards.length}</span></header><div class="planner-month-list">${cards.length ? cards.map((card, index) => cardMarkup(card, index, visibleLimit)).join("") : `<p class="planner-empty">${t("noJobcardsPlanned", "Ingen planlagte jobbkort.")}</p>`}${extraCount ? `<button class="planner-more" type="button" data-open-month="${month.getMonth()}">${t("plannerMoreItems", "+ {count} flere").replace("{count}", extraCount)}</button>` : ""}</div></article>`;
 }
 function closeOverlay(overlay){ overlay.remove(); }
-function openMonthDialog(root, month, cards, onAction){
+function openMonthDialog(root, month, cards, onOpenCard){
     const complete = cards.filter(card => card.completed).length;
     const overlay = document.createElement("div"); overlay.className = "planner-month-overlay";
     overlay.innerHTML = `<section class="planner-month-dialog" role="dialog" aria-modal="true"><header><div><h2>${monthLabel(month)}</h2><p>${complete}/${cards.length}</p></div><button type="button" data-close aria-label="${t("close", "Lukk")}">×</button></header><div class="planner-month-dialog-list">${cards.map(card => cardMarkup(card, -1, Infinity)).join("")}</div></section>`;
     const close = () => closeOverlay(overlay); overlay.addEventListener("click", event => { if(event.target === overlay) close(); }); overlay.querySelector("[data-close]").addEventListener("click", close);
-    overlay.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => { close(); onAction(button.dataset.manualComplete, button.dataset.executionMonth); })); root.append(overlay);
+    const openCard = element => { close(); onOpenCard(element.dataset.openJobcard, element.dataset.executionMonth); };
+    overlay.querySelectorAll(".planner-jobcard").forEach(row => { row.addEventListener("click", event => { if(event.target.closest(".planner-card-actions")) return; openCard(row); }); row.addEventListener("keydown", event => { if(event.target.closest(".planner-card-actions")) return; if(["Enter"," "].includes(event.key)){ event.preventDefault(); openCard(row); } }); });
+    overlay.querySelectorAll(".planner-card-actions").forEach(button => button.addEventListener("click", event => { event.stopPropagation(); openCard(button); })); root.append(overlay);
 }
-function openPlannerActionsMenu(root, card, executionMonth, onManualComplete){
+function openPlannerActionsMenu(root, card, executionMonth, congregation, onManualComplete){
     const overlay = document.createElement("div"); overlay.className = "planner-month-overlay planner-actions-overlay";
-    overlay.innerHTML = `<section class="planner-actions-menu" role="dialog" aria-modal="true" aria-label="${t("plannerActions", "Flere valg")}"><button class="planner-close" type="button" data-close aria-label="${t("close", "Lukk")}">×</button><header><p class="page-eyebrow">${esc(card.jobcard_number)}</p><h2>${esc(card.title)}</h2></header><div class="planner-actions-list"><button type="button" data-manual-complete><span class="planner-actions-icon" aria-hidden="true">✓</span><span><strong>${t("manualApproval", "Manuell godkjenning")}</strong><small>${t("manualApprovalDescription", "Registrer jobbkortet som utført uten rapport.")}</small></span><span class="planner-actions-arrow" aria-hidden="true">›</span></button></div></section>`;
+    const status = card.completed ? t("completed", "Utført") : isOverdueExecution(executionMonth) ? t("plannerOverdueStatus", "Overskredet") : t("planned", "Planlagt");
+    const jobcardUrl = buildJobcardMenuUrl(card, congregation);
+    overlay.innerHTML = `<section class="planner-actions-menu" role="dialog" aria-modal="true" aria-labelledby="plannerJobcardTitle"><button class="planner-close" type="button" data-close aria-label="${t("close", "Lukk")}">×</button><header><p class="page-eyebrow">${t("jobcard", "Jobbkort")} ${esc(card.jobcard_number)}</p><h2 id="plannerJobcardTitle">${esc(card.title)}</h2>${card.hasExplicitSeries ? `<p class="planner-actions-series">${esc(card.seriesLabel)}</p>` : ""}</header><section class="planner-actions-info" aria-label="${t("plannerJobcardInfo", "Kort informasjon")}"><span><small>${t("plannerScheduledMonth", "Planlagt måned")}</small><strong>${esc(monthLabel(dateFromMonth(executionMonth)))}</strong></span><span><small>${t("plannerStatus", "Status")}</small><strong>${esc(status)}</strong></span><span><small>${t("jobcardSuggestedInterval", "Foreslått intervall")}</small><strong>${esc(card.interval || intervalLabel(card.intervalMonths))}</strong></span></section><div class="planner-actions-list"><a href="${esc(jobcardUrl)}" target="_blank" rel="noopener noreferrer"><span class="planner-actions-icon" aria-hidden="true">↗</span><span><strong>${t("openJobcard", "Åpne jobbkort")}</strong><small>${t("openJobcardDescription", "Åpne jobbkortets startside.")}</small></span><span class="planner-actions-arrow" aria-hidden="true">›</span></a><button type="button" data-manual-complete ${card.completed ? "disabled" : ""}><span class="planner-actions-icon" aria-hidden="true">✓</span><span><strong>${t("manualApproval", "Manuell godkjenning")}</strong><small>${card.completed ? t("manualApprovalCompleted", "Jobbkortet er allerede utført denne måneden.") : t("manualApprovalDescription", "Registrer jobbkortet som utført uten rapport.")}</small></span><span class="planner-actions-arrow" aria-hidden="true">›</span></button><button type="button" data-share-jobcard><span class="planner-actions-icon" aria-hidden="true">⌁</span><span><strong>${t("shareJobcard", "Del jobbkort")}</strong><small>${t("shareJobcardDescription", "Kopier lenken eller send jobbkortet på e-post.")}</small></span><span class="planner-actions-arrow" aria-hidden="true">›</span></button></div></section>`;
     const close = () => closeOverlay(overlay);
     overlay.addEventListener("click", event => { if(event.target === overlay) close(); });
     overlay.querySelector("[data-close]").addEventListener("click", close);
     overlay.querySelector("[data-manual-complete]").addEventListener("click", () => { close(); onManualComplete(executionMonth); });
+    overlay.querySelector("[data-share-jobcard]").addEventListener("click", () => { close(); openJobcardShareDialog(card, jobcardUrl); });
     root.append(overlay);
 }
 function openManualCompleteDialog(root, card, executionMonth, onConfirm){
@@ -214,8 +220,9 @@ export async function initPlanner(){
         root.querySelectorAll("[data-month]").forEach(button => button.addEventListener("click", async () => { activeMonth = Math.max(0, Math.min(11, activeMonth + Number(button.dataset.month))); await render(); }));
         root.querySelector("[data-plan-year]")?.addEventListener("click", () => { location.href = `/dashboard/planner/?year=${encodeURIComponent(year)}`; });
         const complete = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openManualCompleteDialog(root, card, executionMonth, async selectedMonth => { const result = await markPlannerCompletion({ congregation_id:congregation.id, year, jobcard_id:String(id), execution_month:selectedMonth }); if(result?.success){ jobcardKeys(id).forEach(key => manualCompletions.add(`${key}:${selectedMonth}`)); await render(); } else window.alert(t("plannerCompletionFailed", "Kunne ikke markere jobbkortet som utført.")); }); };
-        const openActions = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openPlannerActionsMenu(root, card, executionMonth, selectedMonth => complete(id, selectedMonth)); };
-        root.querySelectorAll("[data-manual-complete]").forEach(button => button.addEventListener("click", () => openActions(button.dataset.manualComplete, button.dataset.executionMonth)));
+        const openActions = (id, executionMonth) => { const card = jobcards.find(item => String(item.id) === String(id)); if(card) openPlannerActionsMenu(root, {...card, completed:planned.flat().find(item => String(item.id) === String(id) && item.executionMonth === executionMonth)?.completed}, executionMonth, congregation, selectedMonth => complete(id, selectedMonth)); };
+        root.querySelectorAll(".planner-jobcard").forEach(row => { row.addEventListener("click", event => { if(event.target.closest(".planner-card-actions")) return; openActions(row.dataset.openJobcard, row.dataset.executionMonth); }); row.addEventListener("keydown", event => { if(event.target.closest(".planner-card-actions")) return; if(["Enter"," "].includes(event.key)){ event.preventDefault(); openActions(row.dataset.openJobcard, row.dataset.executionMonth); } }); });
+        root.querySelectorAll(".planner-card-actions").forEach(button => button.addEventListener("click", event => { event.stopPropagation(); openActions(button.dataset.openJobcard, button.dataset.executionMonth); }));
         root.querySelectorAll("[data-open-month]").forEach(button => button.addEventListener("click", () => { const index = Number(button.dataset.openMonth); openMonthDialog(root, new Date(year, index, 1, 12), planned[index], openActions); }));
     };
     await render();
