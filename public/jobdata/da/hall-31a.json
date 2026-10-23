@@ -1,0 +1,37 @@
+{
+  "key": "da:hall:31A",
+  "slug": "hall-31a",
+  "series": "hall",
+  "nummer": "31A",
+  "titel": "Støvsugere & brugsgenstande",
+  "undertittel": "Alment udstyr",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-31a.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Teknikrum\n\nADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Udfør et generelt el-tjek. Tjek kabler og strømstik.",
+        "Tjek funktionen af alle knapper og afbrydere.",
+        "Tjek at skærme sidder som de skal, at hjul og lukkeanordninger virker.",
+        "Undersøg om motoren vibrerer voldsomt når den tændes og slukkes.",
+        "Rens enheden indvendigt – luftindtaget og motoren.",
+        "Tag luftfilteret ud og rens det om nødvendigt.",
+        "Montér filter.",
+        "Tjek slangens tilstand og dens tilslutning.",
+        "Fjern tråde og lignende der har sat sig fast i mundstykkets hjul.",
+        "Tjek funktion og tilstand af alt tilbehør til støvsugeren.",
+        "Afprøv til sidst støvsugeren. Brugsgenstande (Kaffemaskine, elkedel, mikroovn ol.) ADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
+        "Udfør et generelt el-tjek. Tjek kabler og strømstik.",
+        "Tjek funktionen af alle knapper og afbrydere.",
+        "Rengør og/eller afkalk enheden."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

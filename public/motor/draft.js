@@ -1,5 +1,6 @@
 import { state } from "./state.js";
 import { dom } from "./dom.js";
+import { jobcardKey } from "../assets/jobcardIdentity.js";
 
 const DB_NAME = "vedlikehold-work-drafts";
 const STORE_NAME = "drafts";
@@ -53,7 +54,7 @@ function isExpiredDraft(draft){
 
 export function createDraftKey(){
   const params = new URLSearchParams(location.search);
-  return ["jobcard",params.get("congregation") || "public",params.get("language") || "no",state.currentJob?.nummer || params.get("id")].join(":");
+  return ["jobcard",params.get("congregation") || "public",params.get("language") || "no",jobcardKey(state.currentJob) || params.get("id")].join(":");
 }
 
 export async function saveDraft(){

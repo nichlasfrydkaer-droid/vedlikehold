@@ -1,0 +1,69 @@
+{
+  "key": "da:hall:15",
+  "slug": "hall-15",
+  "series": "hall",
+  "nummer": "15",
+  "titel": "Udstyr i teknikrum",
+  "undertittel": "Varmesystem",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-15.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Teknikrum\n\nHUSK: Dette skal måske udføres af en tekniker. Kontakt om nødvendigt din vedligeholdelsesinstruktør.",
+  "oppgaver": [
+    {
+      "overskrift": "Rør",
+      "punkter": [
+        "Se efter rust og utætheder."
+      ]
+    },
+    {
+      "overskrift": "Afspærringsventiler",
+      "punkter": [
+        "Luk og åben hurtigt alle aftræksventiler."
+      ]
+    },
+    {
+      "overskrift": "Automatiske udluftningsventiler",
+      "punkter": [
+        "Visuel kontrol af de automatiske udluftningsventiler."
+      ]
+    },
+    {
+      "overskrift": "Tryk på varmeanlæg",
+      "punkter": [
+        "Tjek trykket på systemet. Manometeret skal vise cirka 1,5 bar (tjek med oplysninger i brugermanual). Påfyld vand efter behov, hvis trykket er for lavt."
+      ]
+    },
+    {
+      "overskrift": "Udefølere",
+      "punkter": [
+        "Tjek at udeføleren er i god stand. ADVARSEL: Ved service af følgende skal der bæres handsker og beskyttelsesbriller."
+      ]
+    },
+    {
+      "overskrift": "Sikkerhedsventil",
+      "punkter": [
+        "Undersøg om ventilen er beskadiget eller rusten.",
+        "Åbn ventilen i et par sekunder. Tjek at vander der løber ud også løber derfra. Tjek at ventilen ikke lækker efter testen. Hvis ventilen lækker, gentages processen i længere tid, og man kan banke lidt på ventilen for at løsne skidt der sidder på ventilsædet. Hvis den fortsat lækker skal den sikkert skiftes.",
+        "Hvis der konstant løber vand fra ventilen skal den sikkert skiftes."
+      ]
+    },
+    {
+      "overskrift": "Manuelle udluftningsventil",
+      "punkter": [
+        "Undersøg om ventilen er beskadiget eller rusten.",
+        "Åben ventilen til der kommer lidt vand ud på en klud. Luk igen."
+      ]
+    },
+    {
+      "overskrift": "Radiatorer i hele bygningen",
+      "punkter": [
+        "Se efter rust og utætheder. Démonter termostaten og massér ventilen/stiften. (Der må kun trykkes forsigtigt ind på stiften, der må IKKE hives i stiften). Sidder stiften fast kan der med forsigtighed rettes små slag direkte på stiften. Løsner den sig ikke, kontakt da vedligeholdelseskoordinatoren"
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

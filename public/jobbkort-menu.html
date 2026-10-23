@@ -28,7 +28,8 @@
     <div id="documentButtons" class="jobcard-document-list"></div>
   </section>
 </main>
-<script>
+<script type="module">
+import { jobcardKey, jobcardSlug } from "/assets/jobcardIdentity.js";
 let translations = null;
 
 const documentIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 14h6M9 18h5"/></svg>`;
@@ -62,14 +63,16 @@ async function loadMenu(){
   const response = await fetch(`/jobdata/${language}/${jobId}.json`);
   if(!response.ok) throw new Error("Jobbkort ikke funnet.");
   const job = await response.json();
+  const cardKey = jobcardKey(job);
+  const cardSlug = jobcardSlug(job);
   document.getElementById("jobcardNumber").textContent = `${translations.jobCard} ${job.nummer}`;
   document.getElementById("title").textContent = job.titel;
-  document.getElementById("openBtn").onclick = () => { location.href = `/jobbkort-motor.html?id=${encodeURIComponent(job.nummer)}&language=${encodeURIComponent(language)}&congregation=${encodeURIComponent(congregation || "")}`; };
+  document.getElementById("openBtn").onclick = () => { location.href = `/jobbkort-motor.html?id=${encodeURIComponent(cardSlug)}&jobcardKey=${encodeURIComponent(cardKey)}&language=${encodeURIComponent(language)}&congregation=${encodeURIComponent(congregation || "")}&congregationId=${encodeURIComponent(congregationId || "")}`; };
   document.getElementById("printBtn").onclick = () => window.open(`/pdf/${language}/${job.jobbkortPdf}`,"_blank","noopener");
 
   const documentCongregation = congregationId || congregation;
   if(!documentCongregation) return;
-  const documentsResponse = await fetch(`https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}`);
+  const documentsResponse = await fetch(`https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(cardKey)}`);
   if(!documentsResponse.ok) return;
   const documents = (await documentsResponse.json()).documents || [];
   if(!documents.length) return;
@@ -80,7 +83,7 @@ async function loadMenu(){
     button.type = "button";
     button.innerHTML = `${documentIcon}<span></span><span class="jobcard-document-arrow" aria-hidden="true">›</span>`;
     button.querySelector("span").textContent = item.label;
-    button.addEventListener("click", () => window.open(`https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(job.nummer)}&document=${encodeURIComponent(item.id)}`,"_blank","noopener"));
+    button.addEventListener("click", () => window.open(`https://api.vedlikeholdsystem.no/public/jobcard-documents?congregation=${encodeURIComponent(documentCongregation)}&jobcard=${encodeURIComponent(cardKey)}&document=${encodeURIComponent(item.id)}`,"_blank","noopener"));
     target.appendChild(button);
   });
   document.getElementById("documentsSection").hidden = false;

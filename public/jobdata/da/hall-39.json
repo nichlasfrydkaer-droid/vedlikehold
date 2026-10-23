@@ -1,0 +1,32 @@
+{
+  "key": "da:hall:39",
+  "slug": "hall-39",
+  "series": "hall",
+  "nummer": "39",
+  "titel": "Røg- og tyverialarm",
+  "undertittel": "Teknisk vedligeholdelse",
+  "frekvens": "Hver 3. måned",
+  "jobbkortPdf": "arbejdskort-39.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Ved hoveddør, i teknikrum og i rigssalen\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek datoen for sidste batteriskift. Batteriet må maks være 3 år gammelt.",
+        "Tjek driften af forskellige røgalarmer hver 3. måned med en testspray.",
+        "Tjek røgalarmen ved at trykke på testknappen på enheden.",
+        "Forvis jer om at ventilationssystemet stopper når røgalarmen aktiveres.",
+        "Efter tjek af alarmen skal det undersøges om personerne på opkaldslisten har fået meddelelse om at alarmen blev aktiveret. Der kan gå et par minutter før meddelelsen kommer frem.",
+        "Lav et notat om service og de uregelmæssigheder der blev fundet. Aflever notatet til den ansvarlige som så vil arkivere det i en logbog.",
+        "Tjek at alarmen stilles tilbage i den oprindelige tilstand ved at indtaste koden.",
+        "Aktiver indbrudsalarmen og test funktionen ved at åbne en dør.",
+        "Tjek at alarmen stilles tilbage i den oprindelige tilstand ved at indtaste koden."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 3
+}

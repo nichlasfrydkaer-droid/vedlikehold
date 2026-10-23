@@ -1,0 +1,36 @@
+{
+  "key": "da:hall:35",
+  "slug": "hall-35",
+  "series": "hall",
+  "nummer": "35",
+  "titel": "Computere",
+  "undertittel": "Teknisk udstyr",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-35.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: På lydbord i salen\n\nHUSK: Servicér xx computere per gang så det sikres at alle computere serviceres en gang om året. ADVARSEL: Brug aldrig alkohol eller opløsningsmidler til at rense computeren med. Disse kemikalier kan beskadige både komponenter og kabinettet. Rør ikke drevet med fingrene, da fedt fra fingrene kan give problemer.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tag et foto af ledninger, så de kan genmonteres korrekt. Fjern strømstikket fra computeren.",
+        "Udfør et generelt el-tjek. Tjek tilstanden af strømstik, kabler og ledninger i enheden.",
+        "Rengør med trykluft inde i enheden.",
+        "Tjek tilstanden af blæseren og rens med trykluft om nødvendigt.",
+        "Rens alle kabler.",
+        "Undersøg for tegn på skader eller overophedning inde i computeren.",
+        "Tjek tastaturet for taster der binder.",
+        "Rens tastaturet.",
+        "Fjern kuglen fra musen, og rens rullerne.",
+        "Brug komprimeret luft til at rense CD-romdrevet.",
+        "Støvsug skærmens luftkanaler.",
+        "Rens computeren og skærmen med en mild sæbeopløsning.",
+        "Fjern genstridige pletter på skærmen med en mild, neutral sæbe."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

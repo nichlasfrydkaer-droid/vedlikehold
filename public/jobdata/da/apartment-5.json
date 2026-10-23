@@ -1,0 +1,29 @@
+{
+  "key": "da:apartment:5",
+  "slug": "apartment-5",
+  "series": "apartment",
+  "nummer": "5",
+  "titel": "Rækværk og have",
+  "undertittel": "Udvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-lejlighed-5.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udvendigt\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek om buske, træer eller planter der står i nærheden af bygningen skal beskæres, så der ikke opstår fugtskader.",
+        "Undersøg om rødder har skadet gangarealer, parkeringsplads eller fundament.",
+        "Se efter tegn på erosion (at jord/sand bliver flyttet af vand), og om faskiner er fyldt med jord eller sand.",
+        "Tjek om stolper i rækværk har skader.",
+        "Er stolperne fikseret ordentligt i jorden.",
+        "Se om jorden er vasket væk under hegn og efterfyld jord efter behov."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

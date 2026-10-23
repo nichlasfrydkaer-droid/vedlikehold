@@ -1,0 +1,28 @@
+{
+  "key": "da:apartment:4",
+  "slug": "apartment-4",
+  "series": "apartment",
+  "nummer": "4",
+  "titel": "Fliser og gangarealer ved lejligheden",
+  "undertittel": "Udvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-lejlighed-4.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udvendigt",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Fjern alt ukrudt der findes mellem fliser og kantsten. Om nødvendigt kan der sprøjtes, men overhold nøje alle sikkerhedsforskrifter.",
+        "Tjek for løse fliser/sten, fyld efter med sand efter behov.",
+        "Hvis der er ujævnheder og nedsænkninger i flisebelægningen, undersøg da årsagen hertil.",
+        "Hvis sandunderlaget er væk, undersøg da årsagen og foretag udbedring.",
+        "Tjek for oliepletter og fjern dem med egnede midler. BØR AFTALES MED VEDLIGEHOLDELSESKOORDINATOREN ”HVEM DER GØR HVAD” HVIS DER ER FÆLLES TING."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

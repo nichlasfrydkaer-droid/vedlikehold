@@ -6,7 +6,7 @@ import { t } from "../js/i18n.js";
 
 const MONTHS_IN_YEAR = 12;
 const MIN_PLANNER_YEAR = 2026;
-const INTERVALS = [1, 2, 3, 6, 12, 24];
+const INTERVALS = [1, 2, 3, 6, 12, 24, 48, 60];
 
 function planningIsAvailable(year){
     const now = new Date();
@@ -25,9 +25,10 @@ function monthsFor(year, firstMonth, interval){
 }
 function jobcardKeys(value){ const key = String(value ?? "").trim(); const numeric = key.match(/^0*(\d+)([A-Za-z]?)$/); const normalized = numeric ? `${Number(numeric[1])}${numeric[2].toUpperCase()}` : key.toUpperCase(); return [...new Set([key, normalized])].filter(Boolean); }
 function esc(value){ const element = document.createElement("span"); element.textContent = String(value ?? ""); return element.innerHTML; }
+function cardName(card){ return `${card.jobcard_number} ${card.title}${card.hasExplicitSeries ? ` · ${card.seriesLabel}` : ""}`; }
 function monthLabel(date){ const label = new Intl.DateTimeFormat(document.documentElement.lang || "no", { month:"long", year:"numeric" }).format(date); return label.replace(/^./, letter => letter.toUpperCase()); }
 function intervalLabel(months, fallback = ""){
-    const labels = { 1:t("monthly", "Månedlig"), 2:t("everySecondMonth", "Hver 2. måned"), 3:t("quarterly", "Kvartalsvis"), 6:t("everySixMonths", "Hver 6. måned"), 12:t("annual", "Årlig"), 24:t("everySecondYear", "Hvert 2. år") };
+    const labels = { 1:t("monthly", "Månedlig"), 2:t("everySecondMonth", "Hver 2. måned"), 3:t("quarterly", "Kvartalsvis"), 6:t("everySixMonths", "Hver 6. måned"), 12:t("annual", "Årlig"), 24:t("everySecondYear", "Hvert 2. år"), 48:t("manualIntervalEveryFourYears", "Hvert 4. år"), 60:t("manualIntervalEveryFiveYears", "Hvert 5. år") };
     return labels[Number(months)] || fallback || "–";
 }
 export function reportCompletionIndex(reports){
@@ -35,7 +36,7 @@ export function reportCompletionIndex(reports){
     (reports || []).forEach(report => {
         const date = new Date(report.finished_at || report.created_at || "");
         if(Number.isNaN(date.getTime())) return;
-        jobcardKeys(report.job_number || report.jobcard_id).forEach(key => {
+        jobcardKeys(report.jobcard_key || report.job_number || report.jobcard_id).forEach(key => {
             const months = completed.get(key) || [];
             months.push(monthKey(date));
             completed.set(key, months);
@@ -99,7 +100,7 @@ function cardMarkup(card, index, moreLimit){
     const statusLabel = card.completed ? t("completed", "Utført") : overdue ? t("overdueJobcards", "Overskredne jobbkort") : t("planned", "Planlagt");
     return `<div class="planner-jobcard ${card.completed ? "is-completed" : overdue ? "is-overdue" : ""} ${index >= moreLimit ? "is-extra" : ""}" title="${esc(card.title)}">
         <span class="planner-status" aria-label="${statusLabel}">${card.completed ? "✓" : overdue ? "!" : ""}</span>
-        <span class="planner-jobcard-copy"><strong><em>${esc(card.jobcard_number)}</em>${esc(card.title)}</strong></span>
+        <span class="planner-jobcard-copy"><strong><em>${esc(card.jobcard_number)}</em>${esc(card.title)}</strong>${card.hasExplicitSeries ? `<small>${esc(card.seriesLabel)}</small>` : ""}</span>
         ${card.completed ? "" : `<button class="planner-card-actions" type="button" data-manual-complete="${esc(card.id)}" data-execution-month="${card.executionMonth}" aria-label="${t("plannerActions", "Flere valg")}">…</button>`}
     </div>`;
 }
@@ -155,7 +156,7 @@ function openPlanEditor(root, { year, jobcards, existing, onSaved }){
     const close = () => closeOverlay(overlay);
     const persist = async () => {
         const missing = state.filter(item => !item.selected).map(item => jobcards.find(card => String(card.id) === item.jobcard_id)).filter(Boolean);
-        if(missing.length && !window.confirm(`${t("plannerMissingConfirm", "Følgende jobbkort mangler planlegging. Vil du fortsette?")}\n\n${missing.map(card => `${card.jobcard_number} ${card.title}`).join("\n")}`)) return;
+        if(missing.length && !window.confirm(`${t("plannerMissingConfirm", "Følgende jobbkort mangler planlegging. Vil du fortsette?")}\n\n${missing.map(cardName).join("\n")}`)) return;
         const entries = state.map(item => { const card = jobcards.find(value => String(value.id) === item.jobcard_id); return buildEditableEntry(item, card, year); });
         const result = await savePlanner({ congregation_id:existing.congregation_id, year, mode, entries });
         if(!result?.success){ window.alert(t("plannerSaveFailed", "Kunne ikke lagre årsplanen.")); return; }
@@ -163,10 +164,10 @@ function openPlanEditor(root, { year, jobcards, existing, onSaved }){
     };
     const drawRows = () => state.map((item, index) => {
         const card = jobcards[index]; const interval = item.auto_interval ? card.intervalMonths : item.manual_interval_months;
-        return `<article class="planner-edit-row ${item.selected ? "is-selected" : ""}" data-row="${index}"><label class="planner-edit-enabled"><input type="checkbox" data-enabled="${index}" ${item.selected ? "checked" : ""}><span>${esc(card.jobcard_number)} ${esc(card.title)}</span></label><div class="planner-edit-controls"><label>${t("firstExecutionMonth", "Første utførelsesmåned")}<select data-first-month="${index}" ${item.selected ? "" : "disabled"}>${Array.from({length:12}, (_, month) => `<option value="${month}" ${Number(item.first_month) === month ? "selected" : ""}>${monthLabel(new Date(year, month, 1, 12))}</option>`).join("")}</select></label><label class="planner-edit-switch"><span>${item.auto_interval ? t("automatic", "Automatisk") : t("manual", "Manuell")}</span><input type="checkbox" data-auto="${index}" ${item.auto_interval ? "checked" : ""} ${item.selected ? "" : "disabled"}></label><label>${t("interval", "Intervall")}<select data-interval="${index}" ${item.selected && !item.auto_interval ? "" : "disabled"}>${INTERVALS.map(value => `<option value="${value}" ${Number(interval) === value ? "selected" : ""}>${intervalLabel(value)}</option>`).join("")}</select></label></div></article>`;
+        return `<article class="planner-edit-row ${item.selected ? "is-selected" : ""}" data-row="${index}"><label class="planner-edit-enabled"><input type="checkbox" data-enabled="${index}" ${item.selected ? "checked" : ""}><span>${esc(cardName(card))}</span></label><div class="planner-edit-controls"><label>${t("firstExecutionMonth", "Første utførelsesmåned")}<select data-first-month="${index}" ${item.selected ? "" : "disabled"}>${Array.from({length:12}, (_, month) => `<option value="${month}" ${Number(item.first_month) === month ? "selected" : ""}>${monthLabel(new Date(year, month, 1, 12))}</option>`).join("")}</select></label><label class="planner-edit-switch"><span>${item.auto_interval ? t("automatic", "Automatisk") : t("manual", "Manuell")}</span><input type="checkbox" data-auto="${index}" ${item.auto_interval ? "checked" : ""} ${item.selected ? "" : "disabled"}></label><label>${t("interval", "Intervall")}<select data-interval="${index}" ${item.selected && !item.auto_interval ? "" : "disabled"}>${INTERVALS.map(value => `<option value="${value}" ${Number(interval) === value ? "selected" : ""}>${intervalLabel(value)}</option>`).join("")}</select></label></div></article>`;
     }).join("");
     const draw = () => {
-        overlay.innerHTML = `<section class="planner-editor-dialog" role="dialog" aria-modal="true"><header><div><p class="page-eyebrow">${year}</p><h2>${t("planYear", "Planlegg året")}</h2><p>${t("plannerEditorDescription", "Velg første utførelsesmåned. Gjentakelser fylles inn automatisk.")}</p></div><button type="button" data-close aria-label="${t("close", "Lukk")}">×</button></header><div class="planner-plan-mode"><button type="button" data-mode="continued" class="${mode === "continued" ? "is-selected" : ""}">${t("continueIntervals", "Fortsett intervall fra {year}").replace("{year}", year - 1)}</button><button type="button" data-mode="manual" class="${mode === "manual" ? "is-selected" : ""}">${t("planYearFromScratch", "Planlegg hele året på nytt")}</button></div><div class="planner-edit-list">${state ? drawRows() : ""}</div><aside class="planner-missing-info"><strong>${t("missingPlanning", "Mangler planlegging")}</strong><span>${state?.filter(item => !item.selected).map(item => { const card = jobcards.find(value => String(value.id) === item.jobcard_id); return `${card?.jobcard_number || ""} ${card?.title || ""}`; }).join(" · ") || t("allJobcardsPlanned", "Alle jobbkort er planlagt.")}</span></aside><footer><button type="button" class="button-secondary" data-close>${t("cancel", "Avbryt")}</button><button type="button" class="button-primary" data-save>${t("savePlan", "Lagre plan")}</button></footer></section>`;
+        overlay.innerHTML = `<section class="planner-editor-dialog" role="dialog" aria-modal="true"><header><div><p class="page-eyebrow">${year}</p><h2>${t("planYear", "Planlegg året")}</h2><p>${t("plannerEditorDescription", "Velg første utførelsesmåned. Gjentakelser fylles inn automatisk.")}</p></div><button type="button" data-close aria-label="${t("close", "Lukk")}">×</button></header><div class="planner-plan-mode"><button type="button" data-mode="continued" class="${mode === "continued" ? "is-selected" : ""}">${t("continueIntervals", "Fortsett intervall fra {year}").replace("{year}", year - 1)}</button><button type="button" data-mode="manual" class="${mode === "manual" ? "is-selected" : ""}">${t("planYearFromScratch", "Planlegg hele året på nytt")}</button></div><div class="planner-edit-list">${state ? drawRows() : ""}</div><aside class="planner-missing-info"><strong>${t("missingPlanning", "Mangler planlegging")}</strong><span>${state?.filter(item => !item.selected).map(item => { const card = jobcards.find(value => String(value.id) === item.jobcard_id); return card ? cardName(card) : ""; }).join(" · ") || t("allJobcardsPlanned", "Alle jobbkort er planlagt.")}</span></aside><footer><button type="button" class="button-secondary" data-close>${t("cancel", "Avbryt")}</button><button type="button" class="button-primary" data-save>${t("savePlan", "Lagre plan")}</button></footer></section>`;
         overlay.querySelectorAll("[data-close]").forEach(button => button.addEventListener("click", close));
         overlay.querySelectorAll("[data-mode]").forEach(button => button.addEventListener("click", () => { mode = button.dataset.mode; if(mode === "continued") state = continuedEntries(jobcards, year, existing); else if(!hasPlan) state = freshEntries(jobcards, year); draw(); }));
         overlay.querySelectorAll("[data-enabled]").forEach(input => input.addEventListener("change", () => { state[Number(input.dataset.enabled)].selected = input.checked; draw(); }));

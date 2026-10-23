@@ -1,0 +1,37 @@
+{
+  "key": "da:hall:25",
+  "slug": "hall-25",
+  "series": "hall",
+  "nummer": "25",
+  "titel": "Nød- og udgangsbelysning",
+  "undertittel": "Belysning",
+  "frekvens": "Månedligt",
+  "jobbkortPdf": "arbejdskort-25.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "HUSK: Dette bør udføres af en person der har fået oplæring.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at hvert lysarmatur virker korrekt når strømmen sluttes. Tjek at LED-indikatorer virker.",
+        "Test at alle nød- og udgangsarmaturer kan lyse i den fastsatte tid når de er indstillet til at køre på batteri."
+      ]
+    },
+    {
+      "overskrift": "Disse tests skal udføres på følgende måde",
+      "punkter": [
+        "Strømafbrydelse på lysgruppen kan simuleres ved at slukke denne gruppe på eltavlen.",
+        "Ved udførelsen af denne test skal alle nød- og udgangsarmaturer gennemgås for at sikre at de er skiftet til indstillingen for batterifunktion og fungerer korrekt.",
+        "Når det er fastslået at alle armaturer kan lyse i den fastsatte tid på indstilingen for batterifunktion, skal armaturerne tjekkes yderligere for fejl.",
+        "Derefter tændes for lysgruppen på eltavlen, og det skal sikres at hvert armatur er skiftet tilbage til strømindstillingen.",
+        "De armaturer som ikke kunne lyse i hele testperioden, skal have skiftet batterier.",
+        "Skriv oplysningerne fra testen i en logbog.",
+        "Sørg for at batteriet i eltavlen udskiftes hvert 3. år."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 1
+}

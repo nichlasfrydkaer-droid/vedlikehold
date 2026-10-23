@@ -1,0 +1,61 @@
+{
+  "key": "da:hall:7",
+  "slug": "hall-7",
+  "series": "hall",
+  "nummer": "7",
+  "titel": "Vægge, gulve og lofter",
+  "undertittel": "Indvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-7.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: I rigssalen",
+  "oppgaver": [
+    {
+      "overskrift": "Vægge",
+      "punkter": [
+        "Tjek malede overflader for mærker, skrammer, revner og skader ved overligger.",
+        "Tjek for tegn på vandskade.",
+        "Vurdér de malede overflader.",
+        "Tjek tapet og glasvæv for mærker, løse samlinger."
+      ]
+    },
+    {
+      "overskrift": "Lofter",
+      "punkter": [
+        "Efterse lofter for tegn på skader (fugtskjolder).",
+        "Vurdér den malede overflade.",
+        "Efterse nedhængte lofter for skader eller skjolder.",
+        "Tjek at skyggelister ikke er løse.",
+        "Tjek om loftet synker og konstatér årsagen.",
+        "Hvis isoleringen flyttes under inspektionen, skal det lægges på plads igen"
+      ]
+    },
+    {
+      "overskrift": "Vægmonteringer",
+      "punkter": [
+        "Tjek at hylder, stikkontakter og lignende sidder fast.",
+        "Tjek radiatorer for tegn på lækage."
+      ]
+    },
+    {
+      "overskrift": "Gulvtæpper",
+      "punkter": [
+        "Tjek gulvtæppets tilstand. Se efter pletter og løse tråde, om det løfter sig eller krøller.",
+        "Bemærk om der er slidte områder.",
+        "Tjek at tæppeskinner er ordentligt fastgjort."
+      ]
+    },
+    {
+      "overskrift": "Flisegulve",
+      "punkter": [
+        "Tjek om der er løse eller knækkede fliser.",
+        "Tjek for manglende fuger, permanent våde fuger og revnede fuger.",
+        "Vurdér gummifuger mellem fliser og væg."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

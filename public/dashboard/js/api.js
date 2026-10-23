@@ -1,5 +1,6 @@
 import { config } from "./config.js";
 import { state } from "./state.js";
+import { jobcardKey, jobcardSlug } from "../../assets/jobcardIdentity.js";
 
 async function request(
     endpoint,
@@ -418,17 +419,10 @@ export function resolveJobcardContext(congregation){
 export function buildJobcardMenuUrl(jobcard, congregation){
 
     const context = resolveJobcardContext(congregation);
-    const jobcardId = String(
-        jobcard?.jobcard_number ??
-        jobcard?.number ??
-        jobcard?.id ??
-        jobcard?.nummer ??
-        jobcard?.raw?.nummer ??
-        jobcard?.raw?.number ??
-        1
-    );
+    const jobcardId = jobcardSlug(jobcard?.raw || jobcard);
+    const key = jobcardKey(jobcard?.raw || jobcard);
 
-    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&language=${encodeURIComponent(context.language || "no")}&congregation=${encodeURIComponent(context.congregationSlug)}&congregationId=${encodeURIComponent(congregation?.id || "")}`;
+    return `https://vedlikeholdsystem.no/jobbkort-menu?id=${encodeURIComponent(jobcardId)}&jobcardKey=${encodeURIComponent(key)}&language=${encodeURIComponent(context.language || "no")}&congregation=${encodeURIComponent(context.congregationSlug)}&congregationId=${encodeURIComponent(congregation?.id || "")}`;
 
 }
 
@@ -466,7 +460,13 @@ export async function getJobcards(
 
     let jobcards = Array.isArray(data)
         ? data.map(jobcard => ({
-            id: jobcard.nummer,
+            id: jobcardKey(jobcard),
+            slug: jobcardSlug(jobcard),
+            series: jobcard.series || "hall",
+            seriesLabel: jobcard.series === "apartment"
+                ? (language === "da" ? "Lejlighed" : language === "no" ? "Leilighet" : "Apartment")
+                : (language === "da" ? "Fællesareal" : language === "no" ? "Fellesareal" : "Shared area"),
+            hasExplicitSeries: Boolean(jobcard.series),
             title: jobcard.titel || jobcard.nummer,
             description: jobcard.undertittel || "",
             jobcard_number: jobcard.nummer,

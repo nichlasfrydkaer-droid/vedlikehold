@@ -1,0 +1,28 @@
+{
+  "key": "da:hall:29",
+  "slug": "hall-29",
+  "series": "hall",
+  "nummer": "29",
+  "titel": "Elektrisk overspændingsbeskyttelse",
+  "undertittel": "Lynbeskyttelse",
+  "frekvens": "Årlig service",
+  "jobbkortPdf": "arbejdskort-29.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Denne service skal udføres af en kvalificeret tekniker.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Kontrollér at indikatorerne på overspændingsbeskyttelsesenheden viser normal drift.",
+        "Når en udligningsskinne er placeret under en elektrisk fordelingstavle, skal du kontrollere at terminalerne for de beskyttende jordforbindelser på udligningsskinnen er spændt tilstrækkeligt.",
+        "Tjek alle møtrikker, bolte og beslag til udligningsskinnen og dens forbindelse til jordingsanlæget er spændt tilstrækkeligt. Afbryd forsyningen til tavlen før du fortsætter med følgende kontroller og tests. Brug LOTO! (DC-82:29)",
+        "Kontrollér at klemmerne til de elektriske ledere, der er forbundet med overspændingsbeskyttelsesenheden, er spændt tilstrækkeligt, og at lederne er i god stand. Test elektrisk forbindelse mellem overspændingsbeskyttelsesenheden og tavlens udligningsskinne.",
+        "Kontrollér at automatsikringer eller sikringer i forbindelse med overspændingsbeskyttelsesenheden er i god stand, og fungerer."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

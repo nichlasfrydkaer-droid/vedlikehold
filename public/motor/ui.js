@@ -1,6 +1,7 @@
 import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { appendFormattedText } from "./utils.js";
+import { jobcardSlug } from "../assets/jobcardIdentity.js";
 
 const t=(key,fallback)=>state.translations?.[key] || fallback;
 const setMobileLabel=(button,label)=>{
@@ -36,7 +37,7 @@ export function renderHeader(){
   dom.subtitle.hidden=!state.currentJob.undertittel;
   dom.frequency.textContent=state.currentJob.frekvens || "";
   const params=new URLSearchParams(location.search);
-  dom.backToMenu.href=`/jobbkort-menu.html?id=${encodeURIComponent(state.currentJob.nummer)}&language=${encodeURIComponent(params.get("language") || "no")}&congregation=${encodeURIComponent(params.get("congregation") || "")}`;
+  dom.backToMenu.href=`/jobbkort-menu.html?id=${encodeURIComponent(jobcardSlug(state.currentJob))}&jobcardKey=${encodeURIComponent(state.currentJob.key || state.currentJob.nummer)}&language=${encodeURIComponent(params.get("language") || "no")}&congregation=${encodeURIComponent(params.get("congregation") || "")}&congregationId=${encodeURIComponent(params.get("congregationId") || "")}`;
 }
 
 export function renderNotes(){

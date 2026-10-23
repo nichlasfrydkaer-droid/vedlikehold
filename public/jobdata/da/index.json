@@ -1,1 +1,1422 @@
-[]
+[
+  {
+    "key": "da:hall:1",
+    "slug": "hall-1",
+    "series": "hall",
+    "nummer": "1",
+    "titel": "Tag og tagrender",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-1.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udvendige facader & redskabsskur.\n\nHUSK: Følg altid gældende sikkerhedsforskrifter ved inspektion af tagrenderne. Det kan være farligt at befinde sig på et vådt eller glat tag.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek om der er skader.",
+          "Undersøg om der er gennemtæring af skotrender og blikinddækninger.",
+          "Tjek tilstanden af teglsten og om de ligger rigtigt.",
+          "Tjek ventilationshætter for revner.",
+          "Tjek fugers tilstand.",
+          "Rens tagrender for blade, jord osv.",
+          "Rens nedløb og bladfang.",
+          "Tjek for tæring, huller og utætte samlinger.",
+          "Tjek om underbrædder sidder fast og om de mangler maling."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:3",
+    "slug": "hall-3",
+    "series": "hall",
+    "nummer": "3",
+    "titel": "Murstensvægge",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-3.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: På rigs\n\nHUSK: Hver enkelt væg skal efterses.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek for tydelige tegn på nedbrydning af overfladen.",
+          "Se efter om der er revner eller huller i overfladen, evaluer behovet for reparation.",
+          "Sørg for at væggen er fri af vegetation som græs og planter, og hold stenkanten rundt om bygningen fri for ukrudt.",
+          "Sørg for at terrænet rundt om bygningen leder vandet væk fra bygningen og at der ikke er jord op ad soklen.",
+          "Tjek at rigssalsskiltet og jw.org-skiltet er intakte og at skilte med mødetider passer."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:4",
+    "slug": "apartment-4",
+    "series": "apartment",
+    "nummer": "4",
+    "titel": "Fliser og gangarealer ved lejligheden",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-4.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udvendigt",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Fjern alt ukrudt der findes mellem fliser og kantsten. Om nødvendigt kan der sprøjtes, men overhold nøje alle sikkerhedsforskrifter.",
+          "Tjek for løse fliser/sten, fyld efter med sand efter behov.",
+          "Hvis der er ujævnheder og nedsænkninger i flisebelægningen, undersøg da årsagen hertil.",
+          "Hvis sandunderlaget er væk, undersøg da årsagen og foretag udbedring.",
+          "Tjek for oliepletter og fjern dem med egnede midler. BØR AFTALES MED VEDLIGEHOLDELSESKOORDINATOREN ”HVEM DER GØR HVAD” HVIS DER ER FÆLLES TING."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:4",
+    "slug": "hall-4",
+    "series": "hall",
+    "nummer": "4",
+    "titel": "Fliser og parkeringsarealer",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-4.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udenfor",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Fjern alt ukrudt der findes mellem fliser og kantsten. Om nødvendigt kan der sprøjtes, men overhold nøje alle sikkerhedsforskrifter.",
+          "Tjek for løse fliser/sten, fyld efter med sand efter behov.",
+          "Se efter at alle kantsten ligger rigtigt og at de ikke er trykket af biler eller knækket, eller om de er kæntret på grund af manglende underlag.",
+          "Se efter kantsikring på flisearealer. Tjek om der er nok grus til at støtte fliserne så de ikke glider ud, og om der er sket skader som følge af regn.",
+          "Se efter drænkloak og render langs vej og parkeringsplads, sørg for at de er renset og fungerer som de skal.",
+          "Hvis der er ujævnheder og nedsænkninger i flisebelægningen, undersøg da årsagen hertil.",
+          "Hvis sandunderlaget er væk, undersøg da årsagen og foretag udbedring.",
+          "Tjek for oliepletter og fjern dem med egnede midler."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:5",
+    "slug": "apartment-5",
+    "series": "apartment",
+    "nummer": "5",
+    "titel": "Rækværk og have",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-5.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udvendigt\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek om buske, træer eller planter der står i nærheden af bygningen skal beskæres, så der ikke opstår fugtskader.",
+          "Undersøg om rødder har skadet gangarealer, parkeringsplads eller fundament.",
+          "Se efter tegn på erosion (at jord/sand bliver flyttet af vand), og om faskiner er fyldt med jord eller sand.",
+          "Tjek om stolper i rækværk har skader.",
+          "Er stolperne fikseret ordentligt i jorden.",
+          "Se om jorden er vasket væk under hegn og efterfyld jord efter behov."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:5",
+    "slug": "hall-5",
+    "series": "hall",
+    "nummer": "5",
+    "titel": "Rækværk og have",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-5.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udenfor\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek om buske, træer eller planter der står i nærheden af bygningen skal beskæres, så der ikke opstår fugtskader.",
+          "Undersøg om rødder har skadet gangarealer, parkeringsplads eller fundament.",
+          "Se efter tegn på erosion (at jord/sand bliver flyttet af vand), og om faskiner er fyldt med jord eller sand.",
+          "Tjek om stolper i rækværk har skader.",
+          "Er stolperne fikseret ordentligt i jorden.",
+          "Se efter om der er huller i ståltrådshegn.",
+          "Se efter at ståltrådshegnet er monteret ordentligt på stolper.",
+          "Se efter om spændewirer er stramme nok, justér efter behov.",
+          "Se om jorden er vasket væk under hegn og efterfyld jord efter behov.",
+          "Tjek om noget på nabogrunde skader hegnet."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:6",
+    "slug": "hall-6",
+    "series": "hall",
+    "nummer": "6",
+    "titel": "Havelåger og døre til redskabsrum",
+    "undertittel": "Udvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-6.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udenfor",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek alle hængslers tilstand, efterspænd bolte og skruer.",
+          "Smør hængsler så de kan bevæge sig frit.",
+          "Tjek om porte/låger har sat sig (støder mod karm eller gulv).",
+          "Tjek om porte/låger passer til karme og lukker ordentligt.",
+          "Tjek at der ikke er for stort gab under porte/låger.",
+          "Tjek at låsetøj og hængelåse fungerer ordentligt og smør eventuelt med silikonebaseret låseolie.",
+          "Tjek malede overfladers tilstand, reparér efter behov.",
+          "Tjek at stopklodser passer i højden og er i god stand."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:7",
+    "slug": "apartment-7",
+    "series": "apartment",
+    "nummer": "7",
+    "titel": "Vægge, gulve og lofter",
+    "undertittel": "Indvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-7.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Indvendigt",
+    "oppgaver": [
+      {
+        "overskrift": "Vægge",
+        "punkter": [
+          "Tjek malede overflader for mærker, skrammer, revner og skader ved overligger.",
+          "Tjek for tegn på vandskade.",
+          "Vurdér de malede overflader.",
+          "Tjek tapet og glasvæv for mærker, løse samlinger."
+        ]
+      },
+      {
+        "overskrift": "Lofter",
+        "punkter": [
+          "Efterse lofter for tegn på skader (fugtskjolder).",
+          "Vurdér den malede overflade.",
+          "Efterse nedhængte lofter for skader eller skjolder.",
+          "Tjek at skyggelister ikke er løse.",
+          "Tjek om loftet synker og konstatér årsagen.",
+          "Hvis isoleringen flyttes under inspektionen, skal det lægges på plads igen"
+        ]
+      },
+      {
+        "overskrift": "Vægmonteringer",
+        "punkter": [
+          "Tjek at hylder, stikkontakter og lignende sidder fast.",
+          "Tjek radiatorer for tegn på lækage."
+        ]
+      },
+      {
+        "overskrift": "Flisegulve",
+        "punkter": [
+          "Tjek om der er løse eller knækkede fliser.",
+          "Tjek for manglende fuger, permanent våde fuger og revnede fuger.",
+          "Vurdér gummifuger mellem fliser og væg."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:7",
+    "slug": "hall-7",
+    "series": "hall",
+    "nummer": "7",
+    "titel": "Vægge, gulve og lofter",
+    "undertittel": "Indvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-7.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I rigssalen",
+    "oppgaver": [
+      {
+        "overskrift": "Vægge",
+        "punkter": [
+          "Tjek malede overflader for mærker, skrammer, revner og skader ved overligger.",
+          "Tjek for tegn på vandskade.",
+          "Vurdér de malede overflader.",
+          "Tjek tapet og glasvæv for mærker, løse samlinger."
+        ]
+      },
+      {
+        "overskrift": "Lofter",
+        "punkter": [
+          "Efterse lofter for tegn på skader (fugtskjolder).",
+          "Vurdér den malede overflade.",
+          "Efterse nedhængte lofter for skader eller skjolder.",
+          "Tjek at skyggelister ikke er løse.",
+          "Tjek om loftet synker og konstatér årsagen.",
+          "Hvis isoleringen flyttes under inspektionen, skal det lægges på plads igen"
+        ]
+      },
+      {
+        "overskrift": "Vægmonteringer",
+        "punkter": [
+          "Tjek at hylder, stikkontakter og lignende sidder fast.",
+          "Tjek radiatorer for tegn på lækage."
+        ]
+      },
+      {
+        "overskrift": "Gulvtæpper",
+        "punkter": [
+          "Tjek gulvtæppets tilstand. Se efter pletter og løse tråde, om det løfter sig eller krøller.",
+          "Bemærk om der er slidte områder.",
+          "Tjek at tæppeskinner er ordentligt fastgjort."
+        ]
+      },
+      {
+        "overskrift": "Flisegulve",
+        "punkter": [
+          "Tjek om der er løse eller knækkede fliser.",
+          "Tjek for manglende fuger, permanent våde fuger og revnede fuger.",
+          "Vurdér gummifuger mellem fliser og væg."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:8",
+    "slug": "apartment-8",
+    "series": "apartment",
+    "nummer": "8",
+    "titel": "Køkken, skabe og røgalarm",
+    "undertittel": "Indvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-8.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Røgalarm i stuen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at alle låger og skuffer åbner korrekt, at vægbeslag sidder fast, at greb og knopper er spændt fast.",
+          "Tjek for skader på lak eller maling.",
+          "Tjek røgalarmen ved at trykke på testknappen på enheden."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:8",
+    "slug": "hall-8",
+    "series": "hall",
+    "nummer": "8",
+    "titel": "Stole og møbler",
+    "undertittel": "Indvendig bygningsinspektion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-8.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I rigssalen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at alle låger og skuffer åbner korrekt, at vægbeslag sidder fast, at greb og knopper er spændt fast.",
+          "Tjek polstring for smuds, pletter og skader.",
+          "Tjek at stole og borde ikke vipper.",
+          "Tjek for skader på lak eller maling.",
+          "Tjek at opslagstavler, kort og vægpulte sidder fast."
+        ]
+      },
+      {
+        "overskrift": "Stole",
+        "punkter": [
+          "Tjek at stole som er boltet til gulv, sidder fast; efterspænd efter behov.",
+          "Tjek vippefunktion på hver enkelt stol.",
+          "Smør hængsler efter behov.",
+          "Tjek polstring for smuds, pletter og skader.",
+          "Efterspænd alle møtrikker, skruer og bolte."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:9",
+    "slug": "apartment-9",
+    "series": "apartment",
+    "nummer": "9",
+    "titel": "Inspektion af bygningskonstruktion",
+    "undertittel": "Bygningskonstruktion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-9.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Indvendigt\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker).",
+    "oppgaver": [
+      {
+        "overskrift": "Hvert enkelt element bør efterses",
+        "punkter": [
+          "Tjek for nyopståede revner i gulve, murstensvægge og gasbetonvægge.",
+          "Tjek for tydelige lunker i gulve og for sætningsrevner.",
+          "Tjek for tegn på fugtskader.",
+          "Tjek for tegn på løsnede fodpaneler og trappetrin, og for tegn på andre løse samlinger."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:9",
+    "slug": "hall-9",
+    "series": "hall",
+    "nummer": "9",
+    "titel": "Inspektion af bygningskonstruktion",
+    "undertittel": "Bygningskonstruktion",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-9.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I rigssalen og redskabsrummet\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker). Hvert enkelt element bør efterses",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek for nyopståede revner i gulve, murstensvægge og gasbetonvægge.",
+          "Tjek for revner, afslåede skaller og rustpletter i eller på armerede betonsøjler.",
+          "Tjek for tydelige lunker i gulve og for sætningsrevner.",
+          "Tjek for tegn på fugtskader.",
+          "Tjek for tegn på løsnede fodpaneler og trappetrin, og for tegn på andre løse samlinger.",
+          "Synlige stålkonstruktioner tjekkes for rust og andre uregelmæssigheder.",
+          "Tjek at ingen tilgængelige bolte sidder løse.",
+          "Tjek de synlige svejsninger.",
+          "Tjek at vinkelbeslag på trapper og plateauer sidder korrekt.",
+          "Tjek for tegn på råd i bærende trækonstruktioner.",
+          "Tjek for skader eller nedbrydning af brandsikring. Det følgende arbejde betragtes som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
+          "På loftet tjekkes tilstanden på tagets bærende konstruktionen. Hvis der er tale om en trækonstruktion, tjekkes for sprækker, skader eller anden form for nedbrydning. Ved stålkonstruktioner tjekkes for rust, om der er sænkninger, om noget har vredet sig og om der er løse samlinger.",
+          "På loftet tjekkes isoleringen og om der er tegn på vandindtrængning gennem taget. Tjek også dampspærrens tilstand."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:10",
+    "slug": "apartment-10",
+    "series": "apartment",
+    "nummer": "10",
+    "titel": "Døre og vinduer",
+    "undertittel": "Døre og vinduer",
+    "frekvens": "Halvårligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-10.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "HUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Åbn og luk døren eller vinduet for at sikre dig at låsesystemet og hængsler virker korrekt. Tjek at nøglen ikke går trægt.",
+          "Se efter slid eller metaltræthed på alle bevægelige dele, greb, hængsler m.m. Justér og smør efter behov. Fjern overskydende olie.",
+          "Sørg for at døre med dørpumper lukker og låser som de skal. Justér om nødvendigt.",
+          "Tjek tilstanden af gummilisten på rammen.",
+          "Sørg for at alle skruer og bolte er fastspændte.",
+          "Tjek fugernes tilstand ved døre og vinduer samt overfladen på vinduer og døre.",
+          "Tjek tilstanden af bundstykket.",
+          "Tjek tilstanden af dørstop.",
+          "Undersøg alle glaspaneler.",
+          "Undersøg tilstanden af den malede eller lakerede overflade på døren, vinduesrammen, samt karmene."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 6
+  },
+  {
+    "key": "da:hall:10",
+    "slug": "hall-10",
+    "series": "hall",
+    "nummer": "10",
+    "titel": "Døre og vinduer",
+    "undertittel": "Døre og vinduer",
+    "frekvens": "Halvårligt",
+    "jobbkortPdf": "arbejdskort-10.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: i rigssalen\n\nHUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Åbn og luk døren eller vinduet for at sikre dig at låsesystemet og hængsler virker korrekt. Tjek at nøglen ikke går trægt.",
+          "Se efter slid eller metaltræthed på alle bevægelige dele, greb, hængsler m.m. Justér og smør efter behov. Fjern overskydende olie.",
+          "Sørg for at døre med dørpumper lukker og låser som de skal. Justér om nødvendigt.",
+          "Tjek tilstanden af gummilisten på rammen.",
+          "Sørg for at alle skruer og bolte er fastspændte.",
+          "Tjek fugernes tilstand ved døre og vinduer samt overfladen på vinduer og døre.",
+          "Tjek tilstanden af bundstykket.",
+          "Tjek tilstanden af dørstop.",
+          "Undersøg alle glaspaneler.",
+          "Undersøg tilstanden af den malede eller lakerede overflade på døren, vinduesrammen, samt karmene."
+        ]
+      },
+      {
+        "overskrift": "Indgangsdøre og nødudgang",
+        "punkter": [
+          "Tjek at nødudstyr, såsom panikhåndtag på nødudgangsdøre/-vinduer virker ordentligt og at låsesystemet virker når det udløses.",
+          "Tjek tilstanden af eventuelle trin ved indgangsdøren, måtter og riste foran døren, samt vandafledningen i den forbindelse; tjek gelænder for stabilitet og tilstand; tjek taget på indgangsparti og løskanter for tæthed."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 6
+  },
+  {
+    "key": "da:hall:12",
+    "slug": "hall-12",
+    "series": "hall",
+    "nummer": "12",
+    "titel": "Brandslanger/slangevinder",
+    "undertittel": "Brandslukkere",
+    "frekvens": "Årligt tjek af menigheden",
+    "jobbkortPdf": "arbejdskort-12.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I forhal\n\nFem-årigt service skal udføres af en autoriseret fagperson. HUSK: Orientér dig først om hvor hovedhanen er placeret, så der hurtigt kan slukkes for vandet hvis brandslangehanen er i stykker. NB! Det 5- åtige tilsyn bestilles via LDC af vedligeholdskorrdinatoren.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at brandslangen er tilgængelig og at adgangen til den er uhindret.",
+          "Tjek at betjeningsvejledningen er ren, letlæselig og anbragt så den kan læses.",
+          "Rul slangen ud og tjek den for synlige skader",
+          "Tjek vandtrykket i slangen ved at dreje op for hanen (træk slangen ud gennem en dør og lad vandet løbe uden for bygningen).",
+          "Tjek at det 5-årige tilsyn er overholdt."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:13",
+    "slug": "apartment-13",
+    "series": "apartment",
+    "nummer": "13",
+    "titel": "VVS",
+    "undertittel": "VVS",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-13.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Badeværelse og køkken\n\nHUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
+    "oppgaver": [
+      {
+        "overskrift": "Ballofix",
+        "punkter": [
+          "Drej på alle ballofix-ventiler, både for vasken og for toiletcisternen."
+        ]
+      },
+      {
+        "overskrift": "Armatur og bundventil",
+        "punkter": [
+          "Fjern perlatoren fra armaturet, og rens den. Tjek at blandingsbatteriet ikke drypper.",
+          "Tjek at bundventilen/proppen er tæt og justeret ordentligt.",
+          "Tjek at armaturet sidder fast og ikke er utæt."
+        ]
+      },
+      {
+        "overskrift": "Vandlås – Hvis vandet forsvinder langsomt",
+        "punkter": [
+          "Rens, genmontér og sørg for at den er tæt."
+        ]
+      },
+      {
+        "overskrift": "Toiletter",
+        "punkter": [
+          "Tjek indersiden af kummen for at se om den er beskadiget eller om der er utætheder fra cisternen. Tjek ydersiden af kummen for utætheder mellem kummen og cisternen og kummen og afløbet.",
+          "Tjek cisternen udvendigt.",
+          "Tjek at toilettet ikke bliver ved med at ’løbe’ efter skyl. Hvis det gør, skiftes de defekte dele (sædvanligvis bundpakning eller svømmepakning).",
+          "Tjek at toilettet er ordentligt fastgjort til gulvet og at sædet er skruet ordentligt fast. Gulvafløb (kan være nødvendigt med rensning hver måned eller oftere)"
+        ]
+      },
+      {
+        "overskrift": "Hvis vandet forsvinder langsomt",
+        "punkter": [
+          "Rens afløbet. Brug handsker når du renser vandlåsen.",
+          "Hæld vand i gulvafløbet så vandlåsen bliver tæt.",
+          "Unidræn afløb renses (hver uge) hvis det findes/vandlås hver måned."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:13",
+    "slug": "hall-13",
+    "series": "hall",
+    "nummer": "13",
+    "titel": "VVS",
+    "undertittel": "VVS",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-13.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: På toiletter\n\nHUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
+    "oppgaver": [
+      {
+        "overskrift": "Ballofix",
+        "punkter": [
+          "Drej på alle ballofix-ventiler, både for vasken og for toiletcisternen."
+        ]
+      },
+      {
+        "overskrift": "Armatur og bundventil",
+        "punkter": [
+          "Fjern perlatoren fra armaturet, og rens den. Tjek at blandingsbatteriet ikke drypper.",
+          "Tjek at bundventilen/proppen er tæt og justeret ordentligt.",
+          "Tjek at armaturet sidder fast og ikke er utæt."
+        ]
+      },
+      {
+        "overskrift": "Vandlås – Hvis vandet forsvinder langsomt",
+        "punkter": [
+          "Rens, genmontér og sørg for at den er tæt."
+        ]
+      },
+      {
+        "overskrift": "Toiletter",
+        "punkter": [
+          "Tjek indersiden af kummen for at se om den er beskadiget eller om der er utætheder fra cisternen. Tjek ydersiden af kummen for utætheder mellem kummen og cisternen og kummen og afløbet.",
+          "Tjek cisternen udvendigt.",
+          "Tjek at toilettet ikke bliver ved med at ’løbe’ efter skyl. Hvis det gør, skiftes de defekte dele (sædvanligvis bundpakning eller svømmepakning).",
+          "Tjek at toilettet er ordentligt fastgjort til gulvet og at sædet er skruet ordentligt fast."
+        ]
+      },
+      {
+        "overskrift": "Gulvafløb – Hvis vandet forsvinder langsomt",
+        "punkter": [
+          "Rens afløbet. Brug handsker når du renser vandlåsen.",
+          "Hæld vand i gulvafløbet så vandlåsen bliver tæt."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:14",
+    "slug": "hall-14",
+    "series": "hall",
+    "nummer": "14",
+    "titel": "Tøm udendørshaner",
+    "undertittel": "VVS",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-14.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udenfor\n\nNote til underviseren: Dette arbejdskort kan sættes sammen med arbejdskortet ”VVS” Tøm vandet fra haner der er isoleret. Om nødvendigt blæs igennem med trykluft.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Lad udendørshaner stå åbne i vinterperioden."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:15",
+    "slug": "hall-15",
+    "series": "hall",
+    "nummer": "15",
+    "titel": "Udstyr i teknikrum",
+    "undertittel": "Varmesystem",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-15.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Teknikrum\n\nHUSK: Dette skal måske udføres af en tekniker. Kontakt om nødvendigt din vedligeholdelsesinstruktør.",
+    "oppgaver": [
+      {
+        "overskrift": "Rør",
+        "punkter": [
+          "Se efter rust og utætheder."
+        ]
+      },
+      {
+        "overskrift": "Afspærringsventiler",
+        "punkter": [
+          "Luk og åben hurtigt alle aftræksventiler."
+        ]
+      },
+      {
+        "overskrift": "Automatiske udluftningsventiler",
+        "punkter": [
+          "Visuel kontrol af de automatiske udluftningsventiler."
+        ]
+      },
+      {
+        "overskrift": "Tryk på varmeanlæg",
+        "punkter": [
+          "Tjek trykket på systemet. Manometeret skal vise cirka 1,5 bar (tjek med oplysninger i brugermanual). Påfyld vand efter behov, hvis trykket er for lavt."
+        ]
+      },
+      {
+        "overskrift": "Udefølere",
+        "punkter": [
+          "Tjek at udeføleren er i god stand. ADVARSEL: Ved service af følgende skal der bæres handsker og beskyttelsesbriller."
+        ]
+      },
+      {
+        "overskrift": "Sikkerhedsventil",
+        "punkter": [
+          "Undersøg om ventilen er beskadiget eller rusten.",
+          "Åbn ventilen i et par sekunder. Tjek at vander der løber ud også løber derfra. Tjek at ventilen ikke lækker efter testen. Hvis ventilen lækker, gentages processen i længere tid, og man kan banke lidt på ventilen for at løsne skidt der sidder på ventilsædet. Hvis den fortsat lækker skal den sikkert skiftes.",
+          "Hvis der konstant løber vand fra ventilen skal den sikkert skiftes."
+        ]
+      },
+      {
+        "overskrift": "Manuelle udluftningsventil",
+        "punkter": [
+          "Undersøg om ventilen er beskadiget eller rusten.",
+          "Åben ventilen til der kommer lidt vand ud på en klud. Luk igen."
+        ]
+      },
+      {
+        "overskrift": "Radiatorer i hele bygningen",
+        "punkter": [
+          "Se efter rust og utætheder. Démonter termostaten og massér ventilen/stiften. (Der må kun trykkes forsigtigt ind på stiften, der må IKKE hives i stiften). Sidder stiften fast kan der med forsigtighed rettes små slag direkte på stiften. Løsner den sig ikke, kontakt da vedligeholdelseskoordinatoren"
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:18",
+    "slug": "apartment-18",
+    "series": "apartment",
+    "nummer": "18",
+    "titel": "Ventilationsriste",
+    "undertittel": "Ventilationssystem",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-18.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Badeværelse",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Rens udvendige ventilationsriste efter behov.",
+          "Rens indvendige luftventiler og evt. kanaler.",
+          "Tjek at klap/drejeventilerne virker.",
+          "Tjek ventilationsarmatur i lofter.",
+          "Tjek og rens fugtventilator på badeværelset (følg brugsanvisningen)"
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:18",
+    "slug": "hall-18",
+    "series": "hall",
+    "nummer": "18",
+    "titel": "Ventilationsriste",
+    "undertittel": "Ventilationssystem",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-18.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udenfor",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Rens udvendige ventilationsriste efter behov.",
+          "Rens indvendige luftventiler og evt. kanaler.",
+          "Tjek at klap/drejeventilerne virker.",
+          "Tjek ventilationsarmatur i lofter."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:19",
+    "slug": "hall-19",
+    "series": "hall",
+    "nummer": "19",
+    "titel": "Aftræksventilator",
+    "undertittel": "Ventilationssystem",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-19.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: På toieltter\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at ventilatoren virker med tænd/sluk-knappen og lyt efter mislyde.",
+          "Find frem til og sluk strømforsyningen på eltavlen. Brug LOTO! (DC-82:29)",
+          "Tjek om ventilatoren kan være beskadiget. Efterspænd alle skruer. Rens om nødvendigt.",
+          "Tjek tilstanden af gummi- og skumpakninger.",
+          "Tjek tilstanden af strømforsyning.",
+          "Geninstallér ventilatoren og test at den virker."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:20",
+    "slug": "hall-20",
+    "series": "hall",
+    "nummer": "20",
+    "titel": "Ventilationsenhed",
+    "undertittel": "Ventilationssystem",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-20.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: På loftet\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget. Hvis anlægget står på loftet, betragtes arbejde som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at blæseren virker med tænd/sluk-knappen og lyt efter mislyde.",
+          "Find frem til og afbryd strømforsyningen på eltavlen. Brug LOTO! (DC-82:29)",
+          "Fjern og rens filteret. Rens enheden udvendig.",
+          "Rens varmeveksleren.",
+          "Tjek at alle lukkespjæld kan bevæge sig frit. Rens lukkespjæld om nødvendigt.",
+          "Tjek blæser hvis den kan være beskadiget. Efterspænd alle skruer. Rens om nødvendigt.",
+          "Find frem til og rens fugtighedssensor.",
+          "Tjek tilstanden af gummi- og skumpakninger.",
+          "Tjek tilstanden af strømforsyning.",
+          "Geninstallér blæser og test at den virker."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:23",
+    "slug": "hall-23",
+    "series": "hall",
+    "nummer": "23",
+    "titel": "El-vandvarmer",
+    "undertittel": "Varmt brugsvand",
+    "frekvens": "To-årigt service",
+    "jobbkortPdf": "arbejdskort-23.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Teknikrum\n\nHUSK: Der skal foretages et to-årigt eftersyn af en fagmand. Vedligeholdelseskoordinatoren bør tilkalde et autoriseret firma der er specialiseret i dette.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Sluk for strømmen til vandvarmeren.",
+          "Tjek om der er tegn på lækage ved samlinger og sikkerhedsventil.",
+          "Tjek ledninger til el-patron/termostat.",
+          "Udløs sikkerhedsventilen manuelt så trykket i tanken udlignes."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 24
+  },
+  {
+    "key": "da:hall:24",
+    "slug": "hall-24",
+    "series": "hall",
+    "nummer": "24",
+    "titel": "Fordelingstavler",
+    "undertittel": "Strømfordeling",
+    "frekvens": "Halvårligt Service",
+    "jobbkortPdf": "arbejdskort-24.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Teknikrum\n\nHUSK: Ingen af punkterne herunder må kræve brug af værktøj. Hvis der skal bruges værktøj, er det en opgave for en autoriseret elektriker.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Sørg for at der er fri passage til tavlen.",
+          "Kontrollér visuelt om nogen komponenter i tavlen er, eller har været, usædvanligt varme (misfarvning).",
+          "Kontrollér at tavleafdækningen er intakt, også ved alle kabelgennemføringer, og at der ikke mangler nogen skruer.",
+          "Test funktionen af samtlige afbrydere i tavlen.",
+          "Kontrollér gruppernes mærkning. Sørg for at al opmærkning er korrekt påsat og let læselig.",
+          "Test alle HPFI-relæer ved at trykke på testknappen.",
+          "Tag et billede hvis noget ser ud til at være defekt, og beskriv problemet i ruden herunder.",
+          "Tjek at sikkerhedsudstyret til låsning af sikringer og afbrydere er tilgængeligt og funktionsdygtigt. (Lockout/tagout LOTO)",
+          "Bekræft at der er udført elkontrol i bygningen af en autoriseret elinstallatør. (Bygninger som er godkendt til over 150 personer kontrolleres hvert andet år, bygninger til max 150 kontrolleres hvert fjerde år.)"
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 6
+  },
+  {
+    "key": "da:hall:25",
+    "slug": "hall-25",
+    "series": "hall",
+    "nummer": "25",
+    "titel": "Nød- og udgangsbelysning",
+    "undertittel": "Belysning",
+    "frekvens": "Månedligt",
+    "jobbkortPdf": "arbejdskort-25.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "HUSK: Dette bør udføres af en person der har fået oplæring.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at hvert lysarmatur virker korrekt når strømmen sluttes. Tjek at LED-indikatorer virker.",
+          "Test at alle nød- og udgangsarmaturer kan lyse i den fastsatte tid når de er indstillet til at køre på batteri."
+        ]
+      },
+      {
+        "overskrift": "Disse tests skal udføres på følgende måde",
+        "punkter": [
+          "Strømafbrydelse på lysgruppen kan simuleres ved at slukke denne gruppe på eltavlen.",
+          "Ved udførelsen af denne test skal alle nød- og udgangsarmaturer gennemgås for at sikre at de er skiftet til indstillingen for batterifunktion og fungerer korrekt.",
+          "Når det er fastslået at alle armaturer kan lyse i den fastsatte tid på indstilingen for batterifunktion, skal armaturerne tjekkes yderligere for fejl.",
+          "Derefter tændes for lysgruppen på eltavlen, og det skal sikres at hvert armatur er skiftet tilbage til strømindstillingen.",
+          "De armaturer som ikke kunne lyse i hele testperioden, skal have skiftet batterier.",
+          "Skriv oplysningerne fra testen i en logbog.",
+          "Sørg for at batteriet i eltavlen udskiftes hvert 3. år."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 1
+  },
+  {
+    "key": "da:hall:26",
+    "slug": "hall-26",
+    "series": "hall",
+    "nummer": "26",
+    "titel": "Alle armaturer",
+    "undertittel": "Belysning",
+    "frekvens": "2-årig service",
+    "jobbkortPdf": "arbejdskort-26.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I rigsalen\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit. Vær særlig forsigtig med håndtering af gamle armaturer.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Inden rengøring tjekkes funktionen af alle lysstofrør, for at se om der er problemer med glimtændere eller ballasts. Dette konstateres gerne ved blinkende lysstofrør eller summende lyde.",
+          "Afbryd om nødvendigt strømmen til lysstofrørene. Brug LOTO! (DC-82:29)",
+          "Tjek at alle armaturer er ordentligt fastgjorte.",
+          "Udskift eller reparér ødelagte skærme, diffusere, gitre og reflektorer.",
+          "Hvis det er nødvendigt at rense armaturet, fjern da gitre, reflektorer, eller diffusere. Pas på når du fjerner plastikdiffusere, da disse kan blive skrøbelige med tiden. Følg producentens rengøringsvejledning. De fleste reflektorer og diffusere kan rengøres med vand og sæbe. Brug ikke opløsningsmidler eller rengøringsmidler indeholdende slibemiddel.",
+          "Tjek fatningens tilstand.",
+          "Hvis enderne på et lysstofrør er blevet sorte (ikke grå) mere end 25mm, skal det skiftes.",
+          "Montér igen gitre, diffusere eller reflektorer.",
+          "Tjek alle armaturers strømstik og kabler."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 24
+  },
+  {
+    "key": "da:hall:27",
+    "slug": "hall-27",
+    "series": "hall",
+    "nummer": "27",
+    "titel": "Udendørsbelysning",
+    "undertittel": "Belysning",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-27.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udenfor\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at skumringsrelæet virker. Hvis der er tilsluttet en bevægelsessensor, tjekkes denne også. Rens stik og tjek at ledningerne er i orden.",
+          "Tjek at alle armaturer tænder. Notér hvilke der er fejl på.",
+          "Afbryd strømmen til de udendørs armaturer. OBS! Brug LOTO mens der arbejdes med nedenstående punkter! (DC-82:29)",
+          "Reparér eller udskift ødelagte skærme, diffusere, reflektorer, dårlige ballasts eller glimtændere efter behov.",
+          "Tjek den generelle tilstand på lampen.",
+          "Tjek om der er fugt i armaturet eller samledåsen. Tjek at eventuelle pakninger er i god stand.",
+          "Tjek for vand i lygtepæle.",
+          "Undersøg om der er beskadigede ledninger.",
+          "Undersøg alle fatninger.",
+          "Hvis det er nødvendigt at rense armaturet, fjern da gitre, reflektorer, eller diffusere. Pas på når du fjerner plastikdiffusere, da disse kan blive skrøbelige med tiden. Følg producentens rengøringsvejledning. De fleste reflektorer og diffusere kan rengøres med vand og sæbe. Brug ikke opløsningsmidler eller rengøringsmidler indeholdende slibemiddel.",
+          "Montér igen skærme, diffusere eller reflektorer."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:29",
+    "slug": "hall-29",
+    "series": "hall",
+    "nummer": "29",
+    "titel": "Elektrisk overspændingsbeskyttelse",
+    "undertittel": "Lynbeskyttelse",
+    "frekvens": "Årlig service",
+    "jobbkortPdf": "arbejdskort-29.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Denne service skal udføres af en kvalificeret tekniker.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Kontrollér at indikatorerne på overspændingsbeskyttelsesenheden viser normal drift.",
+          "Når en udligningsskinne er placeret under en elektrisk fordelingstavle, skal du kontrollere at terminalerne for de beskyttende jordforbindelser på udligningsskinnen er spændt tilstrækkeligt.",
+          "Tjek alle møtrikker, bolte og beslag til udligningsskinnen og dens forbindelse til jordingsanlæget er spændt tilstrækkeligt. Afbryd forsyningen til tavlen før du fortsætter med følgende kontroller og tests. Brug LOTO! (DC-82:29)",
+          "Kontrollér at klemmerne til de elektriske ledere, der er forbundet med overspændingsbeskyttelsesenheden, er spændt tilstrækkeligt, og at lederne er i god stand. Test elektrisk forbindelse mellem overspændingsbeskyttelsesenheden og tavlens udligningsskinne.",
+          "Kontrollér at automatsikringer eller sikringer i forbindelse med overspændingsbeskyttelsesenheden er i god stand, og fungerer."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:30",
+    "slug": "hall-30",
+    "series": "hall",
+    "nummer": "30",
+    "titel": "Test af modstand i lynbeskyttelse",
+    "undertittel": "Lynbeskyttelse",
+    "frekvens": "Fireårigt service",
+    "jobbkortPdf": "arbejdskort-30.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Brug et måleapparat der kan måle lav ohmsk modstand, for at teste lynbeskyttelsessystemet. Denne service skal udføres af en kvalificeret tekniker.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Koordiner denne service med beboerne før elektriciteten afbrydes.",
+          "Læg måleapparatets testledninger ud og mål deres modstand ved at bruge indstillingen for ledningsevne. Gem resultatet. Træk testledningernes modstand fra resultaterne fra de efterfølgende tests, for at få den nøjagtige modstand.",
+          "Udfør en total afbrydelse af forsyningen til bygningens hovedtavle. Dette sikrer at der ikke opstår en farlig situation når jordforbindelsen afbrydes.",
+          "Afbryd forbindelsen mellem udligningsskinnen, der er forbundet til hovedtavlen, og jordingsanlæget. Dette sikrer at der ikke er andre forbindelser til udligningsskinnen i bygningen der forstyrrer testresultatet. Brug LOTO! (DC-82:29)",
+          "Afbryd testklemmen på en lynafleder.",
+          "Brug måleapparatet til at måle modstanden over den afbrudte testklemme.",
+          "Gem resultatet og sammenlign med tidligere testresultater for at se tendenser.",
+          "Modstand til jord på hele det sammenkoblede lynbeskyttelsessytem må ikke overstige 10. Hvis den målte modstand overstiger 10, skal det indberettes til Central Europe-RCD.",
+          "Udfør genindkobling af testklemmen.",
+          "Gentag denne test for hver testklemme på hele bygningen.",
+          "Udfør genindkobling af jordingsanlæget til udligningsskinnen og udfør genindkobling af forsyning til hovedtavlen. Bemærkning til underviser: I nogle tilfælde vil det være praktisk at udføre denne service samtidig med den fireårige service af fordelingstavler, mens forsyningen til bygningen er afbrudt."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 48
+  },
+  {
+    "key": "da:hall:31A",
+    "slug": "hall-31a",
+    "series": "hall",
+    "nummer": "31A",
+    "titel": "Støvsugere & brugsgenstande",
+    "undertittel": "Alment udstyr",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-31a.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Teknikrum\n\nADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Udfør et generelt el-tjek. Tjek kabler og strømstik.",
+          "Tjek funktionen af alle knapper og afbrydere.",
+          "Tjek at skærme sidder som de skal, at hjul og lukkeanordninger virker.",
+          "Undersøg om motoren vibrerer voldsomt når den tændes og slukkes.",
+          "Rens enheden indvendigt – luftindtaget og motoren.",
+          "Tag luftfilteret ud og rens det om nødvendigt.",
+          "Montér filter.",
+          "Tjek slangens tilstand og dens tilslutning.",
+          "Fjern tråde og lignende der har sat sig fast i mundstykkets hjul.",
+          "Tjek funktion og tilstand af alt tilbehør til støvsugeren.",
+          "Afprøv til sidst støvsugeren. Brugsgenstande (Kaffemaskine, elkedel, mikroovn ol.) ADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
+          "Udfør et generelt el-tjek. Tjek kabler og strømstik.",
+          "Tjek funktionen af alle knapper og afbrydere.",
+          "Rengør og/eller afkalk enheden."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:33",
+    "slug": "hall-33",
+    "series": "hall",
+    "nummer": "33",
+    "titel": "Stiger",
+    "undertittel": "Redskaber",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-33.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Loftstige i teknikrum & stiger i redskabsskur",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Rengør stige.",
+          "Tjek for løse eller beskadigede trin.",
+          "Tjek hængsler.",
+          "Tjek at fødderne er i god stand.",
+          "Tjek at alt tilhørende udstyr er i god stand."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:34",
+    "slug": "hall-34",
+    "series": "hall",
+    "nummer": "34",
+    "titel": "Plæneklipper – Mærke og model",
+    "undertittel": "Redskaber",
+    "frekvens": "Halvårligt",
+    "jobbkortPdf": "arbejdskort-34.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Udhuset\n\nHUSK: Vedligeholdelse af maskinen skal ske ifølge producentens anvisninger. NB: Fjern tændrørskablet mens der arbejdes på maskinen.",
+    "oppgaver": [
+      {
+        "overskrift": "Forår (inden klippesæson)",
+        "punkter": [
+          "Skift motorolie. Tjek for tegn på olielækage.",
+          "Tjek og skift eventuelt luftfilter.",
+          "Tjek og skift eventuelt tændrør.",
+          "Tjek benzinslanger og dæksel.",
+          "Tjek tilstanden af de bevægelige udvendige motordele og smør om nødvendigt..",
+          "Tjek for rust og behandl efter behov."
+        ]
+      },
+      {
+        "overskrift": "Efterår (efter klippesæson)",
+        "punkter": [
+          "Rens oversiden med blød kost.",
+          "Rens undersiden af skjoldet med stiv kost, eventuelt trykspuling.",
+          "Spray eventuelt undersiden med undervognslak",
+          "Rens gnistfangeren.",
+          "Sørg for at benzintanken er tømt.",
+          "Tjek ventilafstand og justér om nødvendigt.",
+          "Rens tændrør med stiv børste."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 6
+  },
+  {
+    "key": "da:hall:35",
+    "slug": "hall-35",
+    "series": "hall",
+    "nummer": "35",
+    "titel": "Computere",
+    "undertittel": "Teknisk udstyr",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-35.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: På lydbord i salen\n\nHUSK: Servicér xx computere per gang så det sikres at alle computere serviceres en gang om året. ADVARSEL: Brug aldrig alkohol eller opløsningsmidler til at rense computeren med. Disse kemikalier kan beskadige både komponenter og kabinettet. Rør ikke drevet med fingrene, da fedt fra fingrene kan give problemer.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tag et foto af ledninger, så de kan genmonteres korrekt. Fjern strømstikket fra computeren.",
+          "Udfør et generelt el-tjek. Tjek tilstanden af strømstik, kabler og ledninger i enheden.",
+          "Rengør med trykluft inde i enheden.",
+          "Tjek tilstanden af blæseren og rens med trykluft om nødvendigt.",
+          "Rens alle kabler.",
+          "Undersøg for tegn på skader eller overophedning inde i computeren.",
+          "Tjek tastaturet for taster der binder.",
+          "Rens tastaturet.",
+          "Fjern kuglen fra musen, og rens rullerne.",
+          "Brug komprimeret luft til at rense CD-romdrevet.",
+          "Støvsug skærmens luftkanaler.",
+          "Rens computeren og skærmen med en mild sæbeopløsning.",
+          "Fjern genstridige pletter på skærmen med en mild, neutral sæbe."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:36",
+    "slug": "hall-36",
+    "series": "hall",
+    "nummer": "36",
+    "titel": "Lydanlæg",
+    "undertittel": "Teknisk udstyr",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-36.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I salen",
+    "oppgaver": [
+      {
+        "overskrift": "Mixer og forstærker",
+        "punkter": [
+          "Tag billeder af standardindstillingerne.",
+          "Tjek tilstanden af strømstik og kabler.",
+          "Fjern yderbeklædning og rens med trykluft indvendigt. Rengør ydersiden.",
+          "Tjek for løse, beskadigede eller overophedede ledninger.",
+          "Med strømmen sluttet til, tjek tilstanden og funktionen af samtlige knapper og afbrydere."
+        ]
+      },
+      {
+        "overskrift": "Mikrofoner og standere",
+        "punkter": [
+          "Tjek funktionen og reparér efter behov.",
+          "Rengør mikrofonen.",
+          "Udskift vindhætten om nødvendigt.",
+          "Udskift batteri i trådløs mikrofon efter behov.",
+          "Tjek alle mikrofonkabler for skader og slid. Test dem ved at bevæge kablet frem og tilbage i begge ender, mens lydanlægget er tændt."
+        ]
+      },
+      {
+        "overskrift": "Performancetest",
+        "punkter": [
+          "Skru højt op for lyden, og lyt efter knitren eller forvrængede lyde fra højttalerne."
+        ]
+      },
+      {
+        "overskrift": "Samtaleanlæg",
+        "punkter": [
+          "Fjern dæksel og rens for støv.",
+          "Tjek vejrbestandige pakningers tilstand.",
+          "Tjek at enheden er i god stand.",
+          "Tjek at trykknapperne fungerer korrekt.",
+          "Tjek lydkvalitet på højttaler og mikrofon, samt ringefunktionen ude og inde."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:hall:38",
+    "slug": "hall-38",
+    "series": "hall",
+    "nummer": "38",
+    "titel": "Skærme",
+    "undertittel": "Teknisk udstyr",
+    "frekvens": "Årligt",
+    "jobbkortPdf": "arbejdskort-38.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I salen & klasse 2",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek at ophænget sidder som det skal og er ordentligt fastgjort.",
+          "Tjek at alle kabler sidder fast og at ingen er beskadiget."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 12
+  },
+  {
+    "key": "da:apartment:39",
+    "slug": "apartment-39",
+    "series": "apartment",
+    "nummer": "39",
+    "titel": "Røgalarm",
+    "undertittel": "Teknisk vedligeholdelse",
+    "frekvens": "Hver 3. måned",
+    "jobbkortPdf": "arbejdskort-lejlighed-39.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: I køkken & gang\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek datoen for sidste batteriskift. Batteriet må maks være 3 år gammelt.",
+          "Tjek driften af forskellige røgalarmer hver 3. måned med en testspray.",
+          "Tjek røgalarmen ved at trykke på testknappen på enheden."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 3
+  },
+  {
+    "key": "da:hall:39",
+    "slug": "hall-39",
+    "series": "hall",
+    "nummer": "39",
+    "titel": "Røg- og tyverialarm",
+    "undertittel": "Teknisk vedligeholdelse",
+    "frekvens": "Hver 3. måned",
+    "jobbkortPdf": "arbejdskort-39.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Ved hoveddør, i teknikrum og i rigssalen\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+    "oppgaver": [
+      {
+        "overskrift": "Kontrolpunkter",
+        "punkter": [
+          "Tjek datoen for sidste batteriskift. Batteriet må maks være 3 år gammelt.",
+          "Tjek driften af forskellige røgalarmer hver 3. måned med en testspray.",
+          "Tjek røgalarmen ved at trykke på testknappen på enheden.",
+          "Forvis jer om at ventilationssystemet stopper når røgalarmen aktiveres.",
+          "Efter tjek af alarmen skal det undersøges om personerne på opkaldslisten har fået meddelelse om at alarmen blev aktiveret. Der kan gå et par minutter før meddelelsen kommer frem.",
+          "Lav et notat om service og de uregelmæssigheder der blev fundet. Aflever notatet til den ansvarlige som så vil arkivere det i en logbog.",
+          "Tjek at alarmen stilles tilbage i den oprindelige tilstand ved at indtaste koden.",
+          "Aktiver indbrudsalarmen og test funktionen ved at åbne en dør.",
+          "Tjek at alarmen stilles tilbage i den oprindelige tilstand ved at indtaste koden."
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 3
+  },
+  {
+    "key": "da:apartment:42",
+    "slug": "apartment-42",
+    "series": "apartment",
+    "nummer": "42",
+    "titel": "Vaskemaskine, tørretumbler og emhætte",
+    "undertittel": "Hårde hvidevarer",
+    "frekvens": "Jævnligt",
+    "jobbkortPdf": "arbejdskort-lejlighed-42.pdf",
+    "sjaPdf": "",
+    "sjaVeiledningPdf": "",
+    "arbeidTrygtPdf": "",
+    "merk": "Placering: Lejligheden",
+    "oppgaver": [
+      {
+        "overskrift": "Vaskemaskine",
+        "punkter": [
+          "Tjek for utætheder.",
+          "Rengør jævnligt sæbeskuffen og sæbekassen",
+          "Rens trevlesien efter behov",
+          "Tjek dørpakningen (bælg) om den er fri for skader og tæt under vask"
+        ]
+      },
+      {
+        "overskrift": "Tørretumbler",
+        "punkter": [
+          "Vandbeholderen i kondenstørretumblere tømmes efter hver tørring",
+          "Fnugfilteret i lågen bør renses efter hver tørring",
+          "Aftræksslangen på aftrækstørretumblere renses for fnug med jævne mellemrum",
+          "Kondensatoren/fnugfilteret nederst på kondenstørretumblerens front tømmes en gang om måneden - gælder kun for kondenstørretumblere der ikke er selvrensende",
+          "Aftræksslangen bør renses for fnug og fnuller"
+        ]
+      },
+      {
+        "overskrift": "Emhætte",
+        "punkter": [
+          "Rengøring af fedtfilter 1 gang hver måned",
+          "Aftør emhætten. Først udvendigt og derefter indvendigt (hver måned)"
+        ]
+      }
+    ],
+    "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+    "intervalMonths": 1
+  }
+]

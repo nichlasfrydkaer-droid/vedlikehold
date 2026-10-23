@@ -1,0 +1,27 @@
+{
+  "key": "da:hall:23",
+  "slug": "hall-23",
+  "series": "hall",
+  "nummer": "23",
+  "titel": "El-vandvarmer",
+  "undertittel": "Varmt brugsvand",
+  "frekvens": "To-årigt service",
+  "jobbkortPdf": "arbejdskort-23.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Teknikrum\n\nHUSK: Der skal foretages et to-årigt eftersyn af en fagmand. Vedligeholdelseskoordinatoren bør tilkalde et autoriseret firma der er specialiseret i dette.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Sluk for strømmen til vandvarmeren.",
+        "Tjek om der er tegn på lækage ved samlinger og sikkerhedsventil.",
+        "Tjek ledninger til el-patron/termostat.",
+        "Udløs sikkerhedsventilen manuelt så trykket i tanken udlignes."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 24
+}

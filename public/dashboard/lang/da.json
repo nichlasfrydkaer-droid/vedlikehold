@@ -52,6 +52,8 @@
   "manualIntervalEverySixMonths": "Hver 6. måned",
   "manualIntervalYearly": "Årlig",
   "manualIntervalEveryTwoYears": "Hvert 2. år",
+  "manualIntervalEveryFourYears": "Hvert 4. år",
+  "manualIntervalEveryFiveYears": "Hvert 5. år",
   "automatic": "Automatisk",
   "manual": "Manuel",
   "upcomingJobcards": "Kommende jobkort",

@@ -1,0 +1,33 @@
+{
+  "key": "da:hall:20",
+  "slug": "hall-20",
+  "series": "hall",
+  "nummer": "20",
+  "titel": "Ventilationsenhed",
+  "undertittel": "Ventilationssystem",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-20.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: På loftet\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget. Hvis anlægget står på loftet, betragtes arbejde som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at blæseren virker med tænd/sluk-knappen og lyt efter mislyde.",
+        "Find frem til og afbryd strømforsyningen på eltavlen. Brug LOTO! (DC-82:29)",
+        "Fjern og rens filteret. Rens enheden udvendig.",
+        "Rens varmeveksleren.",
+        "Tjek at alle lukkespjæld kan bevæge sig frit. Rens lukkespjæld om nødvendigt.",
+        "Tjek blæser hvis den kan være beskadiget. Efterspænd alle skruer. Rens om nødvendigt.",
+        "Find frem til og rens fugtighedssensor.",
+        "Tjek tilstanden af gummi- og skumpakninger.",
+        "Tjek tilstanden af strømforsyning.",
+        "Geninstallér blæser og test at den virker."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

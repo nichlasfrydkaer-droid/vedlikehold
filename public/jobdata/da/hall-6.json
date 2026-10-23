@@ -1,0 +1,31 @@
+{
+  "key": "da:hall:6",
+  "slug": "hall-6",
+  "series": "hall",
+  "nummer": "6",
+  "titel": "Havelåger og døre til redskabsrum",
+  "undertittel": "Udvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-6.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udenfor",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek alle hængslers tilstand, efterspænd bolte og skruer.",
+        "Smør hængsler så de kan bevæge sig frit.",
+        "Tjek om porte/låger har sat sig (støder mod karm eller gulv).",
+        "Tjek om porte/låger passer til karme og lukker ordentligt.",
+        "Tjek at der ikke er for stort gab under porte/låger.",
+        "Tjek at låsetøj og hængelåse fungerer ordentligt og smør eventuelt med silikonebaseret låseolie.",
+        "Tjek malede overfladers tilstand, reparér efter behov.",
+        "Tjek at stopklodser passer i højden og er i god stand."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

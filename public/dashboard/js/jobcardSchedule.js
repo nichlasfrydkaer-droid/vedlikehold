@@ -97,7 +97,7 @@ export function mergeJobcardSchedules(jobcards, response){
         const lastPerformedAt = jobcardKeys(jobcard.id)
             .map(key => completed.get(key))
             .find(Boolean) || null;
-        const intervalMonths = Number(definition.interval_months) || null;
+        const intervalMonths = Number(definition.interval_months) || Number(jobcard.intervalMonths) || null;
         const manualIntervalMonths = Number(setting.manual_interval_months) || null;
         const fixedAssignment = jobcardKeys(jobcard.id)
             .map(key => assignments.get(key))

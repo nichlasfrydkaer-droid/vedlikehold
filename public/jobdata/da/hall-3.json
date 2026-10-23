@@ -1,0 +1,28 @@
+{
+  "key": "da:hall:3",
+  "slug": "hall-3",
+  "series": "hall",
+  "nummer": "3",
+  "titel": "Murstensvægge",
+  "undertittel": "Udvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-3.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: På rigs\n\nHUSK: Hver enkelt væg skal efterses.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek for tydelige tegn på nedbrydning af overfladen.",
+        "Se efter om der er revner eller huller i overfladen, evaluer behovet for reparation.",
+        "Sørg for at væggen er fri af vegetation som græs og planter, og hold stenkanten rundt om bygningen fri for ukrudt.",
+        "Sørg for at terrænet rundt om bygningen leder vandet væk fra bygningen og at der ikke er jord op ad soklen.",
+        "Tjek at rigssalsskiltet og jw.org-skiltet er intakte og at skilte med mødetider passer."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

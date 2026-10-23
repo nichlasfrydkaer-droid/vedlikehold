@@ -1,0 +1,32 @@
+{
+  "key": "da:hall:26",
+  "slug": "hall-26",
+  "series": "hall",
+  "nummer": "26",
+  "titel": "Alle armaturer",
+  "undertittel": "Belysning",
+  "frekvens": "2-årig service",
+  "jobbkortPdf": "arbejdskort-26.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: I rigsalen\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit. Vær særlig forsigtig med håndtering af gamle armaturer.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Inden rengøring tjekkes funktionen af alle lysstofrør, for at se om der er problemer med glimtændere eller ballasts. Dette konstateres gerne ved blinkende lysstofrør eller summende lyde.",
+        "Afbryd om nødvendigt strømmen til lysstofrørene. Brug LOTO! (DC-82:29)",
+        "Tjek at alle armaturer er ordentligt fastgjorte.",
+        "Udskift eller reparér ødelagte skærme, diffusere, gitre og reflektorer.",
+        "Hvis det er nødvendigt at rense armaturet, fjern da gitre, reflektorer, eller diffusere. Pas på når du fjerner plastikdiffusere, da disse kan blive skrøbelige med tiden. Følg producentens rengøringsvejledning. De fleste reflektorer og diffusere kan rengøres med vand og sæbe. Brug ikke opløsningsmidler eller rengøringsmidler indeholdende slibemiddel.",
+        "Tjek fatningens tilstand.",
+        "Hvis enderne på et lysstofrør er blevet sorte (ikke grå) mere end 25mm, skal det skiftes.",
+        "Montér igen gitre, diffusere eller reflektorer.",
+        "Tjek alle armaturers strømstik og kabler."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 24
+}

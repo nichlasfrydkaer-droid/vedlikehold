@@ -1,0 +1,40 @@
+{
+  "key": "da:hall:10",
+  "slug": "hall-10",
+  "series": "hall",
+  "nummer": "10",
+  "titel": "Døre og vinduer",
+  "undertittel": "Døre og vinduer",
+  "frekvens": "Halvårligt",
+  "jobbkortPdf": "arbejdskort-10.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: i rigssalen\n\nHUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Åbn og luk døren eller vinduet for at sikre dig at låsesystemet og hængsler virker korrekt. Tjek at nøglen ikke går trægt.",
+        "Se efter slid eller metaltræthed på alle bevægelige dele, greb, hængsler m.m. Justér og smør efter behov. Fjern overskydende olie.",
+        "Sørg for at døre med dørpumper lukker og låser som de skal. Justér om nødvendigt.",
+        "Tjek tilstanden af gummilisten på rammen.",
+        "Sørg for at alle skruer og bolte er fastspændte.",
+        "Tjek fugernes tilstand ved døre og vinduer samt overfladen på vinduer og døre.",
+        "Tjek tilstanden af bundstykket.",
+        "Tjek tilstanden af dørstop.",
+        "Undersøg alle glaspaneler.",
+        "Undersøg tilstanden af den malede eller lakerede overflade på døren, vinduesrammen, samt karmene."
+      ]
+    },
+    {
+      "overskrift": "Indgangsdøre og nødudgang",
+      "punkter": [
+        "Tjek at nødudstyr, såsom panikhåndtag på nødudgangsdøre/-vinduer virker ordentligt og at låsesystemet virker når det udløses.",
+        "Tjek tilstanden af eventuelle trin ved indgangsdøren, måtter og riste foran døren, samt vandafledningen i den forbindelse; tjek gelænder for stabilitet og tilstand; tjek taget på indgangsparti og løskanter for tæthed."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 6
+}

@@ -1,0 +1,27 @@
+{
+  "key": "da:apartment:9",
+  "slug": "apartment-9",
+  "series": "apartment",
+  "nummer": "9",
+  "titel": "Inspektion af bygningskonstruktion",
+  "undertittel": "Bygningskonstruktion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-lejlighed-9.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Indvendigt\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker).",
+  "oppgaver": [
+    {
+      "overskrift": "Hvert enkelt element bør efterses",
+      "punkter": [
+        "Tjek for nyopståede revner i gulve, murstensvægge og gasbetonvægge.",
+        "Tjek for tydelige lunker i gulve og for sætningsrevner.",
+        "Tjek for tegn på fugtskader.",
+        "Tjek for tegn på løsnede fodpaneler og trappetrin, og for tegn på andre løse samlinger."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

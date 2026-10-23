@@ -1,0 +1,27 @@
+{
+  "key": "da:hall:18",
+  "slug": "hall-18",
+  "series": "hall",
+  "nummer": "18",
+  "titel": "Ventilationsriste",
+  "undertittel": "Ventilationssystem",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-18.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udenfor",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Rens udvendige ventilationsriste efter behov.",
+        "Rens indvendige luftventiler og evt. kanaler.",
+        "Tjek at klap/drejeventilerne virker.",
+        "Tjek ventilationsarmatur i lofter."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

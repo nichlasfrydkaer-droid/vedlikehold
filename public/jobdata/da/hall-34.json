@@ -1,0 +1,41 @@
+{
+  "key": "da:hall:34",
+  "slug": "hall-34",
+  "series": "hall",
+  "nummer": "34",
+  "titel": "Plæneklipper – Mærke og model",
+  "undertittel": "Redskaber",
+  "frekvens": "Halvårligt",
+  "jobbkortPdf": "arbejdskort-34.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udhuset\n\nHUSK: Vedligeholdelse af maskinen skal ske ifølge producentens anvisninger. NB: Fjern tændrørskablet mens der arbejdes på maskinen.",
+  "oppgaver": [
+    {
+      "overskrift": "Forår (inden klippesæson)",
+      "punkter": [
+        "Skift motorolie. Tjek for tegn på olielækage.",
+        "Tjek og skift eventuelt luftfilter.",
+        "Tjek og skift eventuelt tændrør.",
+        "Tjek benzinslanger og dæksel.",
+        "Tjek tilstanden af de bevægelige udvendige motordele og smør om nødvendigt..",
+        "Tjek for rust og behandl efter behov."
+      ]
+    },
+    {
+      "overskrift": "Efterår (efter klippesæson)",
+      "punkter": [
+        "Rens oversiden med blød kost.",
+        "Rens undersiden af skjoldet med stiv kost, eventuelt trykspuling.",
+        "Spray eventuelt undersiden med undervognslak",
+        "Rens gnistfangeren.",
+        "Sørg for at benzintanken er tømt.",
+        "Tjek ventilafstand og justér om nødvendigt.",
+        "Rens tændrør med stiv børste."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 6
+}

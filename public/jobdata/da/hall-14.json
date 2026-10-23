@@ -1,0 +1,24 @@
+{
+  "key": "da:hall:14",
+  "slug": "hall-14",
+  "series": "hall",
+  "nummer": "14",
+  "titel": "Tøm udendørshaner",
+  "undertittel": "VVS",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-14.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udenfor\n\nNote til underviseren: Dette arbejdskort kan sættes sammen med arbejdskortet ”VVS” Tøm vandet fra haner der er isoleret. Om nødvendigt blæs igennem med trykluft.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Lad udendørshaner stå åbne i vinterperioden."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

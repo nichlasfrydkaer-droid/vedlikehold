@@ -1,0 +1,25 @@
+{
+  "key": "da:hall:38",
+  "slug": "hall-38",
+  "series": "hall",
+  "nummer": "38",
+  "titel": "Skærme",
+  "undertittel": "Teknisk udstyr",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-38.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: I salen & klasse 2",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at ophænget sidder som det skal og er ordentligt fastgjort.",
+        "Tjek at alle kabler sidder fast og at ingen er beskadiget."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

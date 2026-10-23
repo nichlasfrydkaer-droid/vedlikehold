@@ -1,0 +1,26 @@
+{
+  "key": "da:apartment:8",
+  "slug": "apartment-8",
+  "series": "apartment",
+  "nummer": "8",
+  "titel": "Køkken, skabe og røgalarm",
+  "undertittel": "Indvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-lejlighed-8.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Røgalarm i stuen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at alle låger og skuffer åbner korrekt, at vægbeslag sidder fast, at greb og knopper er spændt fast.",
+        "Tjek for skader på lak eller maling.",
+        "Tjek røgalarmen ved at trykke på testknappen på enheden."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

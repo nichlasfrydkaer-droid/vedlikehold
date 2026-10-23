@@ -1,0 +1,28 @@
+{
+  "key": "da:apartment:18",
+  "slug": "apartment-18",
+  "series": "apartment",
+  "nummer": "18",
+  "titel": "Ventilationsriste",
+  "undertittel": "Ventilationssystem",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-lejlighed-18.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Badeværelse",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Rens udvendige ventilationsriste efter behov.",
+        "Rens indvendige luftventiler og evt. kanaler.",
+        "Tjek at klap/drejeventilerne virker.",
+        "Tjek ventilationsarmatur i lofter.",
+        "Tjek og rens fugtventilator på badeværelset (følg brugsanvisningen)"
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

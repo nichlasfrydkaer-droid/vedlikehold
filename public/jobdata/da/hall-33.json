@@ -1,0 +1,28 @@
+{
+  "key": "da:hall:33",
+  "slug": "hall-33",
+  "series": "hall",
+  "nummer": "33",
+  "titel": "Stiger",
+  "undertittel": "Redskaber",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-33.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Loftstige i teknikrum & stiger i redskabsskur",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Rengør stige.",
+        "Tjek for løse eller beskadigede trin.",
+        "Tjek hængsler.",
+        "Tjek at fødderne er i god stand.",
+        "Tjek at alt tilhørende udstyr er i god stand."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

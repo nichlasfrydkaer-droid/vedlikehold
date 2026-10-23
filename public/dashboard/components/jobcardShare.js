@@ -6,7 +6,7 @@ import { showToast } from "./toast.js";
 function escapeHtml(value){ return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 function interpolate(key, fallback, values){ return Object.entries(values).reduce((text,[name,value]) => text.replaceAll(`{${name}}`,value), t(key,fallback)); }
 function formatDeadline(value){ const date=new Date(`${value}T12:00:00`); return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString(document.documentElement.lang || undefined,{day:"2-digit",month:"2-digit",year:"numeric"}); }
-const manualIntervals = [[1,"manualIntervalMonthly","Månedlig"],[2,"manualIntervalEveryTwoMonths","Hver 2. måned"],[3,"manualIntervalQuarterly","Hvert kvartal"],[6,"manualIntervalEverySixMonths","Hver 6. måned"],[12,"manualIntervalYearly","Årlig"],[24,"manualIntervalEveryTwoYears","Hvert 2. år"]];
+const manualIntervals = [[1,"manualIntervalMonthly","Månedlig"],[2,"manualIntervalEveryTwoMonths","Hver 2. måned"],[3,"manualIntervalQuarterly","Hvert kvartal"],[6,"manualIntervalEverySixMonths","Hver 6. måned"],[12,"manualIntervalYearly","Årlig"],[24,"manualIntervalEveryTwoYears","Hvert 2. år"],[48,"manualIntervalEveryFourYears","Hvert 4. år"],[60,"manualIntervalEveryFiveYears","Hvert 5. år"]];
 
 function intervalOptions(selected){
     return manualIntervals.map(([months,key,fallback]) => `<option value="${months}" ${Number(selected) === months ? "selected" : ""}>${escapeHtml(t(key,fallback))}</option>`).join("");
@@ -102,7 +102,7 @@ function openShareDialog({ item, url, type }){
                 congregation_id:congregation.id,
                 jobcard_id:item.id,
                 jobcard_number:item.jobcard_number || item.id,
-                jobcard_title:item.title,
+                jobcard_title:item.hasExplicitSeries ? `${item.title} · ${item.seriesLabel}` : item.title,
                 jobcard_url:url,
                 language:(document.documentElement.lang || "no").slice(0,2),
                 responsible_name:responsibleName,

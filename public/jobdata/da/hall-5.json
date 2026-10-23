@@ -1,0 +1,33 @@
+{
+  "key": "da:hall:5",
+  "slug": "hall-5",
+  "series": "hall",
+  "nummer": "5",
+  "titel": "Rækværk og have",
+  "undertittel": "Udvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-5.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udenfor\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek om buske, træer eller planter der står i nærheden af bygningen skal beskæres, så der ikke opstår fugtskader.",
+        "Undersøg om rødder har skadet gangarealer, parkeringsplads eller fundament.",
+        "Se efter tegn på erosion (at jord/sand bliver flyttet af vand), og om faskiner er fyldt med jord eller sand.",
+        "Tjek om stolper i rækværk har skader.",
+        "Er stolperne fikseret ordentligt i jorden.",
+        "Se efter om der er huller i ståltrådshegn.",
+        "Se efter at ståltrådshegnet er monteret ordentligt på stolper.",
+        "Se efter om spændewirer er stramme nok, justér efter behov.",
+        "Se om jorden er vasket væk under hegn og efterfyld jord efter behov.",
+        "Tjek om noget på nabogrunde skader hegnet."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

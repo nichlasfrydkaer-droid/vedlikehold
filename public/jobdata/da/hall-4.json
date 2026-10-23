@@ -1,0 +1,31 @@
+{
+  "key": "da:hall:4",
+  "slug": "hall-4",
+  "series": "hall",
+  "nummer": "4",
+  "titel": "Fliser og parkeringsarealer",
+  "undertittel": "Udvendig bygningsinspektion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-4.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udenfor",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Fjern alt ukrudt der findes mellem fliser og kantsten. Om nødvendigt kan der sprøjtes, men overhold nøje alle sikkerhedsforskrifter.",
+        "Tjek for løse fliser/sten, fyld efter med sand efter behov.",
+        "Se efter at alle kantsten ligger rigtigt og at de ikke er trykket af biler eller knækket, eller om de er kæntret på grund af manglende underlag.",
+        "Se efter kantsikring på flisearealer. Tjek om der er nok grus til at støtte fliserne så de ikke glider ud, og om der er sket skader som følge af regn.",
+        "Se efter drænkloak og render langs vej og parkeringsplads, sørg for at de er renset og fungerer som de skal.",
+        "Hvis der er ujævnheder og nedsænkninger i flisebelægningen, undersøg da årsagen hertil.",
+        "Hvis sandunderlaget er væk, undersøg da årsagen og foretag udbedring.",
+        "Tjek for oliepletter og fjern dem med egnede midler."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

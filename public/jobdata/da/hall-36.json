@@ -1,0 +1,54 @@
+{
+  "key": "da:hall:36",
+  "slug": "hall-36",
+  "series": "hall",
+  "nummer": "36",
+  "titel": "Lydanlæg",
+  "undertittel": "Teknisk udstyr",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-36.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: I salen",
+  "oppgaver": [
+    {
+      "overskrift": "Mixer og forstærker",
+      "punkter": [
+        "Tag billeder af standardindstillingerne.",
+        "Tjek tilstanden af strømstik og kabler.",
+        "Fjern yderbeklædning og rens med trykluft indvendigt. Rengør ydersiden.",
+        "Tjek for løse, beskadigede eller overophedede ledninger.",
+        "Med strømmen sluttet til, tjek tilstanden og funktionen af samtlige knapper og afbrydere."
+      ]
+    },
+    {
+      "overskrift": "Mikrofoner og standere",
+      "punkter": [
+        "Tjek funktionen og reparér efter behov.",
+        "Rengør mikrofonen.",
+        "Udskift vindhætten om nødvendigt.",
+        "Udskift batteri i trådløs mikrofon efter behov.",
+        "Tjek alle mikrofonkabler for skader og slid. Test dem ved at bevæge kablet frem og tilbage i begge ender, mens lydanlægget er tændt."
+      ]
+    },
+    {
+      "overskrift": "Performancetest",
+      "punkter": [
+        "Skru højt op for lyden, og lyt efter knitren eller forvrængede lyde fra højttalerne."
+      ]
+    },
+    {
+      "overskrift": "Samtaleanlæg",
+      "punkter": [
+        "Fjern dæksel og rens for støv.",
+        "Tjek vejrbestandige pakningers tilstand.",
+        "Tjek at enheden er i god stand.",
+        "Tjek at trykknapperne fungerer korrekt.",
+        "Tjek lydkvalitet på højttaler og mikrofon, samt ringefunktionen ude og inde."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

@@ -1,0 +1,36 @@
+{
+  "key": "da:hall:9",
+  "slug": "hall-9",
+  "series": "hall",
+  "nummer": "9",
+  "titel": "Inspektion af bygningskonstruktion",
+  "undertittel": "Bygningskonstruktion",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-9.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: I rigssalen og redskabsrummet\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker). Hvert enkelt element bør efterses",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek for nyopståede revner i gulve, murstensvægge og gasbetonvægge.",
+        "Tjek for revner, afslåede skaller og rustpletter i eller på armerede betonsøjler.",
+        "Tjek for tydelige lunker i gulve og for sætningsrevner.",
+        "Tjek for tegn på fugtskader.",
+        "Tjek for tegn på løsnede fodpaneler og trappetrin, og for tegn på andre løse samlinger.",
+        "Synlige stålkonstruktioner tjekkes for rust og andre uregelmæssigheder.",
+        "Tjek at ingen tilgængelige bolte sidder løse.",
+        "Tjek de synlige svejsninger.",
+        "Tjek at vinkelbeslag på trapper og plateauer sidder korrekt.",
+        "Tjek for tegn på råd i bærende trækonstruktioner.",
+        "Tjek for skader eller nedbrydning af brandsikring. Det følgende arbejde betragtes som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
+        "På loftet tjekkes tilstanden på tagets bærende konstruktionen. Hvis der er tale om en trækonstruktion, tjekkes for sprækker, skader eller anden form for nedbrydning. Ved stålkonstruktioner tjekkes for rust, om der er sænkninger, om noget har vredet sig og om der er løse samlinger.",
+        "På loftet tjekkes isoleringen og om der er tegn på vandindtrængning gennem taget. Tjek også dampspærrens tilstand."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

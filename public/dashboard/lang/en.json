@@ -52,6 +52,8 @@
   "manualIntervalEverySixMonths": "Every 6 months",
   "manualIntervalYearly": "Yearly",
   "manualIntervalEveryTwoYears": "Every 2 years",
+  "manualIntervalEveryFourYears": "Every 4 years",
+  "manualIntervalEveryFiveYears": "Every 5 years",
   "automatic": "Automatic",
   "manual": "Manual",
   "upcomingJobcards": "Upcoming job cards",

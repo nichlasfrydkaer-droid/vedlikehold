@@ -1,0 +1,32 @@
+{
+  "key": "da:hall:24",
+  "slug": "hall-24",
+  "series": "hall",
+  "nummer": "24",
+  "titel": "Fordelingstavler",
+  "undertittel": "Strømfordeling",
+  "frekvens": "Halvårligt Service",
+  "jobbkortPdf": "arbejdskort-24.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Teknikrum\n\nHUSK: Ingen af punkterne herunder må kræve brug af værktøj. Hvis der skal bruges værktøj, er det en opgave for en autoriseret elektriker.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Sørg for at der er fri passage til tavlen.",
+        "Kontrollér visuelt om nogen komponenter i tavlen er, eller har været, usædvanligt varme (misfarvning).",
+        "Kontrollér at tavleafdækningen er intakt, også ved alle kabelgennemføringer, og at der ikke mangler nogen skruer.",
+        "Test funktionen af samtlige afbrydere i tavlen.",
+        "Kontrollér gruppernes mærkning. Sørg for at al opmærkning er korrekt påsat og let læselig.",
+        "Test alle HPFI-relæer ved at trykke på testknappen.",
+        "Tag et billede hvis noget ser ud til at være defekt, og beskriv problemet i ruden herunder.",
+        "Tjek at sikkerhedsudstyret til låsning af sikringer og afbrydere er tilgængeligt og funktionsdygtigt. (Lockout/tagout LOTO)",
+        "Bekræft at der er udført elkontrol i bygningen af en autoriseret elinstallatør. (Bygninger som er godkendt til over 150 personer kontrolleres hvert andet år, bygninger til max 150 kontrolleres hvert fjerde år.)"
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 6
+}

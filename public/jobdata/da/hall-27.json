@@ -1,0 +1,34 @@
+{
+  "key": "da:hall:27",
+  "slug": "hall-27",
+  "series": "hall",
+  "nummer": "27",
+  "titel": "Udendørsbelysning",
+  "undertittel": "Belysning",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-27.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Udenfor\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at skumringsrelæet virker. Hvis der er tilsluttet en bevægelsessensor, tjekkes denne også. Rens stik og tjek at ledningerne er i orden.",
+        "Tjek at alle armaturer tænder. Notér hvilke der er fejl på.",
+        "Afbryd strømmen til de udendørs armaturer. OBS! Brug LOTO mens der arbejdes med nedenstående punkter! (DC-82:29)",
+        "Reparér eller udskift ødelagte skærme, diffusere, reflektorer, dårlige ballasts eller glimtændere efter behov.",
+        "Tjek den generelle tilstand på lampen.",
+        "Tjek om der er fugt i armaturet eller samledåsen. Tjek at eventuelle pakninger er i god stand.",
+        "Tjek for vand i lygtepæle.",
+        "Undersøg om der er beskadigede ledninger.",
+        "Undersøg alle fatninger.",
+        "Hvis det er nødvendigt at rense armaturet, fjern da gitre, reflektorer, eller diffusere. Pas på når du fjerner plastikdiffusere, da disse kan blive skrøbelige med tiden. Følg producentens rengøringsvejledning. De fleste reflektorer og diffusere kan rengøres med vand og sæbe. Brug ikke opløsningsmidler eller rengøringsmidler indeholdende slibemiddel.",
+        "Montér igen skærme, diffusere eller reflektorer."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

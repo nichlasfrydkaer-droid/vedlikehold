@@ -1,0 +1,28 @@
+{
+  "key": "da:hall:12",
+  "slug": "hall-12",
+  "series": "hall",
+  "nummer": "12",
+  "titel": "Brandslanger/slangevinder",
+  "undertittel": "Brandslukkere",
+  "frekvens": "Årligt tjek af menigheden",
+  "jobbkortPdf": "arbejdskort-12.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: I forhal\n\nFem-årigt service skal udføres af en autoriseret fagperson. HUSK: Orientér dig først om hvor hovedhanen er placeret, så der hurtigt kan slukkes for vandet hvis brandslangehanen er i stykker. NB! Det 5- åtige tilsyn bestilles via LDC af vedligeholdskorrdinatoren.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at brandslangen er tilgængelig og at adgangen til den er uhindret.",
+        "Tjek at betjeningsvejledningen er ren, letlæselig og anbragt så den kan læses.",
+        "Rul slangen ud og tjek den for synlige skader",
+        "Tjek vandtrykket i slangen ved at dreje op for hanen (træk slangen ud gennem en dør og lad vandet løbe uden for bygningen).",
+        "Tjek at det 5-årige tilsyn er overholdt."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

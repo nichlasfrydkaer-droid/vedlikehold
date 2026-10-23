@@ -1,0 +1,54 @@
+{
+  "key": "da:hall:13",
+  "slug": "hall-13",
+  "series": "hall",
+  "nummer": "13",
+  "titel": "VVS",
+  "undertittel": "VVS",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-13.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: På toiletter\n\nHUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
+  "oppgaver": [
+    {
+      "overskrift": "Ballofix",
+      "punkter": [
+        "Drej på alle ballofix-ventiler, både for vasken og for toiletcisternen."
+      ]
+    },
+    {
+      "overskrift": "Armatur og bundventil",
+      "punkter": [
+        "Fjern perlatoren fra armaturet, og rens den. Tjek at blandingsbatteriet ikke drypper.",
+        "Tjek at bundventilen/proppen er tæt og justeret ordentligt.",
+        "Tjek at armaturet sidder fast og ikke er utæt."
+      ]
+    },
+    {
+      "overskrift": "Vandlås – Hvis vandet forsvinder langsomt",
+      "punkter": [
+        "Rens, genmontér og sørg for at den er tæt."
+      ]
+    },
+    {
+      "overskrift": "Toiletter",
+      "punkter": [
+        "Tjek indersiden af kummen for at se om den er beskadiget eller om der er utætheder fra cisternen. Tjek ydersiden af kummen for utætheder mellem kummen og cisternen og kummen og afløbet.",
+        "Tjek cisternen udvendigt.",
+        "Tjek at toilettet ikke bliver ved med at ’løbe’ efter skyl. Hvis det gør, skiftes de defekte dele (sædvanligvis bundpakning eller svømmepakning).",
+        "Tjek at toilettet er ordentligt fastgjort til gulvet og at sædet er skruet ordentligt fast."
+      ]
+    },
+    {
+      "overskrift": "Gulvafløb – Hvis vandet forsvinder langsomt",
+      "punkter": [
+        "Rens afløbet. Brug handsker når du renser vandlåsen.",
+        "Hæld vand i gulvafløbet så vandlåsen bliver tæt."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}

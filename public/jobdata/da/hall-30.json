@@ -1,0 +1,34 @@
+{
+  "key": "da:hall:30",
+  "slug": "hall-30",
+  "series": "hall",
+  "nummer": "30",
+  "titel": "Test af modstand i lynbeskyttelse",
+  "undertittel": "Lynbeskyttelse",
+  "frekvens": "Fireårigt service",
+  "jobbkortPdf": "arbejdskort-30.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Brug et måleapparat der kan måle lav ohmsk modstand, for at teste lynbeskyttelsessystemet. Denne service skal udføres af en kvalificeret tekniker.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Koordiner denne service med beboerne før elektriciteten afbrydes.",
+        "Læg måleapparatets testledninger ud og mål deres modstand ved at bruge indstillingen for ledningsevne. Gem resultatet. Træk testledningernes modstand fra resultaterne fra de efterfølgende tests, for at få den nøjagtige modstand.",
+        "Udfør en total afbrydelse af forsyningen til bygningens hovedtavle. Dette sikrer at der ikke opstår en farlig situation når jordforbindelsen afbrydes.",
+        "Afbryd forbindelsen mellem udligningsskinnen, der er forbundet til hovedtavlen, og jordingsanlæget. Dette sikrer at der ikke er andre forbindelser til udligningsskinnen i bygningen der forstyrrer testresultatet. Brug LOTO! (DC-82:29)",
+        "Afbryd testklemmen på en lynafleder.",
+        "Brug måleapparatet til at måle modstanden over den afbrudte testklemme.",
+        "Gem resultatet og sammenlign med tidligere testresultater for at se tendenser.",
+        "Modstand til jord på hele det sammenkoblede lynbeskyttelsessytem må ikke overstige 10. Hvis den målte modstand overstiger 10, skal det indberettes til Central Europe-RCD.",
+        "Udfør genindkobling af testklemmen.",
+        "Gentag denne test for hver testklemme på hele bygningen.",
+        "Udfør genindkobling af jordingsanlæget til udligningsskinnen og udfør genindkobling af forsyning til hovedtavlen. Bemærkning til underviser: I nogle tilfælde vil det være praktisk at udføre denne service samtidig med den fireårige service af fordelingstavler, mens forsyningen til bygningen er afbrudt."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 48
+}

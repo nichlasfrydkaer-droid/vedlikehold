@@ -1,5 +1,6 @@
 import { state } from "./state.js";
 import { dom } from "./dom.js";
+import { jobcardKey } from "../assets/jobcardIdentity.js";
 
 export function buildReport(){
 
@@ -118,9 +119,16 @@ export function buildReport(){
         congregation:
             state.currentCongregation?.id,
 
-jobNumber:
-    String(state.currentJob.nummer)
-        .padStart(3, "0"),
+        jobNumber:
+            /^\d+$/.test(String(state.currentJob.nummer))
+                ? String(state.currentJob.nummer).padStart(3, "0")
+                : String(state.currentJob.nummer),
+
+        jobcardKey:
+            jobcardKey(state.currentJob),
+
+        jobcardSeries:
+            state.currentJob.series || "hall",
 
         title:
             state.currentJob.titel,

@@ -1,0 +1,44 @@
+{
+  "key": "da:apartment:42",
+  "slug": "apartment-42",
+  "series": "apartment",
+  "nummer": "42",
+  "titel": "Vaskemaskine, tørretumbler og emhætte",
+  "undertittel": "Hårde hvidevarer",
+  "frekvens": "Jævnligt",
+  "jobbkortPdf": "arbejdskort-lejlighed-42.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: Lejligheden",
+  "oppgaver": [
+    {
+      "overskrift": "Vaskemaskine",
+      "punkter": [
+        "Tjek for utætheder.",
+        "Rengør jævnligt sæbeskuffen og sæbekassen",
+        "Rens trevlesien efter behov",
+        "Tjek dørpakningen (bælg) om den er fri for skader og tæt under vask"
+      ]
+    },
+    {
+      "overskrift": "Tørretumbler",
+      "punkter": [
+        "Vandbeholderen i kondenstørretumblere tømmes efter hver tørring",
+        "Fnugfilteret i lågen bør renses efter hver tørring",
+        "Aftræksslangen på aftrækstørretumblere renses for fnug med jævne mellemrum",
+        "Kondensatoren/fnugfilteret nederst på kondenstørretumblerens front tømmes en gang om måneden - gælder kun for kondenstørretumblere der ikke er selvrensende",
+        "Aftræksslangen bør renses for fnug og fnuller"
+      ]
+    },
+    {
+      "overskrift": "Emhætte",
+      "punkter": [
+        "Rengøring af fedtfilter 1 gang hver måned",
+        "Aftør emhætten. Først udvendigt og derefter indvendigt (hver måned)"
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 1
+}

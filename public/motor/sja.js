@@ -1,4 +1,5 @@
 import { state } from "./state.js";
+import { jobcardKey } from "../assets/jobcardIdentity.js";
 import { config } from "./config.js";
 import { saveDraft } from "./draft.js";
 
@@ -9,7 +10,7 @@ const key=()=>{if(!state.workKey)state.workKey=crypto.randomUUID();return state.
 const info=(text)=>`<button class="sja-info" type="button" aria-label="${t("moreInfo","Mer informasjon")}" aria-expanded="false"><span aria-hidden="true">i</span><span class="sja-info-popover" hidden>${text}</span></button>`;
 
 export async function initSja(){
-  const params=new URLSearchParams(location.search),congregation=params.get("congregation"),jobcard=String(state.currentJob?.nummer||params.get("id")||"").replace(/^0+/,"")||"0";
+  const params=new URLSearchParams(location.search),congregation=params.get("congregationId")||params.get("congregation"),jobcard=jobcardKey(state.currentJob);
   if(!congregation)return;
   const result=await request(`/sja?congregation=${encodeURIComponent(congregation)}&jobcard=${encodeURIComponent(jobcard)}&work_key=${encodeURIComponent(key())}`);
   state.sjaRequired=!!result.required;state.sja=result.sja||null;
@@ -42,7 +43,9 @@ function form(guideUrl){
     const steps=[...section.querySelectorAll(".sja-step")].map(block=>Object.fromEntries([...block.querySelectorAll("textarea")].map(field=>[field.name,field.value.trim()])));
     if([...section.querySelectorAll("input[required],textarea[required]")].some(field=>!field.value.trim())){status.textContent=t("sjaMissing","Fyll ut alle påkrevde felt.");return;}
     const params=new URLSearchParams(location.search);
-    const response=await request("/sja",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:state.sja?.id,target_type:"jobcard",congregation_id:params.get("congregation"),jobcard_id:String(state.currentJob.nummer).replace(/^0+/,"")||"0",target_key:`${params.get("congregation")}:${String(state.currentJob.nummer).replace(/^0+/,"")||"0"}:${key()}`,work_description:formData.get("work_description"),location:formData.get("location"),planned_start_date:formData.get("planned_start_date"),emergency_numbers:formData.get("emergency_numbers"),prepared_by:formData.get("prepared_by"),reviewed_by:formData.get("reviewed_by"),steps})});
+    const cardKey=jobcardKey(state.currentJob);
+    const congregation=params.get("congregationId")||params.get("congregation");
+    const response=await request("/sja",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:state.sja?.id,target_type:"jobcard",congregation_id:congregation,jobcard_id:cardKey,target_key:`${congregation}:${cardKey}:${key()}`,work_description:formData.get("work_description"),location:formData.get("location"),planned_start_date:formData.get("planned_start_date"),emergency_numbers:formData.get("emergency_numbers"),prepared_by:formData.get("prepared_by"),reviewed_by:formData.get("reviewed_by"),steps})});
     if(!response.success){status.textContent=response.message||"Kunne ikke lagre SJA.";return;}
     state.sja=response.sja;
     await saveDraft();

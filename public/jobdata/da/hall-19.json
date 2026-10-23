@@ -1,0 +1,29 @@
+{
+  "key": "da:hall:19",
+  "slug": "hall-19",
+  "series": "hall",
+  "nummer": "19",
+  "titel": "Aftræksventilator",
+  "undertittel": "Ventilationssystem",
+  "frekvens": "Årligt",
+  "jobbkortPdf": "arbejdskort-19.pdf",
+  "sjaPdf": "",
+  "sjaVeiledningPdf": "",
+  "arbeidTrygtPdf": "",
+  "merk": "Placering: På toieltter\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget.",
+  "oppgaver": [
+    {
+      "overskrift": "Kontrolpunkter",
+      "punkter": [
+        "Tjek at ventilatoren virker med tænd/sluk-knappen og lyt efter mislyde.",
+        "Find frem til og sluk strømforsyningen på eltavlen. Brug LOTO! (DC-82:29)",
+        "Tjek om ventilatoren kan være beskadiget. Efterspænd alle skruer. Rens om nødvendigt.",
+        "Tjek tilstanden af gummi- og skumpakninger.",
+        "Tjek tilstanden af strømforsyning.",
+        "Geninstallér ventilatoren og test at den virker."
+      ]
+    }
+  ],
+  "notatInfo": "Notér de forhold, du opdager, men ikke selv må eller kan udbedre.",
+  "intervalMonths": 12
+}
