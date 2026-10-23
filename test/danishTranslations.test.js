@@ -53,3 +53,9 @@ test("annual overview uses the standard share icon for job cards",()=>{
   assert.match(source,/const shareIcon = `<svg[^`]+M12 3v12M8 7l4-4 4 4/);
   assert.match(source,/data-share-jobcard>[\s\S]*?\$\{shareIcon\}/);
 });
+
+test("annual overview uses a checked document icon to open job cards",()=>{
+  const source=readFileSync(join(root,"public/dashboard/pages/planner.js"),"utf8");
+  assert.match(source,/const openJobcardIcon = `<svg[^`]+M6 3h8l4 4v14H6z[^`]+m9 14 2 2 4-4/);
+  assert.match(source,/href="\$\{esc\(jobcardUrl\)\}"[\s\S]*?\$\{openJobcardIcon\}/);
+});
