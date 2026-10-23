@@ -6,11 +6,12 @@
   "titel": "Udendørsbelysning",
   "undertittel": "Belysning",
   "frekvens": "Årligt",
+  "placering": "Udenfor",
   "jobbkortPdf": "arbejdskort-27.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udenfor\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit.",
+  "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

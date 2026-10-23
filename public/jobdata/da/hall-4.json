@@ -6,11 +6,12 @@
   "titel": "Fliser og parkeringsarealer",
   "undertittel": "Udvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Udenfor",
   "jobbkortPdf": "arbejdskort-4.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udenfor",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

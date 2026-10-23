@@ -9,6 +9,8 @@ export const dom = {
   subtitle: qs("jobSubtitle"),
 
   frequency: qs("frequency"),
+  location: qs("location"),
+  locationBadge: qs("locationBadge"),
 
   frequencyLabel: qs("frequencyLabel"),
   timeLabel: qs("timeLabel"),

@@ -6,11 +6,12 @@
   "titel": "VVS",
   "undertittel": "VVS",
   "frekvens": "Årligt",
+  "placering": "Badeværelse og køkken",
   "jobbkortPdf": "arbejdskort-lejlighed-13.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Badeværelse og køkken\n\nHUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
+  "merk": "HUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
   "oppgaver": [
     {
       "overskrift": "Ballofix",

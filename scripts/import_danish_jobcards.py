@@ -174,8 +174,6 @@ def parse_card(text: str, expected_number: str, series: str, pdf_name: str) -> d
         raise ValueError(f"No checklist points found in {pdf_name}")
 
     notice_parts = []
-    if placement:
-        notice_parts.append(f"Placering: {placement}")
     if intro:
         if "fem-årigt" in time_value.casefold():
             if intro[0].casefold().startswith("autoriseret"):
@@ -192,6 +190,7 @@ def parse_card(text: str, expected_number: str, series: str, pdf_name: str) -> d
         "titel": title,
         "undertittel": category,
         "frekvens": frequency,
+        "placering": placement,
         "jobbkortPdf": pdf_name,
         "sjaPdf": "",
         "sjaVeiledningPdf": "",

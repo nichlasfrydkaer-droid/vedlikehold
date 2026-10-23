@@ -6,11 +6,12 @@
   "titel": "Stole og møbler",
   "undertittel": "Indvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "I rigssalen",
   "jobbkortPdf": "arbejdskort-8.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: I rigssalen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+  "merk": "HUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

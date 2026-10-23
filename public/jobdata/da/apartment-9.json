@@ -6,11 +6,12 @@
   "titel": "Inspektion af bygningskonstruktion",
   "undertittel": "Bygningskonstruktion",
   "frekvens": "Årligt",
+  "placering": "Indvendigt",
   "jobbkortPdf": "arbejdskort-lejlighed-9.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Indvendigt\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker).",
+  "merk": "HUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker).",
   "oppgaver": [
     {
       "overskrift": "Hvert enkelt element bør efterses",

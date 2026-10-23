@@ -6,11 +6,12 @@
   "titel": "Havelåger og døre til redskabsrum",
   "undertittel": "Udvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Udenfor",
   "jobbkortPdf": "arbejdskort-6.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udenfor",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

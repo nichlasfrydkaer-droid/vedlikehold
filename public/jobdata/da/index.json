@@ -7,11 +7,12 @@
     "titel": "Tag og tagrender",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Udvendige facader & redskabsskur.",
     "jobbkortPdf": "arbejdskort-1.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udvendige facader & redskabsskur.\n\nHUSK: Følg altid gældende sikkerhedsforskrifter ved inspektion af tagrenderne. Det kan være farligt at befinde sig på et vådt eller glat tag.",
+    "merk": "HUSK: Følg altid gældende sikkerhedsforskrifter ved inspektion af tagrenderne. Det kan være farligt at befinde sig på et vådt eller glat tag.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -39,11 +40,12 @@
     "titel": "Murstensvægge",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "På rigs",
     "jobbkortPdf": "arbejdskort-3.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: På rigs\n\nHUSK: Hver enkelt væg skal efterses.",
+    "merk": "HUSK: Hver enkelt væg skal efterses.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -67,11 +69,12 @@
     "titel": "Fliser og gangarealer ved lejligheden",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Udvendigt",
     "jobbkortPdf": "arbejdskort-lejlighed-4.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udvendigt",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -95,11 +98,12 @@
     "titel": "Fliser og parkeringsarealer",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Udenfor",
     "jobbkortPdf": "arbejdskort-4.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udenfor",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -126,11 +130,12 @@
     "titel": "Rækværk og have",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Udvendigt",
     "jobbkortPdf": "arbejdskort-lejlighed-5.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udvendigt\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+    "merk": "HUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -155,11 +160,12 @@
     "titel": "Rækværk og have",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Udenfor",
     "jobbkortPdf": "arbejdskort-5.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udenfor\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+    "merk": "HUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -188,11 +194,12 @@
     "titel": "Havelåger og døre til redskabsrum",
     "undertittel": "Udvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Udenfor",
     "jobbkortPdf": "arbejdskort-6.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udenfor",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -219,11 +226,12 @@
     "titel": "Vægge, gulve og lofter",
     "undertittel": "Indvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Indvendigt",
     "jobbkortPdf": "arbejdskort-lejlighed-7.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Indvendigt",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Vægge",
@@ -272,11 +280,12 @@
     "titel": "Vægge, gulve og lofter",
     "undertittel": "Indvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "I rigssalen",
     "jobbkortPdf": "arbejdskort-7.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I rigssalen",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Vægge",
@@ -333,11 +342,12 @@
     "titel": "Køkken, skabe og røgalarm",
     "undertittel": "Indvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "Røgalarm i stuen",
     "jobbkortPdf": "arbejdskort-lejlighed-8.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Røgalarm i stuen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+    "merk": "HUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -359,11 +369,12 @@
     "titel": "Stole og møbler",
     "undertittel": "Indvendig bygningsinspektion",
     "frekvens": "Årligt",
+    "placering": "I rigssalen",
     "jobbkortPdf": "arbejdskort-8.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I rigssalen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+    "merk": "HUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -397,11 +408,12 @@
     "titel": "Inspektion af bygningskonstruktion",
     "undertittel": "Bygningskonstruktion",
     "frekvens": "Årligt",
+    "placering": "Indvendigt",
     "jobbkortPdf": "arbejdskort-lejlighed-9.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Indvendigt\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker).",
+    "merk": "HUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker).",
     "oppgaver": [
       {
         "overskrift": "Hvert enkelt element bør efterses",
@@ -424,11 +436,12 @@
     "titel": "Inspektion af bygningskonstruktion",
     "undertittel": "Bygningskonstruktion",
     "frekvens": "Årligt",
+    "placering": "I rigssalen og redskabsrummet",
     "jobbkortPdf": "arbejdskort-9.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I rigssalen og redskabsrummet\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker). Hvert enkelt element bør efterses",
+    "merk": "HUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker). Hvert enkelt element bør efterses",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -460,6 +473,7 @@
     "titel": "Døre og vinduer",
     "undertittel": "Døre og vinduer",
     "frekvens": "Halvårligt",
+    "placering": "",
     "jobbkortPdf": "arbejdskort-lejlighed-10.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
@@ -493,11 +507,12 @@
     "titel": "Døre og vinduer",
     "undertittel": "Døre og vinduer",
     "frekvens": "Halvårligt",
+    "placering": "i rigssalen",
     "jobbkortPdf": "arbejdskort-10.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: i rigssalen\n\nHUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
+    "merk": "HUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -533,11 +548,12 @@
     "titel": "Brandslanger/slangevinder",
     "undertittel": "Brandslukkere",
     "frekvens": "Årligt tjek af menigheden",
+    "placering": "I forhal",
     "jobbkortPdf": "arbejdskort-12.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I forhal\n\nFem-årigt service skal udføres af en autoriseret fagperson. HUSK: Orientér dig først om hvor hovedhanen er placeret, så der hurtigt kan slukkes for vandet hvis brandslangehanen er i stykker. NB! Det 5- åtige tilsyn bestilles via LDC af vedligeholdskorrdinatoren.",
+    "merk": "Fem-årigt service skal udføres af en autoriseret fagperson. HUSK: Orientér dig først om hvor hovedhanen er placeret, så der hurtigt kan slukkes for vandet hvis brandslangehanen er i stykker. NB! Det 5- åtige tilsyn bestilles via LDC af vedligeholdskorrdinatoren.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -561,11 +577,12 @@
     "titel": "VVS",
     "undertittel": "VVS",
     "frekvens": "Årligt",
+    "placering": "Badeværelse og køkken",
     "jobbkortPdf": "arbejdskort-lejlighed-13.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Badeværelse og køkken\n\nHUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
+    "merk": "HUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
     "oppgaver": [
       {
         "overskrift": "Ballofix",
@@ -616,11 +633,12 @@
     "titel": "VVS",
     "undertittel": "VVS",
     "frekvens": "Årligt",
+    "placering": "På toiletter",
     "jobbkortPdf": "arbejdskort-13.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: På toiletter\n\nHUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
+    "merk": "HUSK: Informér på forhånd andre der arbejder i området, om hvornår vedligeholdelsesarbejdet udføres. OBS! Hvis man mærker at en Ballofix-ventil går meget stramt, skal man ikke dreje yderligere på den!",
     "oppgaver": [
       {
         "overskrift": "Ballofix",
@@ -670,11 +688,12 @@
     "titel": "Tøm udendørshaner",
     "undertittel": "VVS",
     "frekvens": "Årligt",
+    "placering": "Udenfor",
     "jobbkortPdf": "arbejdskort-14.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udenfor\n\nNote til underviseren: Dette arbejdskort kan sættes sammen med arbejdskortet ”VVS” Tøm vandet fra haner der er isoleret. Om nødvendigt blæs igennem med trykluft.",
+    "merk": "Note til underviseren: Dette arbejdskort kan sættes sammen med arbejdskortet ”VVS” Tøm vandet fra haner der er isoleret. Om nødvendigt blæs igennem med trykluft.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -694,11 +713,12 @@
     "titel": "Udstyr i teknikrum",
     "undertittel": "Varmesystem",
     "frekvens": "Årligt",
+    "placering": "Teknikrum",
     "jobbkortPdf": "arbejdskort-15.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Teknikrum\n\nHUSK: Dette skal måske udføres af en tekniker. Kontakt om nødvendigt din vedligeholdelsesinstruktør.",
+    "merk": "HUSK: Dette skal måske udføres af en tekniker. Kontakt om nødvendigt din vedligeholdelsesinstruktør.",
     "oppgaver": [
       {
         "overskrift": "Rør",
@@ -763,11 +783,12 @@
     "titel": "Ventilationsriste",
     "undertittel": "Ventilationssystem",
     "frekvens": "Årligt",
+    "placering": "Badeværelse",
     "jobbkortPdf": "arbejdskort-lejlighed-18.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Badeværelse",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -791,11 +812,12 @@
     "titel": "Ventilationsriste",
     "undertittel": "Ventilationssystem",
     "frekvens": "Årligt",
+    "placering": "Udenfor",
     "jobbkortPdf": "arbejdskort-18.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udenfor",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -818,11 +840,12 @@
     "titel": "Aftræksventilator",
     "undertittel": "Ventilationssystem",
     "frekvens": "Årligt",
+    "placering": "På toieltter",
     "jobbkortPdf": "arbejdskort-19.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: På toieltter\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget.",
+    "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -847,11 +870,12 @@
     "titel": "Ventilationsenhed",
     "undertittel": "Ventilationssystem",
     "frekvens": "Årligt",
+    "placering": "På loftet",
     "jobbkortPdf": "arbejdskort-20.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: På loftet\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget. Hvis anlægget står på loftet, betragtes arbejde som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
+    "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget. Hvis anlægget står på loftet, betragtes arbejde som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -880,11 +904,12 @@
     "titel": "El-vandvarmer",
     "undertittel": "Varmt brugsvand",
     "frekvens": "To-årigt service",
+    "placering": "Teknikrum",
     "jobbkortPdf": "arbejdskort-23.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Teknikrum\n\nHUSK: Der skal foretages et to-årigt eftersyn af en fagmand. Vedligeholdelseskoordinatoren bør tilkalde et autoriseret firma der er specialiseret i dette.",
+    "merk": "HUSK: Der skal foretages et to-årigt eftersyn af en fagmand. Vedligeholdelseskoordinatoren bør tilkalde et autoriseret firma der er specialiseret i dette.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -907,11 +932,12 @@
     "titel": "Fordelingstavler",
     "undertittel": "Strømfordeling",
     "frekvens": "Halvårligt Service",
+    "placering": "Teknikrum",
     "jobbkortPdf": "arbejdskort-24.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Teknikrum\n\nHUSK: Ingen af punkterne herunder må kræve brug af værktøj. Hvis der skal bruges værktøj, er det en opgave for en autoriseret elektriker.",
+    "merk": "HUSK: Ingen af punkterne herunder må kræve brug af værktøj. Hvis der skal bruges værktøj, er det en opgave for en autoriseret elektriker.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -939,6 +965,7 @@
     "titel": "Nød- og udgangsbelysning",
     "undertittel": "Belysning",
     "frekvens": "Månedligt",
+    "placering": "",
     "jobbkortPdf": "arbejdskort-25.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
@@ -976,11 +1003,12 @@
     "titel": "Alle armaturer",
     "undertittel": "Belysning",
     "frekvens": "2-årig service",
+    "placering": "I rigsalen",
     "jobbkortPdf": "arbejdskort-26.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I rigsalen\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit. Vær særlig forsigtig med håndtering af gamle armaturer.",
+    "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit. Vær særlig forsigtig med håndtering af gamle armaturer.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1008,11 +1036,12 @@
     "titel": "Udendørsbelysning",
     "undertittel": "Belysning",
     "frekvens": "Årligt",
+    "placering": "Udenfor",
     "jobbkortPdf": "arbejdskort-27.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udenfor\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit.",
+    "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes med el. HUSK: Under rengøring af armaturer med halogenpærer, skal man undgå at røre ved pærerne, da fedt fra fingrene nedsætter pærens levetid. Hvis pæren alligevel har været berørt, renses den med husholdningssprit.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1042,6 +1071,7 @@
     "titel": "Elektrisk overspændingsbeskyttelse",
     "undertittel": "Lynbeskyttelse",
     "frekvens": "Årlig service",
+    "placering": "",
     "jobbkortPdf": "arbejdskort-29.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
@@ -1070,6 +1100,7 @@
     "titel": "Test af modstand i lynbeskyttelse",
     "undertittel": "Lynbeskyttelse",
     "frekvens": "Fireårigt service",
+    "placering": "",
     "jobbkortPdf": "arbejdskort-30.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
@@ -1104,11 +1135,12 @@
     "titel": "Støvsugere & brugsgenstande",
     "undertittel": "Alment udstyr",
     "frekvens": "Årligt",
+    "placering": "Teknikrum",
     "jobbkortPdf": "arbejdskort-31a.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Teknikrum\n\nADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
+    "merk": "ADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1141,11 +1173,12 @@
     "titel": "Stiger",
     "undertittel": "Redskaber",
     "frekvens": "Årligt",
+    "placering": "Loftstige i teknikrum & stiger i redskabsskur",
     "jobbkortPdf": "arbejdskort-33.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Loftstige i teknikrum & stiger i redskabsskur",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1169,11 +1202,12 @@
     "titel": "Plæneklipper – Mærke og model",
     "undertittel": "Redskaber",
     "frekvens": "Halvårligt",
+    "placering": "Udhuset",
     "jobbkortPdf": "arbejdskort-34.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Udhuset\n\nHUSK: Vedligeholdelse af maskinen skal ske ifølge producentens anvisninger. NB: Fjern tændrørskablet mens der arbejdes på maskinen.",
+    "merk": "HUSK: Vedligeholdelse af maskinen skal ske ifølge producentens anvisninger. NB: Fjern tændrørskablet mens der arbejdes på maskinen.",
     "oppgaver": [
       {
         "overskrift": "Forår (inden klippesæson)",
@@ -1210,11 +1244,12 @@
     "titel": "Computere",
     "undertittel": "Teknisk udstyr",
     "frekvens": "Årligt",
+    "placering": "På lydbord i salen",
     "jobbkortPdf": "arbejdskort-35.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: På lydbord i salen\n\nHUSK: Servicér xx computere per gang så det sikres at alle computere serviceres en gang om året. ADVARSEL: Brug aldrig alkohol eller opløsningsmidler til at rense computeren med. Disse kemikalier kan beskadige både komponenter og kabinettet. Rør ikke drevet med fingrene, da fedt fra fingrene kan give problemer.",
+    "merk": "HUSK: Servicér xx computere per gang så det sikres at alle computere serviceres en gang om året. ADVARSEL: Brug aldrig alkohol eller opløsningsmidler til at rense computeren med. Disse kemikalier kan beskadige både komponenter og kabinettet. Rør ikke drevet med fingrene, da fedt fra fingrene kan give problemer.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1246,11 +1281,12 @@
     "titel": "Lydanlæg",
     "undertittel": "Teknisk udstyr",
     "frekvens": "Årligt",
+    "placering": "I salen",
     "jobbkortPdf": "arbejdskort-36.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I salen",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Mixer og forstærker",
@@ -1300,11 +1336,12 @@
     "titel": "Skærme",
     "undertittel": "Teknisk udstyr",
     "frekvens": "Årligt",
+    "placering": "I salen & klasse 2",
     "jobbkortPdf": "arbejdskort-38.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I salen & klasse 2",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1325,11 +1362,12 @@
     "titel": "Røgalarm",
     "undertittel": "Teknisk vedligeholdelse",
     "frekvens": "Hver 3. måned",
+    "placering": "I køkken & gang",
     "jobbkortPdf": "arbejdskort-lejlighed-39.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: I køkken & gang\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+    "merk": "HUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1351,11 +1389,12 @@
     "titel": "Røg- og tyverialarm",
     "undertittel": "Teknisk vedligeholdelse",
     "frekvens": "Hver 3. måned",
+    "placering": "Ved hoveddør, i teknikrum og i rigssalen",
     "jobbkortPdf": "arbejdskort-39.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Ved hoveddør, i teknikrum og i rigssalen\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+    "merk": "HUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
     "oppgaver": [
       {
         "overskrift": "Kontrolpunkter",
@@ -1383,11 +1422,12 @@
     "titel": "Vaskemaskine, tørretumbler og emhætte",
     "undertittel": "Hårde hvidevarer",
     "frekvens": "Jævnligt",
+    "placering": "Lejligheden",
     "jobbkortPdf": "arbejdskort-lejlighed-42.pdf",
     "sjaPdf": "",
     "sjaVeiledningPdf": "",
     "arbeidTrygtPdf": "",
-    "merk": "Placering: Lejligheden",
+    "merk": "",
     "oppgaver": [
       {
         "overskrift": "Vaskemaskine",

@@ -6,11 +6,12 @@
   "titel": "Fliser og gangarealer ved lejligheden",
   "undertittel": "Udvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Udvendigt",
   "jobbkortPdf": "arbejdskort-lejlighed-4.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udvendigt",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

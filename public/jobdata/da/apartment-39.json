@@ -6,11 +6,12 @@
   "titel": "Røgalarm",
   "undertittel": "Teknisk vedligeholdelse",
   "frekvens": "Hver 3. måned",
+  "placering": "I køkken & gang",
   "jobbkortPdf": "arbejdskort-lejlighed-39.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: I køkken & gang\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+  "merk": "HUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

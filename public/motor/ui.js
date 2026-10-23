@@ -2,6 +2,7 @@ import { state } from "./state.js";
 import { dom } from "./dom.js";
 import { appendFormattedText } from "./utils.js";
 import { jobcardSlug } from "../assets/jobcardIdentity.js";
+import { jobcardPresentation } from "../assets/jobcardPresentation.js";
 
 const t=(key,fallback)=>state.translations?.[key] || fallback;
 const setMobileLabel=(button,label)=>{
@@ -36,12 +37,16 @@ export function renderHeader(){
   dom.subtitle.textContent=state.currentJob.undertittel || "";
   dom.subtitle.hidden=!state.currentJob.undertittel;
   dom.frequency.textContent=state.currentJob.frekvens || "";
+  const presentation=jobcardPresentation(state.currentJob);
+  dom.location.textContent=presentation.location;
+  dom.locationBadge.hidden=!presentation.location;
   const params=new URLSearchParams(location.search);
   dom.backToMenu.href=`/jobbkort-menu.html?id=${encodeURIComponent(jobcardSlug(state.currentJob))}&jobcardKey=${encodeURIComponent(state.currentJob.key || state.currentJob.nummer)}&language=${encodeURIComponent(params.get("language") || "no")}&congregation=${encodeURIComponent(params.get("congregation") || "")}&congregationId=${encodeURIComponent(params.get("congregationId") || "")}`;
 }
 
 export function renderNotes(){
-  if(state.currentJob.merk){ dom.noticeSection.hidden=false; appendFormattedText(dom.merkText,state.currentJob.merk); }
+  const { notice }=jobcardPresentation(state.currentJob);
+  if(notice){ dom.noticeSection.hidden=false; appendFormattedText(dom.merkText,notice); }
   else dom.noticeSection.hidden=true;
   appendFormattedText(dom.notatInfo,state.currentJob.notatInfo || "");
   dom.notatInfo.hidden=!state.currentJob.notatInfo;

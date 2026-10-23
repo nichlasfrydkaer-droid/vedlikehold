@@ -6,11 +6,12 @@
   "titel": "Tøm udendørshaner",
   "undertittel": "VVS",
   "frekvens": "Årligt",
+  "placering": "Udenfor",
   "jobbkortPdf": "arbejdskort-14.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udenfor\n\nNote til underviseren: Dette arbejdskort kan sættes sammen med arbejdskortet ”VVS” Tøm vandet fra haner der er isoleret. Om nødvendigt blæs igennem med trykluft.",
+  "merk": "Note til underviseren: Dette arbejdskort kan sættes sammen med arbejdskortet ”VVS” Tøm vandet fra haner der er isoleret. Om nødvendigt blæs igennem med trykluft.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

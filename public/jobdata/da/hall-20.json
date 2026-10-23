@@ -6,11 +6,12 @@
   "titel": "Ventilationsenhed",
   "undertittel": "Ventilationssystem",
   "frekvens": "Årligt",
+  "placering": "På loftet",
   "jobbkortPdf": "arbejdskort-20.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: På loftet\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget. Hvis anlægget står på loftet, betragtes arbejde som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
+  "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget. Hvis anlægget står på loftet, betragtes arbejde som høj risiko! Benyt A-131 og kontakt vedligholdelsesinstruktøren.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

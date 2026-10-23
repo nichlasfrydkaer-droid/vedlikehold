@@ -6,11 +6,12 @@
   "titel": "Plæneklipper – Mærke og model",
   "undertittel": "Redskaber",
   "frekvens": "Halvårligt",
+  "placering": "Udhuset",
   "jobbkortPdf": "arbejdskort-34.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udhuset\n\nHUSK: Vedligeholdelse af maskinen skal ske ifølge producentens anvisninger. NB: Fjern tændrørskablet mens der arbejdes på maskinen.",
+  "merk": "HUSK: Vedligeholdelse af maskinen skal ske ifølge producentens anvisninger. NB: Fjern tændrørskablet mens der arbejdes på maskinen.",
   "oppgaver": [
     {
       "overskrift": "Forår (inden klippesæson)",

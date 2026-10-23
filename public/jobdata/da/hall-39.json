@@ -6,11 +6,12 @@
   "titel": "Røg- og tyverialarm",
   "undertittel": "Teknisk vedligeholdelse",
   "frekvens": "Hver 3. måned",
+  "placering": "Ved hoveddør, i teknikrum og i rigssalen",
   "jobbkortPdf": "arbejdskort-39.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Ved hoveddør, i teknikrum og i rigssalen\n\nHUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
+  "merk": "HUSK: Da røgalarm og tyverialarm er forbundet, notér da kode ???? inden du fortsætter. Informér vagtcentralen (eller dem der ringes op til) om at der udføres en systemtest.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

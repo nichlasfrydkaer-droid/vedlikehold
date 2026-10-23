@@ -6,11 +6,12 @@
   "titel": "Køkken, skabe og røgalarm",
   "undertittel": "Indvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Røgalarm i stuen",
   "jobbkortPdf": "arbejdskort-lejlighed-8.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Røgalarm i stuen\n\nHUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
+  "merk": "HUSK: Dette indbefatter udendørsmøbler, pulte, litteraturmøbler, opslagstavler mm.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

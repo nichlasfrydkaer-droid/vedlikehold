@@ -6,11 +6,12 @@
   "titel": "Ventilationsriste",
   "undertittel": "Ventilationssystem",
   "frekvens": "Årligt",
+  "placering": "Badeværelse",
   "jobbkortPdf": "arbejdskort-lejlighed-18.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Badeværelse",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

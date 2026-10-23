@@ -6,11 +6,12 @@
   "titel": "Døre og vinduer",
   "undertittel": "Døre og vinduer",
   "frekvens": "Halvårligt",
+  "placering": "i rigssalen",
   "jobbkortPdf": "arbejdskort-10.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: i rigssalen\n\nHUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
+  "merk": "HUSK: Brug aldrig låsemidler indeholdende grafit til smøring af låsekassen, da det kan medføre slitage.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

@@ -6,11 +6,12 @@
   "titel": "Computere",
   "undertittel": "Teknisk udstyr",
   "frekvens": "Årligt",
+  "placering": "På lydbord i salen",
   "jobbkortPdf": "arbejdskort-35.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: På lydbord i salen\n\nHUSK: Servicér xx computere per gang så det sikres at alle computere serviceres en gang om året. ADVARSEL: Brug aldrig alkohol eller opløsningsmidler til at rense computeren med. Disse kemikalier kan beskadige både komponenter og kabinettet. Rør ikke drevet med fingrene, da fedt fra fingrene kan give problemer.",
+  "merk": "HUSK: Servicér xx computere per gang så det sikres at alle computere serviceres en gang om året. ADVARSEL: Brug aldrig alkohol eller opløsningsmidler til at rense computeren med. Disse kemikalier kan beskadige både komponenter og kabinettet. Rør ikke drevet med fingrene, da fedt fra fingrene kan give problemer.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

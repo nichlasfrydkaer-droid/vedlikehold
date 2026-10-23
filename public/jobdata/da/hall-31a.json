@@ -6,11 +6,12 @@
   "titel": "Støvsugere & brugsgenstande",
   "undertittel": "Alment udstyr",
   "frekvens": "Årligt",
+  "placering": "Teknikrum",
   "jobbkortPdf": "arbejdskort-31a.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Teknikrum\n\nADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
+  "merk": "ADVARSEL: Tag ledningen ud af stikkontakten før der udføres service eller reparationer.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

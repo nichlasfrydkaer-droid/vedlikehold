@@ -6,11 +6,12 @@
   "titel": "Tag og tagrender",
   "undertittel": "Udvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Udvendige facader & redskabsskur.",
   "jobbkortPdf": "arbejdskort-1.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udvendige facader & redskabsskur.\n\nHUSK: Følg altid gældende sikkerhedsforskrifter ved inspektion af tagrenderne. Det kan være farligt at befinde sig på et vådt eller glat tag.",
+  "merk": "HUSK: Følg altid gældende sikkerhedsforskrifter ved inspektion af tagrenderne. Det kan være farligt at befinde sig på et vådt eller glat tag.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

@@ -6,11 +6,12 @@
   "titel": "Rækværk og have",
   "undertittel": "Udvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Udenfor",
   "jobbkortPdf": "arbejdskort-5.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udenfor\n\nHUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
+  "merk": "HUSK: Det almindelige havearbejde er ikke dækket af denne manual.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

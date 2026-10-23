@@ -6,11 +6,12 @@
   "titel": "Lydanlæg",
   "undertittel": "Teknisk udstyr",
   "frekvens": "Årligt",
+  "placering": "I salen",
   "jobbkortPdf": "arbejdskort-36.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: I salen",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Mixer og forstærker",

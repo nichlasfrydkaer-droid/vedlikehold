@@ -6,11 +6,12 @@
   "titel": "Murstensvægge",
   "undertittel": "Udvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "På rigs",
   "jobbkortPdf": "arbejdskort-3.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: På rigs\n\nHUSK: Hver enkelt væg skal efterses.",
+  "merk": "HUSK: Hver enkelt væg skal efterses.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

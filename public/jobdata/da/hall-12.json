@@ -6,11 +6,12 @@
   "titel": "Brandslanger/slangevinder",
   "undertittel": "Brandslukkere",
   "frekvens": "Årligt tjek af menigheden",
+  "placering": "I forhal",
   "jobbkortPdf": "arbejdskort-12.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: I forhal\n\nFem-årigt service skal udføres af en autoriseret fagperson. HUSK: Orientér dig først om hvor hovedhanen er placeret, så der hurtigt kan slukkes for vandet hvis brandslangehanen er i stykker. NB! Det 5- åtige tilsyn bestilles via LDC af vedligeholdskorrdinatoren.",
+  "merk": "Fem-årigt service skal udføres af en autoriseret fagperson. HUSK: Orientér dig først om hvor hovedhanen er placeret, så der hurtigt kan slukkes for vandet hvis brandslangehanen er i stykker. NB! Det 5- åtige tilsyn bestilles via LDC af vedligeholdskorrdinatoren.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

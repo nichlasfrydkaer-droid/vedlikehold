@@ -6,11 +6,12 @@
   "titel": "Udstyr i teknikrum",
   "undertittel": "Varmesystem",
   "frekvens": "Årligt",
+  "placering": "Teknikrum",
   "jobbkortPdf": "arbejdskort-15.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Teknikrum\n\nHUSK: Dette skal måske udføres af en tekniker. Kontakt om nødvendigt din vedligeholdelsesinstruktør.",
+  "merk": "HUSK: Dette skal måske udføres af en tekniker. Kontakt om nødvendigt din vedligeholdelsesinstruktør.",
   "oppgaver": [
     {
       "overskrift": "Rør",

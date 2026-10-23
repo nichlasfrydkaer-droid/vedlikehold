@@ -6,11 +6,12 @@
   "titel": "Aftræksventilator",
   "undertittel": "Ventilationssystem",
   "frekvens": "Årligt",
+  "placering": "På toieltter",
   "jobbkortPdf": "arbejdskort-19.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: På toieltter\n\nBrug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget.",
+  "merk": "Brug altid Lockout/Tagout (LOTO) når der arbejdes på anlægget.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

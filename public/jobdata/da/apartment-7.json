@@ -6,11 +6,12 @@
   "titel": "Vægge, gulve og lofter",
   "undertittel": "Indvendig bygningsinspektion",
   "frekvens": "Årligt",
+  "placering": "Indvendigt",
   "jobbkortPdf": "arbejdskort-lejlighed-7.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Indvendigt",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Vægge",

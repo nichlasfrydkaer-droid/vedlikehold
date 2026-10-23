@@ -6,11 +6,12 @@
   "titel": "El-vandvarmer",
   "undertittel": "Varmt brugsvand",
   "frekvens": "To-årigt service",
+  "placering": "Teknikrum",
   "jobbkortPdf": "arbejdskort-23.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Teknikrum\n\nHUSK: Der skal foretages et to-årigt eftersyn af en fagmand. Vedligeholdelseskoordinatoren bør tilkalde et autoriseret firma der er specialiseret i dette.",
+  "merk": "HUSK: Der skal foretages et to-årigt eftersyn af en fagmand. Vedligeholdelseskoordinatoren bør tilkalde et autoriseret firma der er specialiseret i dette.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

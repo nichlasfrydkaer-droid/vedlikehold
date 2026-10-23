@@ -6,11 +6,12 @@
   "titel": "Fordelingstavler",
   "undertittel": "Strømfordeling",
   "frekvens": "Halvårligt Service",
+  "placering": "Teknikrum",
   "jobbkortPdf": "arbejdskort-24.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Teknikrum\n\nHUSK: Ingen af punkterne herunder må kræve brug af værktøj. Hvis der skal bruges værktøj, er det en opgave for en autoriseret elektriker.",
+  "merk": "HUSK: Ingen af punkterne herunder må kræve brug af værktøj. Hvis der skal bruges værktøj, er det en opgave for en autoriseret elektriker.",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

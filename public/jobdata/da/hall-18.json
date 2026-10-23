@@ -6,11 +6,12 @@
   "titel": "Ventilationsriste",
   "undertittel": "Ventilationssystem",
   "frekvens": "Årligt",
+  "placering": "Udenfor",
   "jobbkortPdf": "arbejdskort-18.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: Udenfor",
+  "merk": "",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",

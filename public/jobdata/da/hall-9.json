@@ -6,11 +6,12 @@
   "titel": "Inspektion af bygningskonstruktion",
   "undertittel": "Bygningskonstruktion",
   "frekvens": "Årligt",
+  "placering": "I rigssalen og redskabsrummet",
   "jobbkortPdf": "arbejdskort-9.pdf",
   "sjaPdf": "",
   "sjaVeiledningPdf": "",
   "arbeidTrygtPdf": "",
-  "merk": "Placering: I rigssalen og redskabsrummet\n\nHUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker). Hvert enkelt element bør efterses",
+  "merk": "HUSK: Inspicér alle bærende elementer (spær, søjler, vægge, muroverliggere, gulve og bjælker). Hvert enkelt element bør efterses",
   "oppgaver": [
     {
       "overskrift": "Kontrolpunkter",
