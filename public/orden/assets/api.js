@@ -57,4 +57,11 @@ export const endpoints = {
   updateBaseItem: (entity, id, payload) => api(`/v1/base/${entity}/${id}`, { method: "PATCH", body: JSON.stringify(payload) }),
   baseSettings: () => api("/v1/base/settings"),
   updateBaseSettings: (payload) => api("/v1/base/settings", { method: "PATCH", body: JSON.stringify(payload) }),
+  venues: () => api("/v1/venues"),
+  events: () => api("/v1/events"),
+  event: (id) => api(`/v1/events/${id}`),
+  createEvent: (payload) => api("/v1/events", { method: "POST", body: JSON.stringify(payload) }),
+  updateEvent: (id, payload) => api(`/v1/events/${id}`, { method: "PATCH", body: JSON.stringify(payload) }),
+  updateEventSchedule: (id, payload) => api(`/v1/events/${id}/schedule`, { method: "PUT", body: JSON.stringify(payload) }),
+  completeEventSetup: (id) => api(`/v1/events/${id}/complete`, { method: "POST" }),
 };

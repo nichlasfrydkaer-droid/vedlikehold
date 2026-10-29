@@ -1,8 +1,8 @@
 import { ApiError, endpoints, setApiLocale, setCsrfToken } from "./api.js";
-import { getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
+import { formatDate, getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
 
 const app = document.querySelector("#app");
-const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, configured: true, mobileMenu: false, setupComplete: false };
+const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, configured: true, mobileMenu: false, setupComplete: false };
 
 const icons = {
   home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
@@ -39,6 +39,8 @@ function route() {
   if (path === "/orden/ordensposter") return "base-posts";
   if (path === "/orden/kontaktpersoner") return "base-contacts";
   if (path === "/orden/grunninnstillinger") return "base-defaults";
+  if (path === "/orden/stevner") return "events";
+  if (path === "/orden/stevne") return "event-wizard";
   return "home";
 }
 
@@ -51,6 +53,12 @@ function navigate(path) {
   state.mobileMenu = false;
   if (path === "/orden/brukere" && state.user?.role === "system_admin") {
     loadUsers().catch((error) => { toast(errorText(error), "error"); render(); });
+  } else if (path === "/orden") {
+    loadEvents().catch((error) => { toast(errorText(error), "error"); render(); });
+  } else if (path === "/orden/stevner") {
+    loadEvents().catch((error) => { toast(errorText(error), "error"); render(); });
+  } else if (path.startsWith("/orden/stevne")) {
+    loadEventWorkspace().catch((error) => { toast(errorText(error), "error"); render(); });
   } else if (isBaseRoute()) loadBaseData().catch((error) => { toast(errorText(error), "error"); render(); });
   else render();
 }
@@ -106,16 +114,36 @@ function roleLabel(role) {
 
 function shell(content, pageTitle) {
   const current = location.pathname.replace(/\/+$/, "") || "/orden";
+  const currentNav = current === "/orden/stevne" ? "/orden/stevner" : current;
   const canManageUsers = state.user.role === "system_admin";
   const selector = state.user.eventTypes.length > 1
     ? `<label class="type-select"><span>${escapeHtml(t("eventType.label"))}</span><select id="event-type-select">${state.user.eventTypes.map((type) => `<option value="${type}" ${type === state.user.selectedEventType ? "selected" : ""}>${escapeHtml(eventTypeLabel(type))}</option>`).join("")}</select></label>`
     : `<div class="type-pill">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</div>`;
-  return `<div class="app-shell ${state.mobileMenu ? "menu-open" : ""}"><button class="menu-backdrop" aria-label="${escapeHtml(t("common.closeMenu"))}"></button><aside class="sidebar"><div class="sidebar-top">${brand()}<button class="icon-button close-menu" aria-label="${escapeHtml(t("common.closeMenu"))}">${icons.close}</button></div><nav aria-label="${escapeHtml(t("common.mainMenu"))}">${navItem("/orden", "nav.home", "home", current)}${navItem("/orden/stevner", "nav.events", "calendar", current, true)}<div class="nav-divider"></div>${navItem("/orden/ordensvakter", "nav.guards", "badge", current)}${navItem("/orden/ordensposter", "nav.posts", "pin", current)}${navItem("/orden/kontaktpersoner", "nav.contacts", "phone", current)}${navItem("/orden/grunninnstillinger", "nav.defaults", "clock", current)}<div class="nav-divider"></div>${canManageUsers ? navItem("/orden/brukere", "nav.users", "users", current) : ""}${navItem("/orden/innstillinger", "nav.settings", "settings", current)}</nav><div class="sidebar-footer"><div class="user-mini"><span>${escapeHtml(state.user.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(state.user.name)}</strong><small>${escapeHtml(roleLabel(state.user.role))}</small></div></div><button id="logout-button" class="nav-item nav-button">${icons.logout}<span>${escapeHtml(t("auth.logout"))}</span></button></div></aside><div class="main-column"><header class="topbar"><button class="icon-button open-menu" aria-label="${escapeHtml(t("common.openMenu"))}">${icons.menu}</button><div><span class="topbar-label">${escapeHtml(t("app.title"))}</span><strong>${escapeHtml(pageTitle)}</strong></div>${selector}</header>${content}</div></div>`;
+  return `<div class="app-shell ${state.mobileMenu ? "menu-open" : ""}"><button class="menu-backdrop" aria-label="${escapeHtml(t("common.closeMenu"))}"></button><aside class="sidebar"><div class="sidebar-top">${brand()}<button class="icon-button close-menu" aria-label="${escapeHtml(t("common.closeMenu"))}">${icons.close}</button></div><nav aria-label="${escapeHtml(t("common.mainMenu"))}">${navItem("/orden", "nav.home", "home", currentNav)}${navItem("/orden/stevner", "nav.events", "calendar", currentNav)}<div class="nav-divider"></div>${navItem("/orden/ordensvakter", "nav.guards", "badge", currentNav)}${navItem("/orden/ordensposter", "nav.posts", "pin", currentNav)}${navItem("/orden/kontaktpersoner", "nav.contacts", "phone", currentNav)}${navItem("/orden/grunninnstillinger", "nav.defaults", "clock", currentNav)}<div class="nav-divider"></div>${canManageUsers ? navItem("/orden/brukere", "nav.users", "users", currentNav) : ""}${navItem("/orden/innstillinger", "nav.settings", "settings", currentNav)}</nav><div class="sidebar-footer"><div class="user-mini"><span>${escapeHtml(state.user.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(state.user.name)}</strong><small>${escapeHtml(roleLabel(state.user.role))}</small></div></div><button id="logout-button" class="nav-item nav-button">${icons.logout}<span>${escapeHtml(t("auth.logout"))}</span></button></div></aside><div class="main-column"><header class="topbar"><button class="icon-button open-menu" aria-label="${escapeHtml(t("common.openMenu"))}">${icons.menu}</button><div><span class="topbar-label">${escapeHtml(t("app.title"))}</span><strong>${escapeHtml(pageTitle)}</strong></div>${selector}</header>${content}</div></div>`;
+}
+
+function todayString() {
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Oslo", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+
+function dateLabel(startDate, endDate = startDate) {
+  const start = formatDate(`${startDate}T12:00:00Z`);
+  return startDate === endDate ? start : `${start} – ${formatDate(`${endDate}T12:00:00Z`)}`;
+}
+
+function eventStatusLabel(status) {
+  return t(`event.status.${status}`);
 }
 
 function homeView() {
   const type = eventTypeLabel(state.user.selectedEventType).toLocaleLowerCase(getLocale());
-  return shell(`<main class="page page--home"><section class="hero-panel"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("home.greeting", { name: state.user.name.split(" ")[0] }))}</h1><p>${escapeHtml(t("home.foundationBody"))}</p></div><div class="phase-badge"><span>${escapeHtml(t("home.phase"))}</span><strong>${escapeHtml(t("home.foundation"))}</strong><small>${escapeHtml(t("home.secured"))}</small></div></section><section class="action-grid" aria-label="${escapeHtml(t("home.eventActions"))}"><article class="action-card action-card--primary"><div class="action-icon">${icons.calendar}</div><div><span class="eyebrow">${escapeHtml(t("home.planning"))}</span><h2>${escapeHtml(t("home.createEvent"))}</h2><p>${escapeHtml(t("home.createEventLater"))}</p></div><button class="button button--muted" disabled>${escapeHtml(t("home.availablePhase3"))}</button></article><article class="action-card"><div class="action-icon">${icons.shield}</div><div><span class="eyebrow">${escapeHtml(t("home.nextEvent"))}</span><h2>${escapeHtml(t("home.noUpcoming", { type }))}</h2><p>${escapeHtml(t("home.nextEventBody"))}</p></div><span class="empty-chip">${escapeHtml(t("home.noData"))}</span></article></section><section class="content-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("home.implementationStatus"))}</span><h2>${escapeHtml(t("home.safeFoundation"))}</h2></div></div><div class="status-grid"><div><span class="status-check">✓</span><strong>${escapeHtml(t("home.secureLogin"))}</strong><p>${escapeHtml(t("home.secureLoginBody"))}</p></div><div><span class="status-check">✓</span><strong>${escapeHtml(t("home.roleAccess"))}</strong><p>${escapeHtml(t("home.roleAccessBody"))}</p></div><div><span class="status-check">✓</span><strong>${escapeHtml(t("home.eventTypes"))}</strong><p>${escapeHtml(t("home.eventTypesBody"))}</p></div></div></section></main>`, t("nav.home"));
+  const upcoming = state.events.find((event) => event.endDate >= todayString() && !["completed", "cancelled"].includes(event.status));
+  const upcomingCard = upcoming
+    ? `<a class="action-card action-card-link" href="/orden/stevne?id=${encodeURIComponent(upcoming.id)}" data-link><div class="action-icon">${icons.shield}</div><div><span class="eyebrow">${escapeHtml(t("home.nextEvent"))}</span><h2>${escapeHtml(upcoming.name)}</h2><p>${escapeHtml(dateLabel(upcoming.startDate, upcoming.endDate))} · ${escapeHtml(upcoming.venue.name)}, ${escapeHtml(upcoming.venue.city)}</p></div><span class="empty-chip">${escapeHtml(eventStatusLabel(upcoming.status))}</span></a>`
+    : `<article class="action-card"><div class="action-icon">${icons.shield}</div><div><span class="eyebrow">${escapeHtml(t("home.nextEvent"))}</span><h2>${escapeHtml(t("home.noUpcoming", { type }))}</h2><p>${escapeHtml(t("home.nextEventBody"))}</p></div><span class="empty-chip">${escapeHtml(t("home.noData"))}</span></article>`;
+  return shell(`<main class="page page--home"><section class="hero-panel"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("home.greeting", { name: state.user.name.split(" ")[0] }))}</h1><p>${escapeHtml(t("home.eventFoundationBody"))}</p></div><div class="phase-badge"><span>${escapeHtml(t("home.phase"))}</span><strong>${escapeHtml(t("home.eventCreation"))}</strong><small>${escapeHtml(t("home.savedContinuously"))}</small></div></section><section class="action-grid" aria-label="${escapeHtml(t("home.eventActions"))}"><a class="action-card action-card--primary action-card-link" href="/orden/stevne" data-link><div class="action-icon">${icons.calendar}</div><div><span class="eyebrow">${escapeHtml(t("home.planning"))}</span><h2>${escapeHtml(t("home.createEvent"))}</h2><p>${escapeHtml(t("home.createEventReady"))}</p></div><span class="button button--primary">${escapeHtml(t("event.create"))}</span></a>${upcomingCard}</section></main>`, t("nav.home"));
 }
 
 function accessLabel(types) {
@@ -134,6 +162,52 @@ function editUserPanel(user) {
 
 function settingsView() {
   return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(t("settings.personal"))}</span><h1>${escapeHtml(t("settings.title"))}</h1><p>${escapeHtml(t("settings.intro"))}</p></div></section><section class="content-card settings-card"><div class="settings-copy"><div class="action-icon">${icons.settings}</div><div><h2>${escapeHtml(t("settings.languageTitle"))}</h2><p>${escapeHtml(t("settings.languageBody"))}</p></div></div><label class="settings-control"><span>${escapeHtml(t("common.language"))}</span><select id="settings-locale-select">${localeOptions(state.user.locale || getLocale())}</select></label></section></main>`, t("settings.title"));
+}
+
+function eventCard(event) {
+  return `<a class="event-row" href="/orden/stevne?id=${encodeURIComponent(event.id)}" data-link><span class="event-date-badge"><strong>${escapeHtml(new Intl.DateTimeFormat(getLocale(), { day: "2-digit" }).format(new Date(`${event.startDate}T12:00:00Z`)))}</strong><small>${escapeHtml(new Intl.DateTimeFormat(getLocale(), { month: "short" }).format(new Date(`${event.startDate}T12:00:00Z`)))}</small></span><div><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(dateLabel(event.startDate, event.endDate))} · ${escapeHtml(event.venue.name)}, ${escapeHtml(event.venue.city)}</small></div><span class="state-chip ${event.status === "planning" || event.status === "ready" ? "is-active" : ""}">${escapeHtml(eventStatusLabel(event.status))}</span><span class="event-arrow">→</span></a>`;
+}
+
+function eventsView() {
+  const today = todayString();
+  const upcoming = state.events.filter((event) => event.endDate >= today && !["completed", "cancelled"].includes(event.status));
+  const history = state.events.filter((event) => event.endDate < today || ["completed", "cancelled"].includes(event.status)).reverse();
+  const list = (items, emptyKey) => items.length ? `<div class="event-list">${items.map(eventCard).join("")}</div>` : `<p class="base-empty">${escapeHtml(t(emptyKey))}</p>`;
+  return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("event.titlePlural"))}</h1><p>${escapeHtml(t("event.listIntro"))}</p></div><a class="button button--primary button-link" href="/orden/stevne" data-link>+ ${escapeHtml(t("event.create"))}</a></section><section class="content-card"><div class="section-heading"><div><h2>${escapeHtml(t("event.upcoming"))}</h2><p>${escapeHtml(t("event.upcomingCount", { count: upcoming.length }))}</p></div></div>${list(upcoming, "event.noUpcoming")}</section><section class="content-card event-history"><div class="section-heading"><div><h2>${escapeHtml(t("event.history"))}</h2><p>${escapeHtml(t("event.historyIntro"))}</p></div></div>${list(history, "event.noHistory")}</section></main>`, t("event.titlePlural"));
+}
+
+function wizardHeader() {
+  const steps = ["event.stepDateVenue", "event.stepShifts", "event.stepReview"];
+  return `<ol class="wizard-steps">${steps.map((key, index) => `<li class="${state.eventWizardStep === index + 1 ? "is-current" : state.eventWizardStep > index + 1 ? "is-complete" : ""}"><span>${state.eventWizardStep > index + 1 ? "✓" : index + 1}</span><strong>${escapeHtml(t(key))}</strong></li>`).join("")}</ol>`;
+}
+
+function eventStepOne() {
+  const event = state.event;
+  const selectedVenueId = event?.venueId && state.venues.some((venue) => venue.id === event.venueId) ? event.venueId : state.venues[0]?.id || "__new__";
+  const newSelected = selectedVenueId === "__new__";
+  const options = state.venues.map((venue) => `<option value="${escapeHtml(venue.id)}" ${venue.id === selectedVenueId ? "selected" : ""}>${escapeHtml(venue.name)} · ${escapeHtml(venue.city)}</option>`).join("");
+  return `<section class="content-card wizard-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("event.step", { current: 1, total: 3 }))}</span><h2>${escapeHtml(t("event.dateVenueTitle"))}</h2><p>${escapeHtml(t("event.dateVenueIntro", { type: eventTypeLabel(state.user.selectedEventType).toLocaleLowerCase(getLocale()) }))}</p></div></div><form id="event-details-form" class="wizard-form"><label>${escapeHtml(t("event.startDate"))}<input name="startDate" type="date" value="${escapeHtml(event?.startDate || "")}" required><small>${escapeHtml(t(state.user.selectedEventType === "regional" ? "event.regionalDuration" : "event.circuitDuration"))}</small></label><label>${escapeHtml(t("event.venue"))}<select name="venueId" id="event-venue-select">${options}<option value="__new__" ${newSelected ? "selected" : ""}>+ ${escapeHtml(t("event.newVenue"))}</option></select><small>${escapeHtml(t("event.venueSavedHint"))}</small></label><fieldset id="new-venue-fields" class="wide venue-fields" ${newSelected ? "" : "hidden"}><legend>${escapeHtml(t("event.newVenue"))}</legend><div class="venue-grid"><label>${escapeHtml(t("event.venueName"))}<input name="venueName" maxlength="120"></label><label>${escapeHtml(t("event.address"))}<input name="address" autocomplete="street-address"></label><label>${escapeHtml(t("event.postalCode"))}<input name="postalCode" autocomplete="postal-code"></label><label>${escapeHtml(t("event.city"))}<input name="city" autocomplete="address-level2"></label><label>${escapeHtml(t("event.country"))}<input name="country" autocomplete="country-name"></label><label>${escapeHtml(t("base.notes"))}<input name="venueNotes"></label></div></fieldset><p class="form-error wide" hidden></p><div class="form-actions wide"><a class="button button--secondary button-link" href="/orden/stevner" data-link>${escapeHtml(t("common.cancel"))}</a><button class="button button--primary" type="submit">${escapeHtml(t("event.saveContinue"))}</button></div></form></section>`;
+}
+
+function eventStepTwo() {
+  const event = state.event;
+  if (!event) return "";
+  const days = event.days.map((day, dayIndex) => `<article class="schedule-day" data-day-index="${dayIndex}"><header><div><span class="eyebrow">${escapeHtml(t("event.dayNumber", { number: day.dayNumber }))}</span><h3>${escapeHtml(formatDate(`${day.date}T12:00:00Z`))}</h3></div><div class="day-controls"><label>${escapeHtml(t("event.dayStart"))}<input type="time" class="day-start" value="${day.dayStart}"></label><label>${escapeHtml(t("event.dayEnd"))}<input type="time" class="day-end" value="${day.dayEnd}"></label><label>${escapeHtml(t("event.shiftCount"))}<input type="number" class="day-shift-count" min="1" max="12" value="${day.shifts.length}"></label></div></header><div class="shift-list">${day.shifts.map((shift, shiftIndex) => `<div class="shift-row" data-shift-index="${shiftIndex}"><strong>${escapeHtml(t("event.shiftNumber", { number: shiftIndex + 1 }))}</strong><label>${escapeHtml(t("event.from"))}<input type="time" class="shift-start" value="${shift.startTime}"></label><span>→</span><label>${escapeHtml(t("event.to"))}<input type="time" class="shift-end" value="${shift.endTime}"></label></div>`).join("")}</div></article>`).join("");
+  return `<section class="content-card wizard-card wizard-card--wide"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("event.step", { current: 2, total: 3 }))}</span><h2>${escapeHtml(t("event.shiftsTitle"))}</h2><p>${escapeHtml(t("event.shiftsIntro"))}</p></div></div><div class="schedule-days">${days}</div><p id="schedule-error" class="form-error" hidden></p><div class="wizard-actions"><button class="button button--secondary wizard-back" data-step="1">${escapeHtml(t("common.back"))}</button><button id="save-event-schedule" class="button button--primary">${escapeHtml(t("event.saveContinue"))}</button></div></section>`;
+}
+
+function eventStepThree() {
+  const event = state.event;
+  if (!event) return "";
+  const daySummary = event.days.map((day) => `<li><strong>${escapeHtml(formatDate(`${day.date}T12:00:00Z`))}</strong><span>${escapeHtml(day.dayStart)}–${escapeHtml(day.dayEnd)} · ${escapeHtml(t("event.shiftCountValue", { count: day.shifts.length }))}</span></li>`).join("");
+  const completed = event.status !== "draft";
+  return `<section class="content-card wizard-card"><div class="review-status ${completed ? "is-complete" : ""}"><span>${completed ? "✓" : "3"}</span><div><h2>${escapeHtml(t(completed ? "event.createdTitle" : "event.reviewTitle"))}</h2><p>${escapeHtml(t(completed ? "event.createdBody" : "event.reviewIntro"))}</p></div></div><div class="event-review"><div><span>${escapeHtml(t("event.generatedName"))}</span><strong>${escapeHtml(event.name)}</strong></div><div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(dateLabel(event.startDate, event.endDate))}</strong></div><div><span>${escapeHtml(t("event.venue"))}</span><strong>${escapeHtml(event.venue.name)}</strong><small>${escapeHtml([event.venue.address, event.venue.postalCode, event.venue.city, event.venue.country].filter(Boolean).join(", "))}</small></div><div class="wide"><span>${escapeHtml(t("event.shifts"))}</span><ul>${daySummary}</ul></div></div><div class="wizard-actions"><button class="button button--secondary wizard-back" data-step="1">${escapeHtml(t("event.editDateVenue"))}</button><button class="button button--secondary wizard-back" data-step="2">${escapeHtml(t("event.editShifts"))}</button>${completed ? `<a class="button button--primary button-link" href="/orden/stevner" data-link>${escapeHtml(t("event.backToEvents"))}</a>` : `<button id="complete-event-setup" class="button button--primary">${escapeHtml(t("event.completeSetup"))}</button>`}</div></section>`;
+}
+
+function eventWizardView() {
+  const title = state.event?.name || t("event.create");
+  const content = state.eventWizardStep === 1 ? eventStepOne() : state.eventWizardStep === 2 ? eventStepTwo() : eventStepThree();
+  return shell(`<main class="page event-wizard"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(title)}</h1><p>${escapeHtml(t("event.wizardIntro"))}</p></div><span class="save-state">✓ ${escapeHtml(t("event.savedContinuously"))}</span></section>${wizardHeader()}${content}</main>`, title);
 }
 
 const baseMeta = {
@@ -195,6 +269,8 @@ function render() {
   else if (!state.user) app.innerHTML = loginView();
   else if (current === "users" && state.user.role === "system_admin") app.innerHTML = usersView();
   else if (current === "settings") app.innerHTML = settingsView();
+  else if (current === "events") app.innerHTML = eventsView();
+  else if (current === "event-wizard") app.innerHTML = eventWizardView();
   else if (current === "base") app.innerHTML = baseOverviewView();
   else if (current === "base-guards") app.innerHTML = baseEntityView("guards");
   else if (current === "base-posts") app.innerHTML = baseEntityView("posts");
@@ -257,6 +333,108 @@ function bindBaseRecordForm(form) {
   });
 }
 
+function buildClientShifts(dayStart, dayEnd, count) {
+  const toMinutes = (value) => { const [hours, minutes] = value.split(":").map(Number); return hours * 60 + minutes; };
+  const fromMinutes = (value) => `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`;
+  const start = toMinutes(dayStart); const end = toMinutes(dayEnd);
+  if (!Number.isInteger(count) || count < 1 || count > 12 || !Number.isFinite(start) || !Number.isFinite(end) || end - start < count) return null;
+  const boundaries = Array.from({ length: count + 1 }, (_, index) => fromMinutes(Math.round(start + ((end - start) * index) / count)));
+  return Array.from({ length: count }, (_, index) => ({ position: index + 1, startTime: boundaries[index], endTime: boundaries[index + 1] }));
+}
+
+function regenerateEventDay(dayIndex, dayStart, dayEnd, count) {
+  const shifts = buildClientShifts(dayStart, dayEnd, count);
+  if (!shifts) return false;
+  state.event.days[dayIndex] = { ...state.event.days[dayIndex], dayStart, dayEnd, shiftCount: count, shifts };
+  render();
+  return true;
+}
+
+function showScheduleError() {
+  const element = document.querySelector("#schedule-error");
+  if (!element) return;
+  element.textContent = t("errors.invalid_shift_schedule");
+  element.hidden = false;
+}
+
+function bindEventWizard() {
+  const venueSelect = document.querySelector("#event-venue-select");
+  const venueFields = document.querySelector("#new-venue-fields");
+  const syncVenueFields = () => {
+    if (!venueSelect || !venueFields) return;
+    const isNew = venueSelect.value === "__new__";
+    venueFields.hidden = !isNew;
+    for (const name of ["venueName", "address", "city"]) venueFields.querySelector(`[name="${name}"]`)?.toggleAttribute("required", isNew);
+  };
+  venueSelect?.addEventListener("change", syncVenueFields);
+  syncVenueFields();
+
+  document.querySelector("#event-details-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const payload = { startDate: data.get("startDate") };
+    if (data.get("venueId") === "__new__") payload.newVenue = { name: data.get("venueName"), address: data.get("address"), postalCode: data.get("postalCode"), city: data.get("city"), country: data.get("country"), notes: data.get("venueNotes") };
+    else payload.venueId = data.get("venueId");
+    setFormBusy(form, true);
+    try {
+      const result = state.event ? await endpoints.updateEvent(state.event.id, payload) : await endpoints.createEvent(payload);
+      state.event = result.event;
+      state.eventWizardStep = 2;
+      history.replaceState({}, "", `/orden/stevne?id=${encodeURIComponent(state.event.id)}`);
+      render();
+      toast(t("event.saved"));
+    } catch (error) {
+      showFormError(form, error);
+      setFormBusy(form, false);
+    }
+  });
+
+  document.querySelectorAll(".wizard-back").forEach((button) => button.addEventListener("click", () => { state.eventWizardStep = Number(button.dataset.step); render(); }));
+  document.querySelectorAll(".schedule-day").forEach((dayElement) => {
+    const dayIndex = Number(dayElement.dataset.dayIndex);
+    const regenerate = () => {
+      const start = dayElement.querySelector(".day-start").value;
+      const end = dayElement.querySelector(".day-end").value;
+      const count = Number(dayElement.querySelector(".day-shift-count").value);
+      if (!regenerateEventDay(dayIndex, start, end, count)) showScheduleError();
+    };
+    dayElement.querySelectorAll(".day-start, .day-end, .day-shift-count").forEach((input) => input.addEventListener("change", regenerate));
+    dayElement.querySelectorAll(".shift-row").forEach((shiftElement) => {
+      const shiftIndex = Number(shiftElement.dataset.shiftIndex);
+      shiftElement.querySelector(".shift-start")?.addEventListener("change", (inputEvent) => {
+        const value = inputEvent.target.value;
+        const day = state.event.days[dayIndex];
+        day.shifts[shiftIndex].startTime = value;
+        if (shiftIndex === 0) { day.dayStart = value; dayElement.querySelector(".day-start").value = value; }
+        else { day.shifts[shiftIndex - 1].endTime = value; dayElement.querySelectorAll(".shift-end")[shiftIndex - 1].value = value; }
+      });
+      shiftElement.querySelector(".shift-end")?.addEventListener("change", (inputEvent) => {
+        const value = inputEvent.target.value;
+        const day = state.event.days[dayIndex];
+        day.shifts[shiftIndex].endTime = value;
+        if (shiftIndex === day.shifts.length - 1) { day.dayEnd = value; dayElement.querySelector(".day-end").value = value; }
+        else { day.shifts[shiftIndex + 1].startTime = value; dayElement.querySelectorAll(".shift-start")[shiftIndex + 1].value = value; }
+      });
+    });
+  });
+
+  document.querySelector("#save-event-schedule")?.addEventListener("click", async (event) => {
+    const button = event.currentTarget; button.disabled = true;
+    try {
+      const days = state.event.days.map((day) => ({ dayStart: day.dayStart, dayEnd: day.dayEnd, shifts: day.shifts.map(({ startTime, endTime }) => ({ startTime, endTime })) }));
+      const result = await endpoints.updateEventSchedule(state.event.id, { days });
+      state.event = result.event; state.eventWizardStep = 3; render(); toast(t("event.saved"));
+    } catch (error) { button.disabled = false; const element = document.querySelector("#schedule-error"); element.textContent = errorText(error); element.hidden = false; }
+  });
+
+  document.querySelector("#complete-event-setup")?.addEventListener("click", async (event) => {
+    const button = event.currentTarget; button.disabled = true;
+    try { const result = await endpoints.completeEventSetup(state.event.id); state.event = result.event; state.eventWizardStep = 3; render(); toast(t("event.createdToast")); }
+    catch (error) { button.disabled = false; toast(errorText(error), "error"); }
+  });
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); navigate(link.getAttribute("href")); }));
   document.querySelector("#public-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, false));
@@ -280,7 +458,7 @@ function bindEvents() {
     catch (error) { showFormError(form, error); setFormBusy(form, false); }
   });
   document.querySelector("#logout-button")?.addEventListener("click", async () => { try { await endpoints.logout(); } catch (error) { if (error.status !== 401) toast(errorText(error), "error"); } setCsrfToken(""); state.user = null; history.replaceState({}, "", "/orden/login"); render(); });
-  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; if (isBaseRoute()) await loadBaseData(); else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
+  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; state.event = null; if (isBaseRoute()) await loadBaseData(); else if (["events", "home", "event-wizard"].includes(route())) { if (route() === "event-wizard") history.replaceState({}, "", "/orden/stevner"); await loadEvents(); } else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
   const createPanel = document.querySelector("#create-user-panel");
   document.querySelector("#show-create-user")?.addEventListener("click", () => { createPanel.hidden = false; createPanel.scrollIntoView({ behavior: "smooth", block: "start" }); createPanel.querySelector("input")?.focus(); });
   const hideCreate = () => { if (createPanel) createPanel.hidden = true; };
@@ -305,6 +483,7 @@ function bindEvents() {
   }));
   document.querySelectorAll(".base-toggle").forEach((button) => button.addEventListener("click", async () => { button.disabled = true; try { await endpoints.updateBaseItem(button.dataset.entity, button.dataset.id, { active: button.dataset.active !== "true" }); await loadBaseData(); toast(t("base.updated")); } catch (error) { button.disabled = false; toast(errorText(error), "error"); } }));
   document.querySelector("#base-settings-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); data.shiftCount = Number(data.shiftCount); setFormBusy(form, true); try { await endpoints.updateBaseSettings(data); await loadBaseData(); toast(t("base.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
+  bindEventWizard();
 }
 
 function bindEditForm(panel) {
@@ -324,6 +503,23 @@ async function loadBaseData() {
   render();
 }
 
+async function loadEvents() {
+  const result = await endpoints.events();
+  state.events = result.events;
+  render();
+}
+
+async function loadEventWorkspace() {
+  const id = new URLSearchParams(location.search).get("id");
+  const venuesPromise = endpoints.venues();
+  const eventPromise = id ? endpoints.event(id) : Promise.resolve({ event: null });
+  const [venues, eventResult] = await Promise.all([venuesPromise, eventPromise]);
+  state.venues = venues.venues;
+  state.event = eventResult.event;
+  state.eventWizardStep = state.event ? (state.event.status === "draft" ? Math.max(1, state.event.wizardStep) : 3) : 1;
+  render();
+}
+
 async function init() {
   await initI18n();
   setApiLocale(getLocale());
@@ -334,6 +530,8 @@ async function init() {
     if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); }
     if (route() === "users" && state.user.role === "system_admin") await loadUsers();
     else if (isBaseRoute()) await loadBaseData();
+    else if (route() === "event-wizard") await loadEventWorkspace();
+    else if (["home", "events"].includes(route())) await loadEvents();
     else render();
   } catch (error) {
     if (!(error instanceof ApiError) || ![401, 403].includes(error.status)) console.warn(error);
@@ -342,5 +540,5 @@ async function init() {
   }
 }
 
-window.addEventListener("popstate", () => { if (state.user && route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (state.user && isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else render(); });
+window.addEventListener("popstate", () => { if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
 init().catch((error) => { console.error(error); });
