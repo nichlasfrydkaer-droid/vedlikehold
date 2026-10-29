@@ -2,7 +2,7 @@ import { ApiError, endpoints, setApiLocale, setCsrfToken } from "./api.js";
 import { formatDate, getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
 
 const app = document.querySelector("#app");
-const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, configured: true, mobileMenu: false, setupComplete: false };
+const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, configured: true, mobileMenu: false, setupComplete: false };
 
 const icons = {
   home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
@@ -41,6 +41,7 @@ function route() {
   if (path === "/orden/grunninnstillinger") return "base-defaults";
   if (path === "/orden/stevner") return "events";
   if (path === "/orden/stevne") return "event-wizard";
+  if (path === "/orden/vaktplan") return "planning";
   return "home";
 }
 
@@ -59,6 +60,8 @@ function navigate(path) {
     loadEvents().catch((error) => { toast(errorText(error), "error"); render(); });
   } else if (path.startsWith("/orden/stevne")) {
     loadEventWorkspace().catch((error) => { toast(errorText(error), "error"); render(); });
+  } else if (path.startsWith("/orden/vaktplan")) {
+    loadPlanning().catch((error) => { toast(errorText(error), "error"); render(); });
   } else if (isBaseRoute()) loadBaseData().catch((error) => { toast(errorText(error), "error"); render(); });
   else render();
 }
@@ -114,7 +117,7 @@ function roleLabel(role) {
 
 function shell(content, pageTitle) {
   const current = location.pathname.replace(/\/+$/, "") || "/orden";
-  const currentNav = current === "/orden/stevne" ? "/orden/stevner" : current;
+  const currentNav = ["/orden/stevne", "/orden/vaktplan"].includes(current) ? "/orden/stevner" : current;
   const canManageUsers = state.user.role === "system_admin";
   const selector = state.user.eventTypes.length > 1
     ? `<label class="type-select"><span>${escapeHtml(t("eventType.label"))}</span><select id="event-type-select">${state.user.eventTypes.map((type) => `<option value="${type}" ${type === state.user.selectedEventType ? "selected" : ""}>${escapeHtml(eventTypeLabel(type))}</option>`).join("")}</select></label>`
@@ -137,11 +140,15 @@ function eventStatusLabel(status) {
   return t(`event.status.${status}`);
 }
 
+function eventHref(event) {
+  return event.status === "draft" ? `/orden/stevne?id=${encodeURIComponent(event.id)}` : `/orden/vaktplan?id=${encodeURIComponent(event.id)}`;
+}
+
 function homeView() {
   const type = eventTypeLabel(state.user.selectedEventType).toLocaleLowerCase(getLocale());
   const upcoming = state.events.find((event) => event.endDate >= todayString() && !["completed", "cancelled"].includes(event.status));
   const upcomingCard = upcoming
-    ? `<a class="action-card action-card-link" href="/orden/stevne?id=${encodeURIComponent(upcoming.id)}" data-link><div class="action-icon">${icons.shield}</div><div><span class="eyebrow">${escapeHtml(t("home.nextEvent"))}</span><h2>${escapeHtml(upcoming.name)}</h2><p>${escapeHtml(dateLabel(upcoming.startDate, upcoming.endDate))} · ${escapeHtml(upcoming.venue.name)}, ${escapeHtml(upcoming.venue.city)}</p></div><span class="empty-chip">${escapeHtml(eventStatusLabel(upcoming.status))}</span></a>`
+    ? `<a class="action-card action-card-link" href="${eventHref(upcoming)}" data-link><div class="action-icon">${icons.shield}</div><div><span class="eyebrow">${escapeHtml(t("home.nextEvent"))}</span><h2>${escapeHtml(upcoming.name)}</h2><p>${escapeHtml(dateLabel(upcoming.startDate, upcoming.endDate))} · ${escapeHtml(upcoming.venue.name)}, ${escapeHtml(upcoming.venue.city)}</p></div><span class="empty-chip">${escapeHtml(eventStatusLabel(upcoming.status))}</span></a>`
     : `<article class="action-card"><div class="action-icon">${icons.shield}</div><div><span class="eyebrow">${escapeHtml(t("home.nextEvent"))}</span><h2>${escapeHtml(t("home.noUpcoming", { type }))}</h2><p>${escapeHtml(t("home.nextEventBody"))}</p></div><span class="empty-chip">${escapeHtml(t("home.noData"))}</span></article>`;
   return shell(`<main class="page page--home"><section class="hero-panel"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("home.greeting", { name: state.user.name.split(" ")[0] }))}</h1><p>${escapeHtml(t("home.eventFoundationBody"))}</p></div><div class="phase-badge"><span>${escapeHtml(t("home.phase"))}</span><strong>${escapeHtml(t("home.eventCreation"))}</strong><small>${escapeHtml(t("home.savedContinuously"))}</small></div></section><section class="action-grid" aria-label="${escapeHtml(t("home.eventActions"))}"><a class="action-card action-card--primary action-card-link" href="/orden/stevne" data-link><div class="action-icon">${icons.calendar}</div><div><span class="eyebrow">${escapeHtml(t("home.planning"))}</span><h2>${escapeHtml(t("home.createEvent"))}</h2><p>${escapeHtml(t("home.createEventReady"))}</p></div><span class="button button--primary">${escapeHtml(t("event.create"))}</span></a>${upcomingCard}</section></main>`, t("nav.home"));
 }
@@ -165,7 +172,7 @@ function settingsView() {
 }
 
 function eventCard(event) {
-  return `<a class="event-row" href="/orden/stevne?id=${encodeURIComponent(event.id)}" data-link><span class="event-date-badge"><strong>${escapeHtml(new Intl.DateTimeFormat(getLocale(), { day: "2-digit" }).format(new Date(`${event.startDate}T12:00:00Z`)))}</strong><small>${escapeHtml(new Intl.DateTimeFormat(getLocale(), { month: "short" }).format(new Date(`${event.startDate}T12:00:00Z`)))}</small></span><div><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(dateLabel(event.startDate, event.endDate))} · ${escapeHtml(event.venue.name)}, ${escapeHtml(event.venue.city)}</small></div><span class="state-chip ${event.status === "planning" || event.status === "ready" ? "is-active" : ""}">${escapeHtml(eventStatusLabel(event.status))}</span><span class="event-arrow">→</span></a>`;
+  return `<a class="event-row" href="${eventHref(event)}" data-link><span class="event-date-badge"><strong>${escapeHtml(new Intl.DateTimeFormat(getLocale(), { day: "2-digit" }).format(new Date(`${event.startDate}T12:00:00Z`)))}</strong><small>${escapeHtml(new Intl.DateTimeFormat(getLocale(), { month: "short" }).format(new Date(`${event.startDate}T12:00:00Z`)))}</small></span><div><strong>${escapeHtml(event.name)}</strong><small>${escapeHtml(dateLabel(event.startDate, event.endDate))} · ${escapeHtml(event.venue.name)}, ${escapeHtml(event.venue.city)}</small></div><span class="state-chip ${event.status === "planning" || event.status === "ready" ? "is-active" : ""}">${escapeHtml(eventStatusLabel(event.status))}</span><span class="event-arrow">→</span></a>`;
 }
 
 function eventsView() {
@@ -201,13 +208,72 @@ function eventStepThree() {
   if (!event) return "";
   const daySummary = event.days.map((day) => `<li><strong>${escapeHtml(formatDate(`${day.date}T12:00:00Z`))}</strong><span>${escapeHtml(day.dayStart)}–${escapeHtml(day.dayEnd)} · ${escapeHtml(t("event.shiftCountValue", { count: day.shifts.length }))}</span></li>`).join("");
   const completed = event.status !== "draft";
-  return `<section class="content-card wizard-card"><div class="review-status ${completed ? "is-complete" : ""}"><span>${completed ? "✓" : "3"}</span><div><h2>${escapeHtml(t(completed ? "event.createdTitle" : "event.reviewTitle"))}</h2><p>${escapeHtml(t(completed ? "event.createdBody" : "event.reviewIntro"))}</p></div></div><div class="event-review"><div><span>${escapeHtml(t("event.generatedName"))}</span><strong>${escapeHtml(event.name)}</strong></div><div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(dateLabel(event.startDate, event.endDate))}</strong></div><div><span>${escapeHtml(t("event.venue"))}</span><strong>${escapeHtml(event.venue.name)}</strong><small>${escapeHtml([event.venue.address, event.venue.postalCode, event.venue.city, event.venue.country].filter(Boolean).join(", "))}</small></div><div class="wide"><span>${escapeHtml(t("event.shifts"))}</span><ul>${daySummary}</ul></div></div><div class="wizard-actions"><button class="button button--secondary wizard-back" data-step="1">${escapeHtml(t("event.editDateVenue"))}</button><button class="button button--secondary wizard-back" data-step="2">${escapeHtml(t("event.editShifts"))}</button>${completed ? `<a class="button button--primary button-link" href="/orden/stevner" data-link>${escapeHtml(t("event.backToEvents"))}</a>` : `<button id="complete-event-setup" class="button button--primary">${escapeHtml(t("event.completeSetup"))}</button>`}</div></section>`;
+  return `<section class="content-card wizard-card"><div class="review-status ${completed ? "is-complete" : ""}"><span>${completed ? "✓" : "3"}</span><div><h2>${escapeHtml(t(completed ? "event.createdTitle" : "event.reviewTitle"))}</h2><p>${escapeHtml(t(completed ? "event.createdBody" : "event.reviewIntro"))}</p></div></div><div class="event-review"><div><span>${escapeHtml(t("event.generatedName"))}</span><strong>${escapeHtml(event.name)}</strong></div><div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(dateLabel(event.startDate, event.endDate))}</strong></div><div><span>${escapeHtml(t("event.venue"))}</span><strong>${escapeHtml(event.venue.name)}</strong><small>${escapeHtml([event.venue.address, event.venue.postalCode, event.venue.city, event.venue.country].filter(Boolean).join(", "))}</small></div><div class="wide"><span>${escapeHtml(t("event.shifts"))}</span><ul>${daySummary}</ul></div></div><div class="wizard-actions"><button class="button button--secondary wizard-back" data-step="1">${escapeHtml(t("event.editDateVenue"))}</button><button class="button button--secondary wizard-back" data-step="2">${escapeHtml(t("event.editShifts"))}</button>${completed ? `<a class="button button--secondary button-link" href="/orden/stevner" data-link>${escapeHtml(t("event.backToEvents"))}</a><a class="button button--primary button-link" href="/orden/vaktplan?id=${encodeURIComponent(event.id)}" data-link>${escapeHtml(t("planning.open"))}</a>` : `<button id="complete-event-setup" class="button button--primary">${escapeHtml(t("event.completeSetup"))}</button>`}</div></section>`;
 }
 
 function eventWizardView() {
   const title = state.event?.name || t("event.create");
   const content = state.eventWizardStep === 1 ? eventStepOne() : state.eventWizardStep === 2 ? eventStepTwo() : eventStepThree();
   return shell(`<main class="page event-wizard"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(title)}</h1><p>${escapeHtml(t("event.wizardIntro"))}</p></div><span class="save-state">✓ ${escapeHtml(t("event.savedContinuously"))}</span></section>${wizardHeader()}${content}</main>`, title);
+}
+
+function planningAssignment(shiftId, postId) {
+  return state.planning?.assignments.find((item) => item.shiftId === shiftId && item.postId === postId) || null;
+}
+
+function planningEligibility(guard, day, shift, post) {
+  if (!guard.active) return { eligible: false, reason: "planning.reasonInactive" };
+  if (guard.disabledForEvent) return { eligible: false, reason: "planning.reasonEventDisabled" };
+  const weekday = new Date(`${day.date}T12:00:00Z`).getUTCDay();
+  if (guard.availableWeekdays.length && !guard.availableWeekdays.includes(weekday)) return { eligible: false, reason: "planning.reasonDay" };
+  if ((guard.availableFrom && shift.startTime < guard.availableFrom) || (guard.availableTo && shift.endTime > guard.availableTo)) return { eligible: false, reason: "planning.reasonTime" };
+  if (guard.allowedPostIds.length && (!post.sourcePostId || !guard.allowedPostIds.includes(post.sourcePostId))) return { eligible: false, reason: "planning.reasonPost" };
+  const sameShiftElsewhere = state.planning.assignments.some((assignment) => assignment.guardId === guard.id && assignment.shiftId === shift.id && assignment.postId !== post.id);
+  if (sameShiftElsewhere) return { eligible: false, reason: "planning.reasonAssigned" };
+  return { eligible: true, reason: null };
+}
+
+function guardOptionList() {
+  if (!state.planningSlot) return "";
+  const day = state.planning.days[state.planningSlot.dayIndex];
+  const shift = day.shifts.find((item) => item.id === state.planningSlot.shiftId);
+  const post = state.planning.posts.find((item) => item.id === state.planningSlot.postId);
+  const query = state.planningSearch.trim().toLocaleLowerCase(getLocale());
+  const guards = state.planning.guards.filter((guard) => !query || [guard.name, guard.phone, guard.preferences, guard.restrictions].join(" ").toLocaleLowerCase(getLocale()).includes(query));
+  if (!guards.length) return `<p class="base-empty">${escapeHtml(t("planning.noGuardsFound"))}</p>`;
+  return guards.map((guard) => {
+    const eligibility = planningEligibility(guard, day, shift, post);
+    const selected = planningAssignment(shift.id, post.id)?.guardId === guard.id;
+    const details = [guard.preferences && `${t("base.preferences")}: ${guard.preferences}`, guard.restrictions && `${t("base.restrictions")}: ${guard.restrictions}`, guard.availability].filter(Boolean).join(" · ");
+    return `<article class="guard-option ${eligibility.eligible ? "" : "is-unavailable"} ${selected ? "is-selected" : ""}"><button class="guard-select" data-guard-id="${guard.id}" ${eligibility.eligible ? "" : "disabled"}><span class="guard-avatar">${escapeHtml(guard.name.slice(0, 1).toUpperCase())}</span><span><strong>${escapeHtml(guard.name)}</strong><small>${escapeHtml(eligibility.eligible ? (details || guard.phone || t("planning.available")) : t(eligibility.reason))}</small></span>${selected ? `<span class="selected-check">✓</span>` : ""}</button><button class="guard-disable-menu" data-guard-id="${guard.id}" aria-label="${escapeHtml(t("planning.disableGuard"))}" title="${escapeHtml(t("planning.disableGuard"))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.2A10.7 10.7 0 0 1 12 4c7 0 10 8 10 8a18 18 0 0 1-2.1 3.2M6.6 6.6C3.5 8.6 2 12 2 12s3 8 10 8a10.7 10.7 0 0 0 5.4-1.4"/></svg></button></article>`;
+  }).join("");
+}
+
+function guardDisablePanel() {
+  if (!state.planningGuardMenu) return "";
+  const guard = state.planning.guards.find((item) => item.id === state.planningGuardMenu);
+  if (!guard) return "";
+  if (guard.disabledForEvent) return `<section class="disable-panel"><strong>${escapeHtml(guard.name)}</strong><p>${escapeHtml(t("planning.disabledForEvent"))}</p><div><button class="button button--secondary cancel-disable">${escapeHtml(t("common.cancel"))}</button><button class="button button--primary enable-event-guard" data-guard-id="${guard.id}">${escapeHtml(t("planning.enableForEvent"))}</button></div></section>`;
+  return `<section class="disable-panel"><strong>${escapeHtml(t("planning.disableTitle", { name: guard.name }))}</strong><p>${escapeHtml(t("planning.disableIntro"))}</p><div><button class="button button--secondary cancel-disable">${escapeHtml(t("common.cancel"))}</button><button class="button button--secondary disable-guard" data-guard-id="${guard.id}" data-scope="event">${escapeHtml(t("planning.disableEvent"))}</button><button class="button button--danger disable-guard" data-guard-id="${guard.id}" data-scope="indefinite">${escapeHtml(t("planning.disableIndefinite"))}</button></div></section>`;
+}
+
+function planningModal() {
+  if (!state.planningSlot) return "";
+  const day = state.planning.days[state.planningSlot.dayIndex];
+  const shift = day.shifts.find((item) => item.id === state.planningSlot.shiftId);
+  const post = state.planning.posts.find((item) => item.id === state.planningSlot.postId);
+  const assignment = planningAssignment(shift.id, post.id);
+  return `<div class="modal-backdrop" id="planning-modal-backdrop"><section class="planning-modal" role="dialog" aria-modal="true" aria-labelledby="planning-modal-title"><header><div><span class="eyebrow">${escapeHtml(post.code)} · ${escapeHtml(shift.startTime)}–${escapeHtml(shift.endTime)}</span><h2 id="planning-modal-title">${escapeHtml(t("planning.chooseGuard"))}</h2></div><button class="icon-button close-planning-modal" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></header>${guardDisablePanel()}<label class="guard-search"><span>${escapeHtml(t("common.search"))}</span><input id="planning-guard-search" type="search" value="${escapeHtml(state.planningSearch)}" placeholder="${escapeHtml(t("planning.searchPlaceholder"))}" autofocus></label><div id="guard-options" class="guard-options">${guardOptionList()}</div><footer><a href="/orden/ordensvakter" data-link>${escapeHtml(t("planning.manageGuards"))}</a>${assignment ? `<button id="remove-planning-assignment" class="button button--secondary">${escapeHtml(t("planning.removeAssignment"))}</button>` : ""}</footer></section></div>`;
+}
+
+function planningView() {
+  const planning = state.planning;
+  if (!planning) return shell(`<main class="page"><p>${escapeHtml(t("app.loading"))}</p></main>`, t("terms.dutyPlan"));
+  const day = planning.days[Math.min(state.planningDay, Math.max(0, planning.days.length - 1))];
+  const dayTabs = planning.days.length > 1 ? `<div class="planning-days" role="tablist">${planning.days.map((item, index) => `<button class="planning-day ${index === state.planningDay ? "is-active" : ""}" data-day-index="${index}"><span>${escapeHtml(t("event.dayNumber", { number: item.dayNumber }))}</span><strong>${escapeHtml(formatDate(`${item.date}T12:00:00Z`))}</strong></button>`).join("")}</div>` : "";
+  const empty = !planning.posts.length ? `<section class="content-card planning-empty"><div class="action-icon">${icons.pin}</div><h2>${escapeHtml(t("planning.noPostsTitle"))}</h2><p>${escapeHtml(t("planning.noPostsBody"))}</p><a class="button button--primary button-link" href="/orden/ordensposter" data-link>${escapeHtml(t("planning.managePosts"))}</a></section>` : "";
+  const table = planning.posts.length ? `<div class="planning-table-wrap"><table class="planning-table"><thead><tr><th><span>${escapeHtml(t("planning.post"))}</span></th>${day.shifts.map((shift, index) => `<th><strong>${escapeHtml(t("event.shiftNumber", { number: index + 1 }))}</strong><small>${escapeHtml(shift.startTime)}–${escapeHtml(shift.endTime)}</small></th>`).join("")}</tr></thead><tbody>${planning.posts.map((post) => `<tr><th><strong>${escapeHtml(post.code)}</strong><span>${escapeHtml(post.shortName)}</span>${post.notes ? `<small>${escapeHtml(post.notes)}</small>` : ""}</th>${day.shifts.map((shift) => { const assignment = planningAssignment(shift.id, post.id); return `<td><button class="planning-cell ${assignment ? "is-filled" : ""}" data-day-index="${state.planningDay}" data-shift-id="${shift.id}" data-post-id="${post.id}">${assignment ? `<span class="guard-avatar">${escapeHtml(assignment.guardName.slice(0, 1).toUpperCase())}</span><span><strong>${escapeHtml(assignment.guardName)}</strong><small>${escapeHtml(t("planning.changeGuard"))}</small></span>` : `<span class="cell-plus">+</span><span>${escapeHtml(t("planning.choosePerson"))}</span>`}</button></td>`; }).join("")}</tr>`).join("")}</tbody></table></div>` : "";
+  return shell(`<main class="page planning-page"><section class="page-heading planning-heading"><div><span class="eyebrow">${escapeHtml(dateLabel(planning.event.startDate, planning.event.endDate))} · ${escapeHtml(planning.event.venue.name)}</span><h1>${escapeHtml(planning.event.name)}</h1><p>${escapeHtml(t("planning.intro"))}</p></div><div class="planning-summary"><span>${escapeHtml(t("planning.unfilled"))}</span><strong>${planning.missingCount}</strong><small>${escapeHtml(t("planning.ofSlots", { total: planning.totalSlots }))}</small></div></section><div class="planning-toolbar"><span class="save-state">✓ ${escapeHtml(t("planning.autoSaved"))}</span><a class="button button--secondary button-link" href="/orden/stevne?id=${encodeURIComponent(planning.event.id)}" data-link>${escapeHtml(t("planning.editEvent"))}</a></div>${dayTabs}${empty}${table}${planningModal()}</main>`, t("terms.dutyPlan"));
 }
 
 const baseMeta = {
@@ -237,8 +303,12 @@ function baseRows(entity) {
 function baseForm(entity, item = null) {
   const editing = Boolean(item);
   const value = (key) => escapeHtml(item?.[key] || "");
+  const guardWeekdays = item?.availableWeekdays || [];
+  const weekdayFields = Array.from({ length: 7 }, (_, day) => `<label class="check-row"><input type="checkbox" name="availableWeekdays" value="${day}" ${guardWeekdays.includes(day) ? "checked" : ""}><span>${escapeHtml(t(`planning.weekday.${day}`))}</span></label>`).join("");
+  const allowedPosts = item?.allowedPostIds || [];
+  const postFields = state.base.posts.length ? state.base.posts.filter((post) => post.active).map((post) => `<label class="check-row"><input type="checkbox" name="allowedPostIds" value="${post.id}" ${allowedPosts.includes(post.id) ? "checked" : ""}><span>${escapeHtml(post.code)} · ${escapeHtml(post.shortName)}</span></label>`).join("") : `<small>${escapeHtml(t("planning.noPostRestrictions"))}</small>`;
   const fields = entity === "guards"
-    ? `<label>${escapeHtml(t("users.name"))}<input name="name" value="${value("name")}" required maxlength="120"></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel" value="${value("phone")}" autocomplete="tel"></label><label>${escapeHtml(t("base.emailOptional"))}<input name="email" type="email" value="${value("email")}" autocomplete="email"></label><label>${escapeHtml(t("base.availability"))}<input name="availability" value="${value("availability")}"></label><label class="wide">${escapeHtml(t("base.restrictions"))}<textarea name="restrictions">${value("restrictions")}</textarea></label><label class="wide">${escapeHtml(t("base.preferences"))}<textarea name="preferences">${value("preferences")}</textarea></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`
+    ? `<label>${escapeHtml(t("users.name"))}<input name="name" value="${value("name")}" required maxlength="120"></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel" value="${value("phone")}" autocomplete="tel"></label><label>${escapeHtml(t("base.emailOptional"))}<input name="email" type="email" value="${value("email")}" autocomplete="email"></label><label>${escapeHtml(t("base.availability"))}<input name="availability" value="${value("availability")}"></label><fieldset class="wide availability-fieldset"><legend>${escapeHtml(t("planning.structuredAvailability"))}</legend><div class="availability-times"><label>${escapeHtml(t("planning.availableFrom"))}<input name="availableFrom" type="time" value="${value("availableFrom")}"></label><label>${escapeHtml(t("planning.availableTo"))}<input name="availableTo" type="time" value="${value("availableTo")}"></label></div><div class="weekday-grid">${weekdayFields}</div><small>${escapeHtml(t("planning.availabilityEmptyHint"))}</small></fieldset><fieldset class="wide availability-fieldset"><legend>${escapeHtml(t("planning.allowedPosts"))}</legend><div class="post-choice-grid">${postFields}</div><small>${escapeHtml(t("planning.allowedPostsHint"))}</small></fieldset><label class="wide">${escapeHtml(t("base.restrictions"))}<textarea name="restrictions">${value("restrictions")}</textarea></label><label class="wide">${escapeHtml(t("base.preferences"))}<textarea name="preferences">${value("preferences")}</textarea></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`
     : entity === "posts"
       ? `<label>${escapeHtml(t("base.postCode"))}<input name="code" value="${value("code")}" required maxlength="12" placeholder="3B"><small>${escapeHtml(t("base.postCodeHint"))}</small></label><label>${escapeHtml(t("base.shortName"))}<input name="shortName" value="${value("shortName")}" required maxlength="120"></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`
       : `<label>${escapeHtml(t("base.category"))}<input name="category" value="${value("category")}" required maxlength="80" placeholder="${escapeHtml(t("base.categoryHint"))}"></label><label>${escapeHtml(t("base.contactNameOptional"))}<input name="name" value="${value("name")}" maxlength="120"></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel" value="${value("phone")}" autocomplete="tel" required></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`;
@@ -271,6 +341,7 @@ function render() {
   else if (current === "settings") app.innerHTML = settingsView();
   else if (current === "events") app.innerHTML = eventsView();
   else if (current === "event-wizard") app.innerHTML = eventWizardView();
+  else if (current === "planning") app.innerHTML = planningView();
   else if (current === "base") app.innerHTML = baseOverviewView();
   else if (current === "base-guards") app.innerHTML = baseEntityView("guards");
   else if (current === "base-posts") app.innerHTML = baseEntityView("posts");
@@ -319,7 +390,12 @@ function bindBaseRecordForm(form) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const currentForm = event.currentTarget;
-    const data = Object.fromEntries(new FormData(currentForm));
+    const formData = new FormData(currentForm);
+    const data = Object.fromEntries(formData);
+    if (currentForm.dataset.entity === "guards") {
+      data.availableWeekdays = formData.getAll("availableWeekdays").map(Number);
+      data.allowedPostIds = formData.getAll("allowedPostIds");
+    }
     setFormBusy(currentForm, true);
     try {
       if (currentForm.dataset.mode === "edit") await endpoints.updateBaseItem(currentForm.dataset.entity, currentForm.dataset.id, data);
@@ -435,6 +511,61 @@ function bindEventWizard() {
   });
 }
 
+function applyPlanningResult(result, closeModal = false) {
+  state.planning = result.planning;
+  if (closeModal) { state.planningSlot = null; state.planningSearch = ""; state.planningGuardMenu = null; }
+  render();
+}
+
+function bindGuardOptionActions() {
+  document.querySelectorAll(".guard-select").forEach((button) => button.addEventListener("click", async () => {
+    button.disabled = true;
+    try {
+      const result = await endpoints.assignGuard(state.planning.event.id, state.planningSlot.shiftId, state.planningSlot.postId, button.dataset.guardId);
+      applyPlanningResult(result, true);
+      toast(t("planning.assignmentSaved"));
+    } catch (error) { button.disabled = false; toast(errorText(error), "error"); }
+  }));
+  document.querySelectorAll(".guard-disable-menu").forEach((button) => button.addEventListener("click", () => { state.planningGuardMenu = button.dataset.guardId; render(); }));
+}
+
+function bindPlanning() {
+  document.querySelectorAll(".planning-day").forEach((button) => button.addEventListener("click", () => { state.planningDay = Number(button.dataset.dayIndex); state.planningSlot = null; render(); }));
+  document.querySelectorAll(".planning-cell").forEach((button) => button.addEventListener("click", () => {
+    state.planningSlot = { dayIndex: Number(button.dataset.dayIndex), shiftId: button.dataset.shiftId, postId: button.dataset.postId };
+    state.planningSearch = "";
+    state.planningGuardMenu = null;
+    render();
+  }));
+  const closeModal = () => { state.planningSlot = null; state.planningSearch = ""; state.planningGuardMenu = null; render(); };
+  document.querySelector(".close-planning-modal")?.addEventListener("click", closeModal);
+  document.querySelector("#planning-modal-backdrop")?.addEventListener("click", (event) => { if (event.target === event.currentTarget) closeModal(); });
+  document.querySelector("#planning-guard-search")?.addEventListener("input", (event) => {
+    state.planningSearch = event.target.value;
+    const options = document.querySelector("#guard-options");
+    if (options) { options.innerHTML = guardOptionList(); bindGuardOptionActions(); }
+  });
+  document.querySelector("#remove-planning-assignment")?.addEventListener("click", async (event) => {
+    const button = event.currentTarget; button.disabled = true;
+    try { const result = await endpoints.assignGuard(state.planning.event.id, state.planningSlot.shiftId, state.planningSlot.postId, null); applyPlanningResult(result, true); toast(t("planning.assignmentRemoved")); }
+    catch (error) { button.disabled = false; toast(errorText(error), "error"); }
+  });
+  document.querySelectorAll(".cancel-disable").forEach((button) => button.addEventListener("click", () => { state.planningGuardMenu = null; render(); }));
+  document.querySelectorAll(".disable-guard").forEach((button) => button.addEventListener("click", async () => {
+    const count = state.planning.assignments.filter((assignment) => assignment.guardId === button.dataset.guardId).length;
+    if (count && !window.confirm(t("planning.disableConfirm", { count }))) return;
+    button.disabled = true;
+    try { const result = await endpoints.setPlanningGuardDisabled(state.planning.event.id, button.dataset.guardId, { scope: button.dataset.scope, disabled: true, confirm: count > 0 }); applyPlanningResult(result); toast(t("planning.guardDisabled")); }
+    catch (error) { button.disabled = false; toast(errorText(error), "error"); }
+  }));
+  document.querySelectorAll(".enable-event-guard").forEach((button) => button.addEventListener("click", async () => {
+    button.disabled = true;
+    try { const result = await endpoints.setPlanningGuardDisabled(state.planning.event.id, button.dataset.guardId, { scope: "event", disabled: false }); applyPlanningResult(result); toast(t("planning.guardEnabled")); }
+    catch (error) { button.disabled = false; toast(errorText(error), "error"); }
+  }));
+  bindGuardOptionActions();
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); navigate(link.getAttribute("href")); }));
   document.querySelector("#public-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, false));
@@ -458,7 +589,7 @@ function bindEvents() {
     catch (error) { showFormError(form, error); setFormBusy(form, false); }
   });
   document.querySelector("#logout-button")?.addEventListener("click", async () => { try { await endpoints.logout(); } catch (error) { if (error.status !== 401) toast(errorText(error), "error"); } setCsrfToken(""); state.user = null; history.replaceState({}, "", "/orden/login"); render(); });
-  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; state.event = null; if (isBaseRoute()) await loadBaseData(); else if (["events", "home", "event-wizard"].includes(route())) { if (route() === "event-wizard") history.replaceState({}, "", "/orden/stevner"); await loadEvents(); } else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
+  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; state.event = null; state.planning = null; if (isBaseRoute()) await loadBaseData(); else if (["events", "home", "event-wizard", "planning"].includes(route())) { if (["event-wizard", "planning"].includes(route())) history.replaceState({}, "", "/orden/stevner"); await loadEvents(); } else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
   const createPanel = document.querySelector("#create-user-panel");
   document.querySelector("#show-create-user")?.addEventListener("click", () => { createPanel.hidden = false; createPanel.scrollIntoView({ behavior: "smooth", block: "start" }); createPanel.querySelector("input")?.focus(); });
   const hideCreate = () => { if (createPanel) createPanel.hidden = true; };
@@ -484,6 +615,7 @@ function bindEvents() {
   document.querySelectorAll(".base-toggle").forEach((button) => button.addEventListener("click", async () => { button.disabled = true; try { await endpoints.updateBaseItem(button.dataset.entity, button.dataset.id, { active: button.dataset.active !== "true" }); await loadBaseData(); toast(t("base.updated")); } catch (error) { button.disabled = false; toast(errorText(error), "error"); } }));
   document.querySelector("#base-settings-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); data.shiftCount = Number(data.shiftCount); setFormBusy(form, true); try { await endpoints.updateBaseSettings(data); await loadBaseData(); toast(t("base.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
   bindEventWizard();
+  bindPlanning();
 }
 
 function bindEditForm(panel) {
@@ -520,6 +652,17 @@ async function loadEventWorkspace() {
   render();
 }
 
+async function loadPlanning() {
+  const id = new URLSearchParams(location.search).get("id");
+  if (!id) { history.replaceState({}, "", "/orden/stevner"); return loadEvents(); }
+  const result = await endpoints.initializePlanning(id);
+  state.planning = result.planning;
+  state.planningDay = Math.min(state.planningDay, Math.max(0, state.planning.days.length - 1));
+  state.planningSlot = null;
+  state.planningGuardMenu = null;
+  render();
+}
+
 async function init() {
   await initI18n();
   setApiLocale(getLocale());
@@ -531,6 +674,7 @@ async function init() {
     if (route() === "users" && state.user.role === "system_admin") await loadUsers();
     else if (isBaseRoute()) await loadBaseData();
     else if (route() === "event-wizard") await loadEventWorkspace();
+    else if (route() === "planning") await loadPlanning();
     else if (["home", "events"].includes(route())) await loadEvents();
     else render();
   } catch (error) {
@@ -540,5 +684,5 @@ async function init() {
   }
 }
 
-window.addEventListener("popstate", () => { if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
+window.addEventListener("popstate", () => { if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
 init().catch((error) => { console.error(error); });

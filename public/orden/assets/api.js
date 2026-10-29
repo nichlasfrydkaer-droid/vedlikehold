@@ -64,4 +64,8 @@ export const endpoints = {
   updateEvent: (id, payload) => api(`/v1/events/${id}`, { method: "PATCH", body: JSON.stringify(payload) }),
   updateEventSchedule: (id, payload) => api(`/v1/events/${id}/schedule`, { method: "PUT", body: JSON.stringify(payload) }),
   completeEventSetup: (id) => api(`/v1/events/${id}/complete`, { method: "POST" }),
+  initializePlanning: (id) => api(`/v1/events/${id}/planning/initialize`, { method: "POST" }),
+  planning: (id) => api(`/v1/events/${id}/planning`),
+  assignGuard: (eventId, shiftId, postId, guardId) => api(`/v1/events/${eventId}/planning/assignments/${shiftId}/${postId}`, { method: "PUT", body: JSON.stringify({ guardId }) }),
+  setPlanningGuardDisabled: (eventId, guardId, payload) => api(`/v1/events/${eventId}/planning/guards/${guardId}`, { method: "POST", body: JSON.stringify(payload) }),
 };
