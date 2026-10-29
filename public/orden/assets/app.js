@@ -2,8 +2,9 @@ import { ApiError, endpoints, setApiLocale, setCsrfToken } from "./api.js";
 import { formatDate, getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
 
 const app = document.querySelector("#app");
-const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, dashboard: null, dashboardMode: "planning", attendanceOpen: false, checkInCodes: [], checkInCodesOpen: false, publicCheckIn: null, publicCheckInError: "", publicCheckInResult: null, configured: true, mobileMenu: false, setupComplete: false };
+const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, dashboard: null, dashboardMode: "planning", attendanceOpen: false, checkInCodes: [], checkInCodesOpen: false, publicCheckIn: null, publicCheckInError: "", publicCheckInResult: null, countingDraft: [{ name: "", guardId: "" }], publicCounting: null, publicCountingError: "", configured: true, mobileMenu: false, setupComplete: false };
 let dashboardClockTimer = null;
+let countingRefreshTimer = null;
 
 const icons = {
   home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
@@ -36,6 +37,7 @@ function route() {
   if (path === "/orden/login") return "login";
   if (path === "/orden/opprett-passord") return "setup-password";
   if (path === "/orden/innsjekking") return "public-checkin";
+  if (path === "/orden/opptelling") return "public-counting";
   if (path === "/orden/brukere" || path === "/orden/brugere") return "users";
   if (path === "/orden/innstillinger") return "settings";
   if (path === "/orden/grunnoppsett") return "base";
@@ -118,6 +120,15 @@ function publicCheckInView() {
     return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-event"><span class="eyebrow">${escapeHtml(portal.venueName)}</span><h1>${escapeHtml(portal.eventName)}</h1></div><div class="checkin-public-state is-success"><span>✓</span><h2>${escapeHtml(t(checkedIn ? "checkin.successInTitle" : "checkin.successOutTitle"))}</h2><p>${escapeHtml(t(checkedIn ? "checkin.successInBody" : "checkin.successOutBody", { name: state.publicCheckInResult.guardName }))}</p><button id="checkin-again" class="button button--secondary button--large">${escapeHtml(t("checkin.another"))}</button></div></section></main>`;
   }
   return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-event"><span class="eyebrow">${escapeHtml(portal.venueName)} · ${escapeHtml(dateLabel(portal.startDate, portal.endDate))}</span><h1>${escapeHtml(portal.eventName)}</h1><p>${escapeHtml(t("checkin.publicIntro"))}</p></div><form id="public-checkin-form" class="form-stack"><label>${escapeHtml(t("checkin.personalCode"))}<input name="code" class="checkin-code-input" inputmode="text" autocomplete="one-time-code" minlength="8" maxlength="9" placeholder="XXXX-XXXX" required autofocus></label><p class="form-error" hidden></p><div class="checkin-public-actions"><button class="button button--primary button--large" type="submit" name="action" value="checkin">${escapeHtml(t("terms.checkIn"))}</button><button class="button button--secondary button--large" type="submit" name="action" value="checkout">${escapeHtml(t("terms.checkOut"))}</button></div></form><p class="privacy-note">${escapeHtml(t("checkin.privacy"))}</p></section></main>`;
+}
+
+function publicCountingView() {
+  const languageSelect = `<label class="public-language"><span>${escapeHtml(t("common.language"))}</span><select id="public-locale-select">${localeOptions()}</select></label>`;
+  if (state.publicCountingError) return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-public-state is-error"><span>!</span><h1>${escapeHtml(t("counting.unavailable"))}</h1><p>${escapeHtml(errorText({ code: state.publicCountingError }))}</p></div></section></main>`;
+  if (!state.publicCounting) return `<main class="boot-screen"><div class="brand-mark">OV</div><p>${escapeHtml(t("app.loading"))}</p></main>`;
+  const item = state.publicCounting;
+  const status = item.status;
+  return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-event"><span class="eyebrow">${escapeHtml(item.venueName)} · ${escapeHtml(formatDate(`${item.date}T12:00:00Z`))} ${escapeHtml(item.scheduledTime)}</span><h1>${escapeHtml(item.roundName)}</h1><p>${escapeHtml(item.eventName)}</p></div><div class="counting-section-heading"><span>${escapeHtml(t("counting.section"))}</span><h2>${escapeHtml(item.sectionName)}</h2><p>${escapeHtml(t("counting.responsible", { name: item.guardName }))}</p><span class="counting-status is-${escapeHtml(status)}">${escapeHtml(t(`status.${status === "in_progress" ? "inProgress" : status}`))}</span></div>${status === "awaiting" ? `<button id="start-counting" class="button button--primary button--large counting-main-action">${escapeHtml(t("counting.start"))}</button>` : `<form id="public-counting-form" class="form-stack"><label>${escapeHtml(t("counting.participants"))}<input name="count" class="counting-number" type="number" min="0" max="100000" step="1" value="${item.attendeeCount ?? ""}" required autofocus></label><p class="form-error" hidden></p><button class="button button--primary button--large" type="submit">${escapeHtml(t(status === "completed" ? "counting.correct" : "counting.confirm"))}</button></form>`}</section></main>`;
 }
 
 function eventTypeLabel(value) {
@@ -366,6 +377,15 @@ function checkInCodesModal() {
   return `<div class="modal-backdrop" id="checkin-codes-backdrop"><section class="planning-modal checkin-codes-modal" role="dialog" aria-modal="true" aria-labelledby="checkin-codes-title"><header><div><span class="eyebrow">${escapeHtml(t("checkin.personalCodes"))}</span><h2 id="checkin-codes-title">${escapeHtml(t("checkin.codesReadyTitle"))}</h2><p>${escapeHtml(t("checkin.codesReadyBody"))}</p></div><button class="icon-button close-checkin-codes" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></header><div class="checkin-code-actions"><button id="copy-all-checkin-codes" class="button button--secondary">${icons.copy}${escapeHtml(t("checkin.copyAll"))}</button><button class="button button--secondary print-checkin-codes">${escapeHtml(t("checkin.print"))}</button></div><div class="checkin-code-list">${state.checkInCodes.map((item) => `<article><div><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.email || item.phone || t("checkin.noContact"))}</small></div><code>${escapeHtml(item.code)}</code><button class="icon-button copy-value" data-copy="${escapeHtml(item.code)}" aria-label="${escapeHtml(t("checkin.copyCode"))}">${icons.copy}</button></article>`).join("")}</div></section></div>`;
 }
 
+function countingDashboardCard() {
+  const rounds = state.dashboard.countingRounds || [];
+  const guardOptions = (selected) => `<option value="">${escapeHtml(t("counting.chooseGuard"))}</option>${state.dashboard.guards.filter((guard) => guard.active).map((guard) => `<option value="${guard.id}" ${guard.id === selected ? "selected" : ""}>${escapeHtml(guard.name)}</option>`).join("")}`;
+  const roundList = rounds.length ? rounds.map((round) => `<article class="counting-round"><header><div><strong>${escapeHtml(round.name)}</strong><small>${escapeHtml(formatDate(`${round.date}T12:00:00Z`))} · ${escapeHtml(round.scheduledTime)}</small></div><span class="counting-status is-${round.status}">${escapeHtml(t(`status.${round.status === "in_progress" ? "inProgress" : round.status}`))}</span></header><div class="counting-total"><strong>${round.attendeeTotal}</strong><span>${escapeHtml(t(round.provisional ? "counting.provisionalTotal" : "counting.finalTotal"))}</span><small>${escapeHtml(t("counting.sectionsDone", { complete: round.completed, total: round.totalSections }))}</small></div><div class="counting-section-list">${round.sections.map((section) => `<div><span class="counting-dot is-${section.status}"></span><div><strong>${escapeHtml(section.name)}</strong><small>${escapeHtml(section.guardName)}</small></div><b>${section.attendeeCount ?? "–"}</b><button class="icon-button copy-value" data-copy="${escapeHtml(section.url)}" aria-label="${escapeHtml(t("counting.copyLink"))}">${icons.copy}</button></div>`).join("")}</div></article>`).join("") : `<p class="base-empty">${escapeHtml(t("counting.noRounds"))}</p>`;
+  const dayOptions = state.dashboard.days.map((day) => `<option value="${day.id}">${escapeHtml(formatDate(`${day.date}T12:00:00Z`))}</option>`).join("");
+  const rows = state.countingDraft.map((section, index) => `<div class="counting-draft-row"><label>${escapeHtml(t("counting.sectionName"))}<input name="sectionName" data-index="${index}" value="${escapeHtml(section.name)}" required></label><label>${escapeHtml(t("counting.responsibleGuard"))}<select name="guardId" data-index="${index}" required>${guardOptions(section.guardId)}</select></label></div>`).join("");
+  return `<article class="content-card dashboard-counting-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("terms.counting"))}</span><h2>${escapeHtml(t("counting.dashboardTitle"))}</h2><p>${escapeHtml(t("counting.dashboardIntro"))}</p></div></div><div class="counting-rounds">${roundList}</div><details class="counting-create"><summary>${escapeHtml(t("counting.newRound"))}</summary><form id="counting-round-form" class="compact-form"><label>${escapeHtml(t("counting.day"))}<select name="dayId" required>${dayOptions}</select></label><label>${escapeHtml(t("counting.time"))}<input name="scheduledTime" type="time" value="11:40" required></label><label class="wide">${escapeHtml(t("counting.roundName"))}<input name="name" value="${escapeHtml(t("counting.defaultName"))}" required></label><div class="wide counting-draft">${rows}</div><button id="add-counting-section" class="button button--secondary wide" type="button">+ ${escapeHtml(t("counting.addSection"))}</button><p class="form-error wide" hidden></p><div class="form-actions wide"><button class="button button--primary" type="submit">${escapeHtml(t("counting.createRound"))}</button></div></form></details></article>`;
+}
+
 function dashboardView() {
   const dashboard = state.dashboard;
   if (!dashboard) return shell(`<main class="page"><p>${escapeHtml(t("app.loading"))}</p></main>`, t("dashboard.title"));
@@ -376,7 +396,7 @@ function dashboardView() {
   const assignmentTotal = dashboard.days.reduce((sum, day) => sum + day.shifts.length * dashboard.posts.length, 0);
   const fillPercent = assignmentTotal ? Math.round((dashboard.assignments.length / assignmentTotal) * 100) : 0;
   const contactCards = dashboard.contacts.length ? dashboard.contacts.map((contact) => `<a class="dashboard-contact" href="tel:${escapeHtml(contact.phone.replace(/\s/g, ""))}"><span>${icons.phone}</span><div><strong>${escapeHtml(contact.category)}</strong><small>${escapeHtml([contact.name, contact.phone].filter(Boolean).join(" · "))}</small></div><b>→</b></a>`).join("") : `<p class="base-empty">${escapeHtml(t("dashboard.noContacts"))}</p>`;
-  const checkInCard = checkInDashboardCard();
+  const checkInCard = `${checkInDashboardCard()}${countingDashboardCard()}`;
   const nextShift = context.nextShift ? `${formatDate(`${context.nextShift.day.date}T12:00:00Z`)} · ${context.nextShift.startTime}–${context.nextShift.endTime}` : t("dashboard.noMoreShifts");
   return shell(`<main class="page dashboard-page"><section class="dashboard-hero"><div class="dashboard-event"><span class="eyebrow">${escapeHtml(dashboard.event.venue.name)} · ${escapeHtml(dateLabel(dashboard.event.startDate, dashboard.event.endDate))}</span><h1>${escapeHtml(dashboard.event.name)}</h1><div class="mode-switch"><button class="dashboard-mode ${state.dashboardMode === "planning" ? "is-active" : ""}" data-mode="planning">${escapeHtml(t("dashboard.planningMode"))}</button><button class="dashboard-mode ${state.dashboardMode === "operation" ? "is-active" : ""}" data-mode="operation">${escapeHtml(t("dashboard.operationMode"))}</button></div></div><div class="dashboard-clock"><span>${escapeHtml(t("dashboard.localTime"))}</span><strong id="live-clock">${escapeHtml(context.now.clock)}</strong><small>${escapeHtml(formatDate(`${context.now.date}T12:00:00Z`))}</small></div><div class="next-shift"><span>${escapeHtml(t("dashboard.nextShift"))}</span><strong>${escapeHtml(nextShift)}</strong><small id="next-shift-countdown">${escapeHtml(nextShiftText(context))}</small></div></section><section class="dashboard-metrics">${dashboardMetric("✓", t("dashboard.arrived"), String(arrived), t("dashboard.ofExpected", { expected }), "green")}${dashboardMetric("!", t("dashboard.missing"), String(context.missingIds.length), t("dashboard.notCheckedIn"), context.missingIds.length ? "amber" : "green")}${dashboardMetric("R", t("terms.reserves"), String(context.reserveIds.length), t("dashboard.presentNotOnDuty"), "blue")}${dashboardMetric("P", t("dashboard.unstaffedPosts"), String(context.unstaffed.length), context.currentShift ? currentLabel : t("dashboard.forSelectedDay"), context.unstaffed.length ? "red" : "green")}</section><section class="dashboard-grid"><article class="content-card dashboard-shift-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.shiftStatus"))}</span><h2>${escapeHtml(currentLabel)}</h2></div><span class="state-chip ${context.currentShift ? "is-active" : ""}">${escapeHtml(t(context.currentShift ? "dashboard.shiftActive" : "dashboard.waiting"))}</span></div><div class="readiness"><div><span>${escapeHtml(t("dashboard.planCoverage"))}</span><strong>${fillPercent}%</strong></div><progress max="100" value="${fillPercent}"></progress><small>${escapeHtml(t("dashboard.assignmentsComplete", { complete: dashboard.assignments.length, total: assignmentTotal }))}</small></div><div class="dashboard-actions"><a class="button button--primary button-link" href="/orden/vaktplan?id=${encodeURIComponent(dashboard.event.id)}" data-link>${escapeHtml(t("planning.open"))}</a><button id="open-attendance" class="button button--secondary">${escapeHtml(t("dashboard.manageAttendance"))}</button></div></article><article class="content-card dashboard-roster-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.overview"))}</span><h2>${escapeHtml(t("dashboard.attendance"))}</h2></div><button id="open-attendance-secondary" class="button button--secondary">${escapeHtml(t("dashboard.openList"))}</button></div><div class="roster-summary"><div><strong>${arrived}</strong><span>${escapeHtml(t("dashboard.present"))}</span></div><div><strong>${context.missingIds.length}</strong><span>${escapeHtml(t("dashboard.missing"))}</span></div><div><strong>${context.reserveIds.length}</strong><span>${escapeHtml(t("terms.reserves"))}</span></div></div></article>${checkInCard}<article class="content-card dashboard-contacts-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.quickAccess"))}</span><h2>${escapeHtml(t("terms.contacts"))}</h2></div></div><div class="dashboard-contacts">${contactCards}</div></article></section>${attendanceModal()}${checkInCodesModal()}</main>`, t("dashboard.title"));
 }
@@ -440,8 +460,10 @@ function baseDefaultsView() {
 
 function render() {
   if (dashboardClockTimer) { clearInterval(dashboardClockTimer); dashboardClockTimer = null; }
+  if (countingRefreshTimer) { clearInterval(countingRefreshTimer); countingRefreshTimer = null; }
   const current = route();
-  if (current === "public-checkin") app.innerHTML = publicCheckInView();
+  if (current === "public-counting") app.innerHTML = publicCountingView();
+  else if (current === "public-checkin") app.innerHTML = publicCheckInView();
   else if (current === "setup-password") app.innerHTML = setupPasswordView();
   else if (!state.user) app.innerHTML = loginView();
   else if (current === "users" && state.user.role === "system_admin") app.innerHTML = usersView();
@@ -733,9 +755,27 @@ function bindDashboard() {
   document.querySelectorAll(".copy-value").forEach((button) => button.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(button.dataset.copy); toast(t("checkin.copied")); } catch { toast(t("errors.copy_failed"), "error"); }
   }));
+  const captureCountingDraft = () => {
+    const form = document.querySelector("#counting-round-form");
+    if (!form) return;
+    const names = [...form.querySelectorAll('[name="sectionName"]')]; const guards = [...form.querySelectorAll('[name="guardId"]')];
+    state.countingDraft = names.map((input, index) => ({ name: input.value, guardId: guards[index]?.value || "" }));
+  };
+  document.querySelector("#add-counting-section")?.addEventListener("click", () => { captureCountingDraft(); state.countingDraft.push({ name: "", guardId: "" }); render(); document.querySelector(".counting-create")?.setAttribute("open", ""); });
+  document.querySelector("#counting-round-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault(); const form = event.currentTarget; const data = new FormData(form);
+    const names = data.getAll("sectionName"); const guardIds = data.getAll("guardId");
+    const payload = { dayId: data.get("dayId"), scheduledTime: data.get("scheduledTime"), name: data.get("name"), sections: names.map((name, index) => ({ name, guardId: guardIds[index] })) };
+    setFormBusy(form, true);
+    try { const result = await endpoints.createCountingRound(state.dashboard.event.id, payload); state.dashboard.countingRounds = result.rounds; state.countingDraft = [{ name: "", guardId: "" }]; render(); toast(t("counting.created")); }
+    catch (error) { showFormError(form, error); setFormBusy(form, false); }
+  });
   if (route() === "dashboard") {
     updateDashboardClock();
     dashboardClockTimer = setInterval(updateDashboardClock, 1000);
+    countingRefreshTimer = setInterval(async () => {
+      try { const result = await endpoints.counting(state.dashboard.event.id); if (JSON.stringify(result.rounds) !== JSON.stringify(state.dashboard.countingRounds || [])) { state.dashboard.countingRounds = result.rounds; render(); } } catch { /* next poll retries */ }
+    }, 5000);
   }
 }
 
@@ -758,6 +798,16 @@ function bindEvents() {
     event.target.value = raw.length > 4 ? `${raw.slice(0, 4)}-${raw.slice(4)}` : raw;
   });
   document.querySelector("#checkin-again")?.addEventListener("click", () => { state.publicCheckInResult = null; render(); });
+  document.querySelector("#start-counting")?.addEventListener("click", async (event) => {
+    event.currentTarget.disabled = true;
+    try { const token = new URLSearchParams(location.search).get("token") || ""; const result = await endpoints.startCounting(token); state.publicCounting = result.counting; render(); }
+    catch (error) { event.currentTarget.disabled = false; toast(errorText(error), "error"); }
+  });
+  document.querySelector("#public-counting-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault(); const form = event.currentTarget; const count = Number(new FormData(form).get("count")); setFormBusy(form, true);
+    try { const token = new URLSearchParams(location.search).get("token") || ""; const result = await endpoints.submitCounting(token, count, state.publicCounting.revision); state.publicCounting = result.counting; render(); }
+    catch (error) { showFormError(form, error); setFormBusy(form, false); }
+  });
   document.querySelector("#settings-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, true));
   document.querySelector(".open-menu")?.addEventListener("click", () => { state.mobileMenu = true; document.querySelector(".app-shell")?.classList.add("menu-open"); });
   const closeMenu = () => { state.mobileMenu = false; document.querySelector(".app-shell")?.classList.remove("menu-open"); };
@@ -875,12 +925,22 @@ async function loadPublicCheckIn() {
   render();
 }
 
+async function loadPublicCounting() {
+  const token = new URLSearchParams(location.search).get("token") || "";
+  state.publicCounting = null; state.publicCountingError = "";
+  if (!token) { state.publicCountingError = "counting_link_not_found"; render(); return; }
+  try { const result = await endpoints.publicCounting(token); state.publicCounting = result.counting; }
+  catch (error) { state.publicCountingError = error?.code || "request_error"; }
+  render();
+}
+
 async function init() {
   await initI18n();
   setApiLocale(getLocale());
   const bootMessage = document.querySelector("#boot-message");
   if (bootMessage) bootMessage.textContent = t("app.loading");
   if (route() === "public-checkin") { await loadPublicCheckIn(); return; }
+  if (route() === "public-counting") { await loadPublicCounting(); return; }
   try {
     const result = await endpoints.me(); state.user = result.user;
     if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); }
@@ -898,5 +958,5 @@ async function init() {
   }
 }
 
-window.addEventListener("popstate", () => { if (route() === "public-checkin") return loadPublicCheckIn(); if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (route() === "dashboard") loadDashboard().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
+window.addEventListener("popstate", () => { if (route() === "public-checkin") return loadPublicCheckIn(); if (route() === "public-counting") return loadPublicCounting(); if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (route() === "dashboard") loadDashboard().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
 init().catch((error) => { console.error(error); });

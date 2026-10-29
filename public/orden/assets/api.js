@@ -77,4 +77,9 @@ export const endpoints = {
   setCheckInActive: (eventId, active) => api(`/v1/events/${eventId}/check-in/active`, { method: "PATCH", body: JSON.stringify({ active }) }),
   publicCheckInPortal: (token) => api(`/v1/public/check-in/${encodeURIComponent(token)}`),
   publicCheckIn: (token, code, action, source) => api(`/v1/public/check-in/${encodeURIComponent(token)}`, { method: "POST", body: JSON.stringify({ code, action, source }) }),
+  counting: (eventId) => api(`/v1/events/${eventId}/counting`),
+  createCountingRound: (eventId, payload) => api(`/v1/events/${eventId}/counting/rounds`, { method: "POST", body: JSON.stringify(payload) }),
+  publicCounting: (token) => api(`/v1/public/counting/${encodeURIComponent(token)}`),
+  startCounting: (token) => api(`/v1/public/counting/${encodeURIComponent(token)}/start`, { method: "POST", body: JSON.stringify({}) }),
+  submitCounting: (token, count, revision) => api(`/v1/public/counting/${encodeURIComponent(token)}/submit`, { method: "POST", body: JSON.stringify({ count, revision }) }),
 };
