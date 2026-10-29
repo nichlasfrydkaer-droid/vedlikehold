@@ -2,7 +2,7 @@ import { ApiError, endpoints, setApiLocale, setCsrfToken } from "./api.js";
 import { formatDate, getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
 
 const app = document.querySelector("#app");
-const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, dashboard: null, dashboardMode: "planning", attendanceOpen: false, configured: true, mobileMenu: false, setupComplete: false };
+const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, dashboard: null, dashboardMode: "planning", attendanceOpen: false, checkInCodes: [], checkInCodesOpen: false, publicCheckIn: null, publicCheckInError: "", publicCheckInResult: null, configured: true, mobileMenu: false, setupComplete: false };
 let dashboardClockTimer = null;
 
 const icons = {
@@ -18,6 +18,8 @@ const icons = {
   logout: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>`,
   close: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>`,
+  scan: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 12h8"/></svg>`,
+  copy: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>`,
 };
 
 function escapeHtml(value = "") {
@@ -33,6 +35,7 @@ function route() {
   if (!path.startsWith("/orden")) return "home";
   if (path === "/orden/login") return "login";
   if (path === "/orden/opprett-passord") return "setup-password";
+  if (path === "/orden/innsjekking") return "public-checkin";
   if (path === "/orden/brukere" || path === "/orden/brugere") return "users";
   if (path === "/orden/innstillinger") return "settings";
   if (path === "/orden/grunnoppsett") return "base";
@@ -103,6 +106,18 @@ function setupPasswordView() {
     return `<main class="login-shell"><section class="login-card setup-card">${brand()}${languageSelect}<div class="login-heading"><span class="eyebrow">${escapeHtml(t("accountSetup.completeEyebrow"))}</span><h1>${escapeHtml(t("accountSetup.completeTitle"))}</h1><p>${escapeHtml(t("accountSetup.completeBody"))}</p></div><a class="button button--primary button--large button-link" href="/orden/login" data-link>${escapeHtml(t("accountSetup.goToLogin"))}</a></section><aside class="login-visual"><div><span class="visual-kicker">${escapeHtml(t("auth.visualKicker"))}</span><h2>${escapeHtml(t("auth.visualTitle"))}</h2><p>${escapeHtml(t("auth.visualBody"))}</p></div></aside></main>`;
   }
   return `<main class="login-shell"><section class="login-card setup-card">${brand()}${languageSelect}<div class="login-heading"><span class="eyebrow">${escapeHtml(t("accountSetup.eyebrow"))}</span><h1>${escapeHtml(t("accountSetup.title"))}</h1><p>${escapeHtml(t(token ? "accountSetup.intro" : "accountSetup.missingToken"))}</p></div>${token ? `<form id="setup-password-form" class="form-stack"><label>${escapeHtml(t("accountSetup.password"))}<input name="password" type="password" autocomplete="new-password" minlength="12" required autofocus><small>${escapeHtml(t("users.passwordHint"))}</small></label><label>${escapeHtml(t("accountSetup.confirmPassword"))}<input name="passwordConfirm" type="password" autocomplete="new-password" minlength="12" required></label><p class="form-error" hidden></p><button class="button button--primary button--large" type="submit">${escapeHtml(t("accountSetup.submit"))}</button></form>` : `<a class="button button--secondary button--large button-link" href="/orden/login" data-link>${escapeHtml(t("accountSetup.goToLogin"))}</a>`}</section><aside class="login-visual"><div><span class="visual-kicker">${escapeHtml(t("auth.visualKicker"))}</span><h2>${escapeHtml(t("auth.visualTitle"))}</h2><p>${escapeHtml(t("auth.visualBody"))}</p></div></aside></main>`;
+}
+
+function publicCheckInView() {
+  const languageSelect = `<label class="public-language"><span>${escapeHtml(t("common.language"))}</span><select id="public-locale-select">${localeOptions()}</select></label>`;
+  if (state.publicCheckInError) return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-public-state is-error"><span>!</span><h1>${escapeHtml(t("checkin.unavailableTitle"))}</h1><p>${escapeHtml(errorText({ code: state.publicCheckInError }))}</p></div></section></main>`;
+  if (!state.publicCheckIn) return `<main class="boot-screen"><div class="brand-mark">OV</div><p>${escapeHtml(t("app.loading"))}</p></main>`;
+  const portal = state.publicCheckIn;
+  if (state.publicCheckInResult) {
+    const checkedIn = state.publicCheckInResult.action === "checkin";
+    return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-event"><span class="eyebrow">${escapeHtml(portal.venueName)}</span><h1>${escapeHtml(portal.eventName)}</h1></div><div class="checkin-public-state is-success"><span>✓</span><h2>${escapeHtml(t(checkedIn ? "checkin.successInTitle" : "checkin.successOutTitle"))}</h2><p>${escapeHtml(t(checkedIn ? "checkin.successInBody" : "checkin.successOutBody", { name: state.publicCheckInResult.guardName }))}</p><button id="checkin-again" class="button button--secondary button--large">${escapeHtml(t("checkin.another"))}</button></div></section></main>`;
+  }
+  return `<main class="checkin-public"><section class="checkin-public-card">${brand()}${languageSelect}<div class="checkin-event"><span class="eyebrow">${escapeHtml(portal.venueName)} · ${escapeHtml(dateLabel(portal.startDate, portal.endDate))}</span><h1>${escapeHtml(portal.eventName)}</h1><p>${escapeHtml(t("checkin.publicIntro"))}</p></div><form id="public-checkin-form" class="form-stack"><label>${escapeHtml(t("checkin.personalCode"))}<input name="code" class="checkin-code-input" inputmode="text" autocomplete="one-time-code" minlength="8" maxlength="9" placeholder="XXXX-XXXX" required autofocus></label><p class="form-error" hidden></p><div class="checkin-public-actions"><button class="button button--primary button--large" type="submit" name="action" value="checkin">${escapeHtml(t("terms.checkIn"))}</button><button class="button button--secondary button--large" type="submit" name="action" value="checkout">${escapeHtml(t("terms.checkOut"))}</button></div></form><p class="privacy-note">${escapeHtml(t("checkin.privacy"))}</p></section></main>`;
 }
 
 function eventTypeLabel(value) {
@@ -324,7 +339,31 @@ function attendanceModal() {
   const context = dashboardContext();
   const expected = context.expectedIds;
   const guards = [...state.dashboard.guards].sort((a, b) => Number(expected.has(b.id)) - Number(expected.has(a.id)) || a.name.localeCompare(b.name, getLocale()));
-  return `<div class="modal-backdrop" id="attendance-backdrop"><section class="planning-modal attendance-modal" role="dialog" aria-modal="true" aria-labelledby="attendance-title"><header><div><span class="eyebrow">${escapeHtml(t("dashboard.manualRegistration"))}</span><h2 id="attendance-title">${escapeHtml(t("dashboard.attendance"))}</h2></div><button class="icon-button close-attendance" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></header><div class="attendance-list">${guards.map((guard) => { const checkedIn = context.checkedInIds.has(guard.id); const session = state.dashboard.attendance.filter((entry) => entry.guardId === guard.id).at(-1); return `<article class="attendance-row"><span class="guard-avatar">${escapeHtml(guard.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(guard.name)}</strong><small>${escapeHtml(expected.has(guard.id) ? t("dashboard.expected") : t("dashboard.notScheduled"))}${session ? ` · ${escapeHtml(t(checkedIn ? "dashboard.arrivedAt" : "dashboard.leftAt", { time: new Intl.DateTimeFormat(getLocale(), { hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(checkedIn ? session.checkedInAt : session.checkedOutAt)) }))}` : ""}</small></div><span class="attendance-state ${checkedIn ? "is-in" : ""}">${escapeHtml(t(checkedIn ? "dashboard.present" : "dashboard.notPresent"))}</span><button class="button ${checkedIn ? "button--secondary" : "button--primary"} attendance-action" data-guard-id="${guard.id}" data-action="${checkedIn ? "checkout" : "checkin"}">${escapeHtml(t(checkedIn ? "terms.checkOut" : "terms.checkIn"))}</button></article>`; }).join("")}</div></section></div>`;
+  const rows = guards.map((guard) => {
+    const checkedIn = context.checkedInIds.has(guard.id);
+    const session = state.dashboard.attendance.filter((entry) => entry.guardId === guard.id).at(-1);
+    const detail = session ? ` · ${t(checkedIn ? "dashboard.arrivedAt" : "dashboard.leftAt", { time: new Intl.DateTimeFormat(getLocale(), { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Europe/Oslo" }).format(new Date(checkedIn ? session.checkedInAt : session.checkedOutAt)) })}` : "";
+    return `<article class="attendance-row"><span class="guard-avatar">${escapeHtml(guard.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(guard.name)}</strong><small>${escapeHtml(expected.has(guard.id) ? t("dashboard.expected") : t("dashboard.notScheduled"))}${escapeHtml(detail)}</small></div><span class="attendance-state ${checkedIn ? "is-in" : ""}">${escapeHtml(t(checkedIn ? "dashboard.present" : "dashboard.notPresent"))}</span><button class="button ${checkedIn ? "button--secondary" : "button--primary"} attendance-action" data-guard-id="${guard.id}" data-action="${checkedIn ? "checkout" : "checkin"}">${escapeHtml(t(checkedIn ? "terms.checkOut" : "terms.checkIn"))}</button></article>`;
+  }).join("");
+  const dateTime = new Intl.DateTimeFormat(getLocale(), { dateStyle: "medium", timeStyle: "short", hourCycle: "h23", timeZone: "Europe/Oslo" });
+  const history = [...state.dashboard.attendance].reverse().map((entry) => {
+    const guard = state.dashboard.guards.find((item) => item.id === entry.guardId);
+    const source = t(`checkin.source.${entry.checkInSource}`);
+    const out = entry.checkedOutAt ? t("checkin.historyOut", { time: dateTime.format(new Date(entry.checkedOutAt)) }) : t("checkin.stillPresent");
+    return `<article><div><strong>${escapeHtml(guard?.name || t("terms.orderGuard"))}</strong><small>${escapeHtml(t("checkin.historyIn", { time: dateTime.format(new Date(entry.checkedInAt)) }))} · ${escapeHtml(out)}</small></div><span>${escapeHtml(source)}</span></article>`;
+  }).join("");
+  return `<div class="modal-backdrop" id="attendance-backdrop"><section class="planning-modal attendance-modal" role="dialog" aria-modal="true" aria-labelledby="attendance-title"><header><div><span class="eyebrow">${escapeHtml(t("dashboard.manualRegistration"))}</span><h2 id="attendance-title">${escapeHtml(t("dashboard.attendance"))}</h2></div><button class="icon-button close-attendance" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></header><div class="attendance-list">${rows}</div><section class="attendance-history"><h3>${escapeHtml(t("checkin.history"))}</h3>${history || `<p>${escapeHtml(t("checkin.noHistory"))}</p>`}</section></section></div>`;
+}
+
+function checkInDashboardCard() {
+  const settings = state.dashboard.checkIn || { configured: false };
+  if (!settings.configured) return `<article class="content-card checkin-admin-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("checkin.qrNfc"))}</span><h2>${escapeHtml(t("checkin.prepareTitle"))}</h2><p>${escapeHtml(t("checkin.prepareBody"))}</p></div><span class="action-icon">${icons.scan}</span></div><button id="configure-checkin" class="button button--primary">${escapeHtml(t("checkin.prepare"))}</button></article>`;
+  return `<article class="content-card checkin-admin-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("checkin.qrNfc"))}</span><h2>${escapeHtml(t("checkin.adminTitle"))}</h2><p>${escapeHtml(t("checkin.activePeriod", { from: formatDate(`${settings.validFrom}T12:00:00Z`), until: formatDate(`${settings.validUntil}T12:00:00Z`) }))}</p></div><span class="state-chip ${settings.active ? "is-active" : ""}">${escapeHtml(t(settings.active ? "checkin.active" : "checkin.inactive"))}</span></div><div class="checkin-admin-content"><div class="checkin-qr" aria-label="${escapeHtml(t("checkin.qrCode"))}">${settings.qrSvg || ""}</div><div class="checkin-link-list"><div><span>${escapeHtml(t("checkin.qrLink"))}</span><code>${escapeHtml(settings.qrUrl)}</code><button class="icon-button copy-value" data-copy="${escapeHtml(settings.qrUrl)}" aria-label="${escapeHtml(t("checkin.copyLink"))}">${icons.copy}</button></div><div><span>${escapeHtml(t("checkin.nfcLink"))}</span><code>${escapeHtml(settings.nfcUrl)}</code><button class="icon-button copy-value" data-copy="${escapeHtml(settings.nfcUrl)}" aria-label="${escapeHtml(t("checkin.copyLink"))}">${icons.copy}</button></div><p>${escapeHtml(t("checkin.credentialsReady", { count: settings.credentialCount }))}</p></div></div><div class="dashboard-actions"><button id="toggle-checkin" class="button button--secondary" data-active="${settings.active}">${escapeHtml(t(settings.active ? "checkin.deactivate" : "checkin.activate"))}</button><button id="regenerate-checkin" class="button button--secondary">${escapeHtml(t("checkin.regenerate"))}</button></div></article>`;
+}
+
+function checkInCodesModal() {
+  if (!state.checkInCodesOpen || !state.checkInCodes.length) return "";
+  return `<div class="modal-backdrop" id="checkin-codes-backdrop"><section class="planning-modal checkin-codes-modal" role="dialog" aria-modal="true" aria-labelledby="checkin-codes-title"><header><div><span class="eyebrow">${escapeHtml(t("checkin.personalCodes"))}</span><h2 id="checkin-codes-title">${escapeHtml(t("checkin.codesReadyTitle"))}</h2><p>${escapeHtml(t("checkin.codesReadyBody"))}</p></div><button class="icon-button close-checkin-codes" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></header><div class="checkin-code-actions"><button id="copy-all-checkin-codes" class="button button--secondary">${icons.copy}${escapeHtml(t("checkin.copyAll"))}</button><button class="button button--secondary print-checkin-codes">${escapeHtml(t("checkin.print"))}</button></div><div class="checkin-code-list">${state.checkInCodes.map((item) => `<article><div><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.email || item.phone || t("checkin.noContact"))}</small></div><code>${escapeHtml(item.code)}</code><button class="icon-button copy-value" data-copy="${escapeHtml(item.code)}" aria-label="${escapeHtml(t("checkin.copyCode"))}">${icons.copy}</button></article>`).join("")}</div></section></div>`;
 }
 
 function dashboardView() {
@@ -337,8 +376,9 @@ function dashboardView() {
   const assignmentTotal = dashboard.days.reduce((sum, day) => sum + day.shifts.length * dashboard.posts.length, 0);
   const fillPercent = assignmentTotal ? Math.round((dashboard.assignments.length / assignmentTotal) * 100) : 0;
   const contactCards = dashboard.contacts.length ? dashboard.contacts.map((contact) => `<a class="dashboard-contact" href="tel:${escapeHtml(contact.phone.replace(/\s/g, ""))}"><span>${icons.phone}</span><div><strong>${escapeHtml(contact.category)}</strong><small>${escapeHtml([contact.name, contact.phone].filter(Boolean).join(" · "))}</small></div><b>→</b></a>`).join("") : `<p class="base-empty">${escapeHtml(t("dashboard.noContacts"))}</p>`;
+  const checkInCard = checkInDashboardCard();
   const nextShift = context.nextShift ? `${formatDate(`${context.nextShift.day.date}T12:00:00Z`)} · ${context.nextShift.startTime}–${context.nextShift.endTime}` : t("dashboard.noMoreShifts");
-  return shell(`<main class="page dashboard-page"><section class="dashboard-hero"><div class="dashboard-event"><span class="eyebrow">${escapeHtml(dashboard.event.venue.name)} · ${escapeHtml(dateLabel(dashboard.event.startDate, dashboard.event.endDate))}</span><h1>${escapeHtml(dashboard.event.name)}</h1><div class="mode-switch"><button class="dashboard-mode ${state.dashboardMode === "planning" ? "is-active" : ""}" data-mode="planning">${escapeHtml(t("dashboard.planningMode"))}</button><button class="dashboard-mode ${state.dashboardMode === "operation" ? "is-active" : ""}" data-mode="operation">${escapeHtml(t("dashboard.operationMode"))}</button></div></div><div class="dashboard-clock"><span>${escapeHtml(t("dashboard.localTime"))}</span><strong id="live-clock">${escapeHtml(context.now.clock)}</strong><small>${escapeHtml(formatDate(`${context.now.date}T12:00:00Z`))}</small></div><div class="next-shift"><span>${escapeHtml(t("dashboard.nextShift"))}</span><strong>${escapeHtml(nextShift)}</strong><small id="next-shift-countdown">${escapeHtml(nextShiftText(context))}</small></div></section><section class="dashboard-metrics">${dashboardMetric("✓", t("dashboard.arrived"), String(arrived), t("dashboard.ofExpected", { expected }), "green")}${dashboardMetric("!", t("dashboard.missing"), String(context.missingIds.length), t("dashboard.notCheckedIn"), context.missingIds.length ? "amber" : "green")}${dashboardMetric("R", t("terms.reserves"), String(context.reserveIds.length), t("dashboard.presentNotOnDuty"), "blue")}${dashboardMetric("P", t("dashboard.unstaffedPosts"), String(context.unstaffed.length), context.currentShift ? currentLabel : t("dashboard.forSelectedDay"), context.unstaffed.length ? "red" : "green")}</section><section class="dashboard-grid"><article class="content-card dashboard-shift-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.shiftStatus"))}</span><h2>${escapeHtml(currentLabel)}</h2></div><span class="state-chip ${context.currentShift ? "is-active" : ""}">${escapeHtml(t(context.currentShift ? "dashboard.shiftActive" : "dashboard.waiting"))}</span></div><div class="readiness"><div><span>${escapeHtml(t("dashboard.planCoverage"))}</span><strong>${fillPercent}%</strong></div><progress max="100" value="${fillPercent}"></progress><small>${escapeHtml(t("dashboard.assignmentsComplete", { complete: dashboard.assignments.length, total: assignmentTotal }))}</small></div><div class="dashboard-actions"><a class="button button--primary button-link" href="/orden/vaktplan?id=${encodeURIComponent(dashboard.event.id)}" data-link>${escapeHtml(t("planning.open"))}</a><button id="open-attendance" class="button button--secondary">${escapeHtml(t("dashboard.manageAttendance"))}</button></div></article><article class="content-card dashboard-roster-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.overview"))}</span><h2>${escapeHtml(t("dashboard.attendance"))}</h2></div><button id="open-attendance-secondary" class="button button--secondary">${escapeHtml(t("dashboard.openList"))}</button></div><div class="roster-summary"><div><strong>${arrived}</strong><span>${escapeHtml(t("dashboard.present"))}</span></div><div><strong>${context.missingIds.length}</strong><span>${escapeHtml(t("dashboard.missing"))}</span></div><div><strong>${context.reserveIds.length}</strong><span>${escapeHtml(t("terms.reserves"))}</span></div></div></article><article class="content-card dashboard-contacts-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.quickAccess"))}</span><h2>${escapeHtml(t("terms.contacts"))}</h2></div></div><div class="dashboard-contacts">${contactCards}</div></article></section>${attendanceModal()}</main>`, t("dashboard.title"));
+  return shell(`<main class="page dashboard-page"><section class="dashboard-hero"><div class="dashboard-event"><span class="eyebrow">${escapeHtml(dashboard.event.venue.name)} · ${escapeHtml(dateLabel(dashboard.event.startDate, dashboard.event.endDate))}</span><h1>${escapeHtml(dashboard.event.name)}</h1><div class="mode-switch"><button class="dashboard-mode ${state.dashboardMode === "planning" ? "is-active" : ""}" data-mode="planning">${escapeHtml(t("dashboard.planningMode"))}</button><button class="dashboard-mode ${state.dashboardMode === "operation" ? "is-active" : ""}" data-mode="operation">${escapeHtml(t("dashboard.operationMode"))}</button></div></div><div class="dashboard-clock"><span>${escapeHtml(t("dashboard.localTime"))}</span><strong id="live-clock">${escapeHtml(context.now.clock)}</strong><small>${escapeHtml(formatDate(`${context.now.date}T12:00:00Z`))}</small></div><div class="next-shift"><span>${escapeHtml(t("dashboard.nextShift"))}</span><strong>${escapeHtml(nextShift)}</strong><small id="next-shift-countdown">${escapeHtml(nextShiftText(context))}</small></div></section><section class="dashboard-metrics">${dashboardMetric("✓", t("dashboard.arrived"), String(arrived), t("dashboard.ofExpected", { expected }), "green")}${dashboardMetric("!", t("dashboard.missing"), String(context.missingIds.length), t("dashboard.notCheckedIn"), context.missingIds.length ? "amber" : "green")}${dashboardMetric("R", t("terms.reserves"), String(context.reserveIds.length), t("dashboard.presentNotOnDuty"), "blue")}${dashboardMetric("P", t("dashboard.unstaffedPosts"), String(context.unstaffed.length), context.currentShift ? currentLabel : t("dashboard.forSelectedDay"), context.unstaffed.length ? "red" : "green")}</section><section class="dashboard-grid"><article class="content-card dashboard-shift-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.shiftStatus"))}</span><h2>${escapeHtml(currentLabel)}</h2></div><span class="state-chip ${context.currentShift ? "is-active" : ""}">${escapeHtml(t(context.currentShift ? "dashboard.shiftActive" : "dashboard.waiting"))}</span></div><div class="readiness"><div><span>${escapeHtml(t("dashboard.planCoverage"))}</span><strong>${fillPercent}%</strong></div><progress max="100" value="${fillPercent}"></progress><small>${escapeHtml(t("dashboard.assignmentsComplete", { complete: dashboard.assignments.length, total: assignmentTotal }))}</small></div><div class="dashboard-actions"><a class="button button--primary button-link" href="/orden/vaktplan?id=${encodeURIComponent(dashboard.event.id)}" data-link>${escapeHtml(t("planning.open"))}</a><button id="open-attendance" class="button button--secondary">${escapeHtml(t("dashboard.manageAttendance"))}</button></div></article><article class="content-card dashboard-roster-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.overview"))}</span><h2>${escapeHtml(t("dashboard.attendance"))}</h2></div><button id="open-attendance-secondary" class="button button--secondary">${escapeHtml(t("dashboard.openList"))}</button></div><div class="roster-summary"><div><strong>${arrived}</strong><span>${escapeHtml(t("dashboard.present"))}</span></div><div><strong>${context.missingIds.length}</strong><span>${escapeHtml(t("dashboard.missing"))}</span></div><div><strong>${context.reserveIds.length}</strong><span>${escapeHtml(t("terms.reserves"))}</span></div></div></article>${checkInCard}<article class="content-card dashboard-contacts-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.quickAccess"))}</span><h2>${escapeHtml(t("terms.contacts"))}</h2></div></div><div class="dashboard-contacts">${contactCards}</div></article></section>${attendanceModal()}${checkInCodesModal()}</main>`, t("dashboard.title"));
 }
 
 const baseMeta = {
@@ -401,7 +441,8 @@ function baseDefaultsView() {
 function render() {
   if (dashboardClockTimer) { clearInterval(dashboardClockTimer); dashboardClockTimer = null; }
   const current = route();
-  if (current === "setup-password") app.innerHTML = setupPasswordView();
+  if (current === "public-checkin") app.innerHTML = publicCheckInView();
+  else if (current === "setup-password") app.innerHTML = setupPasswordView();
   else if (!state.user) app.innerHTML = loginView();
   else if (current === "users" && state.user.role === "system_admin") app.innerHTML = usersView();
   else if (current === "settings") app.innerHTML = settingsView();
@@ -659,6 +700,39 @@ function bindDashboard() {
       toast(t(button.dataset.action === "checkin" ? "dashboard.checkedIn" : "dashboard.checkedOut"));
     } catch (error) { button.disabled = false; toast(errorText(error), "error"); }
   }));
+  const applyCheckInResult = (result) => {
+    state.dashboard.checkIn = result.checkIn;
+    state.checkInCodes = result.codes || [];
+    state.checkInCodesOpen = state.checkInCodes.length > 0;
+    render();
+  };
+  document.querySelector("#configure-checkin")?.addEventListener("click", async (event) => {
+    event.currentTarget.disabled = true;
+    try { applyCheckInResult(await endpoints.configureCheckIn(state.dashboard.event.id)); }
+    catch (error) { event.currentTarget.disabled = false; toast(errorText(error), "error"); }
+  });
+  document.querySelector("#regenerate-checkin")?.addEventListener("click", async (event) => {
+    if (!window.confirm(t("checkin.regenerateConfirm"))) return;
+    event.currentTarget.disabled = true;
+    try { applyCheckInResult(await endpoints.regenerateCheckInCodes(state.dashboard.event.id)); }
+    catch (error) { event.currentTarget.disabled = false; toast(errorText(error), "error"); }
+  });
+  document.querySelector("#toggle-checkin")?.addEventListener("click", async (event) => {
+    event.currentTarget.disabled = true;
+    try { const result = await endpoints.setCheckInActive(state.dashboard.event.id, event.currentTarget.dataset.active !== "true"); state.dashboard.checkIn = result.checkIn; render(); toast(t("common.saved")); }
+    catch (error) { event.currentTarget.disabled = false; toast(errorText(error), "error"); }
+  });
+  const closeCodes = () => { state.checkInCodesOpen = false; render(); };
+  document.querySelector(".close-checkin-codes")?.addEventListener("click", closeCodes);
+  document.querySelector("#checkin-codes-backdrop")?.addEventListener("click", (event) => { if (event.target === event.currentTarget) closeCodes(); });
+  document.querySelector("#copy-all-checkin-codes")?.addEventListener("click", async () => {
+    const text = state.checkInCodes.map((item) => `${item.name}: ${item.code}`).join("\n");
+    try { await navigator.clipboard.writeText(text); toast(t("checkin.copied")); } catch { toast(t("errors.copy_failed"), "error"); }
+  });
+  document.querySelector(".print-checkin-codes")?.addEventListener("click", () => window.print());
+  document.querySelectorAll(".copy-value").forEach((button) => button.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(button.dataset.copy); toast(t("checkin.copied")); } catch { toast(t("errors.copy_failed"), "error"); }
+  }));
   if (route() === "dashboard") {
     updateDashboardClock();
     dashboardClockTimer = setInterval(updateDashboardClock, 1000);
@@ -668,6 +742,22 @@ function bindDashboard() {
 function bindEvents() {
   document.querySelectorAll("[data-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); navigate(link.getAttribute("href")); }));
   document.querySelector("#public-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, false));
+  document.querySelector("#public-checkin-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget; const submitter = event.submitter; const code = new FormData(form).get("code");
+    setFormBusy(form, true);
+    try {
+      const token = new URLSearchParams(location.search).get("token") || "";
+      const source = new URLSearchParams(location.search).get("source") === "nfc" ? "nfc" : "qr";
+      state.publicCheckInResult = await endpoints.publicCheckIn(token, code, submitter?.value || "checkin", source);
+      render();
+    } catch (error) { showFormError(form, error); setFormBusy(form, false); }
+  });
+  document.querySelector(".checkin-code-input")?.addEventListener("input", (event) => {
+    const raw = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+    event.target.value = raw.length > 4 ? `${raw.slice(0, 4)}-${raw.slice(4)}` : raw;
+  });
+  document.querySelector("#checkin-again")?.addEventListener("click", () => { state.publicCheckInResult = null; render(); });
   document.querySelector("#settings-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, true));
   document.querySelector(".open-menu")?.addEventListener("click", () => { state.mobileMenu = true; document.querySelector(".app-shell")?.classList.add("menu-open"); });
   const closeMenu = () => { state.mobileMenu = false; document.querySelector(".app-shell")?.classList.remove("menu-open"); };
@@ -769,6 +859,19 @@ async function loadDashboard() {
   const result = await endpoints.initializeDashboard(id);
   state.dashboard = result.dashboard;
   state.attendanceOpen = false;
+  state.checkInCodes = [];
+  state.checkInCodesOpen = false;
+  render();
+}
+
+async function loadPublicCheckIn() {
+  const token = new URLSearchParams(location.search).get("token") || "";
+  state.publicCheckIn = null;
+  state.publicCheckInResult = null;
+  state.publicCheckInError = "";
+  if (!token) { state.publicCheckInError = "checkin_portal_not_found"; render(); return; }
+  try { const result = await endpoints.publicCheckInPortal(token); state.publicCheckIn = result.portal; }
+  catch (error) { state.publicCheckInError = error?.code || "request_error"; }
   render();
 }
 
@@ -777,6 +880,7 @@ async function init() {
   setApiLocale(getLocale());
   const bootMessage = document.querySelector("#boot-message");
   if (bootMessage) bootMessage.textContent = t("app.loading");
+  if (route() === "public-checkin") { await loadPublicCheckIn(); return; }
   try {
     const result = await endpoints.me(); state.user = result.user;
     if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); }
@@ -794,5 +898,5 @@ async function init() {
   }
 }
 
-window.addEventListener("popstate", () => { if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (route() === "dashboard") loadDashboard().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
+window.addEventListener("popstate", () => { if (route() === "public-checkin") return loadPublicCheckIn(); if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (route() === "dashboard") loadDashboard().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
 init().catch((error) => { console.error(error); });

@@ -71,4 +71,10 @@ export const endpoints = {
   initializeDashboard: (id) => api(`/v1/events/${id}/dashboard/initialize`, { method: "POST" }),
   dashboard: (id) => api(`/v1/events/${id}/dashboard`),
   updateAttendance: (eventId, guardId, action) => api(`/v1/events/${eventId}/dashboard/attendance`, { method: "POST", body: JSON.stringify({ guardId, action }) }),
+  checkInSettings: (eventId) => api(`/v1/events/${eventId}/check-in`),
+  configureCheckIn: (eventId) => api(`/v1/events/${eventId}/check-in/configure`, { method: "POST" }),
+  regenerateCheckInCodes: (eventId) => api(`/v1/events/${eventId}/check-in/regenerate`, { method: "POST" }),
+  setCheckInActive: (eventId, active) => api(`/v1/events/${eventId}/check-in/active`, { method: "PATCH", body: JSON.stringify({ active }) }),
+  publicCheckInPortal: (token) => api(`/v1/public/check-in/${encodeURIComponent(token)}`),
+  publicCheckIn: (token, code, action, source) => api(`/v1/public/check-in/${encodeURIComponent(token)}`, { method: "POST", body: JSON.stringify({ code, action, source }) }),
 };
