@@ -2,7 +2,8 @@ import { ApiError, endpoints, setApiLocale, setCsrfToken } from "./api.js";
 import { formatDate, getLocale, getLocales, initI18n, setLocale, t } from "./i18n.js";
 
 const app = document.querySelector("#app");
-const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, configured: true, mobileMenu: false, setupComplete: false };
+const state = { user: null, users: [], base: { guards: [], posts: [], contacts: [], settings: null }, events: [], venues: [], event: null, eventWizardStep: 1, planning: null, planningDay: 0, planningSlot: null, planningSearch: "", planningGuardMenu: null, dashboard: null, dashboardMode: "planning", attendanceOpen: false, configured: true, mobileMenu: false, setupComplete: false };
+let dashboardClockTimer = null;
 
 const icons = {
   home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
@@ -42,6 +43,7 @@ function route() {
   if (path === "/orden/stevner") return "events";
   if (path === "/orden/stevne") return "event-wizard";
   if (path === "/orden/vaktplan") return "planning";
+  if (path === "/orden/dashboard") return "dashboard";
   return "home";
 }
 
@@ -62,6 +64,8 @@ function navigate(path) {
     loadEventWorkspace().catch((error) => { toast(errorText(error), "error"); render(); });
   } else if (path.startsWith("/orden/vaktplan")) {
     loadPlanning().catch((error) => { toast(errorText(error), "error"); render(); });
+  } else if (path.startsWith("/orden/dashboard")) {
+    loadDashboard().catch((error) => { toast(errorText(error), "error"); render(); });
   } else if (isBaseRoute()) loadBaseData().catch((error) => { toast(errorText(error), "error"); render(); });
   else render();
 }
@@ -117,7 +121,7 @@ function roleLabel(role) {
 
 function shell(content, pageTitle) {
   const current = location.pathname.replace(/\/+$/, "") || "/orden";
-  const currentNav = ["/orden/stevne", "/orden/vaktplan"].includes(current) ? "/orden/stevner" : current;
+  const currentNav = ["/orden/stevne", "/orden/vaktplan", "/orden/dashboard"].includes(current) ? "/orden/stevner" : current;
   const canManageUsers = state.user.role === "system_admin";
   const selector = state.user.eventTypes.length > 1
     ? `<label class="type-select"><span>${escapeHtml(t("eventType.label"))}</span><select id="event-type-select">${state.user.eventTypes.map((type) => `<option value="${type}" ${type === state.user.selectedEventType ? "selected" : ""}>${escapeHtml(eventTypeLabel(type))}</option>`).join("")}</select></label>`
@@ -141,7 +145,7 @@ function eventStatusLabel(status) {
 }
 
 function eventHref(event) {
-  return event.status === "draft" ? `/orden/stevne?id=${encodeURIComponent(event.id)}` : `/orden/vaktplan?id=${encodeURIComponent(event.id)}`;
+  return event.status === "draft" ? `/orden/stevne?id=${encodeURIComponent(event.id)}` : `/orden/dashboard?id=${encodeURIComponent(event.id)}`;
 }
 
 function homeView() {
@@ -208,7 +212,7 @@ function eventStepThree() {
   if (!event) return "";
   const daySummary = event.days.map((day) => `<li><strong>${escapeHtml(formatDate(`${day.date}T12:00:00Z`))}</strong><span>${escapeHtml(day.dayStart)}–${escapeHtml(day.dayEnd)} · ${escapeHtml(t("event.shiftCountValue", { count: day.shifts.length }))}</span></li>`).join("");
   const completed = event.status !== "draft";
-  return `<section class="content-card wizard-card"><div class="review-status ${completed ? "is-complete" : ""}"><span>${completed ? "✓" : "3"}</span><div><h2>${escapeHtml(t(completed ? "event.createdTitle" : "event.reviewTitle"))}</h2><p>${escapeHtml(t(completed ? "event.createdBody" : "event.reviewIntro"))}</p></div></div><div class="event-review"><div><span>${escapeHtml(t("event.generatedName"))}</span><strong>${escapeHtml(event.name)}</strong></div><div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(dateLabel(event.startDate, event.endDate))}</strong></div><div><span>${escapeHtml(t("event.venue"))}</span><strong>${escapeHtml(event.venue.name)}</strong><small>${escapeHtml([event.venue.address, event.venue.postalCode, event.venue.city, event.venue.country].filter(Boolean).join(", "))}</small></div><div class="wide"><span>${escapeHtml(t("event.shifts"))}</span><ul>${daySummary}</ul></div></div><div class="wizard-actions"><button class="button button--secondary wizard-back" data-step="1">${escapeHtml(t("event.editDateVenue"))}</button><button class="button button--secondary wizard-back" data-step="2">${escapeHtml(t("event.editShifts"))}</button>${completed ? `<a class="button button--secondary button-link" href="/orden/stevner" data-link>${escapeHtml(t("event.backToEvents"))}</a><a class="button button--primary button-link" href="/orden/vaktplan?id=${encodeURIComponent(event.id)}" data-link>${escapeHtml(t("planning.open"))}</a>` : `<button id="complete-event-setup" class="button button--primary">${escapeHtml(t("event.completeSetup"))}</button>`}</div></section>`;
+  return `<section class="content-card wizard-card"><div class="review-status ${completed ? "is-complete" : ""}"><span>${completed ? "✓" : "3"}</span><div><h2>${escapeHtml(t(completed ? "event.createdTitle" : "event.reviewTitle"))}</h2><p>${escapeHtml(t(completed ? "event.createdBody" : "event.reviewIntro"))}</p></div></div><div class="event-review"><div><span>${escapeHtml(t("event.generatedName"))}</span><strong>${escapeHtml(event.name)}</strong></div><div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(dateLabel(event.startDate, event.endDate))}</strong></div><div><span>${escapeHtml(t("event.venue"))}</span><strong>${escapeHtml(event.venue.name)}</strong><small>${escapeHtml([event.venue.address, event.venue.postalCode, event.venue.city, event.venue.country].filter(Boolean).join(", "))}</small></div><div class="wide"><span>${escapeHtml(t("event.shifts"))}</span><ul>${daySummary}</ul></div></div><div class="wizard-actions"><button class="button button--secondary wizard-back" data-step="1">${escapeHtml(t("event.editDateVenue"))}</button><button class="button button--secondary wizard-back" data-step="2">${escapeHtml(t("event.editShifts"))}</button>${completed ? `<a class="button button--secondary button-link" href="/orden/vaktplan?id=${encodeURIComponent(event.id)}" data-link>${escapeHtml(t("planning.open"))}</a><a class="button button--primary button-link" href="/orden/dashboard?id=${encodeURIComponent(event.id)}" data-link>${escapeHtml(t("dashboard.open"))}</a>` : `<button id="complete-event-setup" class="button button--primary">${escapeHtml(t("event.completeSetup"))}</button>`}</div></section>`;
 }
 
 function eventWizardView() {
@@ -276,6 +280,67 @@ function planningView() {
   return shell(`<main class="page planning-page"><section class="page-heading planning-heading"><div><span class="eyebrow">${escapeHtml(dateLabel(planning.event.startDate, planning.event.endDate))} · ${escapeHtml(planning.event.venue.name)}</span><h1>${escapeHtml(planning.event.name)}</h1><p>${escapeHtml(t("planning.intro"))}</p></div><div class="planning-summary"><span>${escapeHtml(t("planning.unfilled"))}</span><strong>${planning.missingCount}</strong><small>${escapeHtml(t("planning.ofSlots", { total: planning.totalSlots }))}</small></div></section><div class="planning-toolbar"><span class="save-state">✓ ${escapeHtml(t("planning.autoSaved"))}</span><a class="button button--secondary button-link" href="/orden/stevne?id=${encodeURIComponent(planning.event.id)}" data-link>${escapeHtml(t("planning.editEvent"))}</a></div>${dayTabs}${empty}${table}${planningModal()}</main>`, t("terms.dutyPlan"));
 }
 
+function osloNow() {
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Oslo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return { date: `${values.year}-${values.month}-${values.day}`, time: `${values.hour}:${values.minute}`, clock: `${values.hour}:${values.minute}:${values.second}` };
+}
+
+function dashboardContext() {
+  const dashboard = state.dashboard;
+  const now = osloNow();
+  const day = dashboard.days.find((item) => item.date === now.date) || dashboard.days[0];
+  const currentShift = day?.date === now.date ? day.shifts.find((shift) => shift.startTime <= now.time && shift.endTime > now.time) || null : null;
+  const allShifts = dashboard.days.flatMap((eventDay) => eventDay.shifts.map((shift) => ({ ...shift, day: eventDay })));
+  const nextShift = allShifts.find((shift) => `${shift.day.date}T${shift.startTime}` > `${now.date}T${now.time}`) || null;
+  const expectedIds = new Set(dashboard.assignments.map((assignment) => assignment.guardId));
+  const checkedInIds = new Set(dashboard.attendance.filter((entry) => !entry.checkedOutAt).map((entry) => entry.guardId));
+  const currentAssignedIds = new Set(currentShift ? dashboard.assignments.filter((assignment) => assignment.shiftId === currentShift.id).map((assignment) => assignment.guardId) : []);
+  const missingIds = [...expectedIds].filter((id) => !checkedInIds.has(id));
+  const reserveIds = [...checkedInIds].filter((id) => !currentAssignedIds.has(id));
+  const unstaffed = currentShift
+    ? dashboard.posts.filter((post) => !dashboard.assignments.some((assignment) => assignment.shiftId === currentShift.id && assignment.postId === post.id))
+    : dashboard.posts.filter((post) => day?.shifts.some((shift) => !dashboard.assignments.some((assignment) => assignment.shiftId === shift.id && assignment.postId === post.id)));
+  return { now, day, currentShift, nextShift, expectedIds, checkedInIds, currentAssignedIds, missingIds, reserveIds, unstaffed };
+}
+
+function nextShiftText(context) {
+  if (!context.nextShift) return t("dashboard.noMoreShifts");
+  if (context.nextShift.day.date !== context.now.date) return `${formatDate(`${context.nextShift.day.date}T12:00:00Z`)} · ${context.nextShift.startTime}`;
+  const [nowHour, nowMinute] = context.now.time.split(":").map(Number);
+  const [shiftHour, shiftMinute] = context.nextShift.startTime.split(":").map(Number);
+  const minutes = Math.max(0, shiftHour * 60 + shiftMinute - nowHour * 60 - nowMinute);
+  if (minutes < 60) return t("dashboard.minutesUntil", { count: minutes });
+  const hours = Math.floor(minutes / 60); const remainder = minutes % 60;
+  return t("dashboard.hoursUntil", { hours, minutes: remainder });
+}
+
+function dashboardMetric(icon, label, value, detail, tone = "") {
+  return `<article class="dashboard-metric ${tone ? `is-${tone}` : ""}"><span class="metric-icon">${icon}</span><div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(detail)}</small></div></article>`;
+}
+
+function attendanceModal() {
+  if (!state.attendanceOpen) return "";
+  const context = dashboardContext();
+  const expected = context.expectedIds;
+  const guards = [...state.dashboard.guards].sort((a, b) => Number(expected.has(b.id)) - Number(expected.has(a.id)) || a.name.localeCompare(b.name, getLocale()));
+  return `<div class="modal-backdrop" id="attendance-backdrop"><section class="planning-modal attendance-modal" role="dialog" aria-modal="true" aria-labelledby="attendance-title"><header><div><span class="eyebrow">${escapeHtml(t("dashboard.manualRegistration"))}</span><h2 id="attendance-title">${escapeHtml(t("dashboard.attendance"))}</h2></div><button class="icon-button close-attendance" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></header><div class="attendance-list">${guards.map((guard) => { const checkedIn = context.checkedInIds.has(guard.id); const session = state.dashboard.attendance.filter((entry) => entry.guardId === guard.id).at(-1); return `<article class="attendance-row"><span class="guard-avatar">${escapeHtml(guard.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(guard.name)}</strong><small>${escapeHtml(expected.has(guard.id) ? t("dashboard.expected") : t("dashboard.notScheduled"))}${session ? ` · ${escapeHtml(t(checkedIn ? "dashboard.arrivedAt" : "dashboard.leftAt", { time: new Intl.DateTimeFormat(getLocale(), { hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(checkedIn ? session.checkedInAt : session.checkedOutAt)) }))}` : ""}</small></div><span class="attendance-state ${checkedIn ? "is-in" : ""}">${escapeHtml(t(checkedIn ? "dashboard.present" : "dashboard.notPresent"))}</span><button class="button ${checkedIn ? "button--secondary" : "button--primary"} attendance-action" data-guard-id="${guard.id}" data-action="${checkedIn ? "checkout" : "checkin"}">${escapeHtml(t(checkedIn ? "terms.checkOut" : "terms.checkIn"))}</button></article>`; }).join("")}</div></section></div>`;
+}
+
+function dashboardView() {
+  const dashboard = state.dashboard;
+  if (!dashboard) return shell(`<main class="page"><p>${escapeHtml(t("app.loading"))}</p></main>`, t("dashboard.title"));
+  const context = dashboardContext();
+  const arrived = context.checkedInIds.size;
+  const expected = context.expectedIds.size;
+  const currentLabel = context.currentShift ? `${context.currentShift.startTime}–${context.currentShift.endTime}` : t("dashboard.noActiveShift");
+  const assignmentTotal = dashboard.days.reduce((sum, day) => sum + day.shifts.length * dashboard.posts.length, 0);
+  const fillPercent = assignmentTotal ? Math.round((dashboard.assignments.length / assignmentTotal) * 100) : 0;
+  const contactCards = dashboard.contacts.length ? dashboard.contacts.map((contact) => `<a class="dashboard-contact" href="tel:${escapeHtml(contact.phone.replace(/\s/g, ""))}"><span>${icons.phone}</span><div><strong>${escapeHtml(contact.category)}</strong><small>${escapeHtml([contact.name, contact.phone].filter(Boolean).join(" · "))}</small></div><b>→</b></a>`).join("") : `<p class="base-empty">${escapeHtml(t("dashboard.noContacts"))}</p>`;
+  const nextShift = context.nextShift ? `${formatDate(`${context.nextShift.day.date}T12:00:00Z`)} · ${context.nextShift.startTime}–${context.nextShift.endTime}` : t("dashboard.noMoreShifts");
+  return shell(`<main class="page dashboard-page"><section class="dashboard-hero"><div class="dashboard-event"><span class="eyebrow">${escapeHtml(dashboard.event.venue.name)} · ${escapeHtml(dateLabel(dashboard.event.startDate, dashboard.event.endDate))}</span><h1>${escapeHtml(dashboard.event.name)}</h1><div class="mode-switch"><button class="dashboard-mode ${state.dashboardMode === "planning" ? "is-active" : ""}" data-mode="planning">${escapeHtml(t("dashboard.planningMode"))}</button><button class="dashboard-mode ${state.dashboardMode === "operation" ? "is-active" : ""}" data-mode="operation">${escapeHtml(t("dashboard.operationMode"))}</button></div></div><div class="dashboard-clock"><span>${escapeHtml(t("dashboard.localTime"))}</span><strong id="live-clock">${escapeHtml(context.now.clock)}</strong><small>${escapeHtml(formatDate(`${context.now.date}T12:00:00Z`))}</small></div><div class="next-shift"><span>${escapeHtml(t("dashboard.nextShift"))}</span><strong>${escapeHtml(nextShift)}</strong><small id="next-shift-countdown">${escapeHtml(nextShiftText(context))}</small></div></section><section class="dashboard-metrics">${dashboardMetric("✓", t("dashboard.arrived"), String(arrived), t("dashboard.ofExpected", { expected }), "green")}${dashboardMetric("!", t("dashboard.missing"), String(context.missingIds.length), t("dashboard.notCheckedIn"), context.missingIds.length ? "amber" : "green")}${dashboardMetric("R", t("terms.reserves"), String(context.reserveIds.length), t("dashboard.presentNotOnDuty"), "blue")}${dashboardMetric("P", t("dashboard.unstaffedPosts"), String(context.unstaffed.length), context.currentShift ? currentLabel : t("dashboard.forSelectedDay"), context.unstaffed.length ? "red" : "green")}</section><section class="dashboard-grid"><article class="content-card dashboard-shift-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.shiftStatus"))}</span><h2>${escapeHtml(currentLabel)}</h2></div><span class="state-chip ${context.currentShift ? "is-active" : ""}">${escapeHtml(t(context.currentShift ? "dashboard.shiftActive" : "dashboard.waiting"))}</span></div><div class="readiness"><div><span>${escapeHtml(t("dashboard.planCoverage"))}</span><strong>${fillPercent}%</strong></div><progress max="100" value="${fillPercent}"></progress><small>${escapeHtml(t("dashboard.assignmentsComplete", { complete: dashboard.assignments.length, total: assignmentTotal }))}</small></div><div class="dashboard-actions"><a class="button button--primary button-link" href="/orden/vaktplan?id=${encodeURIComponent(dashboard.event.id)}" data-link>${escapeHtml(t("planning.open"))}</a><button id="open-attendance" class="button button--secondary">${escapeHtml(t("dashboard.manageAttendance"))}</button></div></article><article class="content-card dashboard-roster-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.overview"))}</span><h2>${escapeHtml(t("dashboard.attendance"))}</h2></div><button id="open-attendance-secondary" class="button button--secondary">${escapeHtml(t("dashboard.openList"))}</button></div><div class="roster-summary"><div><strong>${arrived}</strong><span>${escapeHtml(t("dashboard.present"))}</span></div><div><strong>${context.missingIds.length}</strong><span>${escapeHtml(t("dashboard.missing"))}</span></div><div><strong>${context.reserveIds.length}</strong><span>${escapeHtml(t("terms.reserves"))}</span></div></div></article><article class="content-card dashboard-contacts-card"><div class="section-heading"><div><span class="eyebrow">${escapeHtml(t("dashboard.quickAccess"))}</span><h2>${escapeHtml(t("terms.contacts"))}</h2></div></div><div class="dashboard-contacts">${contactCards}</div></article></section>${attendanceModal()}</main>`, t("dashboard.title"));
+}
+
 const baseMeta = {
   guards: { title: "base.guards", intro: "base.guardsIntro", empty: "base.emptyGuards", add: "base.newGuard", edit: "base.editGuard", save: "base.saveGuard", icon: "badge" },
   posts: { title: "base.posts", intro: "base.postsIntro", empty: "base.emptyPosts", add: "base.newPost", edit: "base.editPost", save: "base.savePost", icon: "pin" },
@@ -334,6 +399,7 @@ function baseDefaultsView() {
 }
 
 function render() {
+  if (dashboardClockTimer) { clearInterval(dashboardClockTimer); dashboardClockTimer = null; }
   const current = route();
   if (current === "setup-password") app.innerHTML = setupPasswordView();
   else if (!state.user) app.innerHTML = loginView();
@@ -342,6 +408,7 @@ function render() {
   else if (current === "events") app.innerHTML = eventsView();
   else if (current === "event-wizard") app.innerHTML = eventWizardView();
   else if (current === "planning") app.innerHTML = planningView();
+  else if (current === "dashboard") app.innerHTML = dashboardView();
   else if (current === "base") app.innerHTML = baseOverviewView();
   else if (current === "base-guards") app.innerHTML = baseEntityView("guards");
   else if (current === "base-posts") app.innerHTML = baseEntityView("posts");
@@ -566,6 +633,38 @@ function bindPlanning() {
   bindGuardOptionActions();
 }
 
+function updateDashboardClock() {
+  if (!state.dashboard || route() !== "dashboard") return;
+  const context = dashboardContext();
+  const clock = document.querySelector("#live-clock");
+  const countdown = document.querySelector("#next-shift-countdown");
+  if (clock) clock.textContent = context.now.clock;
+  if (countdown) countdown.textContent = nextShiftText(context);
+}
+
+function bindDashboard() {
+  document.querySelectorAll(".dashboard-mode").forEach((button) => button.addEventListener("click", () => { state.dashboardMode = button.dataset.mode; render(); }));
+  const openAttendance = () => { state.attendanceOpen = true; render(); };
+  document.querySelector("#open-attendance")?.addEventListener("click", openAttendance);
+  document.querySelector("#open-attendance-secondary")?.addEventListener("click", openAttendance);
+  const closeAttendance = () => { state.attendanceOpen = false; render(); };
+  document.querySelector(".close-attendance")?.addEventListener("click", closeAttendance);
+  document.querySelector("#attendance-backdrop")?.addEventListener("click", (event) => { if (event.target === event.currentTarget) closeAttendance(); });
+  document.querySelectorAll(".attendance-action").forEach((button) => button.addEventListener("click", async () => {
+    button.disabled = true;
+    try {
+      const result = await endpoints.updateAttendance(state.dashboard.event.id, button.dataset.guardId, button.dataset.action);
+      state.dashboard = result.dashboard;
+      render();
+      toast(t(button.dataset.action === "checkin" ? "dashboard.checkedIn" : "dashboard.checkedOut"));
+    } catch (error) { button.disabled = false; toast(errorText(error), "error"); }
+  }));
+  if (route() === "dashboard") {
+    updateDashboardClock();
+    dashboardClockTimer = setInterval(updateDashboardClock, 1000);
+  }
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); navigate(link.getAttribute("href")); }));
   document.querySelector("#public-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, false));
@@ -589,7 +688,7 @@ function bindEvents() {
     catch (error) { showFormError(form, error); setFormBusy(form, false); }
   });
   document.querySelector("#logout-button")?.addEventListener("click", async () => { try { await endpoints.logout(); } catch (error) { if (error.status !== 401) toast(errorText(error), "error"); } setCsrfToken(""); state.user = null; history.replaceState({}, "", "/orden/login"); render(); });
-  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; state.event = null; state.planning = null; if (isBaseRoute()) await loadBaseData(); else if (["events", "home", "event-wizard", "planning"].includes(route())) { if (["event-wizard", "planning"].includes(route())) history.replaceState({}, "", "/orden/stevner"); await loadEvents(); } else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
+  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; state.event = null; state.planning = null; state.dashboard = null; if (isBaseRoute()) await loadBaseData(); else if (["events", "home", "event-wizard", "planning", "dashboard"].includes(route())) { if (["event-wizard", "planning", "dashboard"].includes(route())) history.replaceState({}, "", "/orden/stevner"); await loadEvents(); } else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
   const createPanel = document.querySelector("#create-user-panel");
   document.querySelector("#show-create-user")?.addEventListener("click", () => { createPanel.hidden = false; createPanel.scrollIntoView({ behavior: "smooth", block: "start" }); createPanel.querySelector("input")?.focus(); });
   const hideCreate = () => { if (createPanel) createPanel.hidden = true; };
@@ -616,6 +715,7 @@ function bindEvents() {
   document.querySelector("#base-settings-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); data.shiftCount = Number(data.shiftCount); setFormBusy(form, true); try { await endpoints.updateBaseSettings(data); await loadBaseData(); toast(t("base.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
   bindEventWizard();
   bindPlanning();
+  bindDashboard();
 }
 
 function bindEditForm(panel) {
@@ -663,6 +763,15 @@ async function loadPlanning() {
   render();
 }
 
+async function loadDashboard() {
+  const id = new URLSearchParams(location.search).get("id");
+  if (!id) { history.replaceState({}, "", "/orden/stevner"); return loadEvents(); }
+  const result = await endpoints.initializeDashboard(id);
+  state.dashboard = result.dashboard;
+  state.attendanceOpen = false;
+  render();
+}
+
 async function init() {
   await initI18n();
   setApiLocale(getLocale());
@@ -675,6 +784,7 @@ async function init() {
     else if (isBaseRoute()) await loadBaseData();
     else if (route() === "event-wizard") await loadEventWorkspace();
     else if (route() === "planning") await loadPlanning();
+    else if (route() === "dashboard") await loadDashboard();
     else if (["home", "events"].includes(route())) await loadEvents();
     else render();
   } catch (error) {
@@ -684,5 +794,5 @@ async function init() {
   }
 }
 
-window.addEventListener("popstate", () => { if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
+window.addEventListener("popstate", () => { if (!state.user) return render(); if (route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else if (route() === "event-wizard") loadEventWorkspace().catch((error) => toast(errorText(error), "error")); else if (route() === "planning") loadPlanning().catch((error) => toast(errorText(error), "error")); else if (route() === "dashboard") loadDashboard().catch((error) => toast(errorText(error), "error")); else if (["home", "events"].includes(route())) loadEvents().catch((error) => toast(errorText(error), "error")); else render(); });
 init().catch((error) => { console.error(error); });
