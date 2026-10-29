@@ -282,9 +282,12 @@ label small { display: block; margin-top: 6px; color: var(--muted); font-weight:
 .guard-option { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; border-top: 1px solid #e8eef4; }
 .guard-option.is-selected { background: #f3fbf6; }
 .guard-option.is-unavailable { opacity: .58; }
+.guard-option.has-same-day { background: #fffaf0; }
 .guard-select { min-width: 0; display: flex; align-items: center; gap: 12px; padding: 13px 5px; border: 0; color: inherit; background: transparent; text-align: left; }
 .guard-select > span:nth-child(2) { min-width: 0; display: grid; gap: 4px; }
 .guard-select small { overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.guard-history-label { width: max-content; padding: 2px 7px; border-radius: 999px; color: #1757a8; background: #e8f2ff; font-size: 9px; font-weight: 800; letter-spacing: .02em; }
+.guard-warning { width: 24px; height: 24px; margin-left: auto; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; color: #6b4800; background: #ffc928; font-size: 14px; font-weight: 900; }
 .selected-check { margin-left: auto; color: var(--green); font-size: 18px; font-weight: 900; }
 .guard-disable-menu { width: 38px; height: 38px; display: grid; place-items: center; border: 0; border-radius: 9px; color: #74859a; background: transparent; }
 .guard-disable-menu:hover { color: var(--red); background: #fff0f0; }

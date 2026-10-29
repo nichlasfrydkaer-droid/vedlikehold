@@ -18,3 +18,13 @@ test("phase two navigation and guard restrictions are translated", () => {
     }
   }
 });
+
+test("planning history and same-day warnings are translated", () => {
+  for (const locale of ["nb-NO", "da-DK", "en-US"]) {
+    const messages = load(locale);
+    for (const key of ["planning.recentOnPost", "planning.assignedSameDayCount", "planning.sameDayWarning", "planning.sameDayConfirm"]) {
+      assert.equal(typeof messages[key], "string", `${locale}: ${key}`);
+      assert.ok(messages[key].trim().length > 0, `${locale}: ${key}`);
+    }
+  }
+});

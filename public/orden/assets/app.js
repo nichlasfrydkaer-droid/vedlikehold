@@ -263,19 +263,47 @@ function planningEligibility(guard, day, shift, post) {
   return { eligible: true, reason: null };
 }
 
+function planningSameDayAssignments(guardId, day) {
+  if (!state.planningSlot) return [];
+  return state.planning.assignments
+    .filter((assignment) => assignment.guardId === guardId && assignment.dayId === day.id && !(assignment.shiftId === state.planningSlot.shiftId && assignment.postId === state.planningSlot.postId))
+    .map((assignment) => ({
+      assignment,
+      shift: day.shifts.find((item) => item.id === assignment.shiftId),
+      post: state.planning.posts.find((item) => item.id === assignment.postId),
+    }))
+    .filter((item) => item.shift && item.post)
+    .sort((left, right) => Number(left.shift.position) - Number(right.shift.position));
+}
+
+function planningAssignmentLabel(item) {
+  return `${item.post.code} ${item.post.shortName} · ${item.shift.startTime}–${item.shift.endTime}`;
+}
+
 function guardOptionList() {
   if (!state.planningSlot) return "";
   const day = state.planning.days[state.planningSlot.dayIndex];
   const shift = day.shifts.find((item) => item.id === state.planningSlot.shiftId);
   const post = state.planning.posts.find((item) => item.id === state.planningSlot.postId);
   const query = state.planningSearch.trim().toLocaleLowerCase(getLocale());
-  const guards = state.planning.guards.filter((guard) => !query || [guard.name, guard.preferences, guard.restrictions].join(" ").toLocaleLowerCase(getLocale()).includes(query));
+  const recentGuardIds = post.recentGuardIds || [];
+  const guards = state.planning.guards
+    .filter((guard) => !query || [guard.name, guard.preferences, guard.restrictions].join(" ").toLocaleLowerCase(getLocale()).includes(query))
+    .map((guard) => {
+      const eligibility = planningEligibility(guard, day, shift, post);
+      const sameDayAssignments = eligibility.eligible ? planningSameDayAssignments(guard.id, day) : [];
+      const historyIndex = recentGuardIds.indexOf(guard.id);
+      const group = !eligibility.eligible ? 2 : sameDayAssignments.length ? 3 : historyIndex >= 0 ? 0 : 1;
+      return { guard, eligibility, sameDayAssignments, historyIndex, group };
+    })
+    .sort((left, right) => left.group - right.group || (left.group === 0 ? left.historyIndex - right.historyIndex : left.guard.name.localeCompare(right.guard.name, getLocale())));
   if (!guards.length) return `<p class="base-empty">${escapeHtml(t("planning.noGuardsFound"))}</p>`;
-  return guards.map((guard) => {
-    const eligibility = planningEligibility(guard, day, shift, post);
+  return guards.map(({ guard, eligibility, sameDayAssignments, historyIndex }) => {
     const selected = planningAssignment(shift.id, post.id)?.guardId === guard.id;
     const details = [guard.preferences && `${t("base.preferences")}: ${guard.preferences}`, guard.restrictions && `${t("base.restrictions")}: ${guard.restrictions}`, guard.availability].filter(Boolean).join(" · ");
-    return `<article class="guard-option ${eligibility.eligible ? "" : "is-unavailable"} ${selected ? "is-selected" : ""}"><button class="guard-select" data-guard-id="${guard.id}" ${eligibility.eligible ? "" : "disabled"}><span class="guard-avatar">${escapeHtml(guard.name.slice(0, 1).toUpperCase())}</span><span><strong>${escapeHtml(guard.name)}</strong><small>${escapeHtml(eligibility.eligible ? (details || t("planning.available")) : t(eligibility.reason))}</small></span>${selected ? `<span class="selected-check">✓</span>` : ""}</button><button class="guard-disable-menu" data-guard-id="${guard.id}" aria-label="${escapeHtml(t("planning.disableGuard"))}" title="${escapeHtml(t("planning.disableGuard"))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.2A10.7 10.7 0 0 1 12 4c7 0 10 8 10 8a18 18 0 0 1-2.1 3.2M6.6 6.6C3.5 8.6 2 12 2 12s3 8 10 8a10.7 10.7 0 0 0 5.4-1.4"/></svg></button></article>`;
+    const recent = eligibility.eligible && !sameDayAssignments.length && historyIndex >= 0;
+    const status = sameDayAssignments.length ? t("planning.assignedSameDayCount", { count: sameDayAssignments.length }) : eligibility.eligible ? (details || t("planning.available")) : t(eligibility.reason);
+    return `<article class="guard-option ${eligibility.eligible ? "" : "is-unavailable"} ${sameDayAssignments.length ? "has-same-day" : ""} ${selected ? "is-selected" : ""}"><button class="guard-select" data-guard-id="${guard.id}" ${eligibility.eligible ? "" : "disabled"}><span class="guard-avatar">${escapeHtml(guard.name.slice(0, 1).toUpperCase())}</span><span><strong>${escapeHtml(guard.name)}</strong>${recent ? `<span class="guard-history-label">${escapeHtml(t("planning.recentOnPost"))}</span>` : ""}<small>${escapeHtml(status)}</small></span>${sameDayAssignments.length ? `<span class="guard-warning" aria-label="${escapeHtml(t("planning.sameDayWarning"))}" title="${escapeHtml(t("planning.sameDayWarning"))}">!</span>` : selected ? `<span class="selected-check">✓</span>` : ""}</button><button class="guard-disable-menu" data-guard-id="${guard.id}" aria-label="${escapeHtml(t("planning.disableGuard"))}" title="${escapeHtml(t("planning.disableGuard"))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.2A10.7 10.7 0 0 1 12 4c7 0 10 8 10 8a18 18 0 0 1-2.1 3.2M6.6 6.6C3.5 8.6 2 12 2 12s3 8 10 8a10.7 10.7 0 0 0 5.4-1.4"/></svg></button></article>`;
   }).join("");
 }
 
@@ -659,9 +687,17 @@ function applyPlanningResult(result, closeModal = false) {
 
 function bindGuardOptionActions() {
   document.querySelectorAll(".guard-select").forEach((button) => button.addEventListener("click", async () => {
+    const day = state.planning.days[state.planningSlot.dayIndex];
+    const sameDayAssignments = planningSameDayAssignments(button.dataset.guardId, day);
+    let confirmSameDay = false;
+    if (sameDayAssignments.length) {
+      const assignments = sameDayAssignments.map((item) => `• ${planningAssignmentLabel(item)}`).join("\n");
+      if (!window.confirm(t("planning.sameDayConfirm", { assignments }))) return;
+      confirmSameDay = true;
+    }
     button.disabled = true;
     try {
-      const result = await endpoints.assignGuard(state.planning.event.id, state.planningSlot.shiftId, state.planningSlot.postId, button.dataset.guardId);
+      const result = await endpoints.assignGuard(state.planning.event.id, state.planningSlot.shiftId, state.planningSlot.postId, button.dataset.guardId, confirmSameDay);
       applyPlanningResult(result, true);
       toast(t("planning.assignmentSaved"));
     } catch (error) { button.disabled = false; toast(errorText(error), "error"); }
