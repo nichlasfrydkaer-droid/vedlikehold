@@ -8,7 +8,7 @@ test("orden forms capture their values before disabling controls", () => {
   const handlers = [
     /const form = event\.currentTarget; const data = new FormData\(form\); setFormBusy\(form, true\)/,
     /const form = event\.currentTarget; const payload = formPayload\(form\); setFormBusy\(form, true\)/,
-    /const currentForm = event\.currentTarget; const data = Object\.fromEntries\(new FormData\(currentForm\)\); setFormBusy\(currentForm, true\)/,
+    /const currentForm = event\.currentTarget;\s+const data = Object\.fromEntries\(new FormData\(currentForm\)\);\s+setFormBusy\(currentForm, true\)/,
     /const form = event\.currentTarget; const data = Object\.fromEntries\(new FormData\(form\)\); data\.shiftCount = Number\(data\.shiftCount\); setFormBusy\(form, true\)/,
     /const form = event\.currentTarget; const payload = formPayload\(form, true\); setFormBusy\(form, true\)/,
   ];

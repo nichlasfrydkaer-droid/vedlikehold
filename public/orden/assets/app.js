@@ -9,6 +9,10 @@ const icons = {
   users: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 1-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
   calendar: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>`,
   shield: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>`,
+  badge: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>`,
+  pin: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>`,
+  phone: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg>`,
+  clock: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
   settings: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.08A1.7 1.7 0 0 0 8.97 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.52-1.03H3v-4h.08A1.7 1.7 0 0 0 4.6 8.94a1.7 1.7 0 0 0-.34-1.88L4.2 7l2.83-2.83.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 10 3.05V3h4v.05a1.7 1.7 0 0 0 1.03 1.52 1.7 1.7 0 0 0 1.88-.34l.06-.06L19.8 7l-.06.06a1.7 1.7 0 0 0-.34 1.88A1.7 1.7 0 0 0 20.92 10H21v4h-.08A1.7 1.7 0 0 0 19.4 15Z"/></svg>`,
   logout: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>`,
@@ -31,7 +35,15 @@ function route() {
   if (path === "/orden/brukere" || path === "/orden/brugere") return "users";
   if (path === "/orden/innstillinger") return "settings";
   if (path === "/orden/grunnoppsett") return "base";
+  if (path === "/orden/ordensvakter") return "base-guards";
+  if (path === "/orden/ordensposter") return "base-posts";
+  if (path === "/orden/kontaktpersoner") return "base-contacts";
+  if (path === "/orden/grunninnstillinger") return "base-defaults";
   return "home";
+}
+
+function isBaseRoute(value = route()) {
+  return value === "base" || value.startsWith("base-");
 }
 
 function navigate(path) {
@@ -39,7 +51,7 @@ function navigate(path) {
   state.mobileMenu = false;
   if (path === "/orden/brukere" && state.user?.role === "system_admin") {
     loadUsers().catch((error) => { toast(errorText(error), "error"); render(); });
-  } else if (path === "/orden/grunnoppsett") loadBaseData().catch((error) => { toast(errorText(error), "error"); render(); });
+  } else if (isBaseRoute()) loadBaseData().catch((error) => { toast(errorText(error), "error"); render(); });
   else render();
 }
 
@@ -98,7 +110,7 @@ function shell(content, pageTitle) {
   const selector = state.user.eventTypes.length > 1
     ? `<label class="type-select"><span>${escapeHtml(t("eventType.label"))}</span><select id="event-type-select">${state.user.eventTypes.map((type) => `<option value="${type}" ${type === state.user.selectedEventType ? "selected" : ""}>${escapeHtml(eventTypeLabel(type))}</option>`).join("")}</select></label>`
     : `<div class="type-pill">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</div>`;
-  return `<div class="app-shell ${state.mobileMenu ? "menu-open" : ""}"><button class="menu-backdrop" aria-label="${escapeHtml(t("common.closeMenu"))}"></button><aside class="sidebar"><div class="sidebar-top">${brand()}<button class="icon-button close-menu" aria-label="${escapeHtml(t("common.closeMenu"))}">${icons.close}</button></div><nav aria-label="${escapeHtml(t("common.mainMenu"))}">${navItem("/orden", "nav.home", "home", current)}${navItem("/orden/stevner", "nav.events", "calendar", current, true)}${canManageUsers ? navItem("/orden/brukere", "nav.users", "users", current) : ""}${navItem("/orden/grunnoppsett", "nav.baseData", "shield", current)}${navItem("/orden/innstillinger", "nav.settings", "settings", current)}</nav><div class="sidebar-footer"><div class="user-mini"><span>${escapeHtml(state.user.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(state.user.name)}</strong><small>${escapeHtml(roleLabel(state.user.role))}</small></div></div><button id="logout-button" class="nav-item nav-button">${icons.logout}<span>${escapeHtml(t("auth.logout"))}</span></button></div></aside><div class="main-column"><header class="topbar"><button class="icon-button open-menu" aria-label="${escapeHtml(t("common.openMenu"))}">${icons.menu}</button><div><span class="topbar-label">${escapeHtml(t("app.title"))}</span><strong>${escapeHtml(pageTitle)}</strong></div>${selector}</header>${content}</div></div>`;
+  return `<div class="app-shell ${state.mobileMenu ? "menu-open" : ""}"><button class="menu-backdrop" aria-label="${escapeHtml(t("common.closeMenu"))}"></button><aside class="sidebar"><div class="sidebar-top">${brand()}<button class="icon-button close-menu" aria-label="${escapeHtml(t("common.closeMenu"))}">${icons.close}</button></div><nav aria-label="${escapeHtml(t("common.mainMenu"))}">${navItem("/orden", "nav.home", "home", current)}${navItem("/orden/stevner", "nav.events", "calendar", current, true)}<div class="nav-divider"></div>${navItem("/orden/ordensvakter", "nav.guards", "badge", current)}${navItem("/orden/ordensposter", "nav.posts", "pin", current)}${navItem("/orden/kontaktpersoner", "nav.contacts", "phone", current)}${navItem("/orden/grunninnstillinger", "nav.defaults", "clock", current)}<div class="nav-divider"></div>${canManageUsers ? navItem("/orden/brukere", "nav.users", "users", current) : ""}${navItem("/orden/innstillinger", "nav.settings", "settings", current)}</nav><div class="sidebar-footer"><div class="user-mini"><span>${escapeHtml(state.user.name.slice(0, 1).toUpperCase())}</span><div><strong>${escapeHtml(state.user.name)}</strong><small>${escapeHtml(roleLabel(state.user.role))}</small></div></div><button id="logout-button" class="nav-item nav-button">${icons.logout}<span>${escapeHtml(t("auth.logout"))}</span></button></div></aside><div class="main-column"><header class="topbar"><button class="icon-button open-menu" aria-label="${escapeHtml(t("common.openMenu"))}">${icons.menu}</button><div><span class="topbar-label">${escapeHtml(t("app.title"))}</span><strong>${escapeHtml(pageTitle)}</strong></div>${selector}</header>${content}</div></div>`;
 }
 
 function homeView() {
@@ -124,24 +136,57 @@ function settingsView() {
   return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(t("settings.personal"))}</span><h1>${escapeHtml(t("settings.title"))}</h1><p>${escapeHtml(t("settings.intro"))}</p></div></section><section class="content-card settings-card"><div class="settings-copy"><div class="action-icon">${icons.settings}</div><div><h2>${escapeHtml(t("settings.languageTitle"))}</h2><p>${escapeHtml(t("settings.languageBody"))}</p></div></div><label class="settings-control"><span>${escapeHtml(t("common.language"))}</span><select id="settings-locale-select">${localeOptions(state.user.locale || getLocale())}</select></label></section></main>`, t("settings.title"));
 }
 
-function baseRows(entity, emptyKey) {
-  const items = state.base[entity];
-  if (!items.length) return `<p class="base-empty">${escapeHtml(t(emptyKey))}</p>`;
-  return `<div class="base-list">${items.map((item) => {
-    const title = entity === "guards" ? item.name : entity === "posts" ? `${item.code} · ${item.shortName}` : item.category;
-    const details = entity === "guards" ? [item.phone, item.email, item.availability] : entity === "posts" ? [item.notes] : [item.name, item.phone];
-    return `<article class="base-row ${item.active ? "" : "is-inactive"}"><div><strong>${escapeHtml(title)}</strong><small>${escapeHtml(details.filter(Boolean).join(" · "))}</small></div><span class="state-chip ${item.active ? "is-active" : ""}">${escapeHtml(t(item.active ? "common.active" : "common.inactive"))}</span><button class="button button--secondary base-toggle" data-entity="${entity}" data-id="${item.id}" data-active="${item.active}">${escapeHtml(t(item.active ? "base.deactivate" : "base.activate"))}</button></article>`;
-  }).join("")}</div>`;
+const baseMeta = {
+  guards: { title: "base.guards", intro: "base.guardsIntro", empty: "base.emptyGuards", add: "base.newGuard", edit: "base.editGuard", save: "base.saveGuard", icon: "badge" },
+  posts: { title: "base.posts", intro: "base.postsIntro", empty: "base.emptyPosts", add: "base.newPost", edit: "base.editPost", save: "base.savePost", icon: "pin" },
+  contacts: { title: "base.contacts", intro: "base.contactsIntro", empty: "base.emptyContacts", add: "base.newContact", edit: "base.editContact", save: "base.saveContact", icon: "phone" },
+};
+
+function baseTitle(entity, item) {
+  if (entity === "guards") return item.name;
+  if (entity === "posts") return `${item.code} · ${item.shortName}`;
+  return item.category;
 }
 
-function baseView() {
+function baseDetails(entity, item) {
+  if (entity === "guards") return [item.phone, item.email, item.availability, item.restrictions, item.preferences];
+  if (entity === "posts") return [item.notes];
+  return [item.name, item.phone, item.notes];
+}
+
+function baseRows(entity) {
+  const items = state.base[entity];
+  if (!items.length) return `<p class="base-empty">${escapeHtml(t(baseMeta[entity].empty))}</p>`;
+  return `<div class="base-list">${items.map((item) => `<article class="base-row ${item.active ? "" : "is-inactive"}"><div><strong>${escapeHtml(baseTitle(entity, item))}</strong><small>${escapeHtml(baseDetails(entity, item).filter(Boolean).join(" · ") || t("base.noDetails"))}</small></div><span class="state-chip ${item.active ? "is-active" : ""}">${escapeHtml(t(item.active ? "common.active" : "common.inactive"))}</span><div class="row-actions"><button class="button button--secondary base-edit" data-entity="${entity}" data-id="${item.id}">${escapeHtml(t("common.edit"))}</button><button class="button button--secondary base-toggle" data-entity="${entity}" data-id="${item.id}" data-active="${item.active}">${escapeHtml(t(item.active ? "base.deactivate" : "base.activate"))}</button></div></article>`).join("")}</div>`;
+}
+
+function baseForm(entity, item = null) {
+  const editing = Boolean(item);
+  const value = (key) => escapeHtml(item?.[key] || "");
+  const fields = entity === "guards"
+    ? `<label>${escapeHtml(t("users.name"))}<input name="name" value="${value("name")}" required maxlength="120"></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel" value="${value("phone")}" autocomplete="tel"></label><label>${escapeHtml(t("base.emailOptional"))}<input name="email" type="email" value="${value("email")}" autocomplete="email"></label><label>${escapeHtml(t("base.availability"))}<input name="availability" value="${value("availability")}"></label><label class="wide">${escapeHtml(t("base.restrictions"))}<textarea name="restrictions">${value("restrictions")}</textarea></label><label class="wide">${escapeHtml(t("base.preferences"))}<textarea name="preferences">${value("preferences")}</textarea></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`
+    : entity === "posts"
+      ? `<label>${escapeHtml(t("base.postCode"))}<input name="code" value="${value("code")}" required maxlength="12" placeholder="3B"><small>${escapeHtml(t("base.postCodeHint"))}</small></label><label>${escapeHtml(t("base.shortName"))}<input name="shortName" value="${value("shortName")}" required maxlength="120"></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`
+      : `<label>${escapeHtml(t("base.category"))}<input name="category" value="${value("category")}" required maxlength="80" placeholder="${escapeHtml(t("base.categoryHint"))}"></label><label>${escapeHtml(t("base.contactNameOptional"))}<input name="name" value="${value("name")}" maxlength="120"></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel" value="${value("phone")}" autocomplete="tel" required></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes">${value("notes")}</textarea></label>`;
+  return `<form class="compact-form base-record-form" data-entity="${entity}" data-mode="${editing ? "edit" : "create"}" ${editing ? `data-id="${item.id}"` : ""}>${fields}<p class="form-error wide" hidden></p><div class="form-actions wide"><button type="button" class="button button--secondary base-form-cancel">${escapeHtml(t("common.cancel"))}</button><button class="button button--primary" type="submit">${escapeHtml(t(editing ? baseMeta[entity].save : baseMeta[entity].add))}</button></div></form>`;
+}
+
+function baseOverviewView() {
+  const type = eventTypeLabel(state.user.selectedEventType).toLocaleLowerCase(getLocale());
+  const cards = Object.entries(baseMeta).map(([entity, meta]) => `<a class="setup-card-link" href="/orden/${entity === "guards" ? "ordensvakter" : entity === "posts" ? "ordensposter" : "kontaktpersoner"}" data-link><span class="action-icon">${icons[meta.icon]}</span><div><h2>${escapeHtml(t(meta.title))}</h2><p>${escapeHtml(t(meta.intro))}</p></div><strong>${escapeHtml(t("base.registered", { count: state.base[entity].length }))} →</strong></a>`).join("");
+  return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("base.title"))}</h1><p>${escapeHtml(t("base.overviewIntro", { type }))}</p></div></section><div class="setup-grid">${cards}<a class="setup-card-link" href="/orden/grunninnstillinger" data-link><span class="action-icon">${icons.clock}</span><div><h2>${escapeHtml(t("base.defaults"))}</h2><p>${escapeHtml(t("base.defaultsIntro"))}</p></div><strong>${escapeHtml(t("base.openSection"))} →</strong></a></div></main>`, t("base.title"));
+}
+
+function baseEntityView(entity) {
+  const meta = baseMeta[entity];
+  const items = state.base[entity];
+  const activeCount = items.filter((item) => item.active).length;
+  return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t(meta.title))}</h1><p>${escapeHtml(t(meta.intro))}</p></div><button id="show-base-create" class="button button--primary">+ ${escapeHtml(t(meta.add))}</button></section><p class="scope-note">${escapeHtml(t("base.separateDataNotice"))}</p><section id="base-create-panel" class="content-card form-panel" hidden><div class="section-heading"><h2>${escapeHtml(t(meta.add))}</h2><button class="icon-button base-form-cancel" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></div>${baseForm(entity)}</section><section id="base-edit-panel" class="content-card form-panel" hidden></section><section class="content-card"><div class="section-heading"><div><h2>${escapeHtml(t("base.listTitle"))}</h2><p>${escapeHtml(t("base.activeSummary", { active: activeCount, total: items.length }))}</p></div></div>${baseRows(entity)}</section></main>`, t(meta.title));
+}
+
+function baseDefaultsView() {
   const settings = state.base.settings || { shiftCount: 3, dayStart: "08:00", dayEnd: "17:00" };
-  return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("base.title"))}</h1><p>${escapeHtml(t("base.intro", { type: eventTypeLabel(state.user.selectedEventType).toLocaleLowerCase(getLocale()) }))}</p></div></section><div class="base-grid">
-    <section class="content-card base-card"><div class="section-heading"><h2>${escapeHtml(t("base.guards"))}</h2></div><form class="compact-form base-create" data-entity="guards"><label>${escapeHtml(t("users.name"))}<input name="name" required></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel"></label><label>${escapeHtml(t("base.emailOptional"))}<input name="email" type="email"></label><label>${escapeHtml(t("base.availability"))}<input name="availability"></label><label>${escapeHtml(t("base.preferences"))}<input name="preferences"></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes"></textarea></label><p class="form-error wide" hidden></p><button class="button button--primary wide" type="submit">${escapeHtml(t("base.addGuard"))}</button></form>${baseRows("guards", "base.emptyGuards")}</section>
-    <section class="content-card base-card"><div class="section-heading"><h2>${escapeHtml(t("base.posts"))}</h2></div><form class="compact-form base-create" data-entity="posts"><label>${escapeHtml(t("base.postCode"))}<input name="code" required maxlength="12" placeholder="3B"><small>${escapeHtml(t("base.postCodeHint"))}</small></label><label>${escapeHtml(t("base.shortName"))}<input name="shortName" required></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes"></textarea></label><p class="form-error wide" hidden></p><button class="button button--primary wide" type="submit">${escapeHtml(t("base.addPost"))}</button></form>${baseRows("posts", "base.emptyPosts")}</section>
-    <section class="content-card base-card"><div class="section-heading"><h2>${escapeHtml(t("base.contacts"))}</h2></div><form class="compact-form base-create" data-entity="contacts"><label>${escapeHtml(t("base.category"))}<input name="category" required placeholder="${escapeHtml(t("base.categoryHint"))}"></label><label>${escapeHtml(t("users.name"))}<input name="name"></label><label>${escapeHtml(t("base.phone"))}<input name="phone" type="tel" required></label><label class="wide">${escapeHtml(t("base.notes"))}<textarea name="notes"></textarea></label><p class="form-error wide" hidden></p><button class="button button--primary wide" type="submit">${escapeHtml(t("base.addContact"))}</button></form>${baseRows("contacts", "base.emptyContacts")}</section>
-    <section class="content-card base-card"><div class="section-heading"><div><h2>${escapeHtml(t("base.defaults"))}</h2><p>${escapeHtml(t("base.defaultsBody"))}</p></div></div><form id="base-settings-form" class="compact-form"><label>${escapeHtml(t("base.defaultShiftCount"))}<input name="shiftCount" type="number" min="1" max="12" value="${settings.shiftCount}" required></label><label>${escapeHtml(t("base.defaultDayStart"))}<input name="dayStart" type="time" value="${settings.dayStart}" required></label><label>${escapeHtml(t("base.defaultDayEnd"))}<input name="dayEnd" type="time" value="${settings.dayEnd}" required></label><p class="form-error wide" hidden></p><button class="button button--primary wide" type="submit">${escapeHtml(t("common.save"))}</button></form></section>
-  </div></main>`, t("base.title"));
+  return shell(`<main class="page"><section class="page-heading"><div><span class="eyebrow">${escapeHtml(eventTypeLabel(state.user.selectedEventType))}</span><h1>${escapeHtml(t("base.defaults"))}</h1><p>${escapeHtml(t("base.defaultsIntro"))}</p></div></section><p class="scope-note">${escapeHtml(t("base.separateDataNotice"))}</p><section class="content-card defaults-card"><div class="section-heading"><div><h2>${escapeHtml(t("base.defaults"))}</h2><p>${escapeHtml(t("base.defaultsBody"))}</p></div></div><form id="base-settings-form" class="compact-form"><label>${escapeHtml(t("base.defaultShiftCount"))}<input name="shiftCount" type="number" min="1" max="12" value="${settings.shiftCount}" required></label><label>${escapeHtml(t("base.defaultDayStart"))}<input name="dayStart" type="time" value="${settings.dayStart}" required></label><label>${escapeHtml(t("base.defaultDayEnd"))}<input name="dayEnd" type="time" value="${settings.dayEnd}" required></label><p class="form-error wide" hidden></p><div class="form-actions wide"><button class="button button--primary" type="submit">${escapeHtml(t("common.save"))}</button></div></form></section></main>`, t("base.defaults"));
 }
 
 function render() {
@@ -150,7 +195,11 @@ function render() {
   else if (!state.user) app.innerHTML = loginView();
   else if (current === "users" && state.user.role === "system_admin") app.innerHTML = usersView();
   else if (current === "settings") app.innerHTML = settingsView();
-  else if (current === "base") app.innerHTML = baseView();
+  else if (current === "base") app.innerHTML = baseOverviewView();
+  else if (current === "base-guards") app.innerHTML = baseEntityView("guards");
+  else if (current === "base-posts") app.innerHTML = baseEntityView("posts");
+  else if (current === "base-contacts") app.innerHTML = baseEntityView("contacts");
+  else if (current === "base-defaults") app.innerHTML = baseDefaultsView();
   else app.innerHTML = homeView();
   bindEvents();
 }
@@ -189,6 +238,25 @@ async function changeLocale(locale, persist) {
   }
 }
 
+function bindBaseRecordForm(form) {
+  if (!form) return;
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const currentForm = event.currentTarget;
+    const data = Object.fromEntries(new FormData(currentForm));
+    setFormBusy(currentForm, true);
+    try {
+      if (currentForm.dataset.mode === "edit") await endpoints.updateBaseItem(currentForm.dataset.entity, currentForm.dataset.id, data);
+      else await endpoints.createBaseItem(currentForm.dataset.entity, data);
+      await loadBaseData();
+      toast(t(currentForm.dataset.mode === "edit" ? "base.updated" : "base.created"));
+    } catch (error) {
+      showFormError(currentForm, error);
+      setFormBusy(currentForm, false);
+    }
+  });
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); navigate(link.getAttribute("href")); }));
   document.querySelector("#public-locale-select")?.addEventListener("change", (event) => changeLocale(event.target.value, false));
@@ -212,7 +280,7 @@ function bindEvents() {
     catch (error) { showFormError(form, error); setFormBusy(form, false); }
   });
   document.querySelector("#logout-button")?.addEventListener("click", async () => { try { await endpoints.logout(); } catch (error) { if (error.status !== 401) toast(errorText(error), "error"); } setCsrfToken(""); state.user = null; history.replaceState({}, "", "/orden/login"); render(); });
-  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; if (route() === "base") await loadBaseData(); else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
+  document.querySelector("#event-type-select")?.addEventListener("change", async (event) => { const previous = state.user.selectedEventType; const next = event.target.value; event.target.disabled = true; try { await endpoints.selectEventType(next); state.user.selectedEventType = next; if (isBaseRoute()) await loadBaseData(); else render(); toast(t("eventType.changed", { type: eventTypeLabel(next).toLocaleLowerCase(getLocale()) })); } catch (error) { state.user.selectedEventType = previous; render(); toast(errorText(error), "error"); } });
   const createPanel = document.querySelector("#create-user-panel");
   document.querySelector("#show-create-user")?.addEventListener("click", () => { createPanel.hidden = false; createPanel.scrollIntoView({ behavior: "smooth", block: "start" }); createPanel.querySelector("input")?.focus(); });
   const hideCreate = () => { if (createPanel) createPanel.hidden = true; };
@@ -220,7 +288,21 @@ function bindEvents() {
   document.querySelector("#cancel-create-user")?.addEventListener("click", hideCreate);
   document.querySelector("#create-user-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const payload = formPayload(form); setFormBusy(form, true); try { await endpoints.createUser(payload); await loadUsers(); toast(t("users.created")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
   document.querySelectorAll(".edit-user").forEach((button) => button.addEventListener("click", () => { const user = state.users.find((item) => item.id === button.dataset.id); const panel = document.querySelector("#edit-user-panel"); panel.innerHTML = editUserPanel(user); panel.hidden = false; panel.scrollIntoView({ behavior: "smooth", block: "start" }); bindEditForm(panel); }));
-  document.querySelectorAll(".base-create").forEach((form) => form.addEventListener("submit", async (event) => { event.preventDefault(); const currentForm = event.currentTarget; const data = Object.fromEntries(new FormData(currentForm)); setFormBusy(currentForm, true); try { await endpoints.createBaseItem(currentForm.dataset.entity, data); await loadBaseData(); toast(t("base.created")); } catch (error) { showFormError(currentForm, error); setFormBusy(currentForm, false); } }));
+  const baseCreatePanel = document.querySelector("#base-create-panel");
+  document.querySelector("#show-base-create")?.addEventListener("click", () => { baseCreatePanel.hidden = false; baseCreatePanel.scrollIntoView({ behavior: "smooth", block: "start" }); baseCreatePanel.querySelector("input")?.focus(); });
+  baseCreatePanel?.querySelectorAll(".base-form-cancel").forEach((button) => button.addEventListener("click", () => { baseCreatePanel.hidden = true; }));
+  document.querySelectorAll(".base-record-form").forEach(bindBaseRecordForm);
+  document.querySelectorAll(".base-edit").forEach((button) => button.addEventListener("click", () => {
+    const item = state.base[button.dataset.entity].find((entry) => entry.id === button.dataset.id);
+    const panel = document.querySelector("#base-edit-panel");
+    if (!item || !panel) return;
+    panel.innerHTML = `<div class="section-heading"><h2>${escapeHtml(t(baseMeta[button.dataset.entity].edit))}</h2><button class="icon-button base-form-cancel" aria-label="${escapeHtml(t("common.close"))}">${icons.close}</button></div>${baseForm(button.dataset.entity, item)}`;
+    panel.hidden = false;
+    panel.querySelectorAll(".base-form-cancel").forEach((control) => control.addEventListener("click", () => { panel.hidden = true; }));
+    bindBaseRecordForm(panel.querySelector(".base-record-form"));
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    panel.querySelector("input")?.focus();
+  }));
   document.querySelectorAll(".base-toggle").forEach((button) => button.addEventListener("click", async () => { button.disabled = true; try { await endpoints.updateBaseItem(button.dataset.entity, button.dataset.id, { active: button.dataset.active !== "true" }); await loadBaseData(); toast(t("base.updated")); } catch (error) { button.disabled = false; toast(errorText(error), "error"); } }));
   document.querySelector("#base-settings-form")?.addEventListener("submit", async (event) => { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); data.shiftCount = Number(data.shiftCount); setFormBusy(form, true); try { await endpoints.updateBaseSettings(data); await loadBaseData(); toast(t("base.saved")); } catch (error) { showFormError(form, error); setFormBusy(form, false); } });
 }
@@ -251,7 +333,7 @@ async function init() {
     const result = await endpoints.me(); state.user = result.user;
     if (state.user.locale && state.user.locale !== getLocale()) { await setLocale(state.user.locale); setApiLocale(state.user.locale); }
     if (route() === "users" && state.user.role === "system_admin") await loadUsers();
-    else if (route() === "base") await loadBaseData();
+    else if (isBaseRoute()) await loadBaseData();
     else render();
   } catch (error) {
     if (!(error instanceof ApiError) || ![401, 403].includes(error.status)) console.warn(error);
@@ -260,5 +342,5 @@ async function init() {
   }
 }
 
-window.addEventListener("popstate", () => { if (state.user && route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (state.user && route() === "base") loadBaseData().catch((error) => toast(errorText(error), "error")); else render(); });
+window.addEventListener("popstate", () => { if (state.user && route() === "users" && !state.users.length) loadUsers().catch((error) => toast(errorText(error), "error")); else if (state.user && isBaseRoute()) loadBaseData().catch((error) => toast(errorText(error), "error")); else render(); });
 init().catch((error) => { console.error(error); });
