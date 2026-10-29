@@ -82,4 +82,7 @@ export const endpoints = {
   publicCounting: (token) => api(`/v1/public/counting/${encodeURIComponent(token)}`),
   startCounting: (token) => api(`/v1/public/counting/${encodeURIComponent(token)}/start`, { method: "POST", body: JSON.stringify({}) }),
   submitCounting: (token, count, revision) => api(`/v1/public/counting/${encodeURIComponent(token)}/submit`, { method: "POST", body: JSON.stringify({ count, revision }) }),
+  communications: (eventId) => api(`/v1/events/${eventId}/communications`),
+  sendEventMessage: (eventId, payload) => api(`/v1/events/${eventId}/communications/messages`, { method: "POST", body: JSON.stringify(payload) }),
+  activateAlarm: (eventId, payload) => api(`/v1/events/${eventId}/communications/alarm`, { method: "POST", body: JSON.stringify(payload) }),
 };
